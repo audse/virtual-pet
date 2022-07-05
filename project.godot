@@ -1,0 +1,155 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=5
+
+_global_script_classes=[{
+"base": "Node3D",
+"class": &"AutotileGridMap",
+"language": &"GDScript",
+"path": "res://temp/new_grid_map.gd"
+}, {
+"base": "Object",
+"class": &"BitMask",
+"language": &"GDScript",
+"path": "res://apps/map/nodes/cell_map/bit_mask.gd"
+}, {
+"base": "Object",
+"class": &"Bits",
+"language": &"GDScript",
+"path": "res://apps/map/nodes/cell_map/bits.gd"
+}, {
+"base": "Object",
+"class": &"Cell",
+"language": &"GDScript",
+"path": "res://apps/map/nodes/cell_map/cell.gd"
+}, {
+"base": "Node3D",
+"class": &"CellMap",
+"language": &"GDScript",
+"path": "res://apps/map/nodes/cell_map/cell_map.gd"
+}, {
+"base": "CellMap",
+"class": &"GuideMap",
+"language": &"GDScript",
+"path": "res://apps/map/nodes/guide/guide_map.gd"
+}, {
+"base": "Object",
+"class": &"Math",
+"language": &"GDScript",
+"path": "res://utils/math.gd"
+}, {
+"base": "MeshDataTool",
+"class": &"MeshDataToolPlus",
+"language": &"GDScript",
+"path": "res://utils/mesh/mesh_data_tool_plus.gd"
+}, {
+"base": "Object",
+"class": &"NeighborGroup",
+"language": &"GDScript",
+"path": "res://apps/map/nodes/cell_map/neighbor_group.gd"
+}, {
+"base": "Object",
+"class": &"ScriptRef",
+"language": &"GDScript",
+"path": "res://utils/script_ref.gd"
+}, {
+"base": "MeshInstance3D",
+"class": &"SpacialTile",
+"language": &"GDScript",
+"path": "res://apps/map/nodes/tile_set/spacial_tile.gd"
+}, {
+"base": "Node3D",
+"class": &"SpacialTileFactory",
+"language": &"GDScript",
+"path": "res://apps/map/nodes/tile_set/spacial_tile_factory.gd"
+}, {
+"base": "Resource",
+"class": &"SpacialTileSet",
+"language": &"GDScript",
+"path": "res://apps/map/nodes/tile_set/spacial_tile_set.gd"
+}, {
+"base": "Object",
+"class": &"State",
+"language": &"GDScript",
+"path": "res://utils/state.gd"
+}, {
+"base": "Resource",
+"class": &"UnevenGrid",
+"language": &"GDScript",
+"path": "res://apps/map/nodes/grid/uneven_grid.gd"
+}, {
+"base": "Object",
+"class": &"UnevenPoint",
+"language": &"GDScript",
+"path": "res://apps/map/nodes/grid/uneven_grid_point.gd"
+}, {
+"base": "Object",
+"class": &"Vector3Ref",
+"language": &"GDScript",
+"path": "res://utils/vector3_ref.gd"
+}, {
+"base": "Resource",
+"class": &"VertexData",
+"language": &"GDScript",
+"path": "res://utils/mesh/vertex_data.gd"
+}, {
+"base": "Object",
+"class": &"VertexGroup",
+"language": &"GDScript",
+"path": "res://utils/mesh/vertex_group.gd"
+}]
+_global_script_class_icons={
+"AutotileGridMap": "",
+"BitMask": "",
+"Bits": "",
+"Cell": "",
+"CellMap": "res://apps/map/nodes/cell_map/cell_map_icon.svg",
+"GuideMap": "",
+"Math": "",
+"MeshDataToolPlus": "",
+"NeighborGroup": "",
+"ScriptRef": "",
+"SpacialTile": "res://apps/map/nodes/tile_set/spacial_tile_icon.svg",
+"SpacialTileFactory": "res://apps/map/nodes/tile_set/spacial_tile_factory_icon.svg",
+"SpacialTileSet": "",
+"State": "",
+"UnevenGrid": "",
+"UnevenPoint": "",
+"Vector3Ref": "",
+"VertexData": "",
+"VertexGroup": ""
+}
+
+[application]
+
+config/name="pet-sim"
+config/features=PackedStringArray("4.0", "Vulkan Mobile")
+config/icon="res://icon.png"
+
+[autoload]
+
+Utils="*res://utils/utils.gd"
+Module="*res://utils/module.gd"
+Assets="*res://utils/assets.gd"
+States="*res://utils/states.gd"
+
+[display]
+
+window/size/viewport_width=1080
+window/size/viewport_height=1920
+window/handheld/orientation=1
+
+[input_devices]
+
+pointing/emulate_touch_from_mouse=true
+
+[rendering]
+
+anti_aliasing/quality/screen_space_aa=1
+anti_aliasing/quality/use_debanding=true

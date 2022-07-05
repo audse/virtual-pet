@@ -1,0 +1,59 @@
+[gd_scene load_steps=5 format=3]
+
+[ext_resource type="ArrayMesh" path="res://temp/3d/small_house_2.obj" id="1_uqmef"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_sv8rq"]
+sky_top_color = Color(0.42572, 0.671786, 0.878906, 1)
+sky_horizon_color = Color(0.786822, 0.879711, 0.934432, 1)
+ground_bottom_color = Color(0.721569, 0.847059, 0.858824, 1)
+ground_horizon_color = Color(0.786822, 0.879711, 0.934432, 1)
+
+[sub_resource type="Sky" id="Sky_h77gp"]
+sky_material = SubResource( "ProceduralSkyMaterial_sv8rq" )
+
+[sub_resource type="Environment" id="Environment_0filv"]
+background_mode = 2
+sky = SubResource( "Sky_h77gp" )
+ambient_light_source = 3
+ambient_light_color = Color(0.541176, 0.541176, 0.541176, 1)
+ambient_light_sky_contribution = 0.25
+tonemap_mode = 2
+tonemap_exposure = 0.75
+tonemap_white = 5.0
+ssao_enabled = true
+sdfgi_read_sky_light = false
+sdfgi_energy = 0.1
+glow_enabled = true
+
+[node name="Node3D" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource( "Environment_0filv" )
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.707107, -0.672498, -0.218508, -2.98023e-08, -0.309017, 0.951057, -0.707107, 0.672498, 0.218508, 0, 0, 0)
+light_bake_mode = 1
+shadow_enabled = true
+directional_shadow_split_2 = 0.25
+directional_shadow_split_3 = 0.55
+directional_shadow_max_distance = 250.0
+
+[node name="DirectionalLight3D2" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.906308, -0.0733869, 0.416198, 0, -0.984807, -0.173648, 0.422618, 0.157379, -0.892539, 0, 0, 0)
+light_energy = 0.75
+light_bake_mode = 1
+shadow_enabled = true
+directional_shadow_split_1 = 0.2
+directional_shadow_split_2 = 0.4
+directional_shadow_split_3 = 0.6
+directional_shadow_blend_splits = true
+directional_shadow_max_distance = 250.0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+gi_mode = 1
+mesh = ExtResource( "1_uqmef" )
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(0.866025, -0.25, 0.433013, 0, 0.866025, 0.5, -0.5, -0.433013, 0.75, 2, 4, 3.5)
+projection = 1
+size = 6.0

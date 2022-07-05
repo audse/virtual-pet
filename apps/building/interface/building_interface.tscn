@@ -1,0 +1,41 @@
+[gd_scene load_steps=3 format=3 uid="uid://d3sl8t54oiy5m"]
+
+[ext_resource type="Theme" uid="uid://r3eegva4vgy8" path="res://static/theme.theme" id="1_wnlfs"]
+[ext_resource type="Script" path="res://apps/building/interface/building_interface.gd" id="2_v7vhl"]
+
+[node name="BuildingInterface" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme = ExtResource( "1_wnlfs" )
+script = ExtResource( "2_v7vhl" )
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="HFlowContainer" type="HFlowContainer" parent="MarginContainer"]
+offset_left = 20.0
+offset_top = 20.0
+offset_right = 1060.0
+offset_bottom = 1900.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/vseparation = 16
+theme_override_constants/hseparation = 16
+
+[node name="StartBuildingButton" type="Button" parent="MarginContainer/HFlowContainer"]
+offset_right = 269.0
+offset_bottom = 77.0
+text = "Start building"
+language = "en"
+
+[node name="StopBuildingButton" type="Button" parent="MarginContainer/HFlowContainer"]
+offset_left = 285.0
+offset_right = 548.0
+offset_bottom = 77.0
+text = "Stop building"
+language = "en"

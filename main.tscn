@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://b8wcyrpcdhfyu"]
+
+[ext_resource type="PackedScene" uid="uid://cgarymv51w8js" path="res://apps/map/scenes/uneven_grid.tscn" id="1_4ep0f"]
+
+[node name="Main" type="Node"]
+
+[node name="UnevenGrid" parent="." instance=ExtResource("1_4ep0f")]
