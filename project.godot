@@ -9,11 +9,6 @@
 config_version=5
 
 _global_script_classes=[{
-"base": "Node3D",
-"class": &"AutotileGridMap",
-"language": &"GDScript",
-"path": "res://temp/new_grid_map.gd"
-}, {
 "base": "Object",
 "class": &"BitMask",
 "language": &"GDScript",
@@ -105,7 +100,6 @@ _global_script_classes=[{
 "path": "res://utils/mesh/vertex_group.gd"
 }]
 _global_script_class_icons={
-"AutotileGridMap": "",
 "BitMask": "",
 "Bits": "",
 "Cell": "",

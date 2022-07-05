@@ -17,7 +17,6 @@ const textures := {
 }
 
 const normals := {
-	clay_normal = preload("res://temp/clay_bake.png"),
 	stone       = preload("res://temp/stone_map.png"),
 	interior    = preload("res://temp/interior_map.png"),
 	floor       = preload("res://temp/floor_map.png"),
@@ -25,10 +24,10 @@ const normals := {
 }
 
 const building_01_meshes = {
-	CORNER       = preload("res://apps/map/assets/tile_sets/building_01/meshes/building_01_corner_tile.obj"),
-	CENTER       = preload("res://apps/map/assets/tile_sets/building_01/meshes/building_01_center_tile.obj"),
-	EDGE         = preload("res://apps/map/assets/tile_sets/building_01/meshes/building_01_edge_tile.obj"),
-	INNER_CORNER = preload("res://apps/map/assets/tile_sets/building_01/meshes/building_01_inner_corner_tile.obj"),
+	CORNER       = preload("res://apps/building/assets/tile_sets/building_01/meshes/building_01_corner_tile.obj"),
+	CENTER       = preload("res://apps/building/assets/tile_sets/building_01/meshes/building_01_center_tile.obj"),
+	EDGE         = preload("res://apps/building/assets/tile_sets/building_01/meshes/building_01_edge_tile.obj"),
+	INNER_CORNER = preload("res://apps/building/assets/tile_sets/building_01/meshes/building_01_inner_corner_tile.obj"),
 }
 
 
