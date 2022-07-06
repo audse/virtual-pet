@@ -129,7 +129,6 @@ static func make_shader(id: String, tile_type: String, distortion_amount: Vector
 	shader.shader = distort_shader
 	
 	var distort_edge: bool = Utils.Random.randi_range(0, 2) == 2
-	
 	if !(tile_type == "EDGE" and not distort_edge):
 		shader.set_shader_param("distort_amount", distortion_amount)
 	

@@ -1,0 +1,20 @@
+[gd_scene load_steps=2 format=3 uid="uid://b6dya0dbxdg1f"]
+
+[ext_resource type="Environment" uid="uid://bfisqc0k2mdv5" path="res://environment/assets/environment.tres" id="1_wpukq"]
+
+[node name="Environment" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = ExtResource("1_wpukq")
+
+[node name="MainLight" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-1, 8.70901e-08, 7.61939e-09, 0, -0.0871557, 0.996195, 8.74228e-08, 0.996195, 0.0871557, 0, 0, 0)
+shadow_enabled = true
+shadow_bias = 0.05
+directional_shadow_mode = 1
+directional_shadow_max_distance = 250.0
+
+[node name="SoftLight" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.766044, -0.55667, -0.321394, 2.98023e-08, -0.5, 0.866026, -0.642788, 0.663414, 0.383022, 0, 0, 0)
+shadow_enabled = true
+shadow_bias = 0.05

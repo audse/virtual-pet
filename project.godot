@@ -29,7 +29,12 @@ _global_script_classes=[{
 "language": &"GDScript",
 "path": "res://apps/map/nodes/cell_map/cell_map.gd"
 }, {
-"base": "CellMap",
+"base": "Object",
+"class": &"ControlRef",
+"language": &"GDScript",
+"path": "res://utils/control_ref.gd"
+}, {
+"base": "Node",
 "class": &"GuideMap",
 "language": &"GDScript",
 "path": "res://apps/map/nodes/guide/guide_map.gd"
@@ -104,6 +109,7 @@ _global_script_class_icons={
 "Bits": "",
 "Cell": "",
 "CellMap": "res://apps/map/nodes/cell_map/cell_map_icon.svg",
+"ControlRef": "",
 "GuideMap": "",
 "Math": "",
 "MeshDataToolPlus": "",
@@ -138,6 +144,10 @@ States="*res://utils/states.gd"
 window/size/viewport_width=1080
 window/size/viewport_height=1920
 window/handheld/orientation=1
+
+[gui]
+
+theme/custom="res://static/main.theme"
 
 [input_devices]
 

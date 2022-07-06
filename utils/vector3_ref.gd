@@ -16,6 +16,7 @@ static func all_elements_equal(a: Vector3, b: Vector3, precision: int = 3) -> bo
 
 
 static func sign_no_zeros(a: Vector3i, replacement: int = 1) -> Vector3i:
+	@warning_ignore(shadowed_global_identifier)
 	var sign: Vector3i = sign(a)
 	if sign.x == 0: sign.x = replacement
 	if sign.y == 0: sign.y = replacement

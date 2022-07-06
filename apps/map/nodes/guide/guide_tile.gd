@@ -6,7 +6,7 @@ const Y_POS := SIZE.y / 2
 var building_material: StandardMaterial3D = Assets.import(Assets.materials.building_guide)
 
 
-func _ready() -> void:
+func _init() -> void:
 	mesh = BoxMesh.new()
 	mesh.size = SIZE
 	position.y = Y_POS

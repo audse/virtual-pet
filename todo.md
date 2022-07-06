@@ -1,5 +1,8 @@
 # Todo
 
+## Codebase
+- [ ] Replace inheritance with composition
+
 ## Building
 
 ## Animals

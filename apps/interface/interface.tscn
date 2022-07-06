@@ -1,0 +1,66 @@
+[gd_scene load_steps=2 format=3 uid="uid://duklyahfnuqrq"]
+
+[ext_resource type="Script" path="res://apps/interface/interface.gd" id="1_hdehv"]
+
+[node name="Interface" type="MarginContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+theme_override_constants/margin_top = 100
+theme_override_constants/margin_bottom = 100
+script = ExtResource("1_hdehv")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+offset_left = 24.0
+offset_top = 100.0
+offset_right = 1056.0
+offset_bottom = 1820.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 2
+
+[node name="TopActions" type="HFlowContainer" parent="VBoxContainer"]
+unique_name_in_owner = true
+offset_right = 1032.0
+size_flags_vertical = 0
+
+[node name="CenterActions" type="HFlowContainer" parent="VBoxContainer"]
+unique_name_in_owner = true
+offset_top = 24.0
+offset_right = 1032.0
+offset_bottom = 1619.0
+size_flags_vertical = 3
+mouse_filter = 2
+
+[node name="BottomActions" type="HFlowContainer" parent="VBoxContainer"]
+unique_name_in_owner = true
+offset_top = 1643.0
+offset_right = 1032.0
+offset_bottom = 1720.0
+size_flags_vertical = 8
+
+[node name="CancelButton" type="Button" parent="VBoxContainer/BottomActions"]
+offset_right = 164.0
+offset_bottom = 77.0
+size_flags_horizontal = 4
+size_flags_vertical = 8
+text = "Cancel
+"
+
+[node name="BuildButton" type="Button" parent="VBoxContainer/BottomActions"]
+offset_left = 188.0
+offset_right = 404.0
+offset_bottom = 77.0
+size_flags_horizontal = 4
+size_flags_vertical = 8
+theme_type_variation = &"SuccessButton"
+text = "Build here"
+
+[connection signal="mouse_entered" from="VBoxContainer/TopActions" to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="VBoxContainer/TopActions" to="." method="_on_mouse_exited"]
+[connection signal="mouse_entered" from="VBoxContainer/CenterActions" to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="VBoxContainer/CenterActions" to="." method="_on_mouse_exited"]
+[connection signal="mouse_entered" from="VBoxContainer/BottomActions" to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="VBoxContainer/BottomActions" to="." method="_on_mouse_exited"]
+[connection signal="pressed" from="VBoxContainer/BottomActions/CancelButton" to="." method="_on_button_pressed" binds= [&"CancelButton"]]
+[connection signal="pressed" from="VBoxContainer/BottomActions/BuildButton" to="." method="_on_button_pressed" binds= [&"BuildButton"]]

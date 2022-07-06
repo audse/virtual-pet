@@ -3,9 +3,9 @@ extends Node3D
 @icon("cell_map_icon.svg")
 
 @export var grid: Resource
-@export var use_spacial_tiles: bool = true
+@export var use_autotile: bool = true
 
-var UseSpacialTiles = Module.import(Module.UseSpacialTiles, self) if use_spacial_tiles else null
+var UseSpacialTiles = Module.import(Module.UseSpacialTiles, self) if use_autotile else null
 
 var cells: Array[Cell]
 var _cached_coords: Dictionary = {}
@@ -23,7 +23,7 @@ func set_cellv(coord: Vector3i, tile: MeshInstance3D = null, set_many: bool = fa
 		cells.append(cell)
 		_cached_coords[coord] = cell
 		
-		if use_spacial_tiles:
+		if use_autotile:
 			if not set_many: UseSpacialTiles.connect_tile.call(cell, tile)
 		else: cell.draw_tile(self, grid.cell_size, tile)
 		
@@ -42,9 +42,9 @@ func set_cells_between(start_x: int, start_y: int, start_z: int, end_x: int, end
 func set_cells_betweenv(start_coord: Vector3i, end_coord: Vector3i, tile: MeshInstance3D = null) -> void:
 	var empty_coords := get_empty_coords_betweenv(start_coord, end_coord)
 	var new_cells: Array[Cell] = []
-	for coord in empty_coords: 
+	for coord in empty_coords:
 		new_cells.append(set_cellv(coord, tile, true))
-	if use_spacial_tiles: UseSpacialTiles.connect_many(new_cells, tile)
+	if use_autotile: UseSpacialTiles.connect_many(new_cells, tile)
 
 
 func erase_cell(cell: Cell) -> void:

@@ -1,10 +1,10 @@
-[gd_scene load_steps=13 format=3 uid="uid://cgarymv51w8js"]
+[gd_scene load_steps=10 format=3 uid="uid://dui0t6vapx0xy"]
 
 [ext_resource type="Script" path="res://apps/map/scenes/uneven_grid.gd" id="1_nh8qm"]
 [ext_resource type="Script" path="res://apps/map/nodes/cell_map/cell_map.gd" id="2_c2lv2"]
 [ext_resource type="Script" path="res://apps/map/nodes/guide/guide_map.gd" id="2_yhlvb"]
-[ext_resource type="Environment" uid="uid://bfisqc0k2mdv5" path="res://apps/map/assets/environment.tres" id="5_7khnj"]
-[ext_resource type="FontData" uid="uid://cgf6tr8wj2gby" path="res://static/fonts/Nunito/Nunito-Black.ttf" id="7_50qf0"]
+[ext_resource type="PackedScene" uid="uid://b6dya0dbxdg1f" path="res://environment/scenes/environment.tscn" id="6_uc22u"]
+[ext_resource type="PackedScene" uid="uid://duklyahfnuqrq" path="res://apps/interface/interface.tscn" id="7_6t2cm"]
 [ext_resource type="Script" path="res://apps/map/nodes/grid/uneven_grid.gd" id="8_s7iql"]
 [ext_resource type="Script" path="res://apps/map/nodes/tile_set/spacial_tile_factory.gd" id="17_aug0w"]
 
@@ -17,59 +17,24 @@ z_offset_range = [-0.75, 0.75]
 [sub_resource type="BoxShape3D" id="BoxShape3D_on456"]
 size = Vector3(50, 0.5, 50)
 
-[sub_resource type="Font" id="Font_epy0v"]
-data/0 = ExtResource("7_50qf0")
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2qubm"]
-content_margin_left = 60.0
-content_margin_top = 20.0
-content_margin_right = 60.0
-content_margin_bottom = 20.0
-bg_color = Color(0.392157, 0.454902, 0.545098, 0.784314)
-border_width_left = 1
-border_width_top = 2
-border_width_right = 1
-border_color = Color(0.580392, 0.639216, 0.721569, 0.490196)
-border_blend = true
-corner_radius_top_left = 15
-corner_radius_top_right = 15
-corner_radius_bottom_right = 15
-corner_radius_bottom_left = 15
-shadow_color = Color(0.117647, 0.160784, 0.231373, 0.0588235)
-shadow_size = 15
-shadow_offset = Vector2(0, 10)
-
-[sub_resource type="Theme" id="Theme_hdwhw"]
-Button/colors/font_color = Color(0.875, 0.875, 0.875, 1)
-Button/colors/font_disabled_color = Color(0.875, 0.875, 0.875, 0.5)
-Button/colors/font_focus_color = Color(0.95, 0.95, 0.95, 1)
-Button/colors/font_hover_color = Color(0.95, 0.95, 0.95, 1)
-Button/colors/font_hover_pressed_color = Color(1, 1, 1, 1)
-Button/colors/font_outline_color = Color(1, 1, 1, 1)
-Button/colors/font_pressed_color = Color(1, 1, 1, 1)
-Button/colors/icon_disabled_color = Color(1, 1, 1, 0.4)
-Button/colors/icon_focus_color = Color(1, 1, 1, 1)
-Button/colors/icon_hover_color = Color(1, 1, 1, 1)
-Button/colors/icon_hover_pressed_color = Color(1, 1, 1, 1)
-Button/colors/icon_normal_color = Color(1, 1, 1, 1)
-Button/colors/icon_pressed_color = Color(1, 1, 1, 1)
-Button/constants/h_separation = 2
-Button/constants/outline_size = 0
-Button/font_sizes/font_size = 32
-Button/fonts/font = SubResource("Font_epy0v")
-Button/styles/disabled = SubResource("StyleBoxFlat_2qubm")
-Button/styles/focus = SubResource("StyleBoxFlat_2qubm")
-Button/styles/hover = SubResource("StyleBoxFlat_2qubm")
-Button/styles/normal = SubResource("StyleBoxFlat_2qubm")
-Button/styles/pressed = SubResource("StyleBoxFlat_2qubm")
-
 [node name="UnevenGrid" type="Node3D"]
 script = ExtResource("1_nh8qm")
 
+[node name="Environment" parent="." instance=ExtResource("6_uc22u")]
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(0.766045, -0.413176, 0.492404, 0, 0.766044, 0.642788, -0.642787, -0.492404, 0.586824, 0, 16, 0)
+projection = 1
+current = true
+size = 22.0
+
 [node name="GuideMap" type="Node3D" parent="."]
 script = ExtResource("2_yhlvb")
+
+[node name="GuideCellMap" type="Node3D" parent="GuideMap"]
+script = ExtResource("2_c2lv2")
 grid = SubResource("Resource_2qypc")
-use_spacial_tiles = false
+use_autotile = false
 
 [node name="CellMap" type="Node3D" parent="."]
 script = ExtResource("2_c2lv2")
@@ -78,64 +43,17 @@ grid = SubResource("Resource_2qypc")
 [node name="SpacialTileFactory" type="Node3D" parent="CellMap"]
 script = ExtResource("17_aug0w")
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = ExtResource("5_7khnj")
+[node name="DrawArea" type="Area3D" parent="."]
 
-[node name="MainLight" type="DirectionalLight3D" parent="."]
-transform = Transform3D(-1, 8.70901e-08, 7.61939e-09, 0, -0.0871557, 0.996195, 8.74228e-08, 0.996195, 0.0871557, 0, 0, 0)
-shadow_enabled = true
-shadow_bias = 0.05
-directional_shadow_mode = 1
-directional_shadow_max_distance = 250.0
-
-[node name="SoftLight" type="DirectionalLight3D" parent="."]
-transform = Transform3D(-0.766045, -0.556671, -0.321394, 2.98023e-08, -0.5, 0.866026, -0.642788, 0.663414, 0.383022, 0, 0, 0)
-shadow_enabled = true
-shadow_bias = 0.05
-
-[node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(0.866025, -0.25, 0.433013, 0, 0.866025, 0.5, -0.5, -0.433013, 0.75, 8, 8, 11)
-projection = 1
-current = true
-size = 22.0
-
-[node name="Area3D" type="Area3D" parent="."]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+[node name="DrawAreaBox" type="CollisionShape3D" parent="DrawArea"]
 shape = SubResource("BoxShape3D_on456")
 
-[node name="MarginContainer" type="MarginContainer" parent="."]
-anchor_right = 1.0
-anchor_bottom = 1.0
-theme_override_constants/margin_bottom = 200
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
 
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
-offset_left = 274.0
-offset_top = 1635.0
-offset_right = 805.0
-offset_bottom = 1720.0
-size_flags_horizontal = 4
-size_flags_vertical = 8
-theme_override_constants/separation = 30
-
-[node name="CancelButton" type="Button" parent="MarginContainer/HBoxContainer"]
+[node name="Interface" parent="CanvasLayer" instance=ExtResource("7_6t2cm")]
 unique_name_in_owner = true
-offset_right = 222.0
-offset_bottom = 85.0
-size_flags_horizontal = 4
-size_flags_vertical = 8
-theme = SubResource("Theme_hdwhw")
-text = "Cancel
-"
 
-[node name="BuildButton" type="Button" parent="MarginContainer/HBoxContainer"]
-unique_name_in_owner = true
-offset_left = 252.0
-offset_right = 531.0
-offset_bottom = 85.0
-size_flags_horizontal = 4
-size_flags_vertical = 8
-theme = SubResource("Theme_hdwhw")
-text = "Build here"
-
-[connection signal="input_event" from="Area3D" to="." method="_on_area_3d_input_event"]
+[connection signal="input_event" from="DrawArea" to="." method="_on_area_3d_input_event"]
+[connection signal="button_pressed" from="CanvasLayer/Interface" to="." method="_on_interface_button_pressed"]
+[connection signal="entered" from="CanvasLayer/Interface" to="." method="_on_interface_entered"]
+[connection signal="exited" from="CanvasLayer/Interface" to="." method="_on_interface_exited"]

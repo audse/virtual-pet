@@ -1,0 +1,462 @@
+[gd_scene load_steps=17 format=3 uid="uid://dsdccslw53vke"]
+
+[ext_resource type="Shader" path="res://apps/painter/grid.gdshader" id="1_apxwb"]
+[ext_resource type="Script" path="res://apps/painter/painter.gd" id="1_r1smx"]
+[ext_resource type="Texture2D" uid="uid://xtyu065fl2xv" path="res://apps/painter/assets/shapes/square.svg" id="2_fsvyh"]
+[ext_resource type="Texture2D" uid="uid://bqbli8sgwi7sp" path="res://apps/painter/assets/shapes/sharp.svg" id="3_lwicb"]
+[ext_resource type="Texture2D" uid="uid://blqfvnus8ra7a" path="res://apps/painter/assets/shapes/round.svg" id="4_wucwb"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bebyb"]
+bg_color = Color(0.972549, 0.980392, 0.988235, 1)
+border_width_left = 12
+border_width_top = 12
+border_width_right = 12
+border_width_bottom = 12
+border_color = Color(0.8, 0.8, 0.8, 0)
+corner_radius_top_left = 24
+corner_radius_top_right = 24
+corner_radius_bottom_right = 24
+corner_radius_bottom_left = 24
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2w53s"]
+bg_color = Color(0.945098, 0.960784, 0.976471, 1)
+border_width_left = 12
+border_width_top = 12
+border_width_right = 12
+border_width_bottom = 12
+border_color = Color(0.8, 0.8, 0.8, 0)
+corner_radius_top_left = 24
+corner_radius_top_right = 24
+corner_radius_bottom_right = 24
+corner_radius_bottom_left = 24
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_whher"]
+bg_color = Color(0.886275, 0.909804, 0.941176, 1)
+border_width_left = 12
+border_width_top = 12
+border_width_right = 12
+border_width_bottom = 12
+border_color = Color(0.8, 0.8, 0.8, 0)
+corner_radius_top_left = 24
+corner_radius_top_right = 24
+corner_radius_bottom_right = 24
+corner_radius_bottom_left = 24
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_k7cm5"]
+bg_color = Color(0.796078, 0.835294, 0.882353, 1)
+border_width_left = 12
+border_width_top = 12
+border_width_right = 12
+border_width_bottom = 12
+border_color = Color(0.8, 0.8, 0.8, 0)
+corner_radius_top_left = 24
+corner_radius_top_right = 24
+corner_radius_bottom_right = 24
+corner_radius_bottom_left = 24
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7t2pu"]
+bg_color = Color(0.580392, 0.639216, 0.721569, 1)
+border_width_left = 12
+border_width_top = 12
+border_width_right = 12
+border_width_bottom = 12
+border_color = Color(0.8, 0.8, 0.8, 0)
+corner_radius_top_left = 24
+corner_radius_top_right = 24
+corner_radius_bottom_right = 24
+corner_radius_bottom_left = 24
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_e4rxc"]
+bg_color = Color(0.392157, 0.454902, 0.545098, 1)
+border_width_left = 12
+border_width_top = 12
+border_width_right = 12
+border_width_bottom = 12
+border_color = Color(0.8, 0.8, 0.8, 0)
+corner_radius_top_left = 24
+corner_radius_top_right = 24
+corner_radius_bottom_right = 24
+corner_radius_bottom_left = 24
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_38nsk"]
+bg_color = Color(0.278431, 0.333333, 0.411765, 1)
+border_width_left = 12
+border_width_top = 12
+border_width_right = 12
+border_width_bottom = 12
+border_color = Color(0.8, 0.8, 0.8, 0)
+corner_radius_top_left = 24
+corner_radius_top_right = 24
+corner_radius_bottom_right = 24
+corner_radius_bottom_left = 24
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qt74r"]
+bg_color = Color(0.2, 0.254902, 0.333333, 1)
+border_width_left = 12
+border_width_top = 12
+border_width_right = 12
+border_width_bottom = 12
+border_color = Color(0.8, 0.8, 0.8, 0)
+corner_radius_top_left = 24
+corner_radius_top_right = 24
+corner_radius_bottom_right = 24
+corner_radius_bottom_left = 24
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_tmijp"]
+shader = ExtResource("1_apxwb")
+shader_param/background = null
+shader_param/dots = null
+shader_param/grid_x = 50
+shader_param/grid_y = 50
+
+[sub_resource type="Gradient" id="Gradient_mf720"]
+offsets = PackedFloat32Array(0, 0.220159, 0.607427, 0.846154, 1)
+colors = PackedColorArray(0.2, 0.254902, 0.333333, 0.588235, 0.2, 0.254902, 0.333333, 0.294118, 0.2, 0.254902, 0.333333, 0.112565, 0.2, 0.254902, 0.333333, 0.0304229, 0.2, 0.254902, 0.333333, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_icoo0"]
+gradient = SubResource("Gradient_mf720")
+width = 1000
+height = 1000
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(1, 0.5)
+
+[node name="Painter" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource("1_r1smx")
+
+[node name="Background" type="ColorRect" parent="."]
+custom_minimum_size = Vector2(100, 100)
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color(0.117647, 0.160784, 0.231373, 1)
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+offset_left = 24.0
+offset_top = 24.0
+offset_right = 1056.0
+offset_bottom = 1896.0
+
+[node name="ColorsLabel" type="Label" parent="MarginContainer/VBoxContainer"]
+offset_right = 1032.0
+offset_bottom = 78.0
+theme_override_font_sizes/font_size = 48
+text = "Colors"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Colors" type="MarginContainer" parent="MarginContainer/VBoxContainer"]
+offset_top = 102.0
+offset_right = 1032.0
+offset_bottom = 226.0
+theme_override_constants/margin_left = 36
+theme_override_constants/margin_top = 0
+theme_override_constants/margin_right = 36
+
+[node name="Swatches" type="HFlowContainer" parent="MarginContainer/VBoxContainer/Colors"]
+unique_name_in_owner = true
+offset_left = 36.0
+offset_right = 996.0
+offset_bottom = 100.0
+theme_override_constants/h_separation = 22
+
+[node name="Button" type="Button" parent="MarginContainer/VBoxContainer/Colors/Swatches"]
+custom_minimum_size = Vector2(100, 100)
+offset_right = 100.0
+offset_bottom = 100.0
+
+[node name="Panel" type="Panel" parent="MarginContainer/VBoxContainer/Colors/Swatches/Button"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_bebyb")
+
+[node name="Button2" type="Button" parent="MarginContainer/VBoxContainer/Colors/Swatches"]
+custom_minimum_size = Vector2(100, 100)
+offset_left = 122.0
+offset_right = 222.0
+offset_bottom = 100.0
+
+[node name="Panel" type="Panel" parent="MarginContainer/VBoxContainer/Colors/Swatches/Button2"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_2w53s")
+
+[node name="Button3" type="Button" parent="MarginContainer/VBoxContainer/Colors/Swatches"]
+custom_minimum_size = Vector2(100, 100)
+offset_left = 244.0
+offset_right = 344.0
+offset_bottom = 100.0
+
+[node name="Panel" type="Panel" parent="MarginContainer/VBoxContainer/Colors/Swatches/Button3"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_whher")
+
+[node name="Button4" type="Button" parent="MarginContainer/VBoxContainer/Colors/Swatches"]
+custom_minimum_size = Vector2(100, 100)
+offset_left = 366.0
+offset_right = 466.0
+offset_bottom = 100.0
+
+[node name="Panel" type="Panel" parent="MarginContainer/VBoxContainer/Colors/Swatches/Button4"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_k7cm5")
+
+[node name="Button5" type="Button" parent="MarginContainer/VBoxContainer/Colors/Swatches"]
+custom_minimum_size = Vector2(100, 100)
+offset_left = 488.0
+offset_right = 588.0
+offset_bottom = 100.0
+
+[node name="Panel" type="Panel" parent="MarginContainer/VBoxContainer/Colors/Swatches/Button5"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_7t2pu")
+
+[node name="Button6" type="Button" parent="MarginContainer/VBoxContainer/Colors/Swatches"]
+custom_minimum_size = Vector2(100, 100)
+offset_left = 610.0
+offset_right = 710.0
+offset_bottom = 100.0
+
+[node name="Panel" type="Panel" parent="MarginContainer/VBoxContainer/Colors/Swatches/Button6"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_e4rxc")
+
+[node name="Button7" type="Button" parent="MarginContainer/VBoxContainer/Colors/Swatches"]
+custom_minimum_size = Vector2(100, 100)
+offset_left = 732.0
+offset_right = 832.0
+offset_bottom = 100.0
+
+[node name="Panel" type="Panel" parent="MarginContainer/VBoxContainer/Colors/Swatches/Button7"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_38nsk")
+
+[node name="Button8" type="Button" parent="MarginContainer/VBoxContainer/Colors/Swatches"]
+custom_minimum_size = Vector2(100, 100)
+offset_left = 854.0
+offset_right = 954.0
+offset_bottom = 100.0
+
+[node name="Panel" type="Panel" parent="MarginContainer/VBoxContainer/Colors/Swatches/Button8"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_qt74r")
+
+[node name="CanvasLabel" type="Label" parent="MarginContainer/VBoxContainer"]
+offset_top = 250.0
+offset_right = 1032.0
+offset_bottom = 328.0
+theme_override_font_sizes/font_size = 48
+text = "Canvas"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(800, 800)
+offset_left = 116.0
+offset_top = 352.0
+offset_right = 916.0
+offset_bottom = 1152.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+stretch = true
+
+[node name="SubViewport" type="SubViewport" parent="MarginContainer/VBoxContainer/SubViewportContainer"]
+handle_input_locally = false
+size = Vector2i(800, 800)
+render_target_update_mode = 4
+
+[node name="Canvas" type="ColorRect" parent="MarginContainer/VBoxContainer/SubViewportContainer/SubViewport"]
+unique_name_in_owner = true
+material = SubResource("ShaderMaterial_tmijp")
+clip_contents = true
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="Cursor" type="Sprite2D" parent="MarginContainer/VBoxContainer/SubViewportContainer/SubViewport/Canvas"]
+unique_name_in_owner = true
+self_modulate = Color(0.580392, 0.639216, 0.721569, 1)
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("2_fsvyh")
+centered = false
+
+[node name="Sprite2D" type="Sprite2D" parent="MarginContainer/VBoxContainer/SubViewportContainer/SubViewport/Canvas/Cursor"]
+self_modulate = Color(1, 1, 1, 0.588235)
+show_behind_parent = true
+texture = SubResource("GradientTexture2D_icoo0")
+centered = false
+offset = Vector2(-200, -200)
+
+[node name="ShapesLabel" type="Label" parent="MarginContainer/VBoxContainer"]
+offset_top = 1176.0
+offset_right = 1032.0
+offset_bottom = 1254.0
+theme_override_font_sizes/font_size = 48
+text = "Shapes"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Shapes" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+offset_top = 1278.0
+offset_right = 1032.0
+offset_bottom = 1403.0
+
+[node name="RotateLeftButton" type="Button" parent="MarginContainer/VBoxContainer/Shapes"]
+unique_name_in_owner = true
+offset_top = 24.0
+offset_right = 222.0
+offset_bottom = 101.0
+size_flags_vertical = 4
+text = "Rotate left"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/Shapes"]
+custom_minimum_size = Vector2(0, 125)
+offset_left = 246.0
+offset_right = 765.0
+offset_bottom = 125.0
+size_flags_horizontal = 3
+alignment = 1
+
+[node name="SquareButton" type="Button" parent="MarginContainer/VBoxContainer/Shapes/HBoxContainer"]
+unique_name_in_owner = true
+offset_right = 157.0
+offset_bottom = 125.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_type_variation = &"SuccessButton"
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/VBoxContainer/Shapes/HBoxContainer/SquareButton"]
+custom_minimum_size = Vector2(100, 100)
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -50.0
+offset_top = -50.0
+offset_right = 50.0
+offset_bottom = 50.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(50, 50)
+texture = ExtResource("2_fsvyh")
+ignore_texture_size = true
+stretch_mode = 5
+metadata/_edit_layout_mode = 1
+
+[node name="SharpButton" type="Button" parent="MarginContainer/VBoxContainer/Shapes/HBoxContainer"]
+unique_name_in_owner = true
+offset_left = 181.0
+offset_right = 338.0
+offset_bottom = 125.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/VBoxContainer/Shapes/HBoxContainer/SharpButton"]
+custom_minimum_size = Vector2(100, 100)
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -50.0
+offset_top = -50.0
+offset_right = 50.0
+offset_bottom = 50.0
+pivot_offset = Vector2(50, 50)
+texture = ExtResource("3_lwicb")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="RoundButton" type="Button" parent="MarginContainer/VBoxContainer/Shapes/HBoxContainer"]
+unique_name_in_owner = true
+offset_left = 362.0
+offset_right = 519.0
+offset_bottom = 125.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/VBoxContainer/Shapes/HBoxContainer/RoundButton"]
+custom_minimum_size = Vector2(100, 100)
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -50.0
+offset_top = -50.0
+offset_right = 50.0
+offset_bottom = 50.0
+pivot_offset = Vector2(50, 50)
+texture = ExtResource("4_wucwb")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="RotateRightButton" type="Button" parent="MarginContainer/VBoxContainer/Shapes"]
+unique_name_in_owner = true
+offset_left = 789.0
+offset_top = 24.0
+offset_right = 1032.0
+offset_bottom = 101.0
+size_flags_vertical = 4
+text = "Rotate right"
+
+[node name="ToolsLabel" type="Label" parent="MarginContainer/VBoxContainer"]
+offset_top = 1427.0
+offset_right = 1032.0
+offset_bottom = 1505.0
+theme_override_font_sizes/font_size = 48
+text = "Tools"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+offset_top = 1529.0
+offset_right = 1032.0
+offset_bottom = 1606.0
+alignment = 1
+
+[node name="RedoButton" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+offset_left = 256.0
+offset_right = 396.0
+offset_bottom = 77.0
+text = "Redo"
+
+[node name="UndoButton" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+offset_left = 420.0
+offset_right = 564.0
+offset_bottom = 77.0
+text = "Undo"
+
+[node name="SizeSelector" type="SpinBox" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+offset_left = 588.0
+offset_right = 776.0
+offset_bottom = 77.0
+min_value = 2.0
+max_value = 8.0
+value = 3.0
+rounded = true
+alignment = 2
+prefix = "Size"
+
+[node name="Pixels" type="Sprite2D" parent="."]
+unique_name_in_owner = true
+
+[connection signal="gui_input" from="MarginContainer/VBoxContainer/SubViewportContainer/SubViewport/Canvas" to="." method="_on_canvas_gui_input"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/RedoButton" to="." method="_on_redo_button_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/UndoButton" to="." method="_on_undo_button_pressed"]
+[connection signal="value_changed" from="MarginContainer/VBoxContainer/HBoxContainer/SizeSelector" to="." method="_on_size_selector_value_changed"]

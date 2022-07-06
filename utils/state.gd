@@ -5,10 +5,10 @@ extends Object
 signal exit_state(prev_state)
 signal enter_state(next_state)
 
-var reset_state:int = -1
+var reset_state: int = -1
 var state: int = reset_state
 
-var target_node:Node = null
+var target_node: Node = null
 
 
 func _init(state_value: int = 0, reset_state_value = null) -> void:

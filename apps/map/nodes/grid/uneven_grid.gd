@@ -21,8 +21,8 @@ var points: Array[UnevenPoint] = make_grid()
 ## Returns a list of grid points and their metadata
 func make_grid() -> Array[UnevenPoint]:
 	var new_points := []
-	for x in range(-5, 6):
-		for z in range(-5, 6):
+	for x in range(-10, 10):
+		for z in range(-10, 10):
 			var new_cell := UnevenPoint.new(Vector3i(x, 0, z))
 			new_cell.offset = Vector3(
 				randf_range(x_offset_range[0], x_offset_range[1]),

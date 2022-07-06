@@ -1,0 +1,50 @@
+[gd_scene format=3 uid="uid://b0ts5rd3750f3"]
+
+[node name="MainThemePreview" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="HFlowContainer" type="HFlowContainer" parent="MarginContainer"]
+offset_left = 12.0
+offset_top = 12.0
+offset_right = 1068.0
+offset_bottom = 1908.0
+
+[node name="DefaultButtonContainer" type="VBoxContainer" parent="MarginContainer/HFlowContainer"]
+offset_right = 282.0
+offset_bottom = 166.0
+
+[node name="DefaultButton" type="Button" parent="MarginContainer/HFlowContainer/DefaultButtonContainer"]
+offset_right = 282.0
+offset_bottom = 77.0
+text = "Default button"
+
+[node name="DefaultButton2" type="Button" parent="MarginContainer/HFlowContainer/DefaultButtonContainer"]
+offset_top = 89.0
+offset_right = 282.0
+offset_bottom = 166.0
+disabled = true
+text = "(disabled)"
+
+[node name="SuccessButtonContainer" type="VBoxContainer" parent="MarginContainer/HFlowContainer"]
+offset_left = 294.0
+offset_right = 583.0
+offset_bottom = 166.0
+
+[node name="SuccessButton" type="Button" parent="MarginContainer/HFlowContainer/SuccessButtonContainer"]
+offset_right = 289.0
+offset_bottom = 77.0
+theme_type_variation = &"SuccessButton"
+text = "Success button"
+
+[node name="SuccessButton2" type="Button" parent="MarginContainer/HFlowContainer/SuccessButtonContainer"]
+offset_top = 89.0
+offset_right = 289.0
+offset_bottom = 166.0
+theme_type_variation = &"SuccessButton"
+disabled = true
+text = "(disabled)"

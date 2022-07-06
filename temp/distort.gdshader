@@ -35,7 +35,7 @@ void vertex() {
 	} else if (!is_corner) {
 		bool is_x_center = VERTEX.x >= -0.5 && VERTEX.x <= 0.5;
 		
-		if (is_x_center && VERTEX.y >= 1.0) {
+		if (is_x_center && VERTEX.y >= 0.5) {
 			distortion = distort_amount / 3.0;
 		}
 	}
@@ -52,4 +52,5 @@ void fragment() {
 	ALBEDO = texture(albedo_texture, uv).rgb * albedo_color.rgb;
 	AO = 1.0;
 	AO_LIGHT_AFFECT = 0.25;
+	
 }
