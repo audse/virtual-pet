@@ -1,0 +1,76 @@
+[gd_scene load_steps=8 format=3 uid="uid://dka8eh2n2fj1v"]
+
+[ext_resource type="Shader" path="res://apps/painter/grid.gdshader" id="1_42bug"]
+[ext_resource type="Script" path="res://apps/painter/nodes/canvas.gd" id="1_m4qb3"]
+[ext_resource type="Texture2D" uid="uid://xtyu065fl2xv" path="res://apps/painter/assets/shapes/square.svg" id="2_i46ic"]
+[ext_resource type="Script" path="res://apps/painter/nodes/cursor.gd" id="4_6ws3i"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_tmijp"]
+shader = ExtResource("1_42bug")
+shader_param/background = null
+shader_param/dots = Color(0.64, 0.886, 1, 1)
+shader_param/grid_x = 50
+shader_param/grid_y = 50
+
+[sub_resource type="Gradient" id="Gradient_mf720"]
+offsets = PackedFloat32Array(0, 0.220159, 0.607427, 0.846154, 1)
+colors = PackedColorArray(0.2, 0.254902, 0.333333, 0.588235, 0.2, 0.254902, 0.333333, 0.294118, 0.2, 0.254902, 0.333333, 0.112565, 0.2, 0.254902, 0.333333, 0.0304229, 0.2, 0.254902, 0.333333, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_icoo0"]
+gradient = SubResource("Gradient_mf720")
+width = 1000
+height = 1000
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(1, 0.5)
+
+[node name="Canvas" type="SubViewportContainer"]
+custom_minimum_size = Vector2(800, 800)
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -400.0
+offset_top = -400.0
+offset_right = 400.0
+offset_bottom = 400.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+stretch = true
+script = ExtResource("1_m4qb3")
+
+[node name="SubViewport" type="SubViewport" parent="."]
+handle_input_locally = false
+size = Vector2i(1000, 1000)
+render_target_update_mode = 4
+
+[node name="Canvas" type="ColorRect" parent="SubViewport"]
+unique_name_in_owner = true
+material = SubResource("ShaderMaterial_tmijp")
+clip_contents = true
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="Cursor" type="Sprite2D" parent="SubViewport/Canvas"]
+unique_name_in_owner = true
+self_modulate = Color(0.796078, 0.835294, 0.882353, 1)
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("2_i46ic")
+centered = false
+script = ExtResource("4_6ws3i")
+
+[node name="Sprite2D" type="Sprite2D" parent="SubViewport/Canvas/Cursor"]
+self_modulate = Color(1, 1, 1, 0.588235)
+show_behind_parent = true
+texture = SubResource("GradientTexture2D_icoo0")
+centered = false
+offset = Vector2(-200, -200)
+
+[node name="Ghost" type="Sprite2D" parent="SubViewport/Canvas"]
+modulate = Color(1, 1, 1, 0.490196)
+
+[connection signal="gui_input" from="SubViewport/Canvas" to="." method="_on_canvas_gui_input"]

@@ -90,6 +90,11 @@ _global_script_classes=[{
 "path": "res://apps/map/nodes/grid/uneven_grid_point.gd"
 }, {
 "base": "Object",
+"class": &"Vector2Ref",
+"language": &"GDScript",
+"path": "res://utils/vector2_ref.gd"
+}, {
+"base": "Object",
 "class": &"Vector3Ref",
 "language": &"GDScript",
 "path": "res://utils/vector3_ref.gd"
@@ -121,6 +126,7 @@ _global_script_class_icons={
 "State": "",
 "UnevenGrid": "",
 "UnevenPoint": "",
+"Vector2Ref": "",
 "Vector3Ref": "",
 "VertexData": "",
 "VertexGroup": ""

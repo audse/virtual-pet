@@ -1,7 +1,6 @@
 # States
 extends Node
 
-class BuildingState extends State:
-	
-	func _init() -> void:
-		pass
+
+const PaintState = preload("res://apps/painter/state.gd")
+var Paint = PaintState.new()
