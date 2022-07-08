@@ -1,15 +1,31 @@
 extends Sprite2D
 
+const Paint = States.PaintState
+const Size = Paint.Size
+
+@onready var shadows = [
+	%Cursor/Shadow, 
+	%Cursor/Shadow/Shadow2, 
+	%Cursor/Shadow/Shadow3, 
+	%Cursor/Shadow/Shadow4,
+]
+
+
+func _ready() -> void:
+	States.Paint.size_changed.connect(resize)
+	States.Paint.action_changed.connect(_on_action_changed)
+
+
+func _on_action_changed(new_action: int) -> void:
+	match new_action:
+		Paint.Action.ERASE: self_modulate.a = 0
+		_: self_modulate.a = 1
+
+
 # Cursor SVG files are 500 px, so this converts to the correct scale
 # e.g. a 50px grid has a scale of 0.1
-const cursor_scale := {
-	States.PaintState.Size.Xxs: 0.025,
-	States.PaintState.Size.Xs: 0.05,
-	States.PaintState.Size.Sm: 0.1,
-	States.PaintState.Size.Md: 0.2,
-	States.PaintState.Size.Lg: 0.4,
-	States.PaintState.Size.Xl: 0.8,
-}
+func cursor_scale() -> float:
+	return States.Paint.size_px().x / 500.0
 
 
 func get_offset() -> Vector2:
@@ -26,19 +42,22 @@ func into_pixel() -> Sprite2D:
 	var p: Sprite2D = self.duplicate()
 	var shadow = p.get_child(0)
 	if shadow: shadow.queue_free()
+	p.set_script(null)
 	return p
 
 
 func shape(tex: Texture) -> void:
 	texture = tex
+	for shadow in shadows:
+		shadow.texture = tex
 
 
 func color(c: Color) -> void:
 	self_modulate = c
 
 
-func resize(size: int) -> void:
-	var width: float = cursor_scale[size]
+func resize(_to: int) -> void:
+	var width: float = cursor_scale()
 	var new_size = Vector2(width, width)
 	(get_tree()
 		.create_tween()

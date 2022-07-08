@@ -21,7 +21,12 @@ func _ready() -> void:
 
 func add(type: States.PaintState.Action, pixels: Array[Sprite2D]) -> void:
 	undo_stack.append(Action.new(type, pixels))
+	redo_stack = []
 	updated.emit()
+
+
+func prev() -> Action:
+	return undo_stack.back()
 
 
 func undo() -> Action:

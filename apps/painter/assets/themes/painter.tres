@@ -1,0 +1,107 @@
+[gd_resource type="Theme" load_steps=10 format=3 uid="uid://cq8mh6dl8s7wt"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_twiph"]
+content_margin_left = 8.0
+content_margin_top = 8.0
+content_margin_right = 8.0
+content_margin_bottom = 8.0
+draw_center = false
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_vahvk"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_g2bby"]
+content_margin_left = 8.0
+content_margin_top = 8.0
+content_margin_right = 8.0
+content_margin_bottom = 8.0
+bg_color = Color(0.2, 0.254902, 0.333333, 0.588235)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yn50t"]
+content_margin_left = 8.0
+content_margin_top = 8.0
+content_margin_right = 8.0
+content_margin_bottom = 8.0
+draw_center = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tfjrv"]
+content_margin_left = 8.0
+content_margin_top = 8.0
+content_margin_right = 8.0
+content_margin_bottom = 8.0
+bg_color = Color(0.0627451, 0.72549, 0.505882, 0.490196)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cuevc"]
+content_margin_left = 8.0
+content_margin_top = 8.0
+content_margin_right = 8.0
+content_margin_bottom = 8.0
+draw_center = false
+border_width_bottom = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ffy8n"]
+content_margin_left = 8.0
+content_margin_top = 8.0
+content_margin_right = 8.0
+content_margin_bottom = 8.0
+bg_color = Color(0.0627451, 0.72549, 0.505882, 0.196078)
+border_color = Color(0.0627451, 0.72549, 0.505882, 1)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fhgvx"]
+content_margin_left = 8.0
+content_margin_top = 8.0
+content_margin_right = 8.0
+content_margin_bottom = 8.0
+bg_color = Color(0.0627451, 0.72549, 0.505882, 0.490196)
+border_color = Color(0.0627451, 0.72549, 0.505882, 1)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yrph6"]
+content_margin_left = 8.0
+content_margin_top = 8.0
+content_margin_right = 8.0
+content_margin_bottom = 8.0
+bg_color = Color(0.0627451, 0.72549, 0.505882, 0.392157)
+border_color = Color(0.0627451, 0.72549, 0.505882, 1)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+
+[resource]
+Button/styles/disabled = SubResource("StyleBoxFlat_twiph")
+Button/styles/focus = SubResource("StyleBoxEmpty_vahvk")
+Button/styles/hover = SubResource("StyleBoxFlat_g2bby")
+Button/styles/normal = SubResource("StyleBoxFlat_twiph")
+Button/styles/pressed = SubResource("StyleBoxFlat_twiph")
+HBoxContainer/constants/separation = 0
+HFlowContainer/constants/h_separation = 0
+HFlowContainer/constants/v_separation = 0
+ItemList/colors/font_color = Color(0.796078, 0.835294, 0.882353, 1)
+ItemList/colors/font_selected_color = Color(0.862745, 0.988235, 0.905882, 1)
+ItemList/styles/bg = SubResource("StyleBoxFlat_yn50t")
+ItemList/styles/bg_focus = SubResource("StyleBoxFlat_tfjrv")
+OptionButton/styles/normal = SubResource("StyleBoxFlat_cuevc")
+SuccessButton/base_type = &"Button"
+SuccessButton/colors/font_color = Color(0.85098, 1, 0.901961, 0.784314)
+SuccessButton/colors/icon_disabled_color = Color(0.85098, 1, 0.901961, 0.490196)
+SuccessButton/colors/icon_hover_color = Color(0.85098, 1, 0.901961, 0.784314)
+SuccessButton/colors/icon_normal_color = Color(0.85098, 1, 0.901961, 0.784314)
+SuccessButton/colors/icon_pressed_color = Color(0.85098, 1, 0.901961, 0.588235)
+SuccessButton/styles/disabled = SubResource("StyleBoxFlat_ffy8n")
+SuccessButton/styles/hover = SubResource("StyleBoxFlat_fhgvx")
+SuccessButton/styles/normal = SubResource("StyleBoxFlat_yrph6")
+SuccessButton/styles/pressed = SubResource("StyleBoxFlat_yrph6")
+VBoxContainer/constants/separation = 0
