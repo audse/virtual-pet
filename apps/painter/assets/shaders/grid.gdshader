@@ -13,17 +13,19 @@ void vertex() {
 }
 
 bool fuzzy_remainder(float x, float y) {
-	int ix = int(x);
-	int iy = int(y);
-	bool is_fuzzy = (
-		(ix % iy == 0)
-		|| ((ix + 1) % iy == 0)
-		|| ((ix - 1) % iy == 0)
-	);
-	return is_fuzzy;
+	
+	// x = 210, y = 50
+	// remainder = floor (210 / 50) = 4
+	// target = 4 * 50 = 200
+	// is = 200 - 210 
+	float remainder = round(x / y);
+	float target = remainder * y;
+	bool is = abs(target - x) < 2.0;
+	
+	return is;
 }
 
-void fragment() {	
+void fragment() {
 	bool x_remainder = fuzzy_remainder(vert.x, grid_x);
 	bool y_remainder = fuzzy_remainder(vert.y, grid_y);
 	

@@ -1,38 +1,65 @@
-[gd_scene load_steps=32 format=3 uid="uid://dsdccslw53vke"]
+[gd_scene load_steps=34 format=3 uid="uid://dsdccslw53vke"]
 
 [ext_resource type="Script" path="res://apps/painter/painter.gd" id="1_r1smx"]
 [ext_resource type="Theme" uid="uid://cq8mh6dl8s7wt" path="res://apps/painter/assets/themes/painter.tres" id="1_u00cw"]
 [ext_resource type="Script" path="res://apps/painter/nodes/undo.gd" id="2_fbwuv"]
-[ext_resource type="Texture2D" uid="uid://xtyu065fl2xv" path="res://apps/painter/assets/shapes/square.svg" id="2_fsvyh"]
 [ext_resource type="Script" path="res://apps/painter/nodes/swatch_button.gd" id="2_q85po"]
 [ext_resource type="PackedScene" uid="uid://bn5p31m1beflu" path="res://apps/painter/scenes/canvas.tscn" id="3_bo72m"]
-[ext_resource type="Texture2D" uid="uid://bqbli8sgwi7sp" path="res://apps/painter/assets/shapes/sharp.svg" id="3_lwicb"]
 [ext_resource type="FontData" uid="uid://doyre2d68vvpi" path="res://static/fonts/Nunito/Nunito-Bold.ttf" id="3_tim4a"]
-[ext_resource type="Texture2D" uid="uid://blqfvnus8ra7a" path="res://apps/painter/assets/shapes/round.svg" id="4_wucwb"]
 [ext_resource type="Texture2D" uid="uid://dxpyxfysoqmyu" path="res://apps/painter/assets/icons/rotate_left.svg" id="5_5sj71"]
-[ext_resource type="Texture2D" uid="uid://bajwbq5858hl6" path="res://apps/painter/assets/shapes/concave.svg" id="8_ccb6y"]
 [ext_resource type="Script" path="res://apps/painter/nodes/shape_button.gd" id="8_hoo73"]
 [ext_resource type="Texture2D" uid="uid://26p63shqhm1k" path="res://apps/painter/assets/icons/rotate_right.svg" id="11_11syx"]
-[ext_resource type="Texture2D" uid="uid://bei5x16tcxsig" path="res://apps/painter/assets/stamps/circle.svg" id="11_253su"]
 [ext_resource type="Texture2D" uid="uid://bhvq4marly1o0" path="res://apps/painter/assets/icons/rectangle.svg" id="12_geruk"]
-[ext_resource type="Texture2D" uid="uid://bachgnl2kixgi" path="res://apps/painter/assets/stamps/flower.svg" id="12_qdiws"]
-[ext_resource type="Texture2D" uid="uid://rf1q3bq87a6g" path="res://apps/painter/assets/stamps/heart.svg" id="13_lvr51"]
+[ext_resource type="Texture2D" uid="uid://mexdj1uqwyjs" path="res://apps/painter/assets/icons/gallery.svg" id="13_f0mbl"]
 [ext_resource type="Texture2D" uid="uid://b24vngv1jm71o" path="res://apps/painter/assets/icons/line.svg" id="13_monbh"]
 [ext_resource type="Texture2D" uid="uid://ch7l34kkmaatb" path="res://apps/painter/assets/icons/eraser.svg" id="14_umeww"]
-[ext_resource type="Texture2D" uid="uid://3ld55j63a7p2" path="res://apps/painter/assets/stamps/star.svg" id="14_wpj0n"]
 [ext_resource type="Texture2D" uid="uid://o6p0w2gruix" path="res://apps/painter/assets/icons/pencil.svg" id="15_bphgi"]
+[ext_resource type="Script" path="res://interface/components/circle_container.gd" id="15_pt33y"]
+[ext_resource type="Shader" path="res://apps/painter/assets/shaders/rounded_blur.gdshader" id="15_wbh5j"]
 [ext_resource type="Texture2D" uid="uid://dwlu8jm1xyn6t" path="res://apps/painter/assets/icons/undo.svg" id="16_bta2x"]
+[ext_resource type="Texture2D" uid="uid://c0xjwq26v2od3" path="res://apps/painter/assets/icons/load_save.svg" id="16_s0y0t"]
 [ext_resource type="Texture2D" uid="uid://dp0xkjoprvqm7" path="res://apps/painter/assets/icons/redo.svg" id="17_nvjsf"]
+[ext_resource type="Texture2D" uid="uid://o871cmutas55" path="res://apps/painter/assets/icons/save.svg" id="17_ydjfi"]
 [ext_resource type="Texture2D" uid="uid://4vh1caqutpo" path="res://apps/painter/assets/icons/increase_size.svg" id="19_crq7g"]
 [ext_resource type="Texture2D" uid="uid://by73s6jeshln5" path="res://apps/painter/assets/icons/decrease_size.svg" id="20_ycmut"]
 [ext_resource type="Texture2D" uid="uid://crfk2s5k2gfli" path="res://apps/painter/assets/icons/odd.svg" id="22_d7l23"]
 [ext_resource type="Texture2D" uid="uid://desksw0jv238g" path="res://apps/painter/assets/icons/even.svg" id="23_ghk18"]
 [ext_resource type="Texture2D" uid="uid://bapda8bny76r5" path="res://apps/painter/assets/icons/zoom_in.svg" id="24_4mq7p"]
+[ext_resource type="PackedScene" uid="uid://crve60i1q2pr1" path="res://apps/painter/scenes/gallery.tscn" id="25_1hssg"]
 [ext_resource type="Texture2D" uid="uid://6t2bh8qv4gjy" path="res://apps/painter/assets/icons/zoom_out.svg" id="25_4dkvo"]
 [ext_resource type="Texture2D" uid="uid://feal5xxkatsd" path="res://apps/painter/assets/icons/recenter.svg" id="26_5os7r"]
+[ext_resource type="Texture2D" uid="uid://dnyt7rc2qfo58" path="res://temp/ios_guide-01.svg" id="27_frdcy"]
 
 [sub_resource type="Font" id="Font_gy418"]
 data/0 = ExtResource("3_tim4a")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_q7ylc"]
+content_margin_left = 12.0
+content_margin_top = 32.0
+content_margin_right = 12.0
+content_margin_bottom = 32.0
+bg_color = Color(0.2, 0.254902, 0.333333, 1)
+border_width_bottom = 10
+border_color = Color(0.8, 0.8, 0.8, 0)
+corner_radius_top_left = 20
+corner_radius_bottom_left = 20
+expand_margin_right = 32.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_24lki"]
+bg_color = Color(0.117647, 0.160784, 0.231373, 0.686275)
+corner_radius_top_left = 170
+corner_radius_top_right = 170
+corner_radius_bottom_right = 170
+corner_radius_bottom_left = 170
+corner_detail = 20
+expand_margin_right = 60.0
+expand_margin_bottom = 60.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_00g37"]
+shader = ExtResource("15_wbh5j")
+shader_param/blur_amount = 3.0
+shader_param/radius = 1.0
+shader_param/size = null
 
 [node name="Painter" type="Control"]
 anchor_right = 1.0
@@ -53,486 +80,578 @@ color = Color(0.117647, 0.160784, 0.231373, 1)
 [node name="MarginContainer" type="MarginContainer" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
-theme_override_constants/margin_top = 20
-theme_override_constants/margin_bottom = 20
+theme_override_constants/margin_top = 100
+theme_override_constants/margin_bottom = 150
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
 offset_left = 24.0
-offset_top = 20.0
-offset_right = 1056.0
-offset_bottom = 1900.0
+offset_top = 100.0
+offset_right = 804.0
+offset_bottom = 1642.0
 
-[node name="ColorsLabel" type="Label" parent="MarginContainer/VBoxContainer"]
-offset_right = 1032.0
-offset_bottom = 62.0
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+offset_right = 780.0
+offset_bottom = 331.0
+theme_override_constants/separation = 12
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+offset_right = 678.0
+offset_bottom = 331.0
+size_flags_horizontal = 3
+
+[node name="ColorsLabel" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
+offset_right = 678.0
+offset_bottom = 46.0
 theme_override_colors/font_color = Color(0.580392, 0.639216, 0.721569, 1)
 theme_override_fonts/font = SubResource("Font_gy418")
-theme_override_font_sizes/font_size = 36
+theme_override_font_sizes/font_size = 24
 text = " P A L E T T E"
 vertical_alignment = 1
 
-[node name="Colors" type="MarginContainer" parent="MarginContainer/VBoxContainer"]
-offset_top = 62.0
-offset_right = 1032.0
-offset_bottom = 186.0
+[node name="Colors" type="MarginContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
+offset_top = 46.0
+offset_right = 678.0
+offset_bottom = 145.0
 theme_override_constants/margin_left = 0
 theme_override_constants/margin_top = 0
 theme_override_constants/margin_right = 0
 
-[node name="Swatches" type="HFlowContainer" parent="MarginContainer/VBoxContainer/Colors"]
+[node name="Swatches" type="HFlowContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/Colors"]
 unique_name_in_owner = true
-offset_right = 1032.0
-offset_bottom = 100.0
+offset_right = 678.0
+offset_bottom = 75.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="Button1" type="Button" parent="MarginContainer/VBoxContainer/Colors/Swatches"]
-custom_minimum_size = Vector2(100, 100)
-offset_right = 114.0
-offset_bottom = 100.0
+[node name="Button1" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/Colors/Swatches"]
+custom_minimum_size = Vector2(75, 75)
+offset_right = 75.0
+offset_bottom = 75.0
 size_flags_horizontal = 3
 script = ExtResource("2_q85po")
 swatch = Color(0.972549, 0.980392, 0.988235, 1)
 
-[node name="Button2" type="Button" parent="MarginContainer/VBoxContainer/Colors/Swatches"]
-custom_minimum_size = Vector2(100, 100)
-offset_left = 114.0
-offset_right = 228.0
-offset_bottom = 100.0
+[node name="Button2" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/Colors/Swatches"]
+custom_minimum_size = Vector2(75, 75)
+offset_left = 75.0
+offset_right = 150.0
+offset_bottom = 75.0
 size_flags_horizontal = 3
 script = ExtResource("2_q85po")
 swatch = Color(0.945098, 0.960784, 0.976471, 1)
 
-[node name="Button3" type="Button" parent="MarginContainer/VBoxContainer/Colors/Swatches"]
-custom_minimum_size = Vector2(100, 100)
-offset_left = 228.0
-offset_right = 342.0
-offset_bottom = 100.0
+[node name="Button3" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/Colors/Swatches"]
+custom_minimum_size = Vector2(75, 75)
+offset_left = 150.0
+offset_right = 225.0
+offset_bottom = 75.0
 size_flags_horizontal = 3
 script = ExtResource("2_q85po")
 swatch = Color(0.886275, 0.909804, 0.941176, 1)
 
-[node name="Button4" type="Button" parent="MarginContainer/VBoxContainer/Colors/Swatches"]
-custom_minimum_size = Vector2(100, 100)
-offset_left = 342.0
-offset_right = 456.0
-offset_bottom = 100.0
+[node name="Button4" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/Colors/Swatches"]
+custom_minimum_size = Vector2(75, 75)
+offset_left = 225.0
+offset_right = 300.0
+offset_bottom = 75.0
 size_flags_horizontal = 3
 theme_type_variation = &"SuccessButton"
 script = ExtResource("2_q85po")
 swatch = Color(0.796078, 0.835294, 0.882353, 1)
 
-[node name="Button5" type="Button" parent="MarginContainer/VBoxContainer/Colors/Swatches"]
-custom_minimum_size = Vector2(100, 100)
-offset_left = 456.0
-offset_right = 570.0
-offset_bottom = 100.0
+[node name="Button5" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/Colors/Swatches"]
+custom_minimum_size = Vector2(75, 75)
+offset_left = 300.0
+offset_right = 375.0
+offset_bottom = 75.0
 size_flags_horizontal = 3
 script = ExtResource("2_q85po")
 swatch = Color(0.580392, 0.639216, 0.721569, 1)
 
-[node name="Button6" type="Button" parent="MarginContainer/VBoxContainer/Colors/Swatches"]
-custom_minimum_size = Vector2(100, 100)
-offset_left = 570.0
-offset_right = 684.0
-offset_bottom = 100.0
+[node name="Button6" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/Colors/Swatches"]
+custom_minimum_size = Vector2(75, 75)
+offset_left = 375.0
+offset_right = 450.0
+offset_bottom = 75.0
 size_flags_horizontal = 3
 script = ExtResource("2_q85po")
 swatch = Color(0.392157, 0.454902, 0.545098, 1)
 
-[node name="Button7" type="Button" parent="MarginContainer/VBoxContainer/Colors/Swatches"]
-custom_minimum_size = Vector2(100, 100)
-offset_left = 684.0
-offset_right = 798.0
-offset_bottom = 100.0
+[node name="Button7" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/Colors/Swatches"]
+custom_minimum_size = Vector2(75, 75)
+offset_left = 450.0
+offset_right = 525.0
+offset_bottom = 75.0
 size_flags_horizontal = 3
 script = ExtResource("2_q85po")
 swatch = Color(0.278431, 0.333333, 0.411765, 1)
 
-[node name="Button8" type="Button" parent="MarginContainer/VBoxContainer/Colors/Swatches"]
-custom_minimum_size = Vector2(100, 100)
-offset_left = 798.0
-offset_right = 912.0
-offset_bottom = 100.0
+[node name="Button8" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/Colors/Swatches"]
+custom_minimum_size = Vector2(75, 75)
+offset_left = 525.0
+offset_right = 600.0
+offset_bottom = 75.0
 size_flags_horizontal = 3
 script = ExtResource("2_q85po")
 swatch = Color(0.2, 0.254902, 0.333333, 1)
 
-[node name="Button9" type="Button" parent="MarginContainer/VBoxContainer/Colors/Swatches"]
-custom_minimum_size = Vector2(100, 100)
-offset_left = 912.0
-offset_right = 1026.0
-offset_bottom = 100.0
+[node name="Button9" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/Colors/Swatches"]
+custom_minimum_size = Vector2(75, 75)
+offset_left = 600.0
+offset_right = 675.0
+offset_bottom = 75.0
 size_flags_horizontal = 3
 script = ExtResource("2_q85po")
 swatch = Color(0.117647, 0.160784, 0.231373, 1)
 
-[node name="Shapes" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
-offset_top = 186.0
-offset_right = 1032.0
-offset_bottom = 553.0
+[node name="ShapesLabel" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
+offset_top = 145.0
+offset_right = 678.0
+offset_bottom = 189.0
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.580392, 0.639216, 0.721569, 1)
+theme_override_constants/line_spacing = 10
+theme_override_fonts/font = SubResource("Font_gy418")
+theme_override_font_sizes/font_size = 24
+text = " S H A P E S"
+vertical_alignment = 1
 
-[node name="LeftDrawTools" type="VBoxContainer" parent="MarginContainer/VBoxContainer/Shapes"]
-offset_right = 116.0
-offset_bottom = 367.0
+[node name="Shapes" type="HBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
+offset_top = 189.0
+offset_right = 678.0
+offset_bottom = 331.0
+theme_override_constants/separation = 10
+
+[node name="LeftDrawTools" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/Shapes"]
+offset_right = 66.0
+offset_bottom = 142.0
+theme_override_constants/separation = 10
 alignment = 1
 
-[node name="RotateLeftButton" type="Button" parent="MarginContainer/VBoxContainer/Shapes/LeftDrawTools"]
+[node name="RotateLeftButton" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/Shapes/LeftDrawTools"]
 unique_name_in_owner = true
-offset_top = 67.0
-offset_right = 116.0
-offset_bottom = 183.0
+offset_right = 66.0
+offset_bottom = 66.0
 text = "
 "
 icon = ExtResource("5_5sj71")
 icon_alignment = 1
 
-[node name="DecreaseSizeButton" type="Button" parent="MarginContainer/VBoxContainer/Shapes/LeftDrawTools"]
+[node name="DecreaseSizeButton" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/Shapes/LeftDrawTools"]
 unique_name_in_owner = true
-offset_top = 183.0
-offset_right = 116.0
-offset_bottom = 299.0
+offset_top = 76.0
+offset_right = 66.0
+offset_bottom = 142.0
 icon = ExtResource("20_ycmut")
 icon_alignment = 1
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/Shapes"]
-offset_left = 116.0
-offset_right = 916.0
-offset_bottom = 367.0
+[node name="ShapeButtons" type="ScrollContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/Shapes"]
+custom_minimum_size = Vector2(0, 100)
+offset_left = 76.0
+offset_right = 602.0
+offset_bottom = 142.0
 size_flags_horizontal = 3
-
-[node name="ShapesLabel" type="Label" parent="MarginContainer/VBoxContainer/Shapes/VBoxContainer"]
-offset_right = 800.0
-offset_bottom = 51.0
-theme_override_colors/font_color = Color(0.580392, 0.639216, 0.721569, 1)
-theme_override_fonts/font = SubResource("Font_gy418")
-theme_override_font_sizes/font_size = 28
-text = " S H A P E S"
-vertical_alignment = 1
-
-[node name="ShapeButtons" type="ScrollContainer" parent="MarginContainer/VBoxContainer/Shapes/VBoxContainer"]
-offset_top = 51.0
-offset_right = 800.0
-offset_bottom = 196.0
+size_flags_vertical = 3
 vertical_scroll_mode = 0
 
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/Shapes/VBoxContainer/ShapeButtons"]
-custom_minimum_size = Vector2(0, 145)
-offset_right = 800.0
-offset_bottom = 145.0
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/Shapes/ShapeButtons"]
+offset_right = 739.0
+offset_bottom = 134.0
 size_flags_horizontal = 3
-theme_override_constants/separation = 6
+size_flags_vertical = 3
+theme_override_constants/separation = 8
 
-[node name="SquareButton" type="Button" parent="MarginContainer/VBoxContainer/Shapes/VBoxContainer/ShapeButtons/HBoxContainer"]
+[node name="SquareButton" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/Shapes/ShapeButtons/HBoxContainer"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(130, 130)
-offset_right = 130.0
-offset_bottom = 130.0
+custom_minimum_size = Vector2(75, 75)
+offset_top = 29.0
+offset_right = 75.0
+offset_bottom = 104.0
 size_flags_horizontal = 4
-size_flags_vertical = 0
+size_flags_vertical = 4
 theme_type_variation = &"SuccessButton"
 script = ExtResource("8_hoo73")
-shape = 0
 
-[node name="TextureRect" type="TextureRect" parent="MarginContainer/VBoxContainer/Shapes/VBoxContainer/ShapeButtons/HBoxContainer/SquareButton"]
-visible = false
-custom_minimum_size = Vector2(100, 100)
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -50.0
-offset_top = -50.0
-offset_right = 50.0
-offset_bottom = 50.0
-grow_horizontal = 2
-grow_vertical = 2
-pivot_offset = Vector2(50, 50)
-texture = ExtResource("2_fsvyh")
-ignore_texture_size = true
-stretch_mode = 5
-metadata/_edit_layout_mode = 1
-
-[node name="SharpButton" type="Button" parent="MarginContainer/VBoxContainer/Shapes/VBoxContainer/ShapeButtons/HBoxContainer"]
+[node name="SharpButton" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/Shapes/ShapeButtons/HBoxContainer"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(130, 130)
-offset_left = 136.0
-offset_right = 266.0
-offset_bottom = 130.0
+custom_minimum_size = Vector2(75, 75)
+offset_left = 83.0
+offset_top = 29.0
+offset_right = 158.0
+offset_bottom = 104.0
 size_flags_horizontal = 0
-size_flags_vertical = 0
+size_flags_vertical = 4
+script = ExtResource("8_hoo73")
+shape = 2
 
-[node name="TextureRect" type="TextureRect" parent="MarginContainer/VBoxContainer/Shapes/VBoxContainer/ShapeButtons/HBoxContainer/SharpButton"]
-custom_minimum_size = Vector2(100, 100)
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -50.0
-offset_top = -50.0
-offset_right = 50.0
-offset_bottom = 50.0
-pivot_offset = Vector2(50, 50)
-texture = ExtResource("3_lwicb")
-ignore_texture_size = true
-stretch_mode = 5
-
-[node name="RoundButton" type="Button" parent="MarginContainer/VBoxContainer/Shapes/VBoxContainer/ShapeButtons/HBoxContainer"]
+[node name="RoundButton" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/Shapes/ShapeButtons/HBoxContainer"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(130, 130)
-offset_left = 272.0
-offset_right = 402.0
-offset_bottom = 130.0
+custom_minimum_size = Vector2(75, 75)
+offset_left = 166.0
+offset_top = 29.0
+offset_right = 241.0
+offset_bottom = 104.0
 size_flags_horizontal = 0
-size_flags_vertical = 0
+size_flags_vertical = 4
+script = ExtResource("8_hoo73")
+shape = 3
 
-[node name="TextureRect" type="TextureRect" parent="MarginContainer/VBoxContainer/Shapes/VBoxContainer/ShapeButtons/HBoxContainer/RoundButton"]
-custom_minimum_size = Vector2(100, 100)
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -50.0
-offset_top = -50.0
-offset_right = 50.0
-offset_bottom = 50.0
-pivot_offset = Vector2(50, 50)
-texture = ExtResource("4_wucwb")
-ignore_texture_size = true
-stretch_mode = 5
-
-[node name="ConcaveButton" type="Button" parent="MarginContainer/VBoxContainer/Shapes/VBoxContainer/ShapeButtons/HBoxContainer"]
+[node name="ConcaveButton" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/Shapes/ShapeButtons/HBoxContainer"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(130, 130)
-offset_left = 408.0
-offset_right = 538.0
-offset_bottom = 130.0
+custom_minimum_size = Vector2(75, 75)
+offset_left = 249.0
+offset_top = 29.0
+offset_right = 324.0
+offset_bottom = 104.0
 size_flags_horizontal = 0
-size_flags_vertical = 0
+size_flags_vertical = 4
+script = ExtResource("8_hoo73")
+shape = 4
 
-[node name="TextureRect" type="TextureRect" parent="MarginContainer/VBoxContainer/Shapes/VBoxContainer/ShapeButtons/HBoxContainer/ConcaveButton"]
-custom_minimum_size = Vector2(100, 100)
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -50.0
-offset_top = -50.0
-offset_right = 50.0
-offset_bottom = 50.0
-pivot_offset = Vector2(50, 50)
-texture = ExtResource("8_ccb6y")
-ignore_texture_size = true
-stretch_mode = 5
+[node name="ConcaveSharpButton2" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/Shapes/ShapeButtons/HBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(75, 75)
+offset_left = 332.0
+offset_top = 29.0
+offset_right = 407.0
+offset_bottom = 104.0
+size_flags_horizontal = 0
+size_flags_vertical = 4
+script = ExtResource("8_hoo73")
+shape = 5
 
-[node name="ShapesLabel2" type="Label" parent="MarginContainer/VBoxContainer/Shapes/VBoxContainer"]
-offset_top = 196.0
-offset_right = 800.0
-offset_bottom = 247.0
-theme_override_colors/font_color = Color(0.580392, 0.639216, 0.721569, 1)
-theme_override_fonts/font = SubResource("Font_gy418")
-theme_override_font_sizes/font_size = 28
-text = " S T A M P S"
-vertical_alignment = 1
+[node name="CircleButton" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/Shapes/ShapeButtons/HBoxContainer"]
+custom_minimum_size = Vector2(75, 75)
+offset_left = 415.0
+offset_top = 29.0
+offset_right = 490.0
+offset_bottom = 104.0
+size_flags_vertical = 4
+script = ExtResource("8_hoo73")
+shape = 6
 
-[node name="StampButtons" type="ScrollContainer" parent="MarginContainer/VBoxContainer/Shapes/VBoxContainer"]
-custom_minimum_size = Vector2(0, 120)
-offset_top = 247.0
-offset_right = 800.0
-offset_bottom = 367.0
-size_flags_horizontal = 3
-vertical_scroll_mode = 0
+[node name="FlowerButton" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/Shapes/ShapeButtons/HBoxContainer"]
+custom_minimum_size = Vector2(75, 75)
+offset_left = 498.0
+offset_top = 29.0
+offset_right = 573.0
+offset_bottom = 104.0
+size_flags_vertical = 4
+script = ExtResource("8_hoo73")
+shape = 7
 
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/Shapes/VBoxContainer/StampButtons"]
-offset_right = 800.0
-offset_bottom = 116.0
-size_flags_horizontal = 3
-theme_override_constants/separation = 6
+[node name="HeartButton" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/Shapes/ShapeButtons/HBoxContainer"]
+custom_minimum_size = Vector2(75, 75)
+offset_left = 581.0
+offset_top = 29.0
+offset_right = 656.0
+offset_bottom = 104.0
+size_flags_vertical = 4
+script = ExtResource("8_hoo73")
+shape = 8
 
-[node name="Button" type="Button" parent="MarginContainer/VBoxContainer/Shapes/VBoxContainer/StampButtons/HBoxContainer"]
-offset_right = 116.0
-offset_bottom = 116.0
-icon = ExtResource("11_253su")
+[node name="StarButton" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/Shapes/ShapeButtons/HBoxContainer"]
+custom_minimum_size = Vector2(75, 75)
+offset_left = 664.0
+offset_top = 29.0
+offset_right = 739.0
+offset_bottom = 104.0
+size_flags_vertical = 4
+script = ExtResource("8_hoo73")
+shape = 9
 
-[node name="Button2" type="Button" parent="MarginContainer/VBoxContainer/Shapes/VBoxContainer/StampButtons/HBoxContainer"]
-offset_left = 122.0
-offset_right = 238.0
-offset_bottom = 116.0
-icon = ExtResource("12_qdiws")
-
-[node name="Button3" type="Button" parent="MarginContainer/VBoxContainer/Shapes/VBoxContainer/StampButtons/HBoxContainer"]
-offset_left = 244.0
-offset_right = 360.0
-offset_bottom = 116.0
-icon = ExtResource("13_lvr51")
-
-[node name="Button4" type="Button" parent="MarginContainer/VBoxContainer/Shapes/VBoxContainer/StampButtons/HBoxContainer"]
-offset_left = 366.0
-offset_right = 482.0
-offset_bottom = 116.0
-icon = ExtResource("14_wpj0n")
-
-[node name="RightDrawTools" type="VBoxContainer" parent="MarginContainer/VBoxContainer/Shapes"]
-offset_left = 916.0
-offset_right = 1032.0
-offset_bottom = 367.0
+[node name="RightDrawTools" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/Shapes"]
+offset_left = 612.0
+offset_right = 678.0
+offset_bottom = 142.0
+theme_override_constants/separation = 10
 alignment = 1
 
-[node name="RotateRightButton" type="Button" parent="MarginContainer/VBoxContainer/Shapes/RightDrawTools"]
+[node name="RotateRightButton" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/Shapes/RightDrawTools"]
 unique_name_in_owner = true
-offset_top = 67.0
-offset_right = 116.0
-offset_bottom = 183.0
+offset_right = 66.0
+offset_bottom = 66.0
 icon = ExtResource("11_11syx")
 icon_alignment = 1
 
-[node name="IncreaseSizeButton" type="Button" parent="MarginContainer/VBoxContainer/Shapes/RightDrawTools"]
+[node name="IncreaseSizeButton" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/Shapes/RightDrawTools"]
 unique_name_in_owner = true
-offset_top = 183.0
-offset_right = 116.0
-offset_bottom = 299.0
+offset_top = 76.0
+offset_right = 66.0
+offset_bottom = 142.0
 icon = ExtResource("19_crq7g")
 icon_alignment = 1
 
+[node name="GalleryButtons" type="PanelContainer" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+offset_left = 690.0
+offset_right = 780.0
+offset_bottom = 331.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_q7ylc")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/GalleryButtons"]
+offset_left = 12.0
+offset_top = 32.0
+offset_right = 78.0
+offset_bottom = 299.0
+theme_override_constants/separation = 12
+
+[node name="GalleryButton" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer/GalleryButtons/VBoxContainer"]
+unique_name_in_owner = true
+offset_right = 66.0
+offset_bottom = 66.0
+size_flags_vertical = 0
+icon = ExtResource("13_f0mbl")
+icon_alignment = 1
+
+[node name="LoadSaveButton" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer/GalleryButtons/VBoxContainer"]
+unique_name_in_owner = true
+visible = false
+offset_right = 91.0
+offset_bottom = 91.0
+size_flags_vertical = 0
+icon = ExtResource("16_s0y0t")
+icon_alignment = 1
+
+[node name="SaveButton" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer/GalleryButtons/VBoxContainer"]
+unique_name_in_owner = true
+offset_top = 78.0
+offset_right = 66.0
+offset_bottom = 144.0
+size_flags_vertical = 0
+icon = ExtResource("17_ydjfi")
+icon_alignment = 1
+
 [node name="CanvasContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer"]
-offset_top = 553.0
-offset_right = 1032.0
-offset_bottom = 1625.0
-theme_override_constants/margin_left = 0
-theme_override_constants/margin_top = 36
-theme_override_constants/margin_right = 0
+offset_top = 331.0
+offset_right = 780.0
+offset_bottom = 1177.0
+theme_override_constants/margin_left = -24
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = -24
 theme_override_constants/margin_bottom = 36
 
 [node name="Canvas" parent="MarginContainer/VBoxContainer/CanvasContainer" instance=ExtResource("3_bo72m")]
 unique_name_in_owner = true
-offset_left = 16.0
-offset_top = 36.0
-offset_right = 1016.0
-offset_bottom = 1036.0
+offset_left = -10.0
+offset_top = 10.0
+offset_right = 790.0
+offset_bottom = 810.0
 
-[node name="Tools" type="VBoxContainer" parent="MarginContainer/VBoxContainer"]
-offset_top = 1625.0
-offset_right = 1032.0
-offset_bottom = 1877.0
-theme_override_constants/separation = 20
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer/CanvasContainer"]
+visible = false
+clip_contents = true
+offset_left = -24.0
+offset_top = 10.0
+offset_right = 804.0
+offset_bottom = 810.0
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 0
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 0
 
-[node name="Actions" type="HBoxContainer" parent="MarginContainer/VBoxContainer/Tools"]
-custom_minimum_size = Vector2(0, 110)
-offset_right = 1032.0
-offset_bottom = 116.0
-alignment = 1
+[node name="PanelContainer" type="PanelContainer" parent="MarginContainer/VBoxContainer/CanvasContainer/MarginContainer"]
+show_behind_parent = true
+custom_minimum_size = Vector2(260, 270)
+offset_left = 556.0
+offset_top = 530.0
+offset_right = 816.0
+offset_bottom = 800.0
+size_flags_horizontal = 8
+size_flags_vertical = 8
+theme_override_styles/panel = SubResource("StyleBoxFlat_24lki")
 
-[node name="ToolsLabel" type="Label" parent="MarginContainer/VBoxContainer/Tools/Actions"]
-offset_top = 27.0
-offset_right = 568.0
-offset_bottom = 89.0
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer/CanvasContainer/MarginContainer/PanelContainer"]
+show_behind_parent = true
+clip_contents = true
+offset_right = 260.0
+offset_bottom = 270.0
+theme_override_constants/margin_left = 0
+theme_override_constants/margin_top = 0
+theme_override_constants/margin_right = -60
+theme_override_constants/margin_bottom = -60
+
+[node name="ColorRect" type="ColorRect" parent="MarginContainer/VBoxContainer/CanvasContainer/MarginContainer/PanelContainer/MarginContainer"]
+material = SubResource("ShaderMaterial_00g37")
+offset_right = 320.0
+offset_bottom = 330.0
 size_flags_horizontal = 3
-theme_override_colors/font_color = Color(0.580392, 0.639216, 0.721569, 1)
-theme_override_fonts/font = SubResource("Font_gy418")
-theme_override_font_sizes/font_size = 36
-text = " T O O L S"
-vertical_alignment = 1
+size_flags_vertical = 3
 
-[node name="RectangleButton" type="Button" parent="MarginContainer/VBoxContainer/Tools/Actions"]
+[node name="Control" type="Control" parent="MarginContainer/VBoxContainer/CanvasContainer"]
+visible = false
+clip_contents = true
+offset_left = -24.0
+offset_top = 10.0
+offset_right = 804.0
+offset_bottom = 810.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="CircleContainer" type="Container" parent="MarginContainer/VBoxContainer/CanvasContainer"]
+visible = false
+custom_minimum_size = Vector2(260, 260)
+offset_left = 544.0
+offset_top = 550.0
+offset_right = 804.0
+offset_bottom = 810.0
+size_flags_horizontal = 8
+size_flags_vertical = 8
+script = ExtResource("15_pt33y")
+unsorted = []
+fit_children_inside = true
+degree_range = 240.0
+degree_offset = 130.0
+
+[node name="RectangleButton" type="Button" parent="MarginContainer/VBoxContainer/CanvasContainer/CircleContainer"]
 unique_name_in_owner = true
-offset_left = 568.0
-offset_right = 684.0
-offset_bottom = 116.0
+offset_left = 34.6495
+offset_top = 171.306
+offset_right = 100.65
+offset_bottom = 237.306
 size_flags_vertical = 0
 icon = ExtResource("12_geruk")
 icon_alignment = 1
 
-[node name="LineButton" type="Button" parent="MarginContainer/VBoxContainer/Tools/Actions"]
+[node name="LineButton" type="Button" parent="MarginContainer/VBoxContainer/CanvasContainer/CircleContainer"]
 unique_name_in_owner = true
-offset_left = 684.0
-offset_right = 800.0
-offset_bottom = 116.0
+offset_left = 1.47364
+offset_top = 80.1561
+offset_right = 67.4737
+offset_bottom = 146.156
 size_flags_vertical = 0
 icon = ExtResource("13_monbh")
 icon_alignment = 1
 
-[node name="EraseButton" type="Button" parent="MarginContainer/VBoxContainer/Tools/Actions"]
+[node name="EraseButton" type="Button" parent="MarginContainer/VBoxContainer/CanvasContainer/CircleContainer"]
 unique_name_in_owner = true
-offset_left = 800.0
-offset_right = 916.0
-offset_bottom = 116.0
+offset_left = 63.824
+offset_top = 5.84982
+offset_right = 129.824
+offset_bottom = 71.8498
 size_flags_vertical = 0
 icon = ExtResource("14_umeww")
 icon_alignment = 1
 
-[node name="DrawButton" type="Button" parent="MarginContainer/VBoxContainer/Tools/Actions"]
+[node name="DrawButton" type="Button" parent="MarginContainer/VBoxContainer/CanvasContainer/CircleContainer"]
 unique_name_in_owner = true
-offset_left = 916.0
-offset_right = 1032.0
-offset_bottom = 116.0
+offset_left = 159.35
+offset_top = 22.6937
+offset_right = 225.35
+offset_bottom = 88.6937
 size_flags_vertical = 0
 theme_type_variation = &"SuccessButton"
 icon = ExtResource("15_bphgi")
 icon_alignment = 1
 
+[node name="Tools" type="VBoxContainer" parent="MarginContainer/VBoxContainer"]
+offset_top = 1177.0
+offset_right = 780.0
+offset_bottom = 1406.0
+theme_override_constants/separation = 20
+
+[node name="Actions" type="HBoxContainer" parent="MarginContainer/VBoxContainer/Tools"]
+offset_right = 780.0
+offset_bottom = 46.0
+alignment = 1
+
+[node name="ToolsLabel" type="Label" parent="MarginContainer/VBoxContainer/Tools/Actions"]
+offset_right = 780.0
+offset_bottom = 46.0
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.580392, 0.639216, 0.721569, 1)
+theme_override_fonts/font = SubResource("Font_gy418")
+theme_override_font_sizes/font_size = 24
+text = " T O O L S"
+vertical_alignment = 1
+
 [node name="Editor" type="HBoxContainer" parent="MarginContainer/VBoxContainer/Tools"]
-offset_top = 136.0
-offset_right = 1032.0
-offset_bottom = 252.0
+offset_top = 66.0
+offset_right = 780.0
+offset_bottom = 132.0
 alignment = 2
 
 [node name="UndoButton" type="Button" parent="MarginContainer/VBoxContainer/Tools/Editor"]
 unique_name_in_owner = true
-offset_left = 220.0
-offset_right = 336.0
-offset_bottom = 116.0
+offset_left = 318.0
+offset_right = 384.0
+offset_bottom = 66.0
 size_flags_vertical = 0
 icon = ExtResource("16_bta2x")
 icon_alignment = 1
 
 [node name="RedoButton" type="Button" parent="MarginContainer/VBoxContainer/Tools/Editor"]
 unique_name_in_owner = true
-offset_left = 336.0
-offset_right = 452.0
-offset_bottom = 116.0
+offset_left = 384.0
+offset_right = 450.0
+offset_bottom = 66.0
 size_flags_vertical = 0
 icon = ExtResource("17_nvjsf")
 icon_alignment = 1
 
 [node name="OddButton" type="Button" parent="MarginContainer/VBoxContainer/Tools/Editor"]
 unique_name_in_owner = true
-offset_left = 452.0
-offset_right = 568.0
-offset_bottom = 116.0
+offset_left = 450.0
+offset_right = 516.0
+offset_bottom = 66.0
 icon = ExtResource("22_d7l23")
 
 [node name="EvenButton" type="Button" parent="MarginContainer/VBoxContainer/Tools/Editor"]
 unique_name_in_owner = true
-offset_left = 568.0
-offset_right = 684.0
-offset_bottom = 116.0
+offset_left = 516.0
+offset_right = 582.0
+offset_bottom = 66.0
 theme_type_variation = &"SuccessButton"
 icon = ExtResource("23_ghk18")
 
 [node name="ZoomInButton" type="Button" parent="MarginContainer/VBoxContainer/Tools/Editor"]
 unique_name_in_owner = true
-offset_left = 684.0
-offset_right = 800.0
-offset_bottom = 116.0
+offset_left = 582.0
+offset_right = 648.0
+offset_bottom = 66.0
 icon = ExtResource("24_4mq7p")
 
 [node name="ZoomOutButton" type="Button" parent="MarginContainer/VBoxContainer/Tools/Editor"]
 unique_name_in_owner = true
-offset_left = 800.0
-offset_right = 916.0
-offset_bottom = 116.0
+offset_left = 648.0
+offset_right = 714.0
+offset_bottom = 66.0
 icon = ExtResource("25_4dkvo")
 
 [node name="RecenterButton" type="Button" parent="MarginContainer/VBoxContainer/Tools/Editor"]
 unique_name_in_owner = true
-offset_left = 916.0
-offset_right = 1032.0
-offset_bottom = 116.0
+offset_left = 714.0
+offset_right = 780.0
+offset_bottom = 66.0
 icon = ExtResource("26_5os7r")
 
+[node name="CanvasNameField" type="LineEdit" parent="MarginContainer/VBoxContainer/Tools"]
+unique_name_in_owner = true
+offset_top = 152.0
+offset_right = 780.0
+offset_bottom = 229.0
+placeholder_text = "my_canvas"
+
+[node name="Gallery" parent="." instance=ExtResource("25_1hssg")]
+unique_name_in_owner = true
+mouse_filter = 2
+
+[node name="IosGuide" type="TextureRect" parent="."]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+texture = ExtResource("27_frdcy")
+ignore_texture_size = true
+stretch_mode = 5
+
 [connection signal="updated" from="Undo" to="." method="_on_undo_updated"]
-[connection signal="pressed" from="MarginContainer/VBoxContainer/Shapes/LeftDrawTools/DecreaseSizeButton" to="." method="_on_decrease_size_button_pressed"]
-[connection signal="pressed" from="MarginContainer/VBoxContainer/Shapes/RightDrawTools/IncreaseSizeButton" to="." method="_on_increase_size_button_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/Shapes/LeftDrawTools/RotateLeftButton" to="." method="_on_rotate_button_pressed" binds= [-90]]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/Shapes/LeftDrawTools/DecreaseSizeButton" to="." method="_on_decrease_size_button_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/Shapes/RightDrawTools/RotateRightButton" to="." method="_on_rotate_button_pressed" binds= [90]]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/Shapes/RightDrawTools/IncreaseSizeButton" to="." method="_on_increase_size_button_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/GalleryButtons/VBoxContainer/GalleryButton" to="." method="_on_gallery_button_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/GalleryButtons/VBoxContainer/LoadSaveButton" to="." method="_on_load_save_button_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/GalleryButtons/VBoxContainer/SaveButton" to="." method="_on_save_button_pressed"]
 [connection signal="canvas_gui_input" from="MarginContainer/VBoxContainer/CanvasContainer/Canvas" to="." method="_on_canvas_gui_input"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/Tools/Editor/UndoButton" to="." method="_on_undo_button_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/Tools/Editor/RedoButton" to="." method="_on_redo_button_pressed"]

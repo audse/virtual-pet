@@ -2,160 +2,134 @@ extends Object
 
 
 enum Action { DRAW, ERASE, LINE, RECT }
-enum Shape { SQUARE, SHARP, ROUND, CONCAVE, CONCAVE_SHARP }
+enum Shape { SQUARE = 1, SHARP = 2, ROUND = 3, CONCAVE = 4, CONCAVE_SHARP = 5, CIRCLE = 6, FLOWER = 7, HEART = 8, STAR = 9 }
 enum Size { XXS, XS, SM, MD, LG, XL, XXL }
 enum Ratio { ODD, EVEN }
 
 signal action_changed(to: Action)
+signal aspect_ratio_changed(to: Dictionary)
+signal color_changed(to: Color)
 signal size_changed(to: Size)
 signal zoom_changed(to: float)
 signal shape_changed(to: Shape)
 signal ratio_changed(to: Ratio)
 signal rotation_changed(to: int)
 
+const CANVAS_SIZE := 800.0
+
 const SizePx := {
-	Size.XS: 1000.0 / 64.0,
-	Size.SM: 1000.0 / 32.0,
-	Size.MD: 1000.0 / 16.0,
-	Size.LG: 1000.0 / 8.0,
-	Size.XL: 1000.0 / 4.0,
-	Size.XXL: 1000.0 / 2.0,
+	Size.XS: CANVAS_SIZE / 64.0,
+	Size.SM: CANVAS_SIZE / 32.0,
+	Size.MD: CANVAS_SIZE / 16.0,
+	Size.LG: CANVAS_SIZE / 8.0,
+	Size.XL: CANVAS_SIZE / 4.0,
+	Size.XXL: CANVAS_SIZE / 2.0,
 }
 
 const OddSizePx := {
-	Size.XS: 1000.0 / 81.0,
-	Size.SM: 1000.0 / 27.0,
-	Size.MD: 1000.0 / 18.0,
-	Size.LG: 1000.0 / 9.0,
-	Size.XL: 1000.0 / 3.0,
-	Size.XXL: 1000.0 / 1.0,
+	Size.XS: CANVAS_SIZE / 81.0,
+	Size.SM: CANVAS_SIZE / 27.0,
+	Size.MD: CANVAS_SIZE / 18.0,
+	Size.LG: CANVAS_SIZE / 9.0,
+	Size.XL: CANVAS_SIZE / 3.0,
+	Size.XXL: CANVAS_SIZE / 1.0,
 }
 
-var properties := {
-	curr_action = Action.DRAW,
-	prev_action = Action.DRAW,
-	shape = Shape.SQUARE,
-	size = Size.MD,
-	ratio = Ratio.EVEN,
-	rotation = 0,
-	curr_line = null,
-	zoom = 1.0,
+const ShapeTexture := {
+	Shape.SQUARE: preload("res://apps/painter/assets/shapes/square.svg"),
+	Shape.SHARP: preload("res://apps/painter/assets/shapes/sharp.svg"),
+	Shape.ROUND: preload("res://apps/painter/assets/shapes/round.svg"),
+	Shape.CONCAVE: preload("res://apps/painter/assets/shapes/concave.svg"),
+	Shape.CONCAVE_SHARP: preload("res://apps/painter/assets/shapes/concave_sharp.svg"),
+	Shape.CIRCLE: preload("res://apps/painter/assets/stamps/circle.svg"),
+	Shape.FLOWER: preload("res://apps/painter/assets/stamps/flower.svg"),
+	Shape.HEART: preload("res://apps/painter/assets/stamps/heart.svg"),
+	Shape.STAR: preload("res://apps/painter/assets/stamps/star.svg"),
 }
+
+var action := Action.DRAW:
+	set(value): 
+		action = value
+		action_changed.emit(value)
+
+var aspect_ratio := { x = 1.0, y = 1.0 }:
+	set(value):
+		aspect_ratio = value
+		aspect_ratio_changed.emit(value)
+
+var color := Color.WHITE:
+	set(value):
+		color = value
+		color_changed.emit(value)
+
+var line = null
+var prev_action := Action.DRAW
+
+var ratio := Ratio.EVEN:
+	set(value):
+		ratio = value
+		ratio_changed.emit(value)
+
+var shape := Shape.SQUARE:
+	set(value):
+		shape = value
+		if value > Shape.CONCAVE_SHARP:
+			shape = Shape.SQUARE
+		elif value < Shape.SQUARE:
+			shape = Shape.CONCAVE_SHARP
+		shape_changed.emit(value)
+
+var rotation := 0:
+	set(value):
+		rotation = value
+		# Keep rotation within 360 degrees
+		if rotation > 360: rotation -= 360
+		elif rotation < 0: rotation += 360
+		rotation_changed.emit(value)
+
+var size := Size.MD:
+	set(value):
+		size = clamp(value, Size.XS, Size.XXL)
+		size_changed.emit(value)
+
+var zoom := 1.0:
+	set(value):
+		zoom = clamp(value, 0.1, 20.0)
+		zoom_changed.emit(value)
+
+
+var size_px: Vector2:
+	get: 
+		var s: float = (
+			SizePx[size] 
+				if ratio == Ratio.EVEN 
+				else OddSizePx[size]
+		)
+		return Vector2(s * aspect_ratio.x, s * aspect_ratio.y)
 
 
 func _ready() -> void:
 	size_changed.emit()
 
 
-func get_action() -> int:
-	return properties.curr_action
-
-
 func set_action(value: Action) -> void:
 	match value:
 		Action.LINE, Action.RECT:
-			if properties.curr_action == value:
-				properties.curr_line = null # restart line if they click the button again
-		_: properties.curr_line = null
+			if action == value:
+				line = null # restart line if they click the button again
+		_: line = null
 	
-	properties.prev_action = properties.curr_action
-	properties.curr_action = value
-	action_changed.emit(properties.curr_action)
+	prev_action = action
+	action = value
 
 
 func is_action(value: Action) -> bool:
-	return properties.curr_action == value
-
-
-func shape() -> int:
-	return properties.shape
-
-
-func set_shape(value: Shape) -> void:
-	properties.shape = value
-	shape_changed.emit(properties.shape)
-
-
-func increment_shape(value: int) -> void:
-	properties.shape += value
-	if properties.shape > Shape.CONCAVE_SHARP:
-		properties.shape = Shape.SQUARE
-	elif properties.shape < Shape.SQUARE:
-		properties.shape = Shape.CONCAVE_SHARP
-	shape_changed.emit(properties.shape)
-
-
-func get_size() -> int:
-	return properties.size
-
-
-func size_px() -> Vector2:
-	var s: float = (
-		SizePx[properties.size] 
-			if properties.ratio == Ratio.EVEN 
-			else OddSizePx[properties.size]
-	)
-	return Vector2(s, s)
-
-
-func get_ratio() -> Ratio:
-	return properties.ratio
-
-
-func set_ratio(value: Ratio) -> void:
-	properties.ratio = value
-	ratio_changed.emit(properties.ratio)
-
-
-func set_size(value: Size) -> void:
-	properties.size = value
-	size_changed.emit(properties.size)
-
-
-func increment_size(delta: int) -> void:
-	properties.size += delta
-	properties.size = clamp(properties.size, Size.XS, Size.XXL)
-	size_changed.emit(properties.size)
-
-
-func get_rotation() -> int:
-	return properties.rotation
-
-
-func set_rotation(value: int) -> void:
-	properties.rotation += value
-	# Keep rotation within 360 degrees
-	if properties.rotation > 360: properties.rotation -= 360
-	elif properties.rotation < 0: properties.rotation += 360
-	rotation_changed.emit(properties.rotation)
-
-
-func line() -> Vector2:
-	return properties.curr_line
-
-
-func set_line(value: Vector2):
-	properties.curr_line = value
+	return action == value
 
 
 func has_line() -> bool:
-	return properties.curr_line != null
-
-
-func get_zoom() -> float:
-	return properties.zoom
-
-
-func set_zoom(value: float) -> void:
-	properties.zoom = value
-	zoom_changed.emit(properties.zoom)
-
-
-func increment_zoom(value: float) -> void:
-	properties.zoom += value
-	properties.zoom = clamp(properties.zoom, 0.1, 20.0)
-	zoom_changed.emit(properties.zoom)
+	return line != null
 
 
 func is_zoomed() -> bool:
-	return abs(1.0 - properties.zoom) > 0.05
+	return abs(1.0 - zoom) > 0.05

@@ -28,8 +28,8 @@ static func get_rect_points_in_grid(start: Vector2, end: Vector2, grid_size: Vec
 	var height := int((end.y - start.y) / grid_size.y)
 	
 	if width != 0 and height != 0:
-		for x in range(0, width, sign(width)):
-			for y in range(0, height, sign(height)):
+		for x in range(0, width + sign(width), sign(width)):
+			for y in range(0, height + sign(height), sign(height)):
 				var delta = grid_size * Vector2(x, y)
 				var new_point = start + delta
 				points.append(new_point)

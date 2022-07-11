@@ -2,6 +2,9 @@ extends SubViewportContainer
 
 signal canvas_gui_input(event: InputEvent)
 
+const GALLERY_PATH := "user://gallery/"
+const EXTENSION := ".canvas"
+
 @onready var canvas = %Canvas
 @onready var cursor = %Cursor
 @onready var ghost = %Canvas/Ghost
@@ -10,6 +13,7 @@ signal canvas_gui_input(event: InputEvent)
 func _ready() -> void:
 	States.Paint.size_changed.connect(resize)
 	States.Paint.action_changed.connect(_on_change_action)
+	States.Paint.ratio_changed.connect(resize)
 	States.Paint.zoom_changed.connect(_on_change_zoom)
 
 
@@ -28,7 +32,7 @@ func _on_change_action(_new_action: int) -> void:
 
 func move_cursor(event: InputEvent) -> void:
 	if event.position.x < 1000 and event.position.y < 1000:
-		var pos = States.Paint.size_px()
+		var pos = States.Paint.size_px
 		var offset = cursor.get_offset()
 		cursor.position = (event.position + offset).snapped(pos)
 
@@ -49,12 +53,15 @@ func draw_pixel_set(points: Array[Vector2], is_ghost: bool = false) -> Array[Spr
 	return pixels
 
 
-func find_pixel(pos: Vector2) -> Sprite2D:
+func get_pixels_under_mouse() -> Array[Sprite2D]:
+	var pos = (%CanvasCopy.get_local_mouse_position() - (States.Paint.size_px / 2)).snapped(States.Paint.size_px)
+	var cursor_rect = Rect2(pos, States.Paint.size_px)
+	var pixels = []
 	for pixel in canvas.get_children():
-		var rect: Rect2 = Rect2(pixel.position, States.Paint.size_px())
-		if rect.has_point(pos) and pixel != cursor:
-			return pixel
-	return null
+		var rect: Rect2 = Rect2(pixel.position, States.Paint.size_px)
+		if rect.intersects(cursor_rect) and pixel != cursor:
+			pixels.append(pixel)
+	return pixels
 
 
 func cursor_pos() -> Vector2:
@@ -62,13 +69,12 @@ func cursor_pos() -> Vector2:
 
 
 func resize(_to: int) -> void:
-	var s = States.Paint.size_px()
+	var s = States.Paint.size_px
 	resize_axis("grid_x", s.x)
 	resize_axis("grid_y", s.y)
 
 
 func resize_axis(axis: String, to: float) -> void:
-	print(canvas.material.get_shader_param(axis))
 	(get_tree()
 		.create_tween()
 		.tween_method(
@@ -110,3 +116,48 @@ func _on_canvas_gui_input(event: InputEvent) -> void:
 	
 	if event is InputEventScreenDrag:
 		%CanvasCopy.position += event.relative
+
+
+func pan(keycode: int) -> void:
+	var unit: Vector2 = States.Paint.size_px
+	var target: Vector2 = %CanvasCopy.position
+	match keycode:
+		KEY_LEFT: target.x += unit.x
+		KEY_RIGHT: target.x -= unit.x
+		KEY_UP: target.y += unit.y
+		KEY_DOWN: target.y -= unit.y
+	(get_tree()
+		.create_tween()
+		.tween_property(%CanvasCopy, "position", target, 0.15)
+		.set_ease(Tween.EASE_IN_OUT)
+		.set_trans(Tween.TRANS_CIRC))
+
+
+func save_canvas(canvas_name: String) -> int:
+	var file := File.new()
+	var err := file.open(GALLERY_PATH + canvas_name + EXTENSION, File.WRITE)
+	if not err == OK: return err
+	
+	for pixel in %Canvas.get_children():
+		if pixel != cursor: file.store_var(pixel, true)
+	
+	file.close()
+	return OK
+
+
+func load_canvas(canvas_name: String) -> int:
+	var file := File.new()
+	var err := file.open(GALLERY_PATH + canvas_name + EXTENSION, File.READ)
+	if not err == OK: return err
+	
+	for pixel in %Canvas.get_children():
+		if pixel != cursor: %Canvas.remove_child(pixel)
+	
+	while file.get_position() < file.get_length():
+		var pixel = file.get_var(true)
+		if pixel is Sprite2D:
+			%Canvas.add_child(pixel)
+	
+	cursor.raise()
+	file.close()
+	return OK

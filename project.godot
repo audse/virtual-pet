@@ -29,6 +29,11 @@ _global_script_classes=[{
 "language": &"GDScript",
 "path": "res://apps/map/nodes/cell_map/cell_map.gd"
 }, {
+"base": "Container",
+"class": &"CircleContainer",
+"language": &"GDScript",
+"path": "res://interface/components/circle_container.gd"
+}, {
 "base": "Object",
 "class": &"ControlRef",
 "language": &"GDScript",
@@ -53,6 +58,11 @@ _global_script_classes=[{
 "class": &"NeighborGroup",
 "language": &"GDScript",
 "path": "res://apps/map/nodes/cell_map/neighbor_group.gd"
+}, {
+"base": "Container",
+"class": &"RightDrawerComponent",
+"language": &"GDScript",
+"path": "res://interface/components/right_drawer.gd"
 }, {
 "base": "Object",
 "class": &"ScriptRef",
@@ -114,11 +124,13 @@ _global_script_class_icons={
 "Bits": "",
 "Cell": "",
 "CellMap": "res://apps/map/nodes/cell_map/cell_map_icon.svg",
+"CircleContainer": "res://interface/components/circle_container.svg",
 "ControlRef": "",
 "GuideMap": "",
 "Math": "",
 "MeshDataToolPlus": "",
 "NeighborGroup": "",
+"RightDrawerComponent": "res://interface/components/right_drawer.svg",
 "ScriptRef": "",
 "SpacialTile": "res://apps/map/nodes/tile_set/spacial_tile_icon.svg",
 "SpacialTileFactory": "res://apps/map/nodes/tile_set/spacial_tile_factory_icon.svg",
@@ -147,8 +159,8 @@ States="*res://utils/states.gd"
 
 [display]
 
-window/size/viewport_width=1080
-window/size/viewport_height=1920
+window/size/viewport_width=828
+window/size/viewport_height=1792
 window/handheld/orientation=1
 
 [gui]
@@ -186,33 +198,11 @@ undo={
 backward={
 "deadzone": 0.5,
 "events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"window_id":0,"store_command":true,"alt_pressed":false,"shift_pressed":true,"ctrl_pressed":false,"command_pressed":false,"pressed":false,"keycode":0,"physical_keycode":16777218,"unicode":0,"echo":false,"script":null)
-, Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"window_id":0,"store_command":true,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"command_pressed":false,"pressed":false,"keycode":0,"physical_keycode":44,"unicode":0,"echo":false,"script":null)
 ]
 }
 forward={
 "deadzone": 0.5,
 "events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"window_id":0,"store_command":true,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"command_pressed":false,"pressed":false,"keycode":0,"physical_keycode":16777218,"unicode":0,"echo":false,"script":null)
-, Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"window_id":0,"store_command":true,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"command_pressed":false,"pressed":false,"keycode":0,"physical_keycode":46,"unicode":0,"echo":false,"script":null)
-]
-}
-increment_size={
-"deadzone": 0.5,
-"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"window_id":0,"store_command":true,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"command_pressed":false,"pressed":false,"keycode":0,"physical_keycode":125,"unicode":0,"echo":false,"script":null)
-]
-}
-decrement_size={
-"deadzone": 0.5,
-"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"window_id":0,"store_command":true,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"command_pressed":false,"pressed":false,"keycode":0,"physical_keycode":123,"unicode":0,"echo":false,"script":null)
-]
-}
-zoom_in={
-"deadzone": 0.5,
-"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"window_id":0,"store_command":true,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"command_pressed":false,"pressed":false,"keycode":0,"physical_keycode":61,"unicode":0,"echo":false,"script":null)
-]
-}
-zoom_out={
-"deadzone": 0.5,
-"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"window_id":0,"store_command":true,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"command_pressed":false,"pressed":false,"keycode":0,"physical_keycode":45,"unicode":0,"echo":false,"script":null)
 ]
 }
 tap={

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Created with Vectornator (http://vectornator.io/) -->
+<svg stroke-miterlimit="10" style="fill-rule:nonzero;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;" version="1.1" viewBox="0 0 500 500" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<defs/>
+<g id="Untitled">
+<g opacity="1">
+<clipPath id="ClipPath">
+<path d="M0 0L500 0L500 500L0 500L0 0Z" fill-rule="evenodd"/>
+</clipPath>
+<g clip-path="url(#ClipPath)">
+<path d="M64.135 250C64.135 147.35 147.35 64.135 250 64.135C352.65 64.135 435.865 147.35 435.865 250C435.865 352.65 352.65 435.865 250 435.865C147.35 435.865 64.135 352.65 64.135 250Z" fill="none" fill-rule="evenodd" opacity="1" stroke="#acd8a7" stroke-dasharray="60.0,70.0" stroke-linecap="round" stroke-linejoin="round" stroke-width="60"/>
+</g>
+</g>
+</g>
+</svg>
