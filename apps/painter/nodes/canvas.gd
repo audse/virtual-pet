@@ -15,12 +15,16 @@ func _ready() -> void:
 	States.Paint.action_changed.connect(_on_change_action)
 	States.Paint.ratio_changed.connect(resize)
 	States.Paint.zoom_changed.connect(_on_change_zoom)
+	States.Paint.rotation_changed.connect(
+		func(_x): move_cursor_to(get_local_mouse_position())
+	)
+	%CanvasCopy.size = size
 
 
 func _on_change_zoom(new_zoom: float) -> void:
 	var is_zoomed: bool = States.Paint.is_zoomed()
 	%Minimap.visible = is_zoomed
-	size = Vector2(1000, 1000)
+	size = Vector2(800, 800)
 	%CanvasCopy.scale = Vector2(new_zoom, new_zoom)
 	if not is_zoomed:
 		%CanvasCopy.position = Vector2(0, 0)
@@ -31,10 +35,12 @@ func _on_change_action(_new_action: int) -> void:
 
 
 func move_cursor(event: InputEvent) -> void:
-	if event.position.x < 1000 and event.position.y < 1000:
-		var pos = States.Paint.size_px
-		var offset = cursor.get_offset()
-		cursor.position = (event.position + offset).snapped(pos)
+	move_cursor_to(event.position)
+
+
+func move_cursor_to(pos: Vector2) -> void:
+	if pos.x < 800 and pos.y < 800:
+		cursor.position = (pos + cursor.get_offset()).snapped(States.Paint.size_px)
 
 
 func draw_pixel(is_ghost: bool = false) -> Sprite2D:

@@ -28,9 +28,13 @@ func move_by_unit(keycode: int) -> void:
 		KEY_A: target.x -= unit.x
 		KEY_S: target.y += unit.y
 		KEY_D: target.x += unit.x
+	move_to(target)
+
+
+func move_to(pos: Vector2) -> void:
 	(get_tree()
 		.create_tween()
-		.tween_property(self, "position", target, 0.1)
+		.tween_property(self, "position", pos, 0.05)
 		.set_ease(Tween.EASE_IN_OUT)
 		.set_trans(Tween.TRANS_CIRC))
 

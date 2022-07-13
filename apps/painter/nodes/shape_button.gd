@@ -22,9 +22,10 @@ func _notification(what: int) -> void:
 func _ready() -> void:
 	remake_texture()
 	pressed.connect(set_shape.bind(shape))
-	States.Paint.shape_changed.connect(_on_shape_changed)
-	States.Paint.action_changed.connect(_on_action_changed)
-	States.Paint.rotation_changed.connect(_on_rotation_changed)
+	if not Engine.is_editor_hint():
+		States.Paint.shape_changed.connect(_on_shape_changed)
+		States.Paint.action_changed.connect(_on_action_changed)
+		States.Paint.rotation_changed.connect(_on_rotation_changed)
 
 
 func set_shape(value: int) -> void:
@@ -52,7 +53,8 @@ func remake_texture() -> void:
 	texture_rect.set_anchors_preset(Control.PRESET_CENTER)
 	custom_minimum_size = BUTTON_SIZE
 	size = BUTTON_SIZE
-	modulate = States.Paint.color
+	if not Engine.is_editor_hint():
+		modulate = States.Paint.color
 
 
 func _on_shape_changed(new_shape: int) -> void:

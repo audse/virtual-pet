@@ -12,7 +12,7 @@ const Shape = States.PaintState.Shape
 }
 
 # TODO features:
-# mirroring
+# mirror mode
 # tile mode
 # in-game preview
 # pixel size ratio / width + height
@@ -34,6 +34,7 @@ func _ready() -> void:
 	States.Paint.action_changed.connect(_on_action_changed)
 	States.Paint.size_changed.connect(_on_size_changed)
 	States.Paint.ratio_changed.connect(_on_ratio_changed)
+
 
 var event_map := {
 	"number_key": func(event: InputEventKey):
@@ -79,11 +80,11 @@ func _input(event: InputEvent) -> void:
 				match States.Paint.action:
 					Action.LINE, Action.RECT:
 						_on_tool_button_pressed(Action.DRAW)
-						
+			
 			KEY_R: _on_tool_button_pressed(Action.RECT)
 			KEY_L: _on_tool_button_pressed(Action.LINE)
 			KEY_E: _on_tool_button_pressed(Action.ERASE)
-			KEY_P: _on_tool_button_pressed(Action.DRAW)
+			KEY_P, KEY_B: _on_tool_button_pressed(Action.DRAW)
 			
 			KEY_W, KEY_A, KEY_S, KEY_D: %Canvas.cursor.move_by_unit(event.keycode)
 			KEY_SPACE: draw_shape()
@@ -188,6 +189,23 @@ func _on_action_changed(action: int) -> void:
 	for tool in tool_buttons.values():
 		deselected(tool)
 	selected(tool_buttons[action])
+	
+	match States.Paint.prev_action:
+		Action.LINE, Action.RECT: States.Paint.line = null
+	
+	# update current tool button icon
+	var icon: Texture
+	match action:
+		Action.DRAW: icon = load("res://apps/painter/assets/icons/pencil.svg")
+		Action.ERASE: icon = load("res://apps/painter/assets/icons/eraser.svg")
+		Action.LINE: icon = load("res://apps/painter/assets/icons/line.svg")
+		Action.RECT: icon = load("res://apps/painter/assets/icons/rectangle.svg")
+	%DrawToolsWindow.menu_open_icon = icon
+	
+	# toggle "ok" button (to complete/end current action)
+	match action:
+		Action.LINE, Action.RECT: Anim.pop_enter(%OkButton)
+		_: Anim.pop_exit(%OkButton)
 
 
 func _on_rotate_button_pressed(delta: int) -> void:
@@ -282,3 +300,7 @@ func _on_save_button_pressed() -> void:
 
 func _on_gallery_button_pressed() -> void:
 	%Gallery.open()
+
+
+func _on_ok_button_pressed() -> void:
+	States.Paint.set_action(States.Paint.prev_action)

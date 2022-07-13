@@ -1,171 +1,75 @@
-[gd_scene load_steps=5 format=3 uid="uid://ggf1a52abr1"]
+[gd_scene load_steps=3 format=3 uid="uid://ggf1a52abr1"]
 
 [ext_resource type="Script" path="res://interface/components/circle_menu.gd" id="1_0lgg4"]
-[ext_resource type="Shader" path="res://apps/painter/assets/shaders/rounded_blur.gdshader" id="2_yroch"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_smu83"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ujdpp"]
 bg_color = Color(0.117647, 0.160784, 0.231373, 0.784314)
+border_width_top = 4
+border_color = Color(0.2, 0.254902, 0.333333, 0.490196)
 corner_radius_top_left = 1000
 corner_radius_top_right = 1000
 corner_radius_bottom_right = 1000
 corner_radius_bottom_left = 1000
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_80gp3"]
-shader = ExtResource("2_yroch")
-shader_param/blur_amount = 3.0
-shader_param/radius = 1.0
-shader_param/size = null
+corner_detail = 20
 
 [node name="CircleContainer" type="Container"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
 script = ExtResource("1_0lgg4")
 unsorted = [NodePath("CircleMenuButton"), NodePath("CircleMenuBackdrop"), NodePath("CircleCloseButton")]
-extra_margin = 20.0
+extra_margin = 30.0
 fit_children_inside = true
-degree_range = 300.0
-degree_offset = 50.0
-origin = 8
-menu_stylebox_override = SubResource("StyleBoxFlat_smu83")
-reset_closed = null
-test_open = null
-
-[node name="CircleMenuBackdrop" type="PanelContainer" parent="."]
-offset_top = 482.0
-offset_right = 828.0
-offset_bottom = 1310.0
-size_flags_horizontal = 4
-size_flags_vertical = 4
-theme_override_styles/panel = SubResource("StyleBoxFlat_smu83")
-
-[node name="BackBufferCopy" type="BackBufferCopy" parent="CircleMenuBackdrop"]
-rect = Rect2(0, 0, 828, 828)
-
-[node name="BlurRect" type="ColorRect" parent="CircleMenuBackdrop"]
-show_behind_parent = true
-material = SubResource("ShaderMaterial_80gp3")
-offset_right = 828.0
-offset_bottom = 828.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-
-[node name="CircleCloseButton" type="Button" parent="."]
-offset_left = 514.607
-offset_top = 980.419
-offset_right = 654.607
-offset_bottom = 1057.42
-pivot_offset = Vector2(70, 38.5)
-size_flags_horizontal = 3
-size_flags_vertical = 3
-text = "close"
-
-[node name="CircleMenuButton" type="Button" parent="."]
-unique_name_in_owner = true
-offset_left = 514.607
-offset_top = 980.419
-offset_right = 651.607
-offset_bottom = 1057.42
-rotation = -1.0472
-scale = Vector2(1e-05, 1e-05)
-pivot_offset = Vector2(68.5, 38.5)
-size_flags_horizontal = 0
-size_flags_vertical = 8
-text = "open"
+origin = 4
+menu_button_min_size = Vector2(50, 50)
+close_button_min_size = Vector2(0, 0)
+menu_stylebox_override = SubResource("StyleBoxFlat_ujdpp")
+override_degree_offset = 0.0
+is_open = true
 
 [node name="Button" type="Button" parent="."]
-offset_left = 170.528
-offset_top = 1146.66
-offset_right = 252.527
-offset_bottom = 1223.66
-pivot_offset = Vector2(40.9994, 38.5001)
+offset_left = 30.0
+offset_top = 857.495
+offset_right = 109.001
+offset_bottom = 934.505
+pivot_offset = Vector2(39.5005, 38.505)
 text = "?"
 
 [node name="Button2" type="Button" parent="."]
-offset_left = 67.2931
-offset_top = 1034.0
-offset_right = 149.292
-offset_bottom = 1111.0
-pivot_offset = Vector2(40.9994, 38.5001)
+offset_left = 202.249
+offset_top = 559.151
+offset_right = 281.252
+offset_bottom = 636.161
+pivot_offset = Vector2(39.5015, 38.505)
 text = "?"
 
 [node name="Button3" type="Button" parent="."]
-offset_left = 21.3433
-offset_top = 888.266
-offset_right = 103.343
-offset_bottom = 965.266
-pivot_offset = Vector2(40.9997, 38.5001)
+offset_left = 546.749
+offset_top = 559.153
+offset_right = 625.75
+offset_bottom = 636.157
+pivot_offset = Vector2(39.5005, 38.502)
 text = "?"
 
 [node name="Button4" type="Button" parent="."]
-offset_left = 41.2885
-offset_top = 736.767
-offset_right = 123.288
-offset_bottom = 813.767
-pivot_offset = Vector2(40.9997, 38.5001)
+offset_left = 718.999
+offset_top = 857.5
+offset_right = 798.0
+offset_bottom = 934.501
+pivot_offset = Vector2(39.5005, 38.5005)
 text = "?"
 
 [node name="Button5" type="Button" parent="."]
-offset_left = 123.391
-offset_top = 607.891
-offset_right = 205.391
-offset_bottom = 684.891
-pivot_offset = Vector2(40.9998, 38.5001)
+offset_left = 546.75
+offset_top = 1155.85
+offset_right = 625.75
+offset_bottom = 1232.85
+pivot_offset = Vector2(39.5, 38.5005)
 text = "?"
 
 [node name="Button6" type="Button" parent="."]
-offset_left = 252.267
-offset_top = 525.787
-offset_right = 334.267
-offset_bottom = 602.789
-pivot_offset = Vector2(40.9998, 38.501)
-text = "?"
-
-[node name="Button7" type="Button" parent="."]
-offset_left = 403.765
-offset_top = 505.844
-offset_right = 485.767
-offset_bottom = 582.844
-pivot_offset = Vector2(41.0006, 38.5)
-text = "?"
-
-[node name="Button8" type="Button" parent="."]
-offset_left = 549.5
-offset_top = 551.793
-offset_right = 631.5
-offset_bottom = 628.793
-pivot_offset = Vector2(41.0002, 38.5)
-text = "?"
-
-[node name="Button9" type="Button" parent="."]
-offset_left = 662.162
-offset_top = 655.027
-offset_right = 744.161
-offset_bottom = 732.027
-pivot_offset = Vector2(40.9994, 38.5001)
-text = "?"
-
-[node name="Button10" type="Button" parent="."]
-offset_left = 720.637
-offset_top = 796.202
-offset_right = 802.637
-offset_bottom = 873.202
-pivot_offset = Vector2(41.0001, 38.5001)
-text = "?"
-
-[node name="Button11" type="Button" parent="."]
-offset_left = 713.972
-offset_top = 948.863
-offset_right = 795.972
-offset_bottom = 1025.86
-pivot_offset = Vector2(41.0001, 38.5002)
-text = "?"
-
-[node name="Button12" type="Button" parent="."]
-offset_left = 643.414
-offset_top = 1084.4
-offset_right = 725.414
-offset_bottom = 1161.41
-pivot_offset = Vector2(41.0001, 38.5025)
+offset_left = 202.25
+offset_top = 1155.84
+offset_right = 281.251
+offset_bottom = 1232.85
+pivot_offset = Vector2(39.5005, 38.501)
 text = "?"

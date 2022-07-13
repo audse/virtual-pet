@@ -19,7 +19,6 @@ enum Edge {
 	set(value):
 		extra_margin = value
 		_temp_extra_margin = value
-		_sort_children()
 
 @export var fit_children_inside := false:
 	set(value):
@@ -30,13 +29,11 @@ enum Edge {
 	set(value):
 		degree_range = value
 		_temp_degree_range = value
-		_sort_children()
 
 @export var degree_offset := 0.0:
 	set(value):
 		degree_offset = value
 		_temp_degree_offset = value
-		_sort_children()
 
 var unsorted_nodes: Array[Node]:
 	get:
@@ -62,9 +59,20 @@ var degree_increment: float:
 
 
 # Used for animation without losing original values
-var _temp_extra_margin: float = extra_margin
-var _temp_degree_range: float = degree_range
-var _temp_degree_offset: float = degree_offset
+var _temp_extra_margin: float = extra_margin:
+	set(value):
+		_temp_extra_margin = value
+		_sort_children()
+		
+var _temp_degree_range: float = degree_range:
+	set(value):
+		_temp_degree_range = value
+		_sort_children()
+		
+var _temp_degree_offset: float = degree_offset:
+	set(value):
+		_temp_degree_offset = value
+		_sort_children()
 
 func _notification(what:int) -> void:
 	match what:

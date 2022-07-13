@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=3 uid="uid://dsdccslw53vke"]
+[gd_scene load_steps=51 format=3 uid="uid://dsdccslw53vke"]
 
 [ext_resource type="Script" path="res://apps/painter/painter.gd" id="1_r1smx"]
 [ext_resource type="Theme" uid="uid://cq8mh6dl8s7wt" path="res://apps/painter/assets/themes/painter.tres" id="1_u00cw"]
@@ -14,10 +14,12 @@
 [ext_resource type="Texture2D" uid="uid://b24vngv1jm71o" path="res://apps/painter/assets/icons/line.svg" id="13_monbh"]
 [ext_resource type="Texture2D" uid="uid://ch7l34kkmaatb" path="res://apps/painter/assets/icons/eraser.svg" id="14_umeww"]
 [ext_resource type="Texture2D" uid="uid://o6p0w2gruix" path="res://apps/painter/assets/icons/pencil.svg" id="15_bphgi"]
-[ext_resource type="Script" path="res://interface/components/circle_container.gd" id="15_pt33y"]
-[ext_resource type="Shader" path="res://apps/painter/assets/shaders/rounded_blur.gdshader" id="15_wbh5j"]
+[ext_resource type="Script" path="res://interface/components/circle_menu.gd" id="15_rflyk"]
+[ext_resource type="FontData" uid="uid://b6r7yrlh6rrnh" path="res://static/fonts/Nunito/Nunito-ExtraBold.ttf" id="15_wgjja"]
 [ext_resource type="Texture2D" uid="uid://dwlu8jm1xyn6t" path="res://apps/painter/assets/icons/undo.svg" id="16_bta2x"]
+[ext_resource type="Texture2D" uid="uid://b2lpdvuywdedv" path="res://apps/painter/assets/icons/check.svg" id="16_m0h7j"]
 [ext_resource type="Texture2D" uid="uid://c0xjwq26v2od3" path="res://apps/painter/assets/icons/load_save.svg" id="16_s0y0t"]
+[ext_resource type="Texture2D" uid="uid://3pjhr6dgoo5i" path="res://apps/painter/assets/icons/forward.svg" id="17_d0x7r"]
 [ext_resource type="Texture2D" uid="uid://dp0xkjoprvqm7" path="res://apps/painter/assets/icons/redo.svg" id="17_nvjsf"]
 [ext_resource type="Texture2D" uid="uid://o871cmutas55" path="res://apps/painter/assets/icons/save.svg" id="17_ydjfi"]
 [ext_resource type="Texture2D" uid="uid://4vh1caqutpo" path="res://apps/painter/assets/icons/increase_size.svg" id="19_crq7g"]
@@ -45,21 +47,243 @@ corner_radius_top_left = 20
 corner_radius_bottom_left = 20
 expand_margin_right = 32.0
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_24lki"]
-bg_color = Color(0.117647, 0.160784, 0.231373, 0.686275)
-corner_radius_top_left = 170
-corner_radius_top_right = 170
-corner_radius_bottom_right = 170
-corner_radius_bottom_left = 170
-corner_detail = 20
-expand_margin_right = 60.0
-expand_margin_bottom = 60.0
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_s1wms"]
+content_margin_left = 12.0
+content_margin_top = 12.0
+content_margin_right = 12.0
+content_margin_bottom = 12.0
+bg_color = Color(0.580392, 0.639216, 0.721569, 0.588235)
+border_width_top = 2
+border_width_bottom = 2
+border_color = Color(0.796078, 0.835294, 0.882353, 0.490196)
+border_blend = true
+corner_radius_top_left = 36
+corner_radius_top_right = 36
+corner_radius_bottom_right = 36
+corner_radius_bottom_left = 36
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_00g37"]
-shader = ExtResource("15_wbh5j")
-shader_param/blur_amount = 3.0
-shader_param/radius = 1.0
-shader_param/size = null
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vwnmy"]
+bg_color = Color(0.796078, 0.835294, 0.882353, 0.490196)
+draw_center = false
+border_width_left = 3
+border_width_top = 3
+border_width_right = 1
+border_width_bottom = 2
+corner_radius_top_left = 36
+corner_radius_top_right = 36
+corner_radius_bottom_right = 36
+corner_radius_bottom_left = 36
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_e4kw5"]
+content_margin_left = 12.0
+content_margin_top = 12.0
+content_margin_right = 12.0
+content_margin_bottom = 12.0
+bg_color = Color(0.580392, 0.639216, 0.721569, 0.921569)
+border_width_top = 2
+border_width_bottom = 2
+border_color = Color(0.796078, 0.835294, 0.882353, 0.490196)
+border_blend = true
+corner_radius_top_left = 40
+corner_radius_top_right = 40
+corner_radius_bottom_right = 40
+corner_radius_bottom_left = 40
+expand_margin_left = 1.0
+expand_margin_top = 1.0
+expand_margin_right = 1.0
+expand_margin_bottom = 1.0
+shadow_color = Color(0.0392157, 0.0901961, 0.160784, 0.0392157)
+shadow_size = 10
+shadow_offset = Vector2(0, 6)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3o50q"]
+content_margin_left = 16.0
+content_margin_top = 16.0
+content_margin_right = 16.0
+content_margin_bottom = 16.0
+bg_color = Color(0.580392, 0.639216, 0.721569, 0.882353)
+border_width_top = 2
+border_width_bottom = 2
+border_color = Color(0.796078, 0.835294, 0.882353, 0.490196)
+border_blend = true
+corner_radius_top_left = 38
+corner_radius_top_right = 38
+corner_radius_bottom_right = 38
+corner_radius_bottom_left = 38
+shadow_color = Color(0.0196078, 0.0666667, 0.160784, 0.0588235)
+shadow_size = 6
+shadow_offset = Vector2(0, 3)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fkrkq"]
+content_margin_left = 16.0
+content_margin_top = 16.0
+content_margin_right = 16.0
+content_margin_bottom = 16.0
+bg_color = Color(0.580392, 0.639216, 0.721569, 0.784314)
+border_width_top = 2
+border_width_bottom = 2
+border_color = Color(0.796078, 0.835294, 0.882353, 0.490196)
+border_blend = true
+corner_radius_top_left = 36
+corner_radius_top_right = 36
+corner_radius_bottom_right = 36
+corner_radius_bottom_left = 36
+shadow_color = Color(0.0431373, 0.0941176, 0.160784, 0.0980392)
+shadow_size = 5
+shadow_offset = Vector2(0, 2)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_xmnjs"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sa3wd"]
+draw_center = false
+
+[sub_resource type="Font" id="Font_5i3er"]
+data/0 = ExtResource("15_wgjja")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ahv0o"]
+content_margin_left = 16.0
+content_margin_top = 16.0
+content_margin_right = 16.0
+content_margin_bottom = 16.0
+bg_color = Color(0.0235294, 0.658824, 0.462745, 0.588235)
+border_width_top = 2
+border_width_bottom = 2
+border_color = Color(0.556863, 0.937255, 0.592157, 0.490196)
+border_blend = true
+corner_radius_top_left = 36
+corner_radius_top_right = 36
+corner_radius_bottom_right = 36
+corner_radius_bottom_left = 36
+shadow_color = Color(0.0196078, 0.0666667, 0.160784, 0.0588235)
+shadow_size = 6
+shadow_offset = Vector2(0, 3)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_t2ed6"]
+draw_center = false
+border_width_left = 2
+border_width_top = 3
+border_width_right = 2
+border_width_bottom = 1
+border_color = Color(0.0156863, 0.470588, 0.341176, 0.784314)
+border_blend = true
+corner_radius_top_left = 50
+corner_radius_top_right = 50
+corner_radius_bottom_right = 50
+corner_radius_bottom_left = 50
+expand_margin_left = 2.0
+expand_margin_top = 2.0
+expand_margin_right = 2.0
+expand_margin_bottom = 2.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_h7hh6"]
+content_margin_left = 16.0
+content_margin_top = 16.0
+content_margin_right = 16.0
+content_margin_bottom = 16.0
+bg_color = Color(0.0235294, 0.658824, 0.462745, 0.921569)
+border_width_top = 2
+border_width_bottom = 2
+border_color = Color(0.796078, 0.835294, 0.882353, 0.490196)
+border_blend = true
+corner_radius_top_left = 40
+corner_radius_top_right = 40
+corner_radius_bottom_right = 40
+corner_radius_bottom_left = 40
+expand_margin_left = 1.0
+expand_margin_top = 1.0
+expand_margin_right = 1.0
+expand_margin_bottom = 1.0
+shadow_color = Color(0.0392157, 0.0901961, 0.160784, 0.0392157)
+shadow_size = 10
+shadow_offset = Vector2(0, 6)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5k638"]
+content_margin_left = 16.0
+content_margin_top = 16.0
+content_margin_right = 16.0
+content_margin_bottom = 16.0
+bg_color = Color(0.0235294, 0.658824, 0.462745, 0.882353)
+border_width_top = 2
+border_width_bottom = 2
+border_color = Color(0.556863, 0.937255, 0.592157, 0.490196)
+border_blend = true
+corner_radius_top_left = 38
+corner_radius_top_right = 38
+corner_radius_bottom_right = 38
+corner_radius_bottom_left = 38
+shadow_color = Color(0.0196078, 0.0666667, 0.160784, 0.0588235)
+shadow_size = 6
+shadow_offset = Vector2(0, 3)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_351ge"]
+content_margin_left = 16.0
+content_margin_top = 16.0
+content_margin_right = 16.0
+content_margin_bottom = 16.0
+bg_color = Color(0.0235294, 0.658824, 0.462745, 0.784314)
+border_width_top = 2
+border_width_bottom = 2
+border_color = Color(0.556863, 0.937255, 0.592157, 0.490196)
+border_blend = true
+corner_radius_top_left = 36
+corner_radius_top_right = 36
+corner_radius_bottom_right = 36
+corner_radius_bottom_left = 36
+shadow_color = Color(0.0431373, 0.0941176, 0.160784, 0.0980392)
+shadow_size = 5
+shadow_offset = Vector2(0, 2)
+
+[sub_resource type="Theme" id="Theme_6evjf"]
+Button/colors/icon_hover_color = Color(0.972549, 0.980392, 0.988235, 1)
+Button/colors/icon_normal_color = Color(0.972549, 0.980392, 0.988235, 1)
+Button/colors/icon_pressed_color = Color(0.945098, 0.960784, 0.976471, 1)
+Button/styles/disabled = SubResource("StyleBoxFlat_s1wms")
+Button/styles/focus = SubResource("StyleBoxFlat_vwnmy")
+Button/styles/hover = SubResource("StyleBoxFlat_e4kw5")
+Button/styles/normal = SubResource("StyleBoxFlat_3o50q")
+Button/styles/pressed = SubResource("StyleBoxFlat_fkrkq")
+CircleMenuCloseButton/base_type = &"Button"
+CircleMenuCloseButton/colors/icon_hover_color = Color(0.2, 0.254902, 0.333333, 1)
+CircleMenuCloseButton/colors/icon_hover_pressed_color = Color(0.117647, 0.160784, 0.231373, 1)
+CircleMenuCloseButton/colors/icon_normal_color = Color(0.117647, 0.160784, 0.231373, 1)
+CircleMenuCloseButton/colors/icon_pressed_color = Color(0.0705882, 0.109804, 0.160784, 1)
+CircleMenuCloseButton/styles/focus = SubResource("StyleBoxEmpty_xmnjs")
+CircleMenuCloseButton/styles/hover = SubResource("StyleBoxFlat_sa3wd")
+CircleMenuCloseButton/styles/normal = SubResource("StyleBoxFlat_sa3wd")
+CircleMenuCloseButton/styles/pressed = SubResource("StyleBoxFlat_sa3wd")
+SuccessButton/base_type = &"Button"
+SuccessButton/colors/icon_hover_color = Color(0.941176, 0.992157, 0.956863, 1)
+SuccessButton/colors/icon_hover_pressed_color = Color(0.733333, 0.968627, 0.815686, 1)
+SuccessButton/colors/icon_normal_color = Color(0.85098, 1, 0.901961, 0.784314)
+SuccessButton/colors/icon_pressed_color = Color(0.733333, 0.968627, 0.815686, 1)
+SuccessButton/constants/h_separation = 12
+SuccessButton/font_sizes/font_size = 36
+SuccessButton/fonts/font = SubResource("Font_5i3er")
+SuccessButton/styles/disabled = SubResource("StyleBoxFlat_ahv0o")
+SuccessButton/styles/focus = SubResource("StyleBoxFlat_t2ed6")
+SuccessButton/styles/hover = SubResource("StyleBoxFlat_h7hh6")
+SuccessButton/styles/normal = SubResource("StyleBoxFlat_5k638")
+SuccessButton/styles/pressed = SubResource("StyleBoxFlat_351ge")
+
+[sub_resource type="Gradient" id="Gradient_x1euq"]
+offsets = PackedFloat32Array(0.0521092, 0.557078, 0.981735)
+colors = PackedColorArray(0.117647, 0.160784, 0.231373, 0.392157, 0.117647, 0.160784, 0.231373, 0.118463, 0.117647, 0.160784, 0.231373, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_fvk5r"]
+gradient = SubResource("Gradient_x1euq")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(1, 0.5)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6hkiu"]
+bg_color = Color(0.188235, 0.262745, 0.368627, 0.784314)
+border_width_top = 3
+border_color = Color(0.2, 0.254902, 0.333333, 0.490196)
+corner_radius_top_left = 1000
+corner_radius_top_right = 1000
+corner_radius_bottom_right = 1000
+corner_radius_bottom_left = 1000
+corner_detail = 20
 
 [node name="Painter" type="Control"]
 anchor_right = 1.0
@@ -437,107 +661,148 @@ offset_top = 10.0
 offset_right = 790.0
 offset_bottom = 810.0
 
-[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer/CanvasContainer"]
-visible = false
+[node name="CanvasTools" type="MarginContainer" parent="MarginContainer/VBoxContainer/CanvasContainer"]
 clip_contents = true
 offset_left = -24.0
 offset_top = 10.0
 offset_right = 804.0
 offset_bottom = 810.0
+mouse_filter = 2
+theme = SubResource("Theme_6evjf")
 theme_override_constants/margin_left = 12
 theme_override_constants/margin_top = 0
 theme_override_constants/margin_right = 12
 theme_override_constants/margin_bottom = 0
 
-[node name="PanelContainer" type="PanelContainer" parent="MarginContainer/VBoxContainer/CanvasContainer/MarginContainer"]
-show_behind_parent = true
-custom_minimum_size = Vector2(260, 270)
-offset_left = 556.0
-offset_top = 530.0
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/CanvasContainer/CanvasTools"]
+offset_left = 12.0
+offset_top = 505.0
 offset_right = 816.0
 offset_bottom = 800.0
-size_flags_horizontal = 8
-size_flags_vertical = 8
-theme_override_styles/panel = SubResource("StyleBoxFlat_24lki")
-
-[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer/CanvasContainer/MarginContainer/PanelContainer"]
-show_behind_parent = true
-clip_contents = true
-offset_right = 260.0
-offset_bottom = 270.0
-theme_override_constants/margin_left = 0
-theme_override_constants/margin_top = 0
-theme_override_constants/margin_right = -60
-theme_override_constants/margin_bottom = -60
-
-[node name="ColorRect" type="ColorRect" parent="MarginContainer/VBoxContainer/CanvasContainer/MarginContainer/PanelContainer/MarginContainer"]
-material = SubResource("ShaderMaterial_00g37")
-offset_right = 320.0
-offset_bottom = 330.0
 size_flags_horizontal = 3
-size_flags_vertical = 3
-
-[node name="Control" type="Control" parent="MarginContainer/VBoxContainer/CanvasContainer"]
-visible = false
-clip_contents = true
-offset_left = -24.0
-offset_top = 10.0
-offset_right = 804.0
-offset_bottom = 810.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-
-[node name="CircleContainer" type="Container" parent="MarginContainer/VBoxContainer/CanvasContainer"]
-visible = false
-custom_minimum_size = Vector2(260, 260)
-offset_left = 544.0
-offset_top = 550.0
-offset_right = 804.0
-offset_bottom = 810.0
-size_flags_horizontal = 8
 size_flags_vertical = 8
-script = ExtResource("15_pt33y")
-unsorted = []
-fit_children_inside = true
-degree_range = 240.0
-degree_offset = 130.0
+mouse_filter = 2
 
-[node name="RectangleButton" type="Button" parent="MarginContainer/VBoxContainer/CanvasContainer/CircleContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer/CanvasContainer/CanvasTools/HBoxContainer"]
+offset_right = 509.0
+offset_bottom = 295.0
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="OkButton" type="Button" parent="MarginContainer/VBoxContainer/CanvasContainer/CanvasTools/HBoxContainer/MarginContainer"]
 unique_name_in_owner = true
-offset_left = 34.6495
-offset_top = 171.306
-offset_right = 100.65
-offset_bottom = 237.306
+visible = false
+custom_minimum_size = Vector2(135, 75)
+offset_left = 24.0
+offset_top = 189.0
+offset_right = 159.0
+offset_bottom = 271.0
+size_flags_horizontal = 0
+size_flags_vertical = 8
+theme_type_variation = &"SuccessButton"
+text = "Ok "
+icon = ExtResource("16_m0h7j")
+expand_icon = true
+
+[node name="DrawTools" type="MarginContainer" parent="MarginContainer/VBoxContainer/CanvasContainer/CanvasTools/HBoxContainer"]
+custom_minimum_size = Vector2(295, 295)
+offset_left = 509.0
+offset_right = 804.0
+offset_bottom = 295.0
+size_flags_horizontal = 8
+size_flags_vertical = 8
+mouse_filter = 2
+theme_override_constants/margin_right = -80
+theme_override_constants/margin_bottom = -80
+
+[node name="DropShadowContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer/CanvasContainer/CanvasTools/HBoxContainer/DrawTools"]
+offset_left = 24.0
+offset_top = 24.0
+offset_right = 375.0
+offset_bottom = 375.0
+mouse_filter = 2
+theme_override_constants/margin_right = -90
+theme_override_constants/margin_bottom = -80
+
+[node name="DropShadow" type="TextureRect" parent="MarginContainer/VBoxContainer/CanvasContainer/CanvasTools/HBoxContainer/DrawTools/DropShadowContainer"]
+self_modulate = Color(1, 1, 1, 0.784314)
+offset_left = 24.0
+offset_top = 24.0
+offset_right = 441.0
+offset_bottom = 431.0
+mouse_filter = 2
+texture = SubResource("GradientTexture2D_fvk5r")
+ignore_texture_size = true
+
+[node name="DrawToolsWindow" type="Container" parent="MarginContainer/VBoxContainer/CanvasContainer/CanvasTools/HBoxContainer/DrawTools"]
+unique_name_in_owner = true
+offset_left = 24.0
+offset_top = 24.0
+offset_right = 375.0
+offset_bottom = 375.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 2
+script = ExtResource("15_rflyk")
+unsorted = [NodePath("CircleMenuButton"), NodePath("CircleMenuBackdrop"), NodePath("CircleCloseButton")]
+degree_range = 150.0
+degree_offset = 55.0
+origin = 4
+menu_open_icon = ExtResource("15_bphgi")
+menu_close_icon = ExtResource("17_d0x7r")
+menu_button_min_size = Vector2(75, 75)
+close_button_min_size = Vector2(45, 45)
+menu_stylebox_override = SubResource("StyleBoxFlat_6hkiu")
+override_degree_offset = 55.0
+
+[node name="RectangleButton" type="Button" parent="MarginContainer/VBoxContainer/CanvasContainer/CanvasTools/HBoxContainer/DrawTools/DrawToolsWindow"]
+unique_name_in_owner = true
+offset_left = 134.5
+offset_top = 134.5
+offset_right = 216.5
+offset_bottom = 216.5
+rotation = -3.14159
+scale = Vector2(1e-05, 1e-05)
+pivot_offset = Vector2(41, 41)
 size_flags_vertical = 0
 icon = ExtResource("12_geruk")
 icon_alignment = 1
 
-[node name="LineButton" type="Button" parent="MarginContainer/VBoxContainer/CanvasContainer/CircleContainer"]
+[node name="LineButton" type="Button" parent="MarginContainer/VBoxContainer/CanvasContainer/CanvasTools/HBoxContainer/DrawTools/DrawToolsWindow"]
 unique_name_in_owner = true
-offset_left = 1.47364
-offset_top = 80.1561
-offset_right = 67.4737
-offset_bottom = 146.156
+offset_left = 134.5
+offset_top = 134.5
+offset_right = 216.5
+offset_bottom = 216.5
+rotation = -3.14159
+scale = Vector2(1e-05, 1e-05)
+pivot_offset = Vector2(41, 41)
 size_flags_vertical = 0
 icon = ExtResource("13_monbh")
 icon_alignment = 1
 
-[node name="EraseButton" type="Button" parent="MarginContainer/VBoxContainer/CanvasContainer/CircleContainer"]
+[node name="EraseButton" type="Button" parent="MarginContainer/VBoxContainer/CanvasContainer/CanvasTools/HBoxContainer/DrawTools/DrawToolsWindow"]
 unique_name_in_owner = true
-offset_left = 63.824
-offset_top = 5.84982
-offset_right = 129.824
-offset_bottom = 71.8498
+offset_left = 134.5
+offset_top = 134.5
+offset_right = 216.5
+offset_bottom = 216.5
+rotation = -3.14159
+scale = Vector2(1e-05, 1e-05)
+pivot_offset = Vector2(41, 41)
 size_flags_vertical = 0
 icon = ExtResource("14_umeww")
 icon_alignment = 1
 
-[node name="DrawButton" type="Button" parent="MarginContainer/VBoxContainer/CanvasContainer/CircleContainer"]
+[node name="DrawButton" type="Button" parent="MarginContainer/VBoxContainer/CanvasContainer/CanvasTools/HBoxContainer/DrawTools/DrawToolsWindow"]
 unique_name_in_owner = true
-offset_left = 159.35
-offset_top = 22.6937
-offset_right = 225.35
-offset_bottom = 88.6937
+offset_left = 126.5
+offset_top = 130.5
+offset_right = 224.5
+offset_bottom = 220.5
+rotation = -3.14159
+scale = Vector2(1e-05, 1e-05)
+pivot_offset = Vector2(49, 45)
 size_flags_vertical = 0
 theme_type_variation = &"SuccessButton"
 icon = ExtResource("15_bphgi")
@@ -653,6 +918,11 @@ stretch_mode = 5
 [connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/GalleryButtons/VBoxContainer/LoadSaveButton" to="." method="_on_load_save_button_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/GalleryButtons/VBoxContainer/SaveButton" to="." method="_on_save_button_pressed"]
 [connection signal="canvas_gui_input" from="MarginContainer/VBoxContainer/CanvasContainer/Canvas" to="." method="_on_canvas_gui_input"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/CanvasContainer/CanvasTools/HBoxContainer/MarginContainer/OkButton" to="." method="_on_ok_button_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/CanvasContainer/CanvasTools/HBoxContainer/DrawTools/DrawToolsWindow/RectangleButton" to="MarginContainer/VBoxContainer/CanvasContainer/CanvasTools/HBoxContainer/DrawTools/DrawToolsWindow" method="queue_close"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/CanvasContainer/CanvasTools/HBoxContainer/DrawTools/DrawToolsWindow/LineButton" to="MarginContainer/VBoxContainer/CanvasContainer/CanvasTools/HBoxContainer/DrawTools/DrawToolsWindow" method="queue_close"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/CanvasContainer/CanvasTools/HBoxContainer/DrawTools/DrawToolsWindow/EraseButton" to="MarginContainer/VBoxContainer/CanvasContainer/CanvasTools/HBoxContainer/DrawTools/DrawToolsWindow" method="queue_close"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/CanvasContainer/CanvasTools/HBoxContainer/DrawTools/DrawToolsWindow/DrawButton" to="MarginContainer/VBoxContainer/CanvasContainer/CanvasTools/HBoxContainer/DrawTools/DrawToolsWindow" method="queue_close"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/Tools/Editor/UndoButton" to="." method="_on_undo_button_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/Tools/Editor/RedoButton" to="." method="_on_redo_button_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/Tools/Editor/OddButton" to="." method="_on_odd_button_pressed"]

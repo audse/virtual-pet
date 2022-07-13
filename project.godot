@@ -10,6 +10,21 @@ config_version=5
 
 _global_script_classes=[{
 "base": "Object",
+"class": &"Anim",
+"language": &"GDScript",
+"path": "res://utils/anim/anim.gd"
+}, {
+"base": "Object",
+"class": &"AnimBuilder",
+"language": &"GDScript",
+"path": "res://utils/anim/builder.gd"
+}, {
+"base": "Object",
+"class": &"AnimProperty",
+"language": &"GDScript",
+"path": "res://utils/anim/property.gd"
+}, {
+"base": "Object",
 "class": &"BitMask",
 "language": &"GDScript",
 "path": "res://apps/map/nodes/cell_map/bit_mask.gd"
@@ -39,6 +54,11 @@ _global_script_classes=[{
 "language": &"GDScript",
 "path": "res://utils/control_ref.gd"
 }, {
+"base": "ImageTexture",
+"class": &"CustomSizeTexture2D",
+"language": &"GDScript",
+"path": "res://utils/sized_texture.gd"
+}, {
 "base": "Node",
 "class": &"GuideMap",
 "language": &"GDScript",
@@ -58,6 +78,11 @@ _global_script_classes=[{
 "class": &"NeighborGroup",
 "language": &"GDScript",
 "path": "res://apps/map/nodes/cell_map/neighbor_group.gd"
+}, {
+"base": "Object",
+"class": &"NodeAnim",
+"language": &"GDScript",
+"path": "res://utils/anim/node_anim.gd"
 }, {
 "base": "Container",
 "class": &"RightDrawerComponent",
@@ -120,16 +145,21 @@ _global_script_classes=[{
 "path": "res://utils/mesh/vertex_group.gd"
 }]
 _global_script_class_icons={
+"Anim": "",
+"AnimBuilder": "",
+"AnimProperty": "",
 "BitMask": "",
 "Bits": "",
 "Cell": "",
 "CellMap": "res://apps/map/nodes/cell_map/cell_map_icon.svg",
 "CircleContainer": "res://interface/components/circle_container.svg",
 "ControlRef": "",
+"CustomSizeTexture2D": "",
 "GuideMap": "",
 "Math": "",
 "MeshDataToolPlus": "",
 "NeighborGroup": "",
+"NodeAnim": "",
 "RightDrawerComponent": "res://interface/components/right_drawer.svg",
 "ScriptRef": "",
 "SpacialTile": "res://apps/map/nodes/tile_set/spacial_tile_icon.svg",

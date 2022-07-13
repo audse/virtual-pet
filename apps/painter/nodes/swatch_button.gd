@@ -22,7 +22,8 @@ func _notification(what: int) -> void:
 
 
 func _ready() -> void:
-	States.Paint.color_changed.connect(_on_color_changed)
+	if not Engine.is_editor_hint():
+		States.Paint.color_changed.connect(_on_color_changed)
 	make_panel()
 
 
