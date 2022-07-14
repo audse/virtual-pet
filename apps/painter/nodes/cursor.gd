@@ -73,7 +73,7 @@ func get_offset() -> Vector2:
 	match States.Paint.rotation:
 		270: return start * Vector2(-1, 1)
 		180: return start
-		90: return start * Vector2(1, -1)
+		90:  return start * Vector2(1, -1)
 	return start * -1
 
 

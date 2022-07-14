@@ -30,7 +30,7 @@ const MENU_BACKDROP_PATH := NodePath("CircleMenuBackdrop")
 const MENU_BACKDROP_BLUR_PATH := NodePath("CircleMenuBackdrop/BlurRect")
 const MENU_BACKDROP_BUFFER_PATH := NodePath("CircleMenuBackdrop/BackBufferCopy")
 const CHILD_NODES: Array[NodePath] = [MENU_BUTTON_PATH, MENU_BACKDROP_PATH, CLOSE_BUTTON_PATH]
-const DELAY := 0.05
+const DELAY := 0.1
 
 const DEGREE_OF_ORIGIN := {
 	Origin.TOP_LEFT     : 230.0,
@@ -64,29 +64,29 @@ func _offset_at_origin() -> float:
 @export var menu_open_icon: Texture:
 	set(value):
 		menu_open_icon = value
-		_menu_button.icon = value
+		menu_button.icon = value
 
 @export var menu_close_icon: Texture:
 	set(value):
 		menu_close_icon = value
-		_close_button.icon = value
+		close_button.icon = value
 
 @export var menu_button_min_size: Vector2:
 	set(value):
 		menu_button_min_size = value
-		_menu_button.custom_minimum_size = value
-		_menu_button.size = value
+		menu_button.custom_minimum_size = value
+		menu_button.size = value
 
 @export var close_button_min_size: Vector2:
 	set(value):
 		close_button_min_size = value
-		_close_button.custom_minimum_size = value
-		_close_button.size = value
+		close_button.custom_minimum_size = value
+		close_button.size = value
 
 @export var menu_stylebox_override: StyleBox:
 	set(value):
 		menu_stylebox_override = value
-		_menu_backdrop.add_theme_stylebox_override("panel", value)
+		menu_backdrop.add_theme_stylebox_override("panel", value)
 
 @export var override_degree_offset: float = -1.0:
 	set(value):
@@ -96,8 +96,7 @@ func _offset_at_origin() -> float:
 @export var use_blur: bool = true:
 	set(value):
 		use_blur = value
-		if not use_blur and _menu_backdrop_blur:
-			_menu_backdrop_blur.set_shader_param("blur_amount", 0.0)
+		menu_backdrop_blur.material.set_shader_param("blur_amount", 3.0 if use_blur else 0.0)
 		_reset()
 
 @export var test_open: bool = false:
@@ -123,16 +122,8 @@ func _offset_at_origin() -> float:
 		_reset()
 
 var _state := BEFORE_OPEN
-var _final_state: int:
-	get: 
-		if _state == BEFORE_OPEN: return AFTER_OPEN
-		else: return BEFORE_OPEN
-var _ease: int:
-	get: 
-		if _state == BEFORE_OPEN: return Tween.EASE_OUT
-		else: return Tween.EASE_IN
 
-var _menu_button: Button:
+var menu_button: Button:
 	get: 
 		var node: Button = get_node_or_null(MENU_BUTTON_PATH)
 		if not node: node = _remake_menu_button()
@@ -150,10 +141,12 @@ func _remake_menu_button() -> Button:
 	node.theme_type_variation = "CircleMenuButton"
 	node.expand_icon = true
 	node.custom_minimum_size = menu_button_min_size
+	node.size = menu_button_min_size
+	node.raise()
 	return node
 
 
-var _close_button: Button:
+var close_button: Button:
 	get: 
 		var node: Button = get_node_or_null(CLOSE_BUTTON_PATH)
 		if not node: node = _remake_close_button()
@@ -170,11 +163,13 @@ func _remake_close_button() -> Button:
 	node.pressed.connect(_on_close_button_pressed)
 	node.theme_type_variation = "CircleMenuCloseButton"
 	node.expand_icon = true
-	node.custom_minimum_size = menu_button_min_size
+	node.custom_minimum_size = close_button_min_size
+	node.size = close_button_min_size
+	node.raise()
 	return node
 
 
-var _menu_backdrop: PanelContainer:
+var menu_backdrop: PanelContainer:
 	get: 
 		var node: PanelContainer = get_node_or_null(MENU_BACKDROP_PATH)
 		if not node: node = _remake_backdrop()
@@ -194,7 +189,7 @@ func _remake_backdrop() -> PanelContainer:
 	return node
 
 
-var _menu_backdrop_blur: ColorRect:
+var menu_backdrop_blur: ColorRect:
 	get: 
 		var node: ColorRect = get_node_or_null(MENU_BACKDROP_BLUR_PATH)
 		if not node: node = _remake_backdrop_blur()
@@ -203,10 +198,10 @@ var _menu_backdrop_blur: ColorRect:
 
 func _remake_backdrop_blur() -> ColorRect:
 	var node: ColorRect = get_node_or_null(MENU_BACKDROP_BLUR_PATH)
-	if node: _menu_backdrop.remove_child(node)
+	if node: menu_backdrop.remove_child(node)
 	node = ColorRect.new()
 	node.name = MENU_BACKDROP_BLUR_PATH.get_name(1)
-	_menu_backdrop.add_child(node)
+	menu_backdrop.add_child(node)
 	node.material = ShaderMaterial.new()
 	node.material.shader = load("res://apps/painter/assets/shaders/rounded_blur.gdshader")
 	node.material.set_shader_param("blur_amount", 3.0 if use_blur else 0.0)
@@ -215,7 +210,7 @@ func _remake_backdrop_blur() -> ColorRect:
 	return node
 
 
-var _menu_backdrop_buffer: BackBufferCopy:
+var menu_backdrop_buffer: BackBufferCopy:
 	get: 
 		var node: BackBufferCopy = get_node_or_null(MENU_BACKDROP_BUFFER_PATH)
 		if not node: node = _remake_backdrop_buffer()
@@ -224,11 +219,11 @@ var _menu_backdrop_buffer: BackBufferCopy:
 
 func _remake_backdrop_buffer() -> BackBufferCopy:
 	var node: BackBufferCopy = get_node_or_null(MENU_BACKDROP_BUFFER_PATH)
-	if node: _menu_backdrop.remove_child(node)
+	if node: menu_backdrop.remove_child(node)
 	node = BackBufferCopy.new()
 	node.rect = Rect2(Vector2.ZERO, menu_size)
 	node.name = MENU_BACKDROP_BUFFER_PATH.get_name(1)
-	_menu_backdrop.add_child(node)
+	menu_backdrop.add_child(node)
 	return node
 
 
@@ -263,156 +258,80 @@ var menu_pos: Vector2:
 		else: return Vector2(pos.x, 0)
 
 
-func _self_props() -> Dictionary:
-	return {
-		"static": {
-			"degree_range": degree_range,
-			"degree_offset": _get_degree_offset(),
-			"extra_margin": extra_margin,
-		},
-		"animated": {
-			"_temp_degree_range": {
-				BEFORE_OPEN: 0.0,
-				AFTER_OPEN: degree_range,
-			},
-			"_temp_degree_offset": {
-				BEFORE_OPEN: degree_offset - 20.0,
-				AFTER_OPEN: degree_offset, 
-			},
-			"_temp_extra_margin": {
-				BEFORE_OPEN: radius,
-				AFTER_OPEN: extra_margin,
-			}
-		}
-	}
+func _reset_self() -> void:
+	match _state:
+		BEFORE_OPEN:
+			_temp_degree_range = 0.0
+			_temp_degree_offset = _get_degree_offset() - 20.0
+			_temp_extra_margin = radius
+		AFTER_OPEN:
+			degree_offset = _get_degree_offset()
+			_temp_degree_range = degree_range
+			_temp_extra_margin = extra_margin
+
 
 var _menu_button_radius: float:
 	get: return min(size.x, size.y) / 6 - extra_margin
 
 
-func _menu_button_props() -> Dictionary:
-	return {
-			"static": {
-				"text": "",
-				"size": Vector2(0, 0),
-				"position": func() -> Vector2:
-					if origin != Origin.CENTER:
-						return _to_circle_pos(center, _menu_button_radius, DEGREE_OF_ORIGIN[origin]) 
-					else: return _get_node_origin_pos(_menu_origin_pos, _menu_button, true),
-				"pivot_offset": _menu_button.size / 2
-			},
-			"animated": {
-				"rotation": {
-					BEFORE_OPEN: 0.0,
-					DURING_OPEN: deg2rad(-10),
-					AFTER_OPEN: deg2rad(180),
-				},
-				"scale": {
-					BEFORE_OPEN: Vector2.ONE,
-					DURING_OPEN: Vector2(1.1, 1.1),
-					AFTER_OPEN: Vector2.ZERO
-				}
-			}
-		}
+func _reset_menu_button_pos(button: Button) -> void:
+	if origin != Origin.CENTER:
+		button.position = _to_circle_pos(center, _menu_button_radius, DEGREE_OF_ORIGIN[origin]) 
+	else: 
+		button.position = _get_node_origin_pos(_menu_origin_pos, button, true)
 
 
-func _close_button_props() -> Dictionary:
-	return {
-		"static": {
-			"text": "",
-			"size": Vector2(0, 0),
-			"position": func() -> Vector2:
-				if origin != Origin.CENTER:
-					return _to_circle_pos(center, _menu_button_radius, DEGREE_OF_ORIGIN[origin]) 
-				else: return _get_node_origin_pos(_menu_origin_pos, _close_button, true),
-			"pivot_offset": _close_button.size / 2
-		},
-		"animated": {
-			"rotation": {
-				BEFORE_OPEN: deg2rad(-60),
-				DURING_OPEN: deg2rad(-10),
-				AFTER_OPEN: 0.0,
-			},
-			"scale": {
-				BEFORE_OPEN: Vector2.ZERO,
-				DURING_OPEN: Vector2(1.1, 1.1),
-				AFTER_OPEN: Vector2.ONE
-			}
-		}
-	}
+func _reset_menu_button() -> void:
+	_reset_menu_button_pos(menu_button)
+	match _state:
+		BEFORE_OPEN: menu_button.visible = true
+		AFTER_OPEN: menu_button.visible = false
+	menu_button.raise()
 
 
-func _menu_backdrop_props() -> Dictionary:
-	return {
-		"static": {
-			"size": menu_size,
-			"position": menu_pos,
-			"pivot_offset": (func() -> Vector2: 
-				var offset := Vector2.ZERO
-				if size.y > size.x and abs(size.y - size.x) > 10.0: offset.y = -menu_size.y
-				elif size.x > size.y and abs(size.x - size.y) > 10.0: offset.x = -menu_size.x
-				return _menu_button.position + (offset / 2) + ((_menu_button.size / 2) * _get_factor_from_origin()))
-		},
-		"animated": {
-			"scale": {
-				BEFORE_OPEN: Vector2.ZERO,
-				AFTER_OPEN: Vector2.ONE,
-			},
-		}
-	}
+func _reset_close_button() -> void:
+	_reset_menu_button_pos(close_button)
+	match _state:
+		BEFORE_OPEN: close_button.visible = false
+		AFTER_OPEN: close_button.visible = true
+	close_button.raise()
 
 
-func _menu_backdrop_buffer_props() -> Dictionary:
-	return {
-		"static": {
-			"rect": Rect2(Vector2.ZERO, menu_size)
-		},
-		"animated": {}
-	}
-
-func _menu_backdrop_blur_props() -> Dictionary:
-	return {
-		"static": {
-			"rect": Rect2(Vector2.ZERO, menu_size)
-		},
-		"animated": {}
-	}
+func _get_backdrop_pivot() -> Vector2:
+	var offset := Vector2.ZERO
+	if size.y > size.x and abs(size.y - size.x) > 10.0: offset.y = -menu_size.y
+	elif size.x > size.y and abs(size.x - size.y) > 10.0: offset.x = -menu_size.x
+	return menu_button.position + (offset / 2) + (menu_button.size * _get_factor_from_origin())
 
 
-func _item_props(item: Control) -> Dictionary: 
-	return {
-		"static": { "pivot_offset": item.size / 2 },
-		"animated": {
-			"scale": { 
-				BEFORE_OPEN: Vector2.ZERO,
-				AFTER_OPEN: Vector2.ONE,
-			},
-			"rotation": { 
-				BEFORE_OPEN: deg2rad(-180),
-				AFTER_OPEN: 0.0,
-			},
-			"visible": {
-				BEFORE_OPEN: false,
-				AFTER_OPEN: true,
-			}
-		}
-	}
+func _reset_backdrop() -> void:
+	menu_backdrop.size = menu_size
+	menu_backdrop.position = menu_pos
+	menu_backdrop.pivot_offset = _get_backdrop_pivot()
+	menu_backdrop.scale = Vector2.ONE
+	match _state:
+		BEFORE_OPEN: menu_backdrop.visible = false
+		AFTER_OPEN: menu_backdrop.visible = true
 
 
-func _node_props() -> Dictionary: 
-	var list := {
-		self: _self_props(),
-		_menu_button: _menu_button_props(),
-		_menu_backdrop: _menu_backdrop_props(),
-		_close_button: _close_button_props(),
-		_menu_backdrop_buffer: _menu_backdrop_buffer_props(),
-		_menu_backdrop_blur: _menu_backdrop_blur_props()
-	}
+func _reset_backdrop_buffer() -> void:
+	menu_backdrop_buffer.rect = Rect2(Vector2.ZERO, menu_size)
+
+
+func _reset_backdrop_blur() -> void:
+	menu_backdrop_blur.position = Vector2.ZERO
+	menu_backdrop_blur.size = menu_size
+
+
+func _reset_items() -> void:
 	_for_each_child(
 		func(item: Node, _i: int) -> void:
-			list[item] = _item_props(item)
+			item.scale = Vector2.ONE
+			item.rotation = 0
+			match _state:
+				BEFORE_OPEN: item.visible = false
+				AFTER_OPEN: item.visible = true
 	)
-	return list
 
 
 func _for_each_child(do_something: Callable) -> void:
@@ -430,27 +349,32 @@ var _is_animating: bool = false
 
 
 func queue_open() -> void:
-	if _is_animating:
-		close_complete.connect(open)
-	else: open()
+	if _state == BEFORE_OPEN:
+		if _is_animating:
+			close_complete.connect(open)
+		else: open()
+
 
 func queue_close() -> void:
-	if _is_animating:
-		open_complete.connect(close)
-	else: close()
+	if _state == AFTER_OPEN:
+		if _is_animating:
+			open_complete.connect(close)
+		else: close()
+
 
 func open() -> void:
 	_is_animating = true
+	opening.emit()
 	_reset()
 	
-	_tween_container()
+	_tween_self()
 	_tween_backdrop()
-	_tween_all_menu_buttons()
+	_tween_menu_buttons()
 	
 	_for_each_child(
 		func(item: Node, index: int) -> void:
 			await get_tree().create_timer(DELAY * index).timeout
-			_tween_item(item)
+			Anim.pop_spin_toggle(item, -1)
 	)
 	
 	await get_tree().create_timer(1.0).timeout
@@ -460,16 +384,17 @@ func open() -> void:
 
 func close() -> void:
 	_is_animating = true
+	closing.emit()
 	_reset()
 	
-	_tween_container()
+	_tween_self()
 	_tween_backdrop()
-	_tween_all_menu_buttons()
+	_tween_menu_buttons()
 	
 	_for_each_child(
 		func(item: Node, index: int) -> void:
 			await get_tree().create_timer(DELAY * index).timeout
-			_tween_item(item)
+			Anim.pop_spin_toggle(item, -1)
 	)
 	
 	await get_tree().create_timer(0.75).timeout
@@ -478,100 +403,86 @@ func close() -> void:
 
 
 func _on_menu_button_pressed() -> void: 
-	if not is_open and not _is_animating:
-		open()
+	if not is_open: queue_open()
 
 
 func _on_close_button_pressed() -> void:
-	if is_open and not _is_animating:
-		close()
+	if is_open: queue_close()
 
 
-func _tween(ease_val: int) -> Tween:
-	return (
-		get_tree()
-			.create_tween()
-			.set_ease(ease_val)
-			.set_trans(Tween.TRANS_CUBIC)
-			.set_parallel()
+func _tween_self() -> void:
+	match _state:
+		BEFORE_OPEN: await (
+			AnimBuilder
+				.new(self)
+				.keyframe("enter", 0.75)
+				.props({
+					_temp_degree_range  = { enter = degree_range  },
+					_temp_degree_offset = { enter = degree_offset },
+					_temp_extra_margin  = { enter = extra_margin  }
+				})
+				.complete()
 		)
-
-
-func _tween_container() -> void:
-	var duration := 0.55 if _state == BEFORE_OPEN else 0.35
-	var props: Dictionary = _self_props().animated
-	var tween := _tween(_ease)
-	for prop in props.keys():
-		tween.tween_property(self, prop, props[prop][_final_state], duration)
-	await tween.finished
+		AFTER_OPEN: 
+			await get_tree().create_timer(0.25).timeout
+			await (
+				AnimBuilder
+					.new(self)
+					.keyframe("exit", 0.55)
+					.props({
+						_temp_degree_range  = { exit = 0.0 },
+						_temp_degree_offset = { exit = _get_degree_offset() - 20.0 },
+						_temp_extra_margin  = { exit = radius }
+					})
+					.complete()
+			)
 
 
 func _tween_backdrop() -> void:
-	if _state != BEFORE_OPEN: await get_tree().create_timer(0.15).timeout
-	await _tween_props(
-		_menu_backdrop, 
-		_menu_backdrop_props().animated, 
-		Tween.EASE_IN_OUT, 
-		0.55 if _state == BEFORE_OPEN else 0.35
-	)
+	match _state:
+		BEFORE_OPEN: 
+			await (
+				AnimBuilder
+					.new(menu_backdrop)
+					.setup({
+						scale   = Vector2.ZERO,
+						visible = true,
+					})
+					.keyframe("enter", 0.25, Tween.EASE_OUT)
+					.keyframe("settle", 0.35)
+					.prop("scale", {
+						enter  = Vector2(1.1, 1.1),
+						settle = Vector2.ONE,
+					})
+					.complete()
+			)
+		AFTER_OPEN:
+			await get_tree().create_timer(0.15).timeout
+			await (
+				AnimBuilder
+					.new(menu_backdrop)
+					.keyframe("anticipation", 0.25, Tween.EASE_OUT)
+					.keyframe("exit", 0.15)
+					.prop("scale", {
+						anticipation  = Vector2(1.1, 1.1),
+						exit = Vector2.ZERO,
+					})
+					.complete()
+			)
 
 
-func _tween_props(node: Control, props: Dictionary, ease_val: int = _ease, duration: float = 0.15) -> void:
-	var tween := _tween(ease_val)
-	for prop in props.keys():
-		tween.tween_property(node, prop, props[prop][_final_state], duration)
-	await tween.finished
-
-
-func _tween_during_open(node: Control) -> void:
-	var node_props = _node_props()
-	if node in node_props:
-		var props: Dictionary = node_props[node].animated
-		var tween := _tween(Tween.EASE_IN_OUT)
-		for prop in props.keys():
-			if DURING_OPEN in props[prop]:
-				tween.tween_property(node, prop, props[prop][DURING_OPEN], 0.15)
-		await tween.finished
-
-
-func _tween_menu_button() -> void:
-	if _state == BEFORE_OPEN: await _tween_during_open(_menu_button)	
-	await _tween_props(
-		_menu_button,
-		_menu_button_props().animated,
-	)
-
-
-func _tween_close_button() -> void:
-	if _state == AFTER_OPEN: await _tween_during_open(_close_button)
-	await _tween_props(
-		_close_button,
-		_close_button_props().animated,
-	)
-
-
-func _tween_all_menu_buttons() -> void:
-	if _state == BEFORE_OPEN:
-		_tween_menu_button()
-		await get_tree().create_timer(0.25).timeout
-		await _tween_close_button()
-	else:
-		_tween_close_button()
-		await get_tree().create_timer(0.25).timeout
-		await _tween_menu_button()
-
-
-func _tween_item(item: Control) -> void:
-	await Anim.pop_spin_toggle(item)
-#	var duration := 0.35 if _state == BEFORE_OPEN else 0.15
-#	var node_props := _node_props()
-#	_tween_props(
-#		item,
-#		node_props[item].animated if item in node_props else {},
-#		Tween.EASE_IN_OUT,
-#		duration
-#	)
-#	await get_tree().create_timer(duration).timeout
+func _tween_menu_buttons() -> void:
+	menu_button.disabled = true
+	close_button.disabled = true
+	match _state:
+		BEFORE_OPEN:
+			await Anim.pop_exit(menu_button)
+			await Anim.pop_enter(close_button)
+		AFTER_OPEN:
+			await Anim.pop_exit(close_button)
+			await Anim.pop_enter(menu_button)
+	menu_button.disabled = false
+	close_button.disabled = false
 
 
 func _sort_children() -> void:
@@ -582,18 +493,14 @@ func _sort_children() -> void:
 
 
 func _reset() -> void:
-	var node_props := _node_props()
-	for node in node_props.keys():
-		var props = node_props[node]
-		for prop in props["static"].keys():
-			var val = props["static"][prop]
-			if val is Callable:
-				val = val.call()
-			node.set(prop, val)
-		
-		for prop in props.animated.keys():
-			node.set(prop, props.animated[prop][_state])
-	_temp_degree_offset = degree_offset
+	_reset_self()
+	_reset_backdrop()
+	_reset_backdrop_buffer()
+	_reset_backdrop_blur()
+	_reset_menu_button()
+	_reset_close_button()
+	_reset_items()
+	
 	_sort_children()
 
 

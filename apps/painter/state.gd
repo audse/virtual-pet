@@ -2,18 +2,34 @@ extends Object
 
 
 enum Action { DRAW, ERASE, LINE, RECT }
-enum Shape { SQUARE = 1, SHARP = 2, ROUND = 3, CONCAVE = 4, CONCAVE_SHARP = 5, CIRCLE = 6, FLOWER = 7, HEART = 8, STAR = 9 }
+enum Shape { 
+	SQUARE = 1,
+	SHARP = 2, 
+	ROUND = 3, 
+	CONCAVE = 4, 
+	CONCAVE_SHARP = 5,
+	SQUARE_EDGE = 6,
+	ROUND_EDGE = 7,
+	CIRCLE = 8, 
+	FLOWER = 9, 
+	HEART = 10, 
+	STAR = 11, 
+	PAW_PRINT = 12,
+}
 enum Size { XXS, XS, SM, MD, LG, XL, XXL }
 enum Ratio { ODD, EVEN }
 
 signal action_changed(to: Action)
 signal aspect_ratio_changed(to: Dictionary)
 signal color_changed(to: Color)
-signal size_changed(to: Size)
-signal zoom_changed(to: float)
-signal shape_changed(to: Shape)
+signal precision_changed(to: float)
 signal ratio_changed(to: Ratio)
 signal rotation_changed(to: int)
+signal shape_changed(to: Shape)
+signal size_changed(to: Size)
+signal zoom_changed(to: float)
+
+signal canvas_selected(canvas: SubViewport)
 
 const CANVAS_SIZE := 800.0
 
@@ -41,10 +57,13 @@ const ShapeTexture := {
 	Shape.ROUND: preload("res://apps/painter/assets/shapes/round.svg"),
 	Shape.CONCAVE: preload("res://apps/painter/assets/shapes/concave.svg"),
 	Shape.CONCAVE_SHARP: preload("res://apps/painter/assets/shapes/concave_sharp.svg"),
+	Shape.SQUARE_EDGE: preload("res://apps/painter/assets/shapes/square_edge.svg"),
+	Shape.ROUND_EDGE: preload("res://apps/painter/assets/shapes/round_edge.svg"),
 	Shape.CIRCLE: preload("res://apps/painter/assets/stamps/circle.svg"),
 	Shape.FLOWER: preload("res://apps/painter/assets/stamps/flower.svg"),
 	Shape.HEART: preload("res://apps/painter/assets/stamps/heart.svg"),
 	Shape.STAR: preload("res://apps/painter/assets/stamps/star.svg"),
+	Shape.PAW_PRINT: preload("res://apps/painter/assets/stamps/paw_print.svg"),
 }
 
 var action := Action.DRAW:
@@ -52,7 +71,7 @@ var action := Action.DRAW:
 		action = value
 		action_changed.emit(value)
 
-var aspect_ratio := { x = 1.0, y = 1.0 }:
+var aspect_ratio := Vector2.ONE:
 	set(value):
 		aspect_ratio = value
 		aspect_ratio_changed.emit(value)
@@ -92,6 +111,17 @@ var size := Size.MD:
 		size = clamp(value, Size.XS, Size.XXL)
 		size_changed.emit(value)
 
+
+var precision := -1.0:
+	set(value):
+		precision = value
+		precision_changed.emit(value)
+
+
+var precision_factor: Vector2:
+	get: return Vector2(abs(precision), abs(precision))
+
+
 var zoom := 1.0:
 	set(value):
 		zoom = clamp(value, 0.1, 20.0)
@@ -105,7 +135,7 @@ var size_px: Vector2:
 				if ratio == Ratio.EVEN 
 				else OddSizePx[size]
 		)
-		return Vector2(s * aspect_ratio.x, s * aspect_ratio.y)
+		return Vector2(s, s) * precision_factor * aspect_ratio
 
 
 func _ready() -> void:
@@ -133,3 +163,8 @@ func has_line() -> bool:
 
 func is_zoomed() -> bool:
 	return abs(1.0 - zoom) > 0.05
+
+
+func toggle_precision() -> void:
+	if precision < 0.0: precision = 0.25
+	else: precision = -1.0

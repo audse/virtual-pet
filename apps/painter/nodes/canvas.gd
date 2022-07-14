@@ -13,25 +13,38 @@ const EXTENSION := ".canvas"
 func _ready() -> void:
 	States.Paint.size_changed.connect(resize)
 	States.Paint.action_changed.connect(_on_change_action)
+	States.Paint.precision_changed.connect(_on_precision_changed)
 	States.Paint.ratio_changed.connect(resize)
 	States.Paint.zoom_changed.connect(_on_change_zoom)
 	States.Paint.rotation_changed.connect(
 		func(_x): move_cursor_to(get_local_mouse_position())
 	)
+	States.Paint.canvas_selected.connect(load_canvas)
 	%CanvasCopy.size = size
 
 
 func _on_change_zoom(new_zoom: float) -> void:
+	size = Vector2(800, 800)
 	var is_zoomed: bool = States.Paint.is_zoomed()
 	%Minimap.visible = is_zoomed
-	size = Vector2(800, 800)
-	%CanvasCopy.scale = Vector2(new_zoom, new_zoom)
 	if not is_zoomed:
 		%CanvasCopy.position = Vector2(0, 0)
+	(
+		AnimBuilder
+			.new(%CanvasCopy)
+			.keyframe("zoom", 0.125)
+			.prop("scale", { zoom = Vector2(new_zoom, new_zoom) })
+			.complete()
+	)
 
 
 func _on_change_action(_new_action: int) -> void:
 	clear_ghosts()
+
+
+func _on_precision_changed(precision: float) -> void:
+	canvas.material.set_shader_param("minigrid_x", precision)
+	canvas.material.set_shader_param("minigrid_y", precision)
 
 
 func move_cursor(event: InputEvent) -> void:
@@ -144,26 +157,19 @@ func save_canvas(canvas_name: String) -> int:
 	var err := file.open(GALLERY_PATH + canvas_name + EXTENSION, File.WRITE)
 	if not err == OK: return err
 	
-	for pixel in %Canvas.get_children():
-		if pixel != cursor: file.store_var(pixel, true)
-	
+	for pixel in canvas.get_children():
+		if pixel not in [cursor, ghost]: file.store_var(pixel, true)
 	file.close()
 	return OK
 
 
-func load_canvas(canvas_name: String) -> int:
-	var file := File.new()
-	var err := file.open(GALLERY_PATH + canvas_name + EXTENSION, File.READ)
-	if not err == OK: return err
-	
-	for pixel in %Canvas.get_children():
-		if pixel != cursor: %Canvas.remove_child(pixel)
-	
-	while file.get_position() < file.get_length():
-		var pixel = file.get_var(true)
-		if pixel is Sprite2D:
-			%Canvas.add_child(pixel)
-	
+func clear_canvas() -> void:
+	for pixel in canvas.get_children():
+		if pixel not in [cursor, ghost]: pixel.queue_free()
+
+
+func load_canvas(from_canvas: SubViewport) -> void:
+	clear_canvas()
+	for pixel in from_canvas.get_children():
+		if pixel is Node2D: canvas.add_child(pixel.duplicate())
 	cursor.raise()
-	file.close()
-	return OK

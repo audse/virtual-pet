@@ -1,4 +1,4 @@
-[gd_resource type="Theme" load_steps=10 format=3 uid="uid://cq8mh6dl8s7wt"]
+[gd_resource type="Theme" load_steps=12 format=3 uid="uid://cq8mh6dl8s7wt"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_twiph"]
 content_margin_left = 8.0
@@ -15,6 +15,18 @@ content_margin_top = 8.0
 content_margin_right = 8.0
 content_margin_bottom = 8.0
 bg_color = Color(0.2, 0.254902, 0.333333, 0.588235)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_q7ylc"]
+content_margin_left = 12.0
+content_margin_top = 12.0
+content_margin_right = 12.0
+content_margin_bottom = 12.0
+bg_color = Color(0.2, 0.254902, 0.333333, 0.784314)
+border_color = Color(0.8, 0.8, 0.8, 0)
 corner_radius_top_left = 20
 corner_radius_top_right = 20
 corner_radius_bottom_right = 20
@@ -56,6 +68,8 @@ corner_radius_top_right = 20
 corner_radius_bottom_right = 20
 corner_radius_bottom_left = 20
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_jwlk4"]
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fhgvx"]
 content_margin_left = 8.0
 content_margin_top = 8.0
@@ -86,6 +100,8 @@ Button/styles/focus = SubResource("StyleBoxEmpty_vahvk")
 Button/styles/hover = SubResource("StyleBoxFlat_g2bby")
 Button/styles/normal = SubResource("StyleBoxFlat_twiph")
 Button/styles/pressed = SubResource("StyleBoxFlat_twiph")
+FloatingPanel/base_type = &"PanelContainer"
+FloatingPanel/styles/panel = SubResource("StyleBoxFlat_q7ylc")
 HBoxContainer/constants/separation = 0
 HFlowContainer/constants/h_separation = 0
 HFlowContainer/constants/v_separation = 0
@@ -103,6 +119,7 @@ SuccessButton/colors/icon_hover_color = Color(0.85098, 1, 0.901961, 0.784314)
 SuccessButton/colors/icon_normal_color = Color(0.85098, 1, 0.901961, 0.784314)
 SuccessButton/colors/icon_pressed_color = Color(0.85098, 1, 0.901961, 0.588235)
 SuccessButton/styles/disabled = SubResource("StyleBoxFlat_ffy8n")
+SuccessButton/styles/focus = SubResource("StyleBoxEmpty_jwlk4")
 SuccessButton/styles/hover = SubResource("StyleBoxFlat_fhgvx")
 SuccessButton/styles/normal = SubResource("StyleBoxFlat_yrph6")
 SuccessButton/styles/pressed = SubResource("StyleBoxFlat_yrph6")

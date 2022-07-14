@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://crve60i1q2pr1"]
+[gd_scene load_steps=26 format=3 uid="uid://crve60i1q2pr1"]
 
 [ext_resource type="Script" path="res://interface/components/right_drawer.gd" id="1_38vuy"]
 [ext_resource type="Script" path="res://apps/painter/nodes/gallery.gd" id="1_adm4l"]
@@ -6,6 +6,9 @@
 [ext_resource type="Shader" path="res://apps/painter/assets/shaders/rounded_blur.gdshader" id="3_p8s5q"]
 [ext_resource type="Texture2D" uid="uid://3pjhr6dgoo5i" path="res://apps/painter/assets/icons/forward.svg" id="4_amgs2"]
 [ext_resource type="FontData" uid="uid://b6r7yrlh6rrnh" path="res://static/fonts/Nunito/Nunito-ExtraBold.ttf" id="6_vauo3"]
+[ext_resource type="FontData" uid="uid://bp5ue6xh64brk" path="res://static/fonts/Nunito/Nunito-SemiBold.ttf" id="7_f63pj"]
+[ext_resource type="Texture2D" uid="uid://wd0fvsupe5ip" path="res://apps/painter/assets/icons/download_file.svg" id="8_u4v3k"]
+[ext_resource type="Texture2D" uid="uid://b2lpdvuywdedv" path="res://apps/painter/assets/icons/check.svg" id="9_6k4ib"]
 
 [sub_resource type="Gradient" id="Gradient_iq207"]
 offsets = PackedFloat32Array(0, 0.06621, 0.19863, 0.504566, 0.751142)
@@ -49,6 +52,16 @@ width = 1080
 height = 1920
 noise = SubResource("FastNoiseLite_5y42p")
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_mu0vi"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_auwvl"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_lceam"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_5urbe"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_1xeos"]
+
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ib1yt"]
 shader = ExtResource("3_p8s5q")
 shader_param/blur_amount = 2.5
@@ -66,12 +79,16 @@ content_margin_bottom = 24.0
 draw_center = false
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_1oih1"]
-viewport_path = NodePath("Gallery/Viewports/ViewportTemplate")
+viewport_path = NodePath("GalleryDrawer/Viewports/ViewportTemplate")
+
+[sub_resource type="Font" id="Font_3dt2t"]
+data/0 = ExtResource("7_f63pj")
 
 [node name="Gallery" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 mouse_filter = 1
+theme = ExtResource("2_5mtns")
 script = ExtResource("1_adm4l")
 
 [node name="GalleryDrawer" type="Container" parent="."]
@@ -101,27 +118,40 @@ ignore_texture_size = true
 unique_name_in_owner = true
 modulate = Color(1, 1, 1, 0)
 clip_contents = true
-custom_minimum_size = Vector2(1000, 1000)
+custom_minimum_size = Vector2(800, 800)
 anchor_right = 1.0
 anchor_bottom = 1.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
 mouse_filter = 2
 
 [node name="ViewportTemplate" type="SubViewport" parent="GalleryDrawer/Viewports"]
 unique_name_in_owner = true
 handle_input_locally = false
+screen_space_aa = 1
 gui_disable_input = true
-size = Vector2i(1000, 1000)
+size = Vector2i(800, 800)
 render_target_update_mode = 4
 
 [node name="Canvas" type="ColorRect" parent="GalleryDrawer/Viewports/ViewportTemplate"]
-custom_minimum_size = Vector2(1000, 1000)
-offset_right = 1000.0
-offset_bottom = 1000.0
+custom_minimum_size = Vector2(800, 800)
+offset_right = 800.0
+offset_bottom = 800.0
 mouse_filter = 2
+
+[node name="BackdropButton" type="Button" parent="GalleryDrawer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme_override_styles/normal = SubResource("StyleBoxEmpty_mu0vi")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_auwvl")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_lceam")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_5urbe")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_1xeos")
 
 [node name="MarginContainer" type="MarginContainer" parent="GalleryDrawer"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+mouse_filter = 2
 theme_override_constants/margin_top = 100
 theme_override_constants/margin_bottom = 100
 
@@ -156,19 +186,19 @@ offset_right = 732.0
 offset_bottom = 70.0
 
 [node name="Label" type="Label" parent="GalleryDrawer/MarginContainer/PanelContainer/VBoxContainer/HBoxContainer"]
-offset_right = 531.0
+offset_right = 549.0
 offset_bottom = 70.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 size_flags_stretch_ratio = 3.0
 theme_override_fonts/font = SubResource("Font_m45nl")
-theme_override_font_sizes/font_size = 28
+theme_override_font_sizes/font_size = 26
 text = "G  A  L  L  E  R  Y  "
 vertical_alignment = 1
 
 [node name="CloseButton" type="Button" parent="GalleryDrawer/MarginContainer/PanelContainer/VBoxContainer/HBoxContainer"]
 custom_minimum_size = Vector2(70, 70)
-offset_left = 555.0
+offset_left = 549.0
 offset_right = 732.0
 offset_bottom = 70.0
 size_flags_horizontal = 3
@@ -191,7 +221,7 @@ expand_icon = true
 
 [node name="ScrollContainer" type="ScrollContainer" parent="GalleryDrawer/MarginContainer/PanelContainer/VBoxContainer"]
 clip_contents = false
-offset_top = 94.0
+offset_top = 70.0
 offset_right = 732.0
 offset_bottom = 1520.0
 size_flags_vertical = 3
@@ -199,21 +229,74 @@ size_flags_vertical = 3
 [node name="CanvasGrid" type="GridContainer" parent="GalleryDrawer/MarginContainer/PanelContainer/VBoxContainer/ScrollContainer"]
 unique_name_in_owner = true
 offset_right = 732.0
-offset_bottom = 1426.0
+offset_bottom = 1450.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 columns = 4
 
-[node name="CanvasTemplate" type="TextureRect" parent="GalleryDrawer/MarginContainer/PanelContainer/VBoxContainer/ScrollContainer/CanvasGrid"]
+[node name="CanvasTemplateSection" type="VBoxContainer" parent="GalleryDrawer/MarginContainer/PanelContainer/VBoxContainer/ScrollContainer/CanvasGrid"]
 unique_name_in_owner = true
 visible = false
-custom_minimum_size = Vector2(0, 300)
-offset_right = 234.0
-offset_bottom = 300.0
+offset_right = 183.0
+offset_bottom = 331.0
 size_flags_horizontal = 3
 size_flags_vertical = 0
-texture = SubResource("ViewportTexture_1oih1")
+
+[node name="CanvasTemplate" type="TextureButton" parent="GalleryDrawer/MarginContainer/PanelContainer/VBoxContainer/ScrollContainer/CanvasGrid/CanvasTemplateSection"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 220)
+offset_right = 183.0
+offset_bottom = 220.0
+size_flags_horizontal = 3
+size_flags_vertical = 0
+texture_normal = SubResource("ViewportTexture_1oih1")
 ignore_texture_size = true
 stretch_mode = 5
 
+[node name="Label" type="Label" parent="GalleryDrawer/MarginContainer/PanelContainer/VBoxContainer/ScrollContainer/CanvasGrid/CanvasTemplateSection"]
+offset_top = 220.0
+offset_right = 183.0
+offset_bottom = 270.0
+size_flags_vertical = 0
+theme_override_colors/font_color = Color(0.796078, 0.835294, 0.882353, 1)
+theme_override_constants/line_spacing = 0
+theme_override_fonts/font = SubResource("Font_3dt2t")
+theme_override_font_sizes/font_size = 36
+text = "Canvas 1"
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="GalleryDrawer/MarginContainer/PanelContainer/VBoxContainer/ScrollContainer/CanvasGrid/CanvasTemplateSection"]
+offset_top = 270.0
+offset_right = 183.0
+offset_bottom = 331.0
+theme_override_constants/margin_left = 0
+theme_override_constants/margin_top = 0
+theme_override_constants/margin_right = 0
+theme_override_constants/margin_bottom = 0
+
+[node name="DownloadPngButton" type="Button" parent="GalleryDrawer/MarginContainer/PanelContainer/VBoxContainer/ScrollContainer/CanvasGrid/CanvasTemplateSection/MarginContainer"]
+custom_minimum_size = Vector2(125, 0)
+offset_left = 29.0
+offset_right = 154.0
+offset_bottom = 61.0
+size_flags_horizontal = 4
+text = ".png"
+icon = ExtResource("8_u4v3k")
+alignment = 2
+expand_icon = true
+
+[node name="DownloadPngSuccessButton" type="Button" parent="GalleryDrawer/MarginContainer/PanelContainer/VBoxContainer/ScrollContainer/CanvasGrid/CanvasTemplateSection/MarginContainer"]
+visible = false
+custom_minimum_size = Vector2(125, 60)
+offset_left = 29.0
+offset_right = 154.0
+offset_bottom = 61.0
+size_flags_horizontal = 4
+theme_type_variation = &"SuccessButton"
+icon = ExtResource("9_6k4ib")
+icon_alignment = 1
+expand_icon = true
+
+[connection signal="pressed" from="GalleryDrawer/BackdropButton" to="GalleryDrawer" method="close"]
 [connection signal="pressed" from="GalleryDrawer/MarginContainer/PanelContainer/VBoxContainer/HBoxContainer/CloseButton" to="GalleryDrawer" method="close"]

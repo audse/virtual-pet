@@ -18,11 +18,14 @@ const Shape = States.PaintState.Shape
 # pixel size ratio / width + height
 # "advanced" menu
 # height map
-# save to gallery
-# open + edit
-# save as PNG
 # save as JSON
-# paw print shape
+# upload JSON
+# shape libraries
+# max number of pictures
+# preset canvases
+# fill tool ???
+# optimization ???
+# color picker
 
 func _ready() -> void:
 	for tool in tool_buttons.keys():
@@ -34,6 +37,12 @@ func _ready() -> void:
 	States.Paint.action_changed.connect(_on_action_changed)
 	States.Paint.size_changed.connect(_on_size_changed)
 	States.Paint.ratio_changed.connect(_on_ratio_changed)
+	States.Paint.precision_changed.connect(_on_precision_changed)
+	
+	%CanvasNameField.text = "Canvas %d" % (%Gallery.num_canvases + 1)
+	
+	%DrawToolsWindow.opening.connect(%ViewToolsWindow.queue_close)
+	%ViewToolsWindow.opening.connect(%DrawToolsWindow.queue_close)
 
 
 var event_map := {
@@ -46,6 +55,7 @@ var event_map := {
 	"forward": func(_e): States.Paint.shape += 1,
 	"backward": func(_e): States.Paint.shape -= 1,
 }
+
 
 func _input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion:
@@ -288,14 +298,11 @@ func _on_recenter_button_pressed() -> void:
 	States.Paint.zoom = 1.0
 
 
-func _on_load_save_button_pressed() -> void:
-	%Canvas.load_canvas()
-
-
 func _on_save_button_pressed() -> void:
 	var canvas_name: String = %CanvasNameField.text
 	if len(canvas_name) < 1: return
 	%Canvas.save_canvas(canvas_name)
+	%Gallery.load_gallery() # reload gallery grid
 
 
 func _on_gallery_button_pressed() -> void:
@@ -304,3 +311,12 @@ func _on_gallery_button_pressed() -> void:
 
 func _on_ok_button_pressed() -> void:
 	States.Paint.set_action(States.Paint.prev_action)
+
+
+func _on_precision_button_pressed() -> void:
+	States.Paint.toggle_precision()
+
+
+func _on_precision_changed(precision: float) -> void:
+	if precision < 0.0: deselected(%PrecisionButton)
+	else: selected(%PrecisionButton)

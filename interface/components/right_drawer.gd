@@ -99,7 +99,7 @@ func _create_ref_rect() -> ReferenceRect:
 func open() -> void:
 	if player:
 		opened.emit()
-		player.play(Anim.OPEN)
+		player.play(Anim.OPEN, -1, 1.5)
 		await player.animation_finished
 		is_open.emit()
 
@@ -107,6 +107,6 @@ func open() -> void:
 func close() -> void:
 	if player:
 		closed.emit()
-		player.play(Anim.CLOSE)
+		player.play(Anim.CLOSE, -1, 1.5)
 		await player.animation_finished
 		is_closed.emit()

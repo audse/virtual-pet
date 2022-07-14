@@ -39,7 +39,7 @@ func animate() -> void:
 		var key_data: Dictionary = keyframes.keyframes[key]
 		var tween := (
 			node.create_tween()
-				.set_trans(Tween.TRANS_CUBIC)
+				.set_trans(key_data.trans_type)
 				.set_ease(key_data.ease_type)
 		)
 		for prop in props:
@@ -48,3 +48,6 @@ func animate() -> void:
 	
 	tear_down()
 	self.animation_finished.emit()
+
+func _to_string() -> String:
+	return ("Animating %s" % [node.name])

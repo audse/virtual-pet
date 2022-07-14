@@ -23,7 +23,7 @@ func setup(value: Dictionary) -> AnimBuilder:
 
 
 func setup_prop(prop_name: String, value) -> AnimBuilder:
-	anim.props[prop_name] = value
+	anim.setup[prop_name] = value
 	return self
 
 
@@ -44,10 +44,11 @@ func keyframes(value: Dictionary) -> AnimBuilder:
 	return self
 
 
-func keyframe(key_name: String, duration: float, ease_val: int = Tween.EASE_IN_OUT) -> AnimBuilder:
+func keyframe(key_name: String, duration: float, ease_val: int = Tween.EASE_IN_OUT, trans_val: int = Tween.TRANS_CUBIC) -> AnimBuilder:
 	anim.keyframes[key_name] = { 
 		ease_type = ease_val if ease_override == -1 else ease_override,
-		duration = duration 
+		duration = duration,
+		trans_type = trans_val
 	}
 	return self
 

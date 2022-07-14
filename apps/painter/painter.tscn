@@ -1,4 +1,4 @@
-[gd_scene load_steps=51 format=3 uid="uid://dsdccslw53vke"]
+[gd_scene load_steps=39 format=3 uid="uid://dsdccslw53vke"]
 
 [ext_resource type="Script" path="res://apps/painter/painter.gd" id="1_r1smx"]
 [ext_resource type="Theme" uid="uid://cq8mh6dl8s7wt" path="res://apps/painter/assets/themes/painter.tres" id="1_u00cw"]
@@ -12,258 +12,31 @@
 [ext_resource type="Texture2D" uid="uid://bhvq4marly1o0" path="res://apps/painter/assets/icons/rectangle.svg" id="12_geruk"]
 [ext_resource type="Texture2D" uid="uid://mexdj1uqwyjs" path="res://apps/painter/assets/icons/gallery.svg" id="13_f0mbl"]
 [ext_resource type="Texture2D" uid="uid://b24vngv1jm71o" path="res://apps/painter/assets/icons/line.svg" id="13_monbh"]
+[ext_resource type="Texture2D" uid="uid://bneve00ab2acy" path="res://apps/painter/assets/icons/color_drop.svg" id="13_r01k2"]
 [ext_resource type="Texture2D" uid="uid://ch7l34kkmaatb" path="res://apps/painter/assets/icons/eraser.svg" id="14_umeww"]
 [ext_resource type="Texture2D" uid="uid://o6p0w2gruix" path="res://apps/painter/assets/icons/pencil.svg" id="15_bphgi"]
+[ext_resource type="Theme" uid="uid://wbvix152d8b5" path="res://apps/painter/assets/themes/draw_tools.tres" id="15_icrpu"]
+[ext_resource type="Script" path="res://interface/components/custom_height_vbox_container.gd" id="15_p2icr"]
 [ext_resource type="Script" path="res://interface/components/circle_menu.gd" id="15_rflyk"]
-[ext_resource type="FontData" uid="uid://b6r7yrlh6rrnh" path="res://static/fonts/Nunito/Nunito-ExtraBold.ttf" id="15_wgjja"]
 [ext_resource type="Texture2D" uid="uid://dwlu8jm1xyn6t" path="res://apps/painter/assets/icons/undo.svg" id="16_bta2x"]
 [ext_resource type="Texture2D" uid="uid://b2lpdvuywdedv" path="res://apps/painter/assets/icons/check.svg" id="16_m0h7j"]
-[ext_resource type="Texture2D" uid="uid://c0xjwq26v2od3" path="res://apps/painter/assets/icons/load_save.svg" id="16_s0y0t"]
-[ext_resource type="Texture2D" uid="uid://3pjhr6dgoo5i" path="res://apps/painter/assets/icons/forward.svg" id="17_d0x7r"]
+[ext_resource type="Texture2D" uid="uid://bn61fbcpokvek" path="res://apps/painter/assets/icons/back.svg" id="16_sdttm"]
 [ext_resource type="Texture2D" uid="uid://dp0xkjoprvqm7" path="res://apps/painter/assets/icons/redo.svg" id="17_nvjsf"]
 [ext_resource type="Texture2D" uid="uid://o871cmutas55" path="res://apps/painter/assets/icons/save.svg" id="17_ydjfi"]
 [ext_resource type="Texture2D" uid="uid://4vh1caqutpo" path="res://apps/painter/assets/icons/increase_size.svg" id="19_crq7g"]
 [ext_resource type="Texture2D" uid="uid://by73s6jeshln5" path="res://apps/painter/assets/icons/decrease_size.svg" id="20_ycmut"]
+[ext_resource type="Texture2D" uid="uid://c1oyf7lcynirk" path="res://apps/painter/assets/icons/advanced_view.svg" id="21_carqh"]
 [ext_resource type="Texture2D" uid="uid://crfk2s5k2gfli" path="res://apps/painter/assets/icons/odd.svg" id="22_d7l23"]
 [ext_resource type="Texture2D" uid="uid://desksw0jv238g" path="res://apps/painter/assets/icons/even.svg" id="23_ghk18"]
 [ext_resource type="Texture2D" uid="uid://bapda8bny76r5" path="res://apps/painter/assets/icons/zoom_in.svg" id="24_4mq7p"]
 [ext_resource type="PackedScene" uid="uid://crve60i1q2pr1" path="res://apps/painter/scenes/gallery.tscn" id="25_1hssg"]
 [ext_resource type="Texture2D" uid="uid://6t2bh8qv4gjy" path="res://apps/painter/assets/icons/zoom_out.svg" id="25_4dkvo"]
 [ext_resource type="Texture2D" uid="uid://feal5xxkatsd" path="res://apps/painter/assets/icons/recenter.svg" id="26_5os7r"]
+[ext_resource type="Texture2D" uid="uid://bqrpqs6dqd7lo" path="res://apps/painter/assets/icons/precision.svg" id="26_o1uin"]
 [ext_resource type="Texture2D" uid="uid://dnyt7rc2qfo58" path="res://temp/ios_guide-01.svg" id="27_frdcy"]
 
 [sub_resource type="Font" id="Font_gy418"]
 data/0 = ExtResource("3_tim4a")
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_q7ylc"]
-content_margin_left = 12.0
-content_margin_top = 32.0
-content_margin_right = 12.0
-content_margin_bottom = 32.0
-bg_color = Color(0.2, 0.254902, 0.333333, 1)
-border_width_bottom = 10
-border_color = Color(0.8, 0.8, 0.8, 0)
-corner_radius_top_left = 20
-corner_radius_bottom_left = 20
-expand_margin_right = 32.0
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_s1wms"]
-content_margin_left = 12.0
-content_margin_top = 12.0
-content_margin_right = 12.0
-content_margin_bottom = 12.0
-bg_color = Color(0.580392, 0.639216, 0.721569, 0.588235)
-border_width_top = 2
-border_width_bottom = 2
-border_color = Color(0.796078, 0.835294, 0.882353, 0.490196)
-border_blend = true
-corner_radius_top_left = 36
-corner_radius_top_right = 36
-corner_radius_bottom_right = 36
-corner_radius_bottom_left = 36
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vwnmy"]
-bg_color = Color(0.796078, 0.835294, 0.882353, 0.490196)
-draw_center = false
-border_width_left = 3
-border_width_top = 3
-border_width_right = 1
-border_width_bottom = 2
-corner_radius_top_left = 36
-corner_radius_top_right = 36
-corner_radius_bottom_right = 36
-corner_radius_bottom_left = 36
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_e4kw5"]
-content_margin_left = 12.0
-content_margin_top = 12.0
-content_margin_right = 12.0
-content_margin_bottom = 12.0
-bg_color = Color(0.580392, 0.639216, 0.721569, 0.921569)
-border_width_top = 2
-border_width_bottom = 2
-border_color = Color(0.796078, 0.835294, 0.882353, 0.490196)
-border_blend = true
-corner_radius_top_left = 40
-corner_radius_top_right = 40
-corner_radius_bottom_right = 40
-corner_radius_bottom_left = 40
-expand_margin_left = 1.0
-expand_margin_top = 1.0
-expand_margin_right = 1.0
-expand_margin_bottom = 1.0
-shadow_color = Color(0.0392157, 0.0901961, 0.160784, 0.0392157)
-shadow_size = 10
-shadow_offset = Vector2(0, 6)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3o50q"]
-content_margin_left = 16.0
-content_margin_top = 16.0
-content_margin_right = 16.0
-content_margin_bottom = 16.0
-bg_color = Color(0.580392, 0.639216, 0.721569, 0.882353)
-border_width_top = 2
-border_width_bottom = 2
-border_color = Color(0.796078, 0.835294, 0.882353, 0.490196)
-border_blend = true
-corner_radius_top_left = 38
-corner_radius_top_right = 38
-corner_radius_bottom_right = 38
-corner_radius_bottom_left = 38
-shadow_color = Color(0.0196078, 0.0666667, 0.160784, 0.0588235)
-shadow_size = 6
-shadow_offset = Vector2(0, 3)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fkrkq"]
-content_margin_left = 16.0
-content_margin_top = 16.0
-content_margin_right = 16.0
-content_margin_bottom = 16.0
-bg_color = Color(0.580392, 0.639216, 0.721569, 0.784314)
-border_width_top = 2
-border_width_bottom = 2
-border_color = Color(0.796078, 0.835294, 0.882353, 0.490196)
-border_blend = true
-corner_radius_top_left = 36
-corner_radius_top_right = 36
-corner_radius_bottom_right = 36
-corner_radius_bottom_left = 36
-shadow_color = Color(0.0431373, 0.0941176, 0.160784, 0.0980392)
-shadow_size = 5
-shadow_offset = Vector2(0, 2)
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_xmnjs"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sa3wd"]
-draw_center = false
-
-[sub_resource type="Font" id="Font_5i3er"]
-data/0 = ExtResource("15_wgjja")
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ahv0o"]
-content_margin_left = 16.0
-content_margin_top = 16.0
-content_margin_right = 16.0
-content_margin_bottom = 16.0
-bg_color = Color(0.0235294, 0.658824, 0.462745, 0.588235)
-border_width_top = 2
-border_width_bottom = 2
-border_color = Color(0.556863, 0.937255, 0.592157, 0.490196)
-border_blend = true
-corner_radius_top_left = 36
-corner_radius_top_right = 36
-corner_radius_bottom_right = 36
-corner_radius_bottom_left = 36
-shadow_color = Color(0.0196078, 0.0666667, 0.160784, 0.0588235)
-shadow_size = 6
-shadow_offset = Vector2(0, 3)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_t2ed6"]
-draw_center = false
-border_width_left = 2
-border_width_top = 3
-border_width_right = 2
-border_width_bottom = 1
-border_color = Color(0.0156863, 0.470588, 0.341176, 0.784314)
-border_blend = true
-corner_radius_top_left = 50
-corner_radius_top_right = 50
-corner_radius_bottom_right = 50
-corner_radius_bottom_left = 50
-expand_margin_left = 2.0
-expand_margin_top = 2.0
-expand_margin_right = 2.0
-expand_margin_bottom = 2.0
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_h7hh6"]
-content_margin_left = 16.0
-content_margin_top = 16.0
-content_margin_right = 16.0
-content_margin_bottom = 16.0
-bg_color = Color(0.0235294, 0.658824, 0.462745, 0.921569)
-border_width_top = 2
-border_width_bottom = 2
-border_color = Color(0.796078, 0.835294, 0.882353, 0.490196)
-border_blend = true
-corner_radius_top_left = 40
-corner_radius_top_right = 40
-corner_radius_bottom_right = 40
-corner_radius_bottom_left = 40
-expand_margin_left = 1.0
-expand_margin_top = 1.0
-expand_margin_right = 1.0
-expand_margin_bottom = 1.0
-shadow_color = Color(0.0392157, 0.0901961, 0.160784, 0.0392157)
-shadow_size = 10
-shadow_offset = Vector2(0, 6)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5k638"]
-content_margin_left = 16.0
-content_margin_top = 16.0
-content_margin_right = 16.0
-content_margin_bottom = 16.0
-bg_color = Color(0.0235294, 0.658824, 0.462745, 0.882353)
-border_width_top = 2
-border_width_bottom = 2
-border_color = Color(0.556863, 0.937255, 0.592157, 0.490196)
-border_blend = true
-corner_radius_top_left = 38
-corner_radius_top_right = 38
-corner_radius_bottom_right = 38
-corner_radius_bottom_left = 38
-shadow_color = Color(0.0196078, 0.0666667, 0.160784, 0.0588235)
-shadow_size = 6
-shadow_offset = Vector2(0, 3)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_351ge"]
-content_margin_left = 16.0
-content_margin_top = 16.0
-content_margin_right = 16.0
-content_margin_bottom = 16.0
-bg_color = Color(0.0235294, 0.658824, 0.462745, 0.784314)
-border_width_top = 2
-border_width_bottom = 2
-border_color = Color(0.556863, 0.937255, 0.592157, 0.490196)
-border_blend = true
-corner_radius_top_left = 36
-corner_radius_top_right = 36
-corner_radius_bottom_right = 36
-corner_radius_bottom_left = 36
-shadow_color = Color(0.0431373, 0.0941176, 0.160784, 0.0980392)
-shadow_size = 5
-shadow_offset = Vector2(0, 2)
-
-[sub_resource type="Theme" id="Theme_6evjf"]
-Button/colors/icon_hover_color = Color(0.972549, 0.980392, 0.988235, 1)
-Button/colors/icon_normal_color = Color(0.972549, 0.980392, 0.988235, 1)
-Button/colors/icon_pressed_color = Color(0.945098, 0.960784, 0.976471, 1)
-Button/styles/disabled = SubResource("StyleBoxFlat_s1wms")
-Button/styles/focus = SubResource("StyleBoxFlat_vwnmy")
-Button/styles/hover = SubResource("StyleBoxFlat_e4kw5")
-Button/styles/normal = SubResource("StyleBoxFlat_3o50q")
-Button/styles/pressed = SubResource("StyleBoxFlat_fkrkq")
-CircleMenuCloseButton/base_type = &"Button"
-CircleMenuCloseButton/colors/icon_hover_color = Color(0.2, 0.254902, 0.333333, 1)
-CircleMenuCloseButton/colors/icon_hover_pressed_color = Color(0.117647, 0.160784, 0.231373, 1)
-CircleMenuCloseButton/colors/icon_normal_color = Color(0.117647, 0.160784, 0.231373, 1)
-CircleMenuCloseButton/colors/icon_pressed_color = Color(0.0705882, 0.109804, 0.160784, 1)
-CircleMenuCloseButton/styles/focus = SubResource("StyleBoxEmpty_xmnjs")
-CircleMenuCloseButton/styles/hover = SubResource("StyleBoxFlat_sa3wd")
-CircleMenuCloseButton/styles/normal = SubResource("StyleBoxFlat_sa3wd")
-CircleMenuCloseButton/styles/pressed = SubResource("StyleBoxFlat_sa3wd")
-SuccessButton/base_type = &"Button"
-SuccessButton/colors/icon_hover_color = Color(0.941176, 0.992157, 0.956863, 1)
-SuccessButton/colors/icon_hover_pressed_color = Color(0.733333, 0.968627, 0.815686, 1)
-SuccessButton/colors/icon_normal_color = Color(0.85098, 1, 0.901961, 0.784314)
-SuccessButton/colors/icon_pressed_color = Color(0.733333, 0.968627, 0.815686, 1)
-SuccessButton/constants/h_separation = 12
-SuccessButton/font_sizes/font_size = 36
-SuccessButton/fonts/font = SubResource("Font_5i3er")
-SuccessButton/styles/disabled = SubResource("StyleBoxFlat_ahv0o")
-SuccessButton/styles/focus = SubResource("StyleBoxFlat_t2ed6")
-SuccessButton/styles/hover = SubResource("StyleBoxFlat_h7hh6")
-SuccessButton/styles/normal = SubResource("StyleBoxFlat_5k638")
-SuccessButton/styles/pressed = SubResource("StyleBoxFlat_351ge")
 
 [sub_resource type="Gradient" id="Gradient_x1euq"]
 offsets = PackedFloat32Array(0.0521092, 0.557078, 0.981735)
@@ -313,18 +86,18 @@ offset_top = 100.0
 offset_right = 804.0
 offset_bottom = 1642.0
 
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer"]
 offset_right = 780.0
-offset_bottom = 331.0
+offset_bottom = 343.0
 theme_override_constants/separation = 12
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer"]
-offset_right = 678.0
-offset_bottom = 331.0
+[node name="ColorsContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/VBoxContainer"]
+offset_right = 780.0
+offset_bottom = 145.0
 size_flags_horizontal = 3
 
-[node name="ColorsLabel" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
-offset_right = 678.0
+[node name="ColorsLabel" type="Label" parent="MarginContainer/VBoxContainer/VBoxContainer/ColorsContainer"]
+offset_right = 780.0
 offset_bottom = 46.0
 theme_override_colors/font_color = Color(0.580392, 0.639216, 0.721569, 1)
 theme_override_fonts/font = SubResource("Font_gy418")
@@ -332,106 +105,110 @@ theme_override_font_sizes/font_size = 24
 text = " P A L E T T E"
 vertical_alignment = 1
 
-[node name="Colors" type="MarginContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
+[node name="Colors" type="MarginContainer" parent="MarginContainer/VBoxContainer/VBoxContainer/ColorsContainer"]
 offset_top = 46.0
-offset_right = 678.0
+offset_right = 780.0
 offset_bottom = 145.0
 theme_override_constants/margin_left = 0
 theme_override_constants/margin_top = 0
 theme_override_constants/margin_right = 0
 
-[node name="Swatches" type="HFlowContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/Colors"]
+[node name="Swatches" type="HFlowContainer" parent="MarginContainer/VBoxContainer/VBoxContainer/ColorsContainer/Colors"]
 unique_name_in_owner = true
-offset_right = 678.0
+offset_right = 780.0
 offset_bottom = 75.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="Button1" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/Colors/Swatches"]
+[node name="Button1" type="Button" parent="MarginContainer/VBoxContainer/VBoxContainer/ColorsContainer/Colors/Swatches"]
 custom_minimum_size = Vector2(75, 75)
-offset_right = 75.0
+offset_right = 86.0
 offset_bottom = 75.0
 size_flags_horizontal = 3
 script = ExtResource("2_q85po")
 swatch = Color(0.972549, 0.980392, 0.988235, 1)
 
-[node name="Button2" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/Colors/Swatches"]
+[node name="Button2" type="Button" parent="MarginContainer/VBoxContainer/VBoxContainer/ColorsContainer/Colors/Swatches"]
 custom_minimum_size = Vector2(75, 75)
-offset_left = 75.0
-offset_right = 150.0
+offset_left = 86.0
+offset_right = 172.0
 offset_bottom = 75.0
 size_flags_horizontal = 3
 script = ExtResource("2_q85po")
 swatch = Color(0.945098, 0.960784, 0.976471, 1)
 
-[node name="Button3" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/Colors/Swatches"]
+[node name="Button3" type="Button" parent="MarginContainer/VBoxContainer/VBoxContainer/ColorsContainer/Colors/Swatches"]
 custom_minimum_size = Vector2(75, 75)
-offset_left = 150.0
-offset_right = 225.0
+offset_left = 172.0
+offset_right = 258.0
 offset_bottom = 75.0
 size_flags_horizontal = 3
 script = ExtResource("2_q85po")
 swatch = Color(0.886275, 0.909804, 0.941176, 1)
 
-[node name="Button4" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/Colors/Swatches"]
+[node name="Button4" type="Button" parent="MarginContainer/VBoxContainer/VBoxContainer/ColorsContainer/Colors/Swatches"]
 custom_minimum_size = Vector2(75, 75)
-offset_left = 225.0
-offset_right = 300.0
+offset_left = 258.0
+offset_right = 344.0
 offset_bottom = 75.0
 size_flags_horizontal = 3
 theme_type_variation = &"SuccessButton"
 script = ExtResource("2_q85po")
 swatch = Color(0.796078, 0.835294, 0.882353, 1)
 
-[node name="Button5" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/Colors/Swatches"]
+[node name="Button5" type="Button" parent="MarginContainer/VBoxContainer/VBoxContainer/ColorsContainer/Colors/Swatches"]
 custom_minimum_size = Vector2(75, 75)
-offset_left = 300.0
-offset_right = 375.0
+offset_left = 344.0
+offset_right = 430.0
 offset_bottom = 75.0
 size_flags_horizontal = 3
 script = ExtResource("2_q85po")
 swatch = Color(0.580392, 0.639216, 0.721569, 1)
 
-[node name="Button6" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/Colors/Swatches"]
+[node name="Button6" type="Button" parent="MarginContainer/VBoxContainer/VBoxContainer/ColorsContainer/Colors/Swatches"]
 custom_minimum_size = Vector2(75, 75)
-offset_left = 375.0
-offset_right = 450.0
+offset_left = 430.0
+offset_right = 516.0
 offset_bottom = 75.0
 size_flags_horizontal = 3
 script = ExtResource("2_q85po")
 swatch = Color(0.392157, 0.454902, 0.545098, 1)
 
-[node name="Button7" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/Colors/Swatches"]
+[node name="Button7" type="Button" parent="MarginContainer/VBoxContainer/VBoxContainer/ColorsContainer/Colors/Swatches"]
 custom_minimum_size = Vector2(75, 75)
-offset_left = 450.0
-offset_right = 525.0
+offset_left = 516.0
+offset_right = 602.0
 offset_bottom = 75.0
 size_flags_horizontal = 3
 script = ExtResource("2_q85po")
 swatch = Color(0.278431, 0.333333, 0.411765, 1)
 
-[node name="Button8" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/Colors/Swatches"]
+[node name="Button8" type="Button" parent="MarginContainer/VBoxContainer/VBoxContainer/ColorsContainer/Colors/Swatches"]
 custom_minimum_size = Vector2(75, 75)
-offset_left = 525.0
-offset_right = 600.0
+offset_left = 602.0
+offset_right = 688.0
 offset_bottom = 75.0
 size_flags_horizontal = 3
 script = ExtResource("2_q85po")
 swatch = Color(0.2, 0.254902, 0.333333, 1)
 
-[node name="Button9" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/Colors/Swatches"]
+[node name="Button9" type="Button" parent="MarginContainer/VBoxContainer/VBoxContainer/ColorsContainer/Colors/Swatches"]
 custom_minimum_size = Vector2(75, 75)
-offset_left = 600.0
-offset_right = 675.0
+offset_left = 688.0
+offset_right = 774.0
 offset_bottom = 75.0
 size_flags_horizontal = 3
 script = ExtResource("2_q85po")
 swatch = Color(0.117647, 0.160784, 0.231373, 1)
 
-[node name="ShapesLabel" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
-offset_top = 145.0
-offset_right = 678.0
-offset_bottom = 189.0
+[node name="ShapesContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/VBoxContainer"]
+offset_top = 157.0
+offset_right = 780.0
+offset_bottom = 343.0
+
+[node name="ShapesLabel" type="Label" parent="MarginContainer/VBoxContainer/VBoxContainer/ShapesContainer"]
+offset_right = 780.0
+offset_bottom = 44.0
 size_flags_horizontal = 3
 theme_override_colors/font_color = Color(0.580392, 0.639216, 0.721569, 1)
 theme_override_constants/line_spacing = 10
@@ -440,19 +217,19 @@ theme_override_font_sizes/font_size = 24
 text = " S H A P E S"
 vertical_alignment = 1
 
-[node name="Shapes" type="HBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
-offset_top = 189.0
-offset_right = 678.0
-offset_bottom = 331.0
+[node name="Shapes" type="HBoxContainer" parent="MarginContainer/VBoxContainer/VBoxContainer/ShapesContainer"]
+offset_top = 44.0
+offset_right = 780.0
+offset_bottom = 186.0
 theme_override_constants/separation = 10
 
-[node name="LeftDrawTools" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/Shapes"]
+[node name="LeftDrawTools" type="VBoxContainer" parent="MarginContainer/VBoxContainer/VBoxContainer/ShapesContainer/Shapes"]
 offset_right = 66.0
 offset_bottom = 142.0
 theme_override_constants/separation = 10
 alignment = 1
 
-[node name="RotateLeftButton" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/Shapes/LeftDrawTools"]
+[node name="RotateLeftButton" type="Button" parent="MarginContainer/VBoxContainer/VBoxContainer/ShapesContainer/Shapes/LeftDrawTools"]
 unique_name_in_owner = true
 offset_right = 66.0
 offset_bottom = 66.0
@@ -461,7 +238,7 @@ text = "
 icon = ExtResource("5_5sj71")
 icon_alignment = 1
 
-[node name="DecreaseSizeButton" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/Shapes/LeftDrawTools"]
+[node name="DecreaseSizeButton" type="Button" parent="MarginContainer/VBoxContainer/VBoxContainer/ShapesContainer/Shapes/LeftDrawTools"]
 unique_name_in_owner = true
 offset_top = 76.0
 offset_right = 66.0
@@ -469,23 +246,23 @@ offset_bottom = 142.0
 icon = ExtResource("20_ycmut")
 icon_alignment = 1
 
-[node name="ShapeButtons" type="ScrollContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/Shapes"]
+[node name="ShapeButtons" type="ScrollContainer" parent="MarginContainer/VBoxContainer/VBoxContainer/ShapesContainer/Shapes"]
 custom_minimum_size = Vector2(0, 100)
 offset_left = 76.0
-offset_right = 602.0
+offset_right = 704.0
 offset_bottom = 142.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 vertical_scroll_mode = 0
 
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/Shapes/ShapeButtons"]
-offset_right = 739.0
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/VBoxContainer/ShapesContainer/Shapes/ShapeButtons"]
+offset_right = 988.0
 offset_bottom = 134.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_constants/separation = 8
 
-[node name="SquareButton" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/Shapes/ShapeButtons/HBoxContainer"]
+[node name="SquareButton" type="Button" parent="MarginContainer/VBoxContainer/VBoxContainer/ShapesContainer/Shapes/ShapeButtons/HBoxContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(75, 75)
 offset_top = 29.0
@@ -496,7 +273,7 @@ size_flags_vertical = 4
 theme_type_variation = &"SuccessButton"
 script = ExtResource("8_hoo73")
 
-[node name="SharpButton" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/Shapes/ShapeButtons/HBoxContainer"]
+[node name="SharpButton" type="Button" parent="MarginContainer/VBoxContainer/VBoxContainer/ShapesContainer/Shapes/ShapeButtons/HBoxContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(75, 75)
 offset_left = 83.0
@@ -508,7 +285,7 @@ size_flags_vertical = 4
 script = ExtResource("8_hoo73")
 shape = 2
 
-[node name="RoundButton" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/Shapes/ShapeButtons/HBoxContainer"]
+[node name="RoundButton" type="Button" parent="MarginContainer/VBoxContainer/VBoxContainer/ShapesContainer/Shapes/ShapeButtons/HBoxContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(75, 75)
 offset_left = 166.0
@@ -520,7 +297,7 @@ size_flags_vertical = 4
 script = ExtResource("8_hoo73")
 shape = 3
 
-[node name="ConcaveButton" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/Shapes/ShapeButtons/HBoxContainer"]
+[node name="ConcaveButton" type="Button" parent="MarginContainer/VBoxContainer/VBoxContainer/ShapesContainer/Shapes/ShapeButtons/HBoxContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(75, 75)
 offset_left = 249.0
@@ -532,7 +309,7 @@ size_flags_vertical = 4
 script = ExtResource("8_hoo73")
 shape = 4
 
-[node name="ConcaveSharpButton2" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/Shapes/ShapeButtons/HBoxContainer"]
+[node name="ConcaveSharpButton2" type="Button" parent="MarginContainer/VBoxContainer/VBoxContainer/ShapesContainer/Shapes/ShapeButtons/HBoxContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(75, 75)
 offset_left = 332.0
@@ -544,27 +321,31 @@ size_flags_vertical = 4
 script = ExtResource("8_hoo73")
 shape = 5
 
-[node name="CircleButton" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/Shapes/ShapeButtons/HBoxContainer"]
+[node name="SquareEdgeButton" type="Button" parent="MarginContainer/VBoxContainer/VBoxContainer/ShapesContainer/Shapes/ShapeButtons/HBoxContainer"]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(75, 75)
 offset_left = 415.0
 offset_top = 29.0
 offset_right = 490.0
 offset_bottom = 104.0
+size_flags_horizontal = 0
 size_flags_vertical = 4
 script = ExtResource("8_hoo73")
 shape = 6
 
-[node name="FlowerButton" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/Shapes/ShapeButtons/HBoxContainer"]
+[node name="RoundEdgeButton" type="Button" parent="MarginContainer/VBoxContainer/VBoxContainer/ShapesContainer/Shapes/ShapeButtons/HBoxContainer"]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(75, 75)
 offset_left = 498.0
 offset_top = 29.0
 offset_right = 573.0
 offset_bottom = 104.0
+size_flags_horizontal = 0
 size_flags_vertical = 4
 script = ExtResource("8_hoo73")
 shape = 7
 
-[node name="HeartButton" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/Shapes/ShapeButtons/HBoxContainer"]
+[node name="CircleButton" type="Button" parent="MarginContainer/VBoxContainer/VBoxContainer/ShapesContainer/Shapes/ShapeButtons/HBoxContainer"]
 custom_minimum_size = Vector2(75, 75)
 offset_left = 581.0
 offset_top = 29.0
@@ -574,7 +355,7 @@ size_flags_vertical = 4
 script = ExtResource("8_hoo73")
 shape = 8
 
-[node name="StarButton" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/Shapes/ShapeButtons/HBoxContainer"]
+[node name="FlowerButton" type="Button" parent="MarginContainer/VBoxContainer/VBoxContainer/ShapesContainer/Shapes/ShapeButtons/HBoxContainer"]
 custom_minimum_size = Vector2(75, 75)
 offset_left = 664.0
 offset_top = 29.0
@@ -584,21 +365,51 @@ size_flags_vertical = 4
 script = ExtResource("8_hoo73")
 shape = 9
 
-[node name="RightDrawTools" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/Shapes"]
-offset_left = 612.0
-offset_right = 678.0
+[node name="HeartButton" type="Button" parent="MarginContainer/VBoxContainer/VBoxContainer/ShapesContainer/Shapes/ShapeButtons/HBoxContainer"]
+custom_minimum_size = Vector2(75, 75)
+offset_left = 747.0
+offset_top = 29.0
+offset_right = 822.0
+offset_bottom = 104.0
+size_flags_vertical = 4
+script = ExtResource("8_hoo73")
+shape = 10
+
+[node name="StarButton" type="Button" parent="MarginContainer/VBoxContainer/VBoxContainer/ShapesContainer/Shapes/ShapeButtons/HBoxContainer"]
+custom_minimum_size = Vector2(75, 75)
+offset_left = 830.0
+offset_top = 29.0
+offset_right = 905.0
+offset_bottom = 104.0
+size_flags_vertical = 4
+script = ExtResource("8_hoo73")
+shape = 11
+
+[node name="StarButton2" type="Button" parent="MarginContainer/VBoxContainer/VBoxContainer/ShapesContainer/Shapes/ShapeButtons/HBoxContainer"]
+custom_minimum_size = Vector2(75, 75)
+offset_left = 913.0
+offset_top = 29.0
+offset_right = 988.0
+offset_bottom = 104.0
+size_flags_vertical = 4
+script = ExtResource("8_hoo73")
+shape = 12
+
+[node name="RightDrawTools" type="VBoxContainer" parent="MarginContainer/VBoxContainer/VBoxContainer/ShapesContainer/Shapes"]
+offset_left = 714.0
+offset_right = 780.0
 offset_bottom = 142.0
 theme_override_constants/separation = 10
 alignment = 1
 
-[node name="RotateRightButton" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/Shapes/RightDrawTools"]
+[node name="RotateRightButton" type="Button" parent="MarginContainer/VBoxContainer/VBoxContainer/ShapesContainer/Shapes/RightDrawTools"]
 unique_name_in_owner = true
 offset_right = 66.0
 offset_bottom = 66.0
 icon = ExtResource("11_11syx")
 icon_alignment = 1
 
-[node name="IncreaseSizeButton" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/Shapes/RightDrawTools"]
+[node name="IncreaseSizeButton" type="Button" parent="MarginContainer/VBoxContainer/VBoxContainer/ShapesContainer/Shapes/RightDrawTools"]
 unique_name_in_owner = true
 offset_top = 76.0
 offset_right = 66.0
@@ -606,49 +417,10 @@ offset_bottom = 142.0
 icon = ExtResource("19_crq7g")
 icon_alignment = 1
 
-[node name="GalleryButtons" type="PanelContainer" parent="MarginContainer/VBoxContainer/HBoxContainer"]
-offset_left = 690.0
-offset_right = 780.0
-offset_bottom = 331.0
-theme_override_styles/panel = SubResource("StyleBoxFlat_q7ylc")
-
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/GalleryButtons"]
-offset_left = 12.0
-offset_top = 32.0
-offset_right = 78.0
-offset_bottom = 299.0
-theme_override_constants/separation = 12
-
-[node name="GalleryButton" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer/GalleryButtons/VBoxContainer"]
-unique_name_in_owner = true
-offset_right = 66.0
-offset_bottom = 66.0
-size_flags_vertical = 0
-icon = ExtResource("13_f0mbl")
-icon_alignment = 1
-
-[node name="LoadSaveButton" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer/GalleryButtons/VBoxContainer"]
-unique_name_in_owner = true
-visible = false
-offset_right = 91.0
-offset_bottom = 91.0
-size_flags_vertical = 0
-icon = ExtResource("16_s0y0t")
-icon_alignment = 1
-
-[node name="SaveButton" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer/GalleryButtons/VBoxContainer"]
-unique_name_in_owner = true
-offset_top = 78.0
-offset_right = 66.0
-offset_bottom = 144.0
-size_flags_vertical = 0
-icon = ExtResource("17_ydjfi")
-icon_alignment = 1
-
 [node name="CanvasContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer"]
-offset_top = 331.0
+offset_top = 343.0
 offset_right = 780.0
-offset_bottom = 1177.0
+offset_bottom = 1189.0
 theme_override_constants/margin_left = -24
 theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = -24
@@ -668,155 +440,354 @@ offset_top = 10.0
 offset_right = 804.0
 offset_bottom = 810.0
 mouse_filter = 2
-theme = SubResource("Theme_6evjf")
+theme = ExtResource("15_icrpu")
 theme_override_constants/margin_left = 12
 theme_override_constants/margin_top = 0
 theme_override_constants/margin_right = 12
 theme_override_constants/margin_bottom = 0
 
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/CanvasContainer/CanvasTools"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/CanvasContainer/CanvasTools"]
 offset_left = 12.0
-offset_top = 505.0
 offset_right = 816.0
 offset_bottom = 800.0
+mouse_filter = 2
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="MarginContainer/VBoxContainer/CanvasContainer/CanvasTools/VBoxContainer"]
+offset_right = 804.0
+offset_bottom = 106.0
+mouse_filter = 2
+theme_override_constants/separation = 24
+
+[node name="PaletteButton" type="Button" parent="MarginContainer/VBoxContainer/CanvasContainer/CanvasTools/VBoxContainer/HBoxContainer2"]
+offset_top = 12.0
+offset_right = 82.0
+offset_bottom = 94.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+icon = ExtResource("13_r01k2")
+
+[node name="UndoButtons" type="PanelContainer" parent="MarginContainer/VBoxContainer/CanvasContainer/CanvasTools/VBoxContainer/HBoxContainer2"]
+offset_left = 106.0
+offset_right = 318.0
+offset_bottom = 106.0
+size_flags_horizontal = 8
+size_flags_vertical = 3
+theme_type_variation = &"FloatingPanel"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/CanvasContainer/CanvasTools/VBoxContainer/HBoxContainer2/UndoButtons"]
+offset_left = 12.0
+offset_top = 12.0
+offset_right = 200.0
+offset_bottom = 94.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 24
+alignment = 1
+
+[node name="UndoButton" type="Button" parent="MarginContainer/VBoxContainer/CanvasContainer/CanvasTools/VBoxContainer/HBoxContainer2/UndoButtons/HBoxContainer"]
+unique_name_in_owner = true
+offset_right = 82.0
+offset_bottom = 82.0
+size_flags_vertical = 0
+icon = ExtResource("16_bta2x")
+icon_alignment = 1
+
+[node name="RedoButton" type="Button" parent="MarginContainer/VBoxContainer/CanvasContainer/CanvasTools/VBoxContainer/HBoxContainer2/UndoButtons/HBoxContainer"]
+unique_name_in_owner = true
+offset_left = 106.0
+offset_right = 188.0
+offset_bottom = 82.0
+size_flags_vertical = 0
+icon = ExtResource("17_nvjsf")
+icon_alignment = 1
+
+[node name="GalleryButtons" type="PanelContainer" parent="MarginContainer/VBoxContainer/CanvasContainer/CanvasTools/VBoxContainer/HBoxContainer2"]
+offset_left = 342.0
+offset_right = 554.0
+offset_bottom = 106.0
+size_flags_horizontal = 8
+size_flags_vertical = 3
+theme_type_variation = &"FloatingPanel"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/CanvasContainer/CanvasTools/VBoxContainer/HBoxContainer2/GalleryButtons"]
+offset_left = 12.0
+offset_top = 12.0
+offset_right = 200.0
+offset_bottom = 94.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 24
+alignment = 1
+
+[node name="GalleryButton" type="Button" parent="MarginContainer/VBoxContainer/CanvasContainer/CanvasTools/VBoxContainer/HBoxContainer2/GalleryButtons/HBoxContainer"]
+unique_name_in_owner = true
+offset_right = 82.0
+offset_bottom = 82.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+icon = ExtResource("13_f0mbl")
+icon_alignment = 1
+
+[node name="SaveButton" type="Button" parent="MarginContainer/VBoxContainer/CanvasContainer/CanvasTools/VBoxContainer/HBoxContainer2/GalleryButtons/HBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(60, 60)
+offset_left = 106.0
+offset_right = 188.0
+offset_bottom = 82.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+icon = ExtResource("17_ydjfi")
+icon_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/CanvasContainer/CanvasTools/VBoxContainer"]
+custom_minimum_size = Vector2(0, 610)
+offset_top = 106.0
+offset_right = 804.0
+offset_bottom = 716.0
 size_flags_horizontal = 3
 size_flags_vertical = 8
 mouse_filter = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer/CanvasContainer/CanvasTools/HBoxContainer"]
-offset_right = 509.0
-offset_bottom = 295.0
+[node name="DrawTools" type="MarginContainer" parent="MarginContainer/VBoxContainer/CanvasContainer/CanvasTools/VBoxContainer/HBoxContainer"]
+offset_right = 402.0
+offset_bottom = 610.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 2
+
+[node name="DropShadowContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer/CanvasContainer/CanvasTools/VBoxContainer/HBoxContainer/DrawTools"]
+offset_left = 24.0
+offset_top = 24.0
+offset_right = 378.0
+offset_bottom = 586.0
+mouse_filter = 2
+theme_override_constants/margin_left = -350
+theme_override_constants/margin_bottom = -140
+
+[node name="DropShadow" type="TextureRect" parent="MarginContainer/VBoxContainer/CanvasContainer/CanvasTools/VBoxContainer/HBoxContainer/DrawTools/DropShadowContainer"]
+self_modulate = Color(1, 1, 1, 0.784314)
+offset_left = -350.0
+offset_top = 24.0
+offset_right = 330.0
+offset_bottom = 702.0
+mouse_filter = 2
+texture = SubResource("GradientTexture2D_fvk5r")
+ignore_texture_size = true
+
+[node name="CustomHeightVBoxContainer" type="Container" parent="MarginContainer/VBoxContainer/CanvasContainer/CanvasTools/VBoxContainer/HBoxContainer/DrawTools"]
+offset_left = 24.0
+offset_top = 24.0
+offset_right = 378.0
+offset_bottom = 424.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 2
+script = ExtResource("15_p2icr")
+height = 100.0
+resort = false
+
+[node name="ZoomInButton" type="Button" parent="MarginContainer/VBoxContainer/CanvasContainer/CanvasTools/VBoxContainer/HBoxContainer/DrawTools/CustomHeightVBoxContainer"]
+unique_name_in_owner = true
+offset_right = 82.0
+offset_bottom = 82.0
+pivot_offset = Vector2(41.0001, 41.0002)
+size_flags_horizontal = 0
+size_flags_vertical = 0
+icon = ExtResource("24_4mq7p")
+
+[node name="ZoomOutButton" type="Button" parent="MarginContainer/VBoxContainer/CanvasContainer/CanvasTools/VBoxContainer/HBoxContainer/DrawTools/CustomHeightVBoxContainer"]
+unique_name_in_owner = true
+offset_top = 100.0
+offset_right = 82.0
+offset_bottom = 182.0
+pivot_offset = Vector2(41, 41)
+size_flags_horizontal = 0
+size_flags_vertical = 0
+icon = ExtResource("25_4dkvo")
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer/CanvasContainer/CanvasTools/VBoxContainer/HBoxContainer/DrawTools/CustomHeightVBoxContainer"]
+offset_top = 200.0
+offset_right = 348.0
+offset_bottom = 300.0
+theme_override_constants/margin_left = -100
+theme_override_constants/margin_top = -140
+theme_override_constants/margin_right = 0
+theme_override_constants/margin_bottom = 0
+
+[node name="DrawToolsWindow" type="Container" parent="MarginContainer/VBoxContainer/CanvasContainer/CanvasTools/VBoxContainer/HBoxContainer/DrawTools/CustomHeightVBoxContainer/MarginContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(300, 300)
+offset_left = -100.0
+offset_top = -140.0
+offset_right = 200.0
+offset_bottom = 160.0
+size_flags_horizontal = 0
+size_flags_vertical = 3
+mouse_filter = 2
+script = ExtResource("15_rflyk")
+unsorted = [NodePath("CircleMenuButton"), NodePath("CircleMenuBackdrop"), NodePath("CircleCloseButton")]
+degree_range = 150.0
+degree_offset = 255.0
+origin = 3
+menu_open_icon = ExtResource("15_bphgi")
+menu_close_icon = ExtResource("16_sdttm")
+menu_button_min_size = Vector2(85, 85)
+close_button_min_size = Vector2(45, 45)
+menu_stylebox_override = SubResource("StyleBoxFlat_6hkiu")
+override_degree_offset = 255.0
+
+[node name="DrawButton" type="Button" parent="MarginContainer/VBoxContainer/CanvasContainer/CanvasTools/VBoxContainer/HBoxContainer/DrawTools/CustomHeightVBoxContainer/MarginContainer/DrawToolsWindow"]
+unique_name_in_owner = true
+visible = false
+offset_left = 109.0
+offset_top = 109.0
+offset_right = 191.0
+offset_bottom = 191.0
+pivot_offset = Vector2(41.0001, 41)
+size_flags_vertical = 0
+theme_type_variation = &"SuccessButton"
+icon = ExtResource("15_bphgi")
+icon_alignment = 1
+
+[node name="EraseButton" type="Button" parent="MarginContainer/VBoxContainer/CanvasContainer/CanvasTools/VBoxContainer/HBoxContainer/DrawTools/CustomHeightVBoxContainer/MarginContainer/DrawToolsWindow"]
+unique_name_in_owner = true
+visible = false
+offset_left = 109.0
+offset_top = 109.0
+offset_right = 191.0
+offset_bottom = 191.0
+pivot_offset = Vector2(41, 41)
+size_flags_vertical = 0
+icon = ExtResource("14_umeww")
+icon_alignment = 1
+
+[node name="LineButton" type="Button" parent="MarginContainer/VBoxContainer/CanvasContainer/CanvasTools/VBoxContainer/HBoxContainer/DrawTools/CustomHeightVBoxContainer/MarginContainer/DrawToolsWindow"]
+unique_name_in_owner = true
+visible = false
+offset_left = 109.0
+offset_top = 109.0
+offset_right = 191.0
+offset_bottom = 191.0
+pivot_offset = Vector2(41.0001, 41.0001)
+size_flags_vertical = 0
+icon = ExtResource("13_monbh")
+icon_alignment = 1
+
+[node name="RectangleButton" type="Button" parent="MarginContainer/VBoxContainer/CanvasContainer/CanvasTools/VBoxContainer/HBoxContainer/DrawTools/CustomHeightVBoxContainer/MarginContainer/DrawToolsWindow"]
+unique_name_in_owner = true
+visible = false
+offset_left = 109.0
+offset_top = 109.0
+offset_right = 191.0
+offset_bottom = 191.0
+pivot_offset = Vector2(41, 41.0001)
+size_flags_vertical = 0
+icon = ExtResource("12_geruk")
+icon_alignment = 1
+
+[node name="MarginContainer2" type="MarginContainer" parent="MarginContainer/VBoxContainer/CanvasContainer/CanvasTools/VBoxContainer/HBoxContainer/DrawTools/CustomHeightVBoxContainer"]
+offset_top = 300.0
+offset_right = 348.0
+offset_bottom = 400.0
+theme_override_constants/margin_left = -100
+theme_override_constants/margin_top = -130
+theme_override_constants/margin_right = 0
+theme_override_constants/margin_bottom = 0
+
+[node name="ViewToolsWindow" type="Container" parent="MarginContainer/VBoxContainer/CanvasContainer/CanvasTools/VBoxContainer/HBoxContainer/DrawTools/CustomHeightVBoxContainer/MarginContainer2"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(300, 300)
+offset_left = -100.0
+offset_top = -130.0
+offset_right = 200.0
+offset_bottom = 170.0
+size_flags_horizontal = 0
+mouse_filter = 2
+script = ExtResource("15_rflyk")
+unsorted = [NodePath("CircleMenuButton"), NodePath("CircleMenuBackdrop"), NodePath("CircleCloseButton")]
+degree_range = 160.0
+degree_offset = 255.0
+origin = 3
+menu_open_icon = ExtResource("21_carqh")
+menu_close_icon = ExtResource("16_sdttm")
+menu_button_min_size = Vector2(85, 85)
+close_button_min_size = Vector2(45, 45)
+menu_stylebox_override = SubResource("StyleBoxFlat_6hkiu")
+override_degree_offset = 255.0
+
+[node name="EvenButton" type="Button" parent="MarginContainer/VBoxContainer/CanvasContainer/CanvasTools/VBoxContainer/HBoxContainer/DrawTools/CustomHeightVBoxContainer/MarginContainer2/ViewToolsWindow"]
+unique_name_in_owner = true
+visible = false
+offset_left = 109.0
+offset_top = 109.0
+offset_right = 191.0
+offset_bottom = 191.0
+theme_type_variation = &"SuccessButton"
+icon = ExtResource("23_ghk18")
+
+[node name="OddButton" type="Button" parent="MarginContainer/VBoxContainer/CanvasContainer/CanvasTools/VBoxContainer/HBoxContainer/DrawTools/CustomHeightVBoxContainer/MarginContainer2/ViewToolsWindow"]
+unique_name_in_owner = true
+visible = false
+offset_left = 109.0
+offset_top = 109.0
+offset_right = 191.0
+offset_bottom = 191.0
+icon = ExtResource("22_d7l23")
+
+[node name="PrecisionButton" type="Button" parent="MarginContainer/VBoxContainer/CanvasContainer/CanvasTools/VBoxContainer/HBoxContainer/DrawTools/CustomHeightVBoxContainer/MarginContainer2/ViewToolsWindow"]
+unique_name_in_owner = true
+visible = false
+offset_left = 109.0
+offset_top = 109.0
+offset_right = 191.0
+offset_bottom = 191.0
+pivot_offset = Vector2(41.0001, 41.0001)
+size_flags_vertical = 0
+icon = ExtResource("26_o1uin")
+
+[node name="RecenterButton" type="Button" parent="MarginContainer/VBoxContainer/CanvasContainer/CanvasTools/VBoxContainer/HBoxContainer/DrawTools/CustomHeightVBoxContainer/MarginContainer2/ViewToolsWindow"]
+unique_name_in_owner = true
+visible = false
+offset_left = 109.0
+offset_top = 109.0
+offset_right = 191.0
+offset_bottom = 191.0
+pivot_offset = Vector2(41.0001, 41.0001)
+size_flags_vertical = 0
+icon = ExtResource("26_5os7r")
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer/CanvasContainer/CanvasTools/VBoxContainer/HBoxContainer"]
+offset_left = 402.0
+offset_right = 804.0
+offset_bottom = 610.0
 size_flags_horizontal = 3
 mouse_filter = 2
 
-[node name="OkButton" type="Button" parent="MarginContainer/VBoxContainer/CanvasContainer/CanvasTools/HBoxContainer/MarginContainer"]
+[node name="OkButton" type="Button" parent="MarginContainer/VBoxContainer/CanvasContainer/CanvasTools/VBoxContainer/HBoxContainer/MarginContainer"]
 unique_name_in_owner = true
 visible = false
 custom_minimum_size = Vector2(135, 75)
-offset_left = 24.0
-offset_top = 189.0
-offset_right = 159.0
-offset_bottom = 271.0
-size_flags_horizontal = 0
+offset_left = 243.0
+offset_top = 504.0
+offset_right = 378.0
+offset_bottom = 586.0
+size_flags_horizontal = 8
 size_flags_vertical = 8
 theme_type_variation = &"SuccessButton"
 text = "Ok "
 icon = ExtResource("16_m0h7j")
 expand_icon = true
 
-[node name="DrawTools" type="MarginContainer" parent="MarginContainer/VBoxContainer/CanvasContainer/CanvasTools/HBoxContainer"]
-custom_minimum_size = Vector2(295, 295)
-offset_left = 509.0
-offset_right = 804.0
-offset_bottom = 295.0
-size_flags_horizontal = 8
-size_flags_vertical = 8
-mouse_filter = 2
-theme_override_constants/margin_right = -80
-theme_override_constants/margin_bottom = -80
-
-[node name="DropShadowContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer/CanvasContainer/CanvasTools/HBoxContainer/DrawTools"]
-offset_left = 24.0
-offset_top = 24.0
-offset_right = 375.0
-offset_bottom = 375.0
-mouse_filter = 2
-theme_override_constants/margin_right = -90
-theme_override_constants/margin_bottom = -80
-
-[node name="DropShadow" type="TextureRect" parent="MarginContainer/VBoxContainer/CanvasContainer/CanvasTools/HBoxContainer/DrawTools/DropShadowContainer"]
-self_modulate = Color(1, 1, 1, 0.784314)
-offset_left = 24.0
-offset_top = 24.0
-offset_right = 441.0
-offset_bottom = 431.0
-mouse_filter = 2
-texture = SubResource("GradientTexture2D_fvk5r")
-ignore_texture_size = true
-
-[node name="DrawToolsWindow" type="Container" parent="MarginContainer/VBoxContainer/CanvasContainer/CanvasTools/HBoxContainer/DrawTools"]
-unique_name_in_owner = true
-offset_left = 24.0
-offset_top = 24.0
-offset_right = 375.0
-offset_bottom = 375.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-mouse_filter = 2
-script = ExtResource("15_rflyk")
-unsorted = [NodePath("CircleMenuButton"), NodePath("CircleMenuBackdrop"), NodePath("CircleCloseButton")]
-degree_range = 150.0
-degree_offset = 55.0
-origin = 4
-menu_open_icon = ExtResource("15_bphgi")
-menu_close_icon = ExtResource("17_d0x7r")
-menu_button_min_size = Vector2(75, 75)
-close_button_min_size = Vector2(45, 45)
-menu_stylebox_override = SubResource("StyleBoxFlat_6hkiu")
-override_degree_offset = 55.0
-
-[node name="RectangleButton" type="Button" parent="MarginContainer/VBoxContainer/CanvasContainer/CanvasTools/HBoxContainer/DrawTools/DrawToolsWindow"]
-unique_name_in_owner = true
-offset_left = 134.5
-offset_top = 134.5
-offset_right = 216.5
-offset_bottom = 216.5
-rotation = -3.14159
-scale = Vector2(1e-05, 1e-05)
-pivot_offset = Vector2(41, 41)
-size_flags_vertical = 0
-icon = ExtResource("12_geruk")
-icon_alignment = 1
-
-[node name="LineButton" type="Button" parent="MarginContainer/VBoxContainer/CanvasContainer/CanvasTools/HBoxContainer/DrawTools/DrawToolsWindow"]
-unique_name_in_owner = true
-offset_left = 134.5
-offset_top = 134.5
-offset_right = 216.5
-offset_bottom = 216.5
-rotation = -3.14159
-scale = Vector2(1e-05, 1e-05)
-pivot_offset = Vector2(41, 41)
-size_flags_vertical = 0
-icon = ExtResource("13_monbh")
-icon_alignment = 1
-
-[node name="EraseButton" type="Button" parent="MarginContainer/VBoxContainer/CanvasContainer/CanvasTools/HBoxContainer/DrawTools/DrawToolsWindow"]
-unique_name_in_owner = true
-offset_left = 134.5
-offset_top = 134.5
-offset_right = 216.5
-offset_bottom = 216.5
-rotation = -3.14159
-scale = Vector2(1e-05, 1e-05)
-pivot_offset = Vector2(41, 41)
-size_flags_vertical = 0
-icon = ExtResource("14_umeww")
-icon_alignment = 1
-
-[node name="DrawButton" type="Button" parent="MarginContainer/VBoxContainer/CanvasContainer/CanvasTools/HBoxContainer/DrawTools/DrawToolsWindow"]
-unique_name_in_owner = true
-offset_left = 126.5
-offset_top = 130.5
-offset_right = 224.5
-offset_bottom = 220.5
-rotation = -3.14159
-scale = Vector2(1e-05, 1e-05)
-pivot_offset = Vector2(49, 45)
-size_flags_vertical = 0
-theme_type_variation = &"SuccessButton"
-icon = ExtResource("15_bphgi")
-icon_alignment = 1
-
 [node name="Tools" type="VBoxContainer" parent="MarginContainer/VBoxContainer"]
-offset_top = 1177.0
+offset_top = 1189.0
 offset_right = 780.0
-offset_bottom = 1406.0
+offset_bottom = 1332.0
 theme_override_constants/separation = 20
 
 [node name="Actions" type="HBoxContainer" parent="MarginContainer/VBoxContainer/Tools"]
 offset_right = 780.0
 offset_bottom = 46.0
+theme_override_constants/separation = 6
 alignment = 1
 
 [node name="ToolsLabel" type="Label" parent="MarginContainer/VBoxContainer/Tools/Actions"]
@@ -829,76 +800,20 @@ theme_override_font_sizes/font_size = 24
 text = " T O O L S"
 vertical_alignment = 1
 
-[node name="Editor" type="HBoxContainer" parent="MarginContainer/VBoxContainer/Tools"]
-offset_top = 66.0
-offset_right = 780.0
-offset_bottom = 132.0
-alignment = 2
-
-[node name="UndoButton" type="Button" parent="MarginContainer/VBoxContainer/Tools/Editor"]
-unique_name_in_owner = true
-offset_left = 318.0
-offset_right = 384.0
-offset_bottom = 66.0
-size_flags_vertical = 0
-icon = ExtResource("16_bta2x")
-icon_alignment = 1
-
-[node name="RedoButton" type="Button" parent="MarginContainer/VBoxContainer/Tools/Editor"]
-unique_name_in_owner = true
-offset_left = 384.0
-offset_right = 450.0
-offset_bottom = 66.0
-size_flags_vertical = 0
-icon = ExtResource("17_nvjsf")
-icon_alignment = 1
-
-[node name="OddButton" type="Button" parent="MarginContainer/VBoxContainer/Tools/Editor"]
-unique_name_in_owner = true
-offset_left = 450.0
-offset_right = 516.0
-offset_bottom = 66.0
-icon = ExtResource("22_d7l23")
-
-[node name="EvenButton" type="Button" parent="MarginContainer/VBoxContainer/Tools/Editor"]
-unique_name_in_owner = true
-offset_left = 516.0
-offset_right = 582.0
-offset_bottom = 66.0
-theme_type_variation = &"SuccessButton"
-icon = ExtResource("23_ghk18")
-
-[node name="ZoomInButton" type="Button" parent="MarginContainer/VBoxContainer/Tools/Editor"]
-unique_name_in_owner = true
-offset_left = 582.0
-offset_right = 648.0
-offset_bottom = 66.0
-icon = ExtResource("24_4mq7p")
-
-[node name="ZoomOutButton" type="Button" parent="MarginContainer/VBoxContainer/Tools/Editor"]
-unique_name_in_owner = true
-offset_left = 648.0
-offset_right = 714.0
-offset_bottom = 66.0
-icon = ExtResource("25_4dkvo")
-
-[node name="RecenterButton" type="Button" parent="MarginContainer/VBoxContainer/Tools/Editor"]
-unique_name_in_owner = true
-offset_left = 714.0
-offset_right = 780.0
-offset_bottom = 66.0
-icon = ExtResource("26_5os7r")
-
 [node name="CanvasNameField" type="LineEdit" parent="MarginContainer/VBoxContainer/Tools"]
 unique_name_in_owner = true
-offset_top = 152.0
+offset_top = 66.0
 offset_right = 780.0
-offset_bottom = 229.0
+offset_bottom = 143.0
+text = "my_canvas"
 placeholder_text = "my_canvas"
 
 [node name="Gallery" parent="." instance=ExtResource("25_1hssg")]
 unique_name_in_owner = true
+grow_horizontal = 2
+grow_vertical = 2
 mouse_filter = 2
+metadata/_edit_layout_mode = 1
 
 [node name="IosGuide" type="TextureRect" parent="."]
 visible = false
@@ -910,23 +825,23 @@ ignore_texture_size = true
 stretch_mode = 5
 
 [connection signal="updated" from="Undo" to="." method="_on_undo_updated"]
-[connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/Shapes/LeftDrawTools/RotateLeftButton" to="." method="_on_rotate_button_pressed" binds= [-90]]
-[connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/Shapes/LeftDrawTools/DecreaseSizeButton" to="." method="_on_decrease_size_button_pressed"]
-[connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/Shapes/RightDrawTools/RotateRightButton" to="." method="_on_rotate_button_pressed" binds= [90]]
-[connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/Shapes/RightDrawTools/IncreaseSizeButton" to="." method="_on_increase_size_button_pressed"]
-[connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/GalleryButtons/VBoxContainer/GalleryButton" to="." method="_on_gallery_button_pressed"]
-[connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/GalleryButtons/VBoxContainer/LoadSaveButton" to="." method="_on_load_save_button_pressed"]
-[connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/GalleryButtons/VBoxContainer/SaveButton" to="." method="_on_save_button_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/VBoxContainer/ShapesContainer/Shapes/LeftDrawTools/RotateLeftButton" to="." method="_on_rotate_button_pressed" binds= [-90]]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/VBoxContainer/ShapesContainer/Shapes/LeftDrawTools/DecreaseSizeButton" to="." method="_on_decrease_size_button_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/VBoxContainer/ShapesContainer/Shapes/RightDrawTools/RotateRightButton" to="." method="_on_rotate_button_pressed" binds= [90]]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/VBoxContainer/ShapesContainer/Shapes/RightDrawTools/IncreaseSizeButton" to="." method="_on_increase_size_button_pressed"]
 [connection signal="canvas_gui_input" from="MarginContainer/VBoxContainer/CanvasContainer/Canvas" to="." method="_on_canvas_gui_input"]
-[connection signal="pressed" from="MarginContainer/VBoxContainer/CanvasContainer/CanvasTools/HBoxContainer/MarginContainer/OkButton" to="." method="_on_ok_button_pressed"]
-[connection signal="pressed" from="MarginContainer/VBoxContainer/CanvasContainer/CanvasTools/HBoxContainer/DrawTools/DrawToolsWindow/RectangleButton" to="MarginContainer/VBoxContainer/CanvasContainer/CanvasTools/HBoxContainer/DrawTools/DrawToolsWindow" method="queue_close"]
-[connection signal="pressed" from="MarginContainer/VBoxContainer/CanvasContainer/CanvasTools/HBoxContainer/DrawTools/DrawToolsWindow/LineButton" to="MarginContainer/VBoxContainer/CanvasContainer/CanvasTools/HBoxContainer/DrawTools/DrawToolsWindow" method="queue_close"]
-[connection signal="pressed" from="MarginContainer/VBoxContainer/CanvasContainer/CanvasTools/HBoxContainer/DrawTools/DrawToolsWindow/EraseButton" to="MarginContainer/VBoxContainer/CanvasContainer/CanvasTools/HBoxContainer/DrawTools/DrawToolsWindow" method="queue_close"]
-[connection signal="pressed" from="MarginContainer/VBoxContainer/CanvasContainer/CanvasTools/HBoxContainer/DrawTools/DrawToolsWindow/DrawButton" to="MarginContainer/VBoxContainer/CanvasContainer/CanvasTools/HBoxContainer/DrawTools/DrawToolsWindow" method="queue_close"]
-[connection signal="pressed" from="MarginContainer/VBoxContainer/Tools/Editor/UndoButton" to="." method="_on_undo_button_pressed"]
-[connection signal="pressed" from="MarginContainer/VBoxContainer/Tools/Editor/RedoButton" to="." method="_on_redo_button_pressed"]
-[connection signal="pressed" from="MarginContainer/VBoxContainer/Tools/Editor/OddButton" to="." method="_on_odd_button_pressed"]
-[connection signal="pressed" from="MarginContainer/VBoxContainer/Tools/Editor/EvenButton" to="." method="_on_even_button_pressed"]
-[connection signal="pressed" from="MarginContainer/VBoxContainer/Tools/Editor/ZoomInButton" to="." method="_on_zoom_in_button_pressed"]
-[connection signal="pressed" from="MarginContainer/VBoxContainer/Tools/Editor/ZoomOutButton" to="." method="_on_zoom_out_button_pressed"]
-[connection signal="pressed" from="MarginContainer/VBoxContainer/Tools/Editor/RecenterButton" to="." method="_on_recenter_button_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/CanvasContainer/CanvasTools/VBoxContainer/HBoxContainer2/UndoButtons/HBoxContainer/UndoButton" to="." method="_on_undo_button_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/CanvasContainer/CanvasTools/VBoxContainer/HBoxContainer2/UndoButtons/HBoxContainer/RedoButton" to="." method="_on_redo_button_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/CanvasContainer/CanvasTools/VBoxContainer/HBoxContainer2/GalleryButtons/HBoxContainer/GalleryButton" to="." method="_on_gallery_button_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/CanvasContainer/CanvasTools/VBoxContainer/HBoxContainer2/GalleryButtons/HBoxContainer/SaveButton" to="." method="_on_save_button_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/CanvasContainer/CanvasTools/VBoxContainer/HBoxContainer/DrawTools/CustomHeightVBoxContainer/ZoomInButton" to="." method="_on_zoom_in_button_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/CanvasContainer/CanvasTools/VBoxContainer/HBoxContainer/DrawTools/CustomHeightVBoxContainer/ZoomOutButton" to="." method="_on_zoom_out_button_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/CanvasContainer/CanvasTools/VBoxContainer/HBoxContainer/DrawTools/CustomHeightVBoxContainer/MarginContainer/DrawToolsWindow/DrawButton" to="MarginContainer/VBoxContainer/CanvasContainer/CanvasTools/VBoxContainer/HBoxContainer/DrawTools/CustomHeightVBoxContainer/MarginContainer/DrawToolsWindow" method="queue_close"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/CanvasContainer/CanvasTools/VBoxContainer/HBoxContainer/DrawTools/CustomHeightVBoxContainer/MarginContainer/DrawToolsWindow/EraseButton" to="MarginContainer/VBoxContainer/CanvasContainer/CanvasTools/VBoxContainer/HBoxContainer/DrawTools/CustomHeightVBoxContainer/MarginContainer/DrawToolsWindow" method="queue_close"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/CanvasContainer/CanvasTools/VBoxContainer/HBoxContainer/DrawTools/CustomHeightVBoxContainer/MarginContainer/DrawToolsWindow/LineButton" to="MarginContainer/VBoxContainer/CanvasContainer/CanvasTools/VBoxContainer/HBoxContainer/DrawTools/CustomHeightVBoxContainer/MarginContainer/DrawToolsWindow" method="queue_close"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/CanvasContainer/CanvasTools/VBoxContainer/HBoxContainer/DrawTools/CustomHeightVBoxContainer/MarginContainer/DrawToolsWindow/RectangleButton" to="MarginContainer/VBoxContainer/CanvasContainer/CanvasTools/VBoxContainer/HBoxContainer/DrawTools/CustomHeightVBoxContainer/MarginContainer/DrawToolsWindow" method="queue_close"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/CanvasContainer/CanvasTools/VBoxContainer/HBoxContainer/DrawTools/CustomHeightVBoxContainer/MarginContainer2/ViewToolsWindow/EvenButton" to="." method="_on_even_button_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/CanvasContainer/CanvasTools/VBoxContainer/HBoxContainer/DrawTools/CustomHeightVBoxContainer/MarginContainer2/ViewToolsWindow/OddButton" to="." method="_on_odd_button_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/CanvasContainer/CanvasTools/VBoxContainer/HBoxContainer/DrawTools/CustomHeightVBoxContainer/MarginContainer2/ViewToolsWindow/PrecisionButton" to="." method="_on_precision_button_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/CanvasContainer/CanvasTools/VBoxContainer/HBoxContainer/DrawTools/CustomHeightVBoxContainer/MarginContainer2/ViewToolsWindow/RecenterButton" to="." method="_on_recenter_button_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/CanvasContainer/CanvasTools/VBoxContainer/HBoxContainer/MarginContainer/OkButton" to="." method="_on_ok_button_pressed"]

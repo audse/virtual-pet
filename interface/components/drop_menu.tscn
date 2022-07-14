@@ -1,0 +1,27 @@
+[gd_scene load_steps=2 format=3 uid="uid://dmlds32b5qwdx"]
+
+[ext_resource type="Script" path="res://interface/components/drop_menu.gd" id="1_gr0b8"]
+
+[node name="Control" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource("1_gr0b8")
+origin = null
+triangle_size = Vector2(80, 0)
+margin = null
+
+[node name="ReferenceRect" type="ReferenceRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+border_width = 3.0
+
+[node name="DropMenuTriangle" type="Polygon2D" parent="."]
+antialiased = true
+polygon = PackedVector2Array(25, 0, 50, 25, 0, 25)
+
+[node name="DropMenuTriangle2" type="Polygon2D" parent="DropMenuTriangle"]
+show_behind_parent = true
+color = Color(0.796078, 0.835294, 0.882353, 1)
+antialiased = true
+polygon = PackedVector2Array(25, 0, 50, 25, 0, 25)
