@@ -95,6 +95,7 @@ corner_radius_bottom_right = 20
 corner_radius_bottom_left = 20
 
 [resource]
+default_font_size = 28
 Button/styles/disabled = SubResource("StyleBoxFlat_twiph")
 Button/styles/focus = SubResource("StyleBoxEmpty_vahvk")
 Button/styles/hover = SubResource("StyleBoxFlat_g2bby")

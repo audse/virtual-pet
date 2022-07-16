@@ -1,0 +1,139 @@
+[gd_scene load_steps=10 format=3 uid="uid://bxmglwwmm7yem"]
+
+[ext_resource type="Theme" uid="uid://wbvix152d8b5" path="res://apps/painter/assets/themes/draw_tools.tres" id="1_frw0o"]
+[ext_resource type="Texture2D" uid="uid://o871cmutas55" path="res://apps/painter/assets/icons/save.svg" id="1_kgwxk"]
+[ext_resource type="Script" path="res://interface/components/drop_menu.gd" id="2_owbd3"]
+[ext_resource type="Script" path="res://apps/painter/scenes/save_menu.gd" id="2_qsjbt"]
+[ext_resource type="FontData" uid="uid://doyre2d68vvpi" path="res://static/fonts/Nunito/Nunito-Bold.ttf" id="4_kdu1y"]
+[ext_resource type="Texture2D" uid="uid://b2lpdvuywdedv" path="res://apps/painter/assets/icons/check.svg" id="6_tjlfs"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qfegr"]
+content_margin_left = 24.0
+content_margin_top = 36.0
+content_margin_right = 24.0
+content_margin_bottom = 24.0
+bg_color = Color(0.2, 0.254902, 0.333333, 0.941176)
+border_width_top = 30
+border_color = Color(0.278431, 0.333333, 0.411765, 1)
+border_blend = true
+corner_radius_top_left = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+
+[sub_resource type="Font" id="Font_k3ba2"]
+data/0 = ExtResource("4_kdu1y")
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_oy3pb"]
+
+[node name="SaveButton" type="Button"]
+unique_name_in_owner = true
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -114.0
+offset_bottom = 82.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme = ExtResource("1_frw0o")
+theme_type_variation = &"FloatingPanelButton"
+icon = ExtResource("1_kgwxk")
+icon_alignment = 1
+script = ExtResource("2_qsjbt")
+
+[node name="MenuControl" type="Control" parent="."]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+script = ExtResource("2_owbd3")
+origin = 2
+container = NodePath("../CanvasLayer/SaveMenu")
+triangle_size = Vector2(50, 28)
+triangle_outline_width = {
+"bottom": 0,
+"left": 0,
+"right": 0,
+"top": 0
+}
+right_angle = true
+margin = Vector2(0, -30)
+triangle_color = Color(0.278431, 0.333333, 0.411765, 1)
+triangle_outline_color = Color(0, 0, 0, 1)
+remake = false
+test_open = false
+test_close = false
+is_open = true
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="SaveMenu" type="MarginContainer" parent="CanvasLayer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 52.0
+offset_right = -57.0
+theme = ExtResource("1_frw0o")
+theme_override_constants/margin_right = 0
+
+[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer/SaveMenu"]
+offset_left = 377.0
+offset_top = 24.0
+offset_right = 771.0
+offset_bottom = 448.0
+size_flags_horizontal = 8
+size_flags_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_qfegr")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/SaveMenu/PanelContainer"]
+offset_left = 24.0
+offset_top = 36.0
+offset_right = 370.0
+offset_bottom = 400.0
+
+[node name="Label" type="Label" parent="CanvasLayer/SaveMenu/PanelContainer/VBoxContainer"]
+offset_right = 346.0
+offset_bottom = 46.0
+theme_override_fonts/font = SubResource("Font_k3ba2")
+theme_override_font_sizes/font_size = 24
+text = "S A V E    C A N V A S . . ."
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/SaveMenu/PanelContainer/VBoxContainer"]
+custom_minimum_size = Vector2(100, 100)
+offset_top = 70.0
+offset_right = 346.0
+offset_bottom = 170.0
+size_flags_vertical = 3
+texture = SubResource("ViewportTexture_oy3pb")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="CanvasNameField" type="LineEdit" parent="CanvasLayer/SaveMenu/PanelContainer/VBoxContainer"]
+unique_name_in_owner = true
+offset_top = 194.0
+offset_right = 346.0
+offset_bottom = 265.0
+theme_override_font_sizes/font_size = 28
+text = "my_canvas"
+placeholder_text = "my_canvas"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/SaveMenu/PanelContainer/VBoxContainer"]
+offset_top = 289.0
+offset_right = 346.0
+offset_bottom = 364.0
+
+[node name="Button" type="Button" parent="CanvasLayer/SaveMenu/PanelContainer/VBoxContainer/HBoxContainer"]
+offset_right = 187.0
+offset_bottom = 75.0
+text = "Maybe later"
+flat = true
+
+[node name="SaveButton" type="Button" parent="CanvasLayer/SaveMenu/PanelContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(135, 75)
+offset_left = 211.0
+offset_right = 346.0
+offset_bottom = 75.0
+size_flags_horizontal = 8
+size_flags_vertical = 8
+theme_type_variation = &"SuccessButton"
+text = "Save"
+icon = ExtResource("6_tjlfs")
+expand_icon = true

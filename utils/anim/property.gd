@@ -18,7 +18,8 @@ func animate(tween: Tween, node: Node, to_key: String, duration: float = 0.25) -
 	match mode:
 		Mode.PARALLEL: tween.parallel()
 		Mode.CHAIN: tween.chain()
-	tween.tween_property(node, prop, keyframes[to_key], duration)
+	if to_key in keyframes:
+		tween.tween_property(node, prop, keyframes[to_key], duration)
 	return tween
 
 

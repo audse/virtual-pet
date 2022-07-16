@@ -5,17 +5,21 @@ signal animation_finished
 
 var node: Node
 var keyframes: Dictionary
+var logging: bool = false
 
-
-func _init(node_val: Node, keys_val: Dictionary) -> void:
+func _init(node_val: Node = null, keys_val: Dictionary = {}, log_val: bool = false) -> void:
 	node = node_val
 	keyframes = keys_val
+	logging = log_val
+
+
+static func make(node_val: Node, keys_val: Dictionary, log_val: bool = false) -> NodeAnim:
+	return NodeAnim.new(node_val, keys_val, log_val)
 
 
 func setup() -> void:
 	for prop in keyframes.setup:
 		if prop in node: node.set(prop, keyframes.setup[prop])
-	await node.get_tree().process_frame
 
 
 func get_props() -> Array:
@@ -34,6 +38,7 @@ func animate() -> void:
 	setup()
 	
 	var props := get_props()
+	if not node.is_inside_tree(): return
 	
 	for key in keyframes.keyframes:
 		var key_data: Dictionary = keyframes.keyframes[key]

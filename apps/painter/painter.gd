@@ -31,9 +31,6 @@ func _ready() -> void:
 	for tool in tool_buttons.keys():
 		tool_buttons[tool].pressed.connect(_on_tool_button_pressed.bind(tool))
 	
-	for swatch_button in %Swatches.get_children():
-		swatch_button.pressed.connect(_on_swatch_button_pressed.bind(swatch_button))
-	
 	States.Paint.action_changed.connect(_on_action_changed)
 	States.Paint.size_changed.connect(_on_size_changed)
 	States.Paint.ratio_changed.connect(_on_ratio_changed)
@@ -46,10 +43,10 @@ func _ready() -> void:
 
 
 var event_map := {
-	"number_key": func(event: InputEventKey):
-		var k := clampi(event.keycode - 49, 0, 9)
-		var swatch = %Swatches.get_child(k)
-		if swatch: _on_swatch_button_pressed(swatch),
+#	"number_key": func(event: InputEventKey):
+#		var k := clampi(event.keycode - 49, 0, 9)
+#		var swatch = %Swatches.get_child(k)
+#		if swatch: _on_swatch_button_pressed(swatch),
 	"redo": func(_e): _on_redo_button_pressed(),
 	"undo": func(_e): _on_undo_button_pressed(),
 	"forward": func(_e): States.Paint.shape += 1,
@@ -220,10 +217,6 @@ func _on_action_changed(action: int) -> void:
 
 func _on_rotate_button_pressed(delta: int) -> void:
 	States.Paint.rotation += delta
-
-
-func _on_swatch_button_pressed(swatch_button: Button) -> void:
-	States.Paint.color = swatch_button.swatch
 
 
 func _on_undo_button_pressed() -> void:

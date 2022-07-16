@@ -1,27 +1,66 @@
-[gd_scene load_steps=2 format=3 uid="uid://dmlds32b5qwdx"]
+[gd_scene load_steps=3 format=3 uid="uid://dmlds32b5qwdx"]
 
 [ext_resource type="Script" path="res://interface/components/drop_menu.gd" id="1_gr0b8"]
 
-[node name="Control" type="Control"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mrx1m"]
+bg_color = Color(0.580392, 0.639216, 0.721569, 1)
+
+[node name="DropMenu" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = 24.0
+offset_right = -76.0
+offset_bottom = -100.0
 script = ExtResource("1_gr0b8")
-origin = null
-triangle_size = Vector2(80, 0)
-margin = null
+origin = 2
+container = NodePath("CanvasLayer/Control/MarginContainer")
+triangle_outline_width = {
+"bottom": 0.0,
+"left": 0.0,
+"right": 0.0,
+"top": 0.0
+}
+right_angle = true
+margin = Vector2(50, 50)
+triangle_color = Color(0.580392, 0.639216, 0.721569, 1)
+triangle_outline_color = Color(0.580392, 0.639216, 0.721569, 1)
+remake = false
+test_open = false
+test_close = false
+is_open = true
 
-[node name="ReferenceRect" type="ReferenceRect" parent="."]
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="ReferenceRect" type="ReferenceRect" parent="CanvasLayer"]
+unique_name_in_owner = true
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
-mouse_filter = 2
-border_width = 3.0
+offset_left = 628.0
+offset_top = 50.0
+offset_right = -150.0
+offset_bottom = -1717.0
+pivot_offset = Vector2(50, 0)
 
-[node name="DropMenuTriangle" type="Polygon2D" parent="."]
-antialiased = true
-polygon = PackedVector2Array(25, 0, 50, 25, 0, 25)
+[node name="Control" type="Control" parent="CanvasLayer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
 
-[node name="DropMenuTriangle2" type="Polygon2D" parent="DropMenuTriangle"]
-show_behind_parent = true
-color = Color(0.796078, 0.835294, 0.882353, 1)
-antialiased = true
-polygon = PackedVector2Array(25, 0, 50, 25, 0, 25)
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 50.0
+offset_right = -126.0
+pivot_offset = Vector2(702, 0)
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 0
+
+[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer/Control/MarginContainer"]
+custom_minimum_size = Vector2(300, 300)
+offset_left = 402.0
+offset_top = 20.0
+offset_right = 702.0
+offset_bottom = 320.0
+size_flags_horizontal = 8
+size_flags_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_mrx1m")
