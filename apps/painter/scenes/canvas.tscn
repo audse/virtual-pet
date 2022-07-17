@@ -15,9 +15,6 @@ shader_param/grid_y = 50.0
 shader_param/minigrid_x = -1.0
 shader_param/minigrid_y = -1.0
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_vrdc2"]
-viewport_path = NodePath("SubViewport")
-
 [sub_resource type="ViewportTexture" id="ViewportTexture_5sk27"]
 viewport_path = NodePath("SubViewport")
 
@@ -32,39 +29,54 @@ fill = 1
 fill_from = Vector2(0.5, 0.5)
 fill_to = Vector2(1, 0.5)
 
-[node name="Canvas" type="SubViewportContainer"]
+[sub_resource type="ViewportTexture" id="ViewportTexture_vrdc2"]
+viewport_path = NodePath("Canvas/SubViewport")
+
+[node name="Control" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource("1_m4qb3")
+
+[node name="Canvas" type="SubViewportContainer" parent="."]
 clip_contents = true
 custom_minimum_size = Vector2(800, 800)
-offset_right = 800.0
-offset_bottom = 800.0
+anchor_right = 1.0
+anchor_bottom = 1.0
 size_flags_horizontal = 4
 size_flags_vertical = 4
 mouse_force_pass_scroll_events = false
-script = ExtResource("1_m4qb3")
+stretch = true
 
-[node name="SubViewport" type="SubViewport" parent="."]
+[node name="SubViewport" type="SubViewport" parent="Canvas"]
 unique_name_in_owner = true
+transparent_bg = true
 handle_input_locally = false
 screen_space_aa = 1
 canvas_item_default_texture_filter = 3
 gui_disable_input = true
-size = Vector2i(800, 800)
+size = Vector2i(828, 1792)
 render_target_update_mode = 4
 
-[node name="Canvas" type="ColorRect" parent="SubViewport"]
+[node name="Canvas" type="ColorRect" parent="Canvas/SubViewport"]
 unique_name_in_owner = true
 material = SubResource("ShaderMaterial_tmijp")
 clip_contents = true
 custom_minimum_size = Vector2(800, 800)
-offset_right = 800.0
-offset_bottom = 800.0
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -400.0
+offset_top = -400.0
+offset_right = 400.0
+offset_bottom = 400.0
 grow_horizontal = 2
 grow_vertical = 2
-size_flags_horizontal = 0
-size_flags_vertical = 0
+size_flags_horizontal = 4
+size_flags_vertical = 4
 mouse_filter = 2
 
-[node name="Cursor" type="Sprite2D" parent="SubViewport/Canvas"]
+[node name="Cursor" type="Sprite2D" parent="Canvas/SubViewport/Canvas"]
 unique_name_in_owner = true
 self_modulate = Color(0.796078, 0.835294, 0.882353, 1)
 scale = Vector2(0.1, 0.1)
@@ -73,7 +85,7 @@ centered = false
 region_rect = Rect2(0, 0, 650, 650)
 script = ExtResource("4_6ws3i")
 
-[node name="Shadow" type="Sprite2D" parent="SubViewport/Canvas/Cursor"]
+[node name="Shadow" type="Sprite2D" parent="Canvas/SubViewport/Canvas/Cursor"]
 modulate = Color(0.117647, 0.160784, 0.231373, 0.027451)
 show_behind_parent = true
 scale = Vector2(1.01, 1.01)
@@ -82,7 +94,7 @@ centered = false
 region_rect = Rect2(-500, -500, 1500, 1500)
 region_filter_clip_enabled = true
 
-[node name="Shadow2" type="Sprite2D" parent="SubViewport/Canvas/Cursor/Shadow"]
+[node name="Shadow2" type="Sprite2D" parent="Canvas/SubViewport/Canvas/Cursor/Shadow"]
 show_behind_parent = true
 position = Vector2(3, 3)
 scale = Vector2(1.05, 1.05)
@@ -92,7 +104,7 @@ offset = Vector2(-20, -20)
 region_rect = Rect2(-500, -500, 1500, 1500)
 region_filter_clip_enabled = true
 
-[node name="Shadow3" type="Sprite2D" parent="SubViewport/Canvas/Cursor/Shadow"]
+[node name="Shadow3" type="Sprite2D" parent="Canvas/SubViewport/Canvas/Cursor/Shadow"]
 modulate = Color(1, 1, 1, 0.588235)
 show_behind_parent = true
 position = Vector2(10, 10)
@@ -103,7 +115,7 @@ offset = Vector2(-20, -20)
 region_rect = Rect2(-500, -500, 1500, 1500)
 region_filter_clip_enabled = true
 
-[node name="Shadow4" type="Sprite2D" parent="SubViewport/Canvas/Cursor/Shadow"]
+[node name="Shadow4" type="Sprite2D" parent="Canvas/SubViewport/Canvas/Cursor/Shadow"]
 modulate = Color(1, 1, 1, 0.196078)
 show_behind_parent = true
 scale = Vector2(1.3, 1.3)
@@ -113,23 +125,10 @@ offset = Vector2(-20, -20)
 region_rect = Rect2(-500, -500, 1500, 1500)
 region_filter_clip_enabled = true
 
-[node name="Ghost" type="Sprite2D" parent="SubViewport/Canvas"]
+[node name="Ghost" type="Sprite2D" parent="Canvas/SubViewport/Canvas"]
 modulate = Color(1, 1, 1, 0.490196)
 
-[node name="Backdrop" type="ColorRect" parent="."]
-custom_minimum_size = Vector2(800, 800)
-offset_right = 40.0
-offset_bottom = 40.0
-mouse_filter = 1
-color = Color(0.117647, 0.160784, 0.231373, 1)
-
-[node name="CanvasCopy" type="TextureRect" parent="."]
-unique_name_in_owner = true
-offset_right = 1000.0
-offset_bottom = 1000.0
-texture = SubResource("ViewportTexture_vrdc2")
-
-[node name="Minimap" type="Sprite2D" parent="."]
+[node name="Minimap" type="Sprite2D" parent="Canvas"]
 unique_name_in_owner = true
 visible = false
 position = Vector2(770, 30)
@@ -139,7 +138,7 @@ centered = false
 offset = Vector2(-800, 0)
 region_rect = Rect2(0, 0, 990, 990)
 
-[node name="Shadow" type="Sprite2D" parent="Minimap"]
+[node name="Shadow" type="Sprite2D" parent="Canvas/Minimap"]
 modulate = Color(1, 1, 1, 0.294118)
 show_behind_parent = true
 scale = Vector2(1.4, 1.4)
@@ -147,4 +146,24 @@ texture = SubResource("GradientTexture2D_65wri")
 centered = false
 offset = Vector2(-700, -300)
 
-[connection signal="gui_input" from="CanvasCopy" to="." method="_on_canvas_gui_input"]
+[node name="Backdrop" type="ColorRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color(0.278431, 0.333333, 0.411765, 1)
+
+[node name="CanvasCopy" type="TextureRect" parent="."]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(828, 828)
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -414.0
+offset_top = -414.0
+offset_right = 414.0
+offset_bottom = 414.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = SubResource("ViewportTexture_vrdc2")
+ignore_texture_size = true
+stretch_mode = 6

@@ -36,10 +36,12 @@ func _ready() -> void:
 	States.Paint.ratio_changed.connect(_on_ratio_changed)
 	States.Paint.precision_changed.connect(_on_precision_changed)
 	
-	%CanvasNameField.text = "Canvas %d" % (%Gallery.num_canvases + 1)
+#	%CanvasNameField.text = "Canvas %d" % (%Gallery.num_canvases + 1)
 	
 	%DrawToolsWindow.opening.connect(%ViewToolsWindow.queue_close)
 	%ViewToolsWindow.opening.connect(%DrawToolsWindow.queue_close)
+	
+	print(%Canvas.scale)
 
 
 var event_map := {
@@ -55,22 +57,12 @@ var event_map := {
 
 
 func _input(event: InputEvent) -> void:
-	if event is InputEventMouseMotion:
-		# Hide cursor when outside of canvas
-		if ControlRef.rect(%Canvas).has_point(event.global_position):
-			%Canvas.cursor.modulate.a = 1
-		else:
-			%Canvas.cursor.modulate.a = 0
-	
 	if event is InputEventKey and event.is_pressed():
 		
 		for e in event_map.keys():
 			if event.is_action_pressed(e): event_map[e].call(event)
 		
 		match event.keycode:
-			# Zoom
-			KEY_MINUS: _on_zoom_out_button_pressed()
-			KEY_EQUAL: _on_zoom_in_button_pressed()
 			
 			# Rotation
 			KEY_COMMA: _on_rotate_button_pressed(-90)
@@ -79,8 +71,6 @@ func _input(event: InputEvent) -> void:
 			# Size
 			KEY_BRACELEFT: _on_decrease_size_button_pressed()
 			KEY_BRACERIGHT: _on_increase_size_button_pressed()
-			
-			KEY_LEFT, KEY_RIGHT, KEY_UP, KEY_DOWN: %Canvas.pan(event.keycode)
 			
 			# Cancel action
 			KEY_ESCAPE:
@@ -93,9 +83,6 @@ func _input(event: InputEvent) -> void:
 			KEY_E: _on_tool_button_pressed(Action.ERASE)
 			KEY_P, KEY_B: _on_tool_button_pressed(Action.DRAW)
 			
-			KEY_W, KEY_A, KEY_S, KEY_D: %Canvas.cursor.move_by_unit(event.keycode)
-			KEY_SPACE: draw_shape()
-			
 			# Starts a line from the previous point
 			KEY_SHIFT:
 				var prev_point = %Undo.prev()
@@ -104,92 +91,12 @@ func _input(event: InputEvent) -> void:
 					States.Paint.line = prev_point.pixels[0].position
 
 
-func draw_shape() -> Sprite2D:
-	var pixel: Sprite2D = %Canvas.draw_pixel()
-	var pixels: Array[Sprite2D] = [pixel]
-	%Undo.add(Action.DRAW, pixels)
-	return pixel
-
-
-func draw_segment(is_ghost: bool = false) -> void:
-	var action = States.Paint.action
-	var start = States.Paint.line
-	var end: Vector2 = %Canvas.cursor_pos()
-	var px: Vector2 = States.Paint.size_px
-	
-	%Canvas.clear_ghosts()
-	var points: Array[Vector2] = []
-	
-	match action:
-		Action.LINE:
-			points = Vector2Ref.get_line_points_in_grid(start, end, px)
-		Action.RECT:
-			points = Vector2Ref.get_rect_points_in_grid(start, end, px)
-	
-	var pixels: Array[Sprite2D] = %Canvas.draw_pixel_set(points, is_ghost)
-	
-	if not is_ghost:
-		%Undo.add(action, pixels)
-		
-		var clicked_prev_pixel_again: bool = start.distance_to(end) <= px.x
-		
-		if action == Action.LINE and not clicked_prev_pixel_again:
-			States.Paint.line = end
-		else:
-			_on_tool_button_pressed(Action.DRAW) # go back to pen tool
-
-
-func erase() -> void:
-	var pixels: Array[Sprite2D] = %Canvas.get_pixels_under_mouse()
-	%Canvas.clear(pixels)
-	%Undo.add(Action.ERASE, pixels)
-
-
 func selected(button: Button) -> void:
 	button.theme_type_variation = "SuccessButton"
 
 
 func deselected(button: Button) -> void:
 	button.theme_type_variation = ""
-
-
-var _dragging: int = 0
-func _on_canvas_gui_input(event: InputEvent) -> void:
-	if event is InputEventScreenDrag:
-		_dragging += 1
-	if event is InputEventMouseMotion:
-		_on_mouse_motion(event)
-	if event.is_action_released("tap"):
-		if _dragging < 5:
-			_on_press(event)
-		else:
-			_dragging = 0
-
-
-var _debounce_draw_ghost: int = 0
-func _on_mouse_motion(event: InputEventMouseMotion) -> void:
-	%Canvas.move_cursor(event)
-	
-	if States.Paint.has_line():
-		if _debounce_draw_ghost > 5:
-			# Draw ghost if a line is being created
-			draw_segment(true)
-			_debounce_draw_ghost = 0
-		else:
-			_debounce_draw_ghost += 1
-
-
-func _on_press(_event: InputEvent) -> void:
-	match States.Paint.action:
-		Action.DRAW:
-			draw_shape()
-		Action.ERASE:
-			erase()
-		Action.LINE, Action.RECT:
-			if not States.Paint.has_line():
-				States.Paint.line = %Canvas.cursor_pos()
-			else:
-				draw_segment(false)
 
 
 func _on_action_changed(action: int) -> void:
@@ -292,10 +199,12 @@ func _on_recenter_button_pressed() -> void:
 
 
 func _on_save_button_pressed() -> void:
-	var canvas_name: String = %CanvasNameField.text
-	if len(canvas_name) < 1: return
-	%Canvas.save_canvas(canvas_name)
-	%Gallery.load_gallery() # reload gallery grid
+	var canvas_texture: ImageTexture = %Canvas.get_texture()
+	%SaveButton.update_texture(canvas_texture)
+#	var canvas_name: String = %CanvasNameField.text
+#	if len(canvas_name) < 1: return
+#	%Canvas.save_canvas(canvas_name)
+#	%Gallery.load_gallery() # reload gallery grid
 
 
 func _on_gallery_button_pressed() -> void:
@@ -313,3 +222,12 @@ func _on_precision_button_pressed() -> void:
 func _on_precision_changed(precision: float) -> void:
 	if precision < 0.0: deselected(%PrecisionButton)
 	else: selected(%PrecisionButton)
+
+
+func _on_canvas_action_completed(action: int, pixels: Array) -> void:
+	%Undo.add(action, pixels)
+	pass # Replace with function body.
+
+
+func _on_rotate_right_button_pressed() -> void:
+	pass # Replace with function body.

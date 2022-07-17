@@ -8,12 +8,12 @@
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_jbo1o"]
 
-[sub_resource type="Gradient" id="Gradient_x1euq"]
+[sub_resource type="Gradient" id="Gradient_84slf"]
 offsets = PackedFloat32Array(0, 0.41055, 0.733945, 0.981735)
 colors = PackedColorArray(0.117647, 0.160784, 0.231373, 0.490196, 0.117647, 0.160784, 0.231373, 0.196078, 0.117647, 0.160784, 0.231373, 0.0392157, 0.117647, 0.160784, 0.231373, 0)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_fvk5r"]
-gradient = SubResource("Gradient_x1euq")
+gradient = SubResource("Gradient_84slf")
 fill = 1
 fill_from = Vector2(0.5, 0.5)
 fill_to = Vector2(1, 0.5)

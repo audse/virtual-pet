@@ -70,8 +70,7 @@ func fade_in() -> AnimBuilder:
 ## Decreases alpha smoothly throughout entire animation.
 ## Add this method after all keyframes to be faded have been defined.
 func fade_out() -> AnimBuilder:
-	var s = fade(base_node.modulate.a, 0.0)
-	return self
+	return fade(base_node.modulate.a, 0.0)
 
 
 func keyframes(value: Dictionary) -> AnimBuilder:
@@ -99,7 +98,7 @@ func ease_type(value: int) -> AnimBuilder:
 
 
 func tear_down(value: Dictionary) -> AnimBuilder:
-	for prop_name in anim.tear_down:
+	for prop_name in value:
 		anim.tear_down[prop_name] = value[prop_name]
 	return self
 
@@ -110,8 +109,8 @@ func tear_down_prop(prop_name: String, value) -> AnimBuilder:
 
 
 func done() -> NodeAnim:
-	for prop in anim.props:
-		print("[", base_node.name, "]: antimating ", prop)
+	for prop_name in anim.props:
+		print("[", base_node.name, "]: antimating ", prop_name)
 	return NodeAnim.make(base_node, anim, logging_enabled)
 
 

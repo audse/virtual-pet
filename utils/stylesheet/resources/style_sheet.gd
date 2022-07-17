@@ -4,7 +4,7 @@ extends Resource
 
 #StyleSheet
 #
-##TODO stylebox
+# #TODO stylebox
 #- [x] Shadow size
 #- [x] Shadow color
 #- [x] Shadow opacity
@@ -14,7 +14,7 @@ extends Resource
 #- [x] Antialiasing bool
 #- [x] Antialising size
 #
-##TODO font
+# #TODO font
 #- [ ] Outline size
 #- [ ] Outline color
 #- [ ] Spacing
@@ -25,25 +25,23 @@ extends Resource
 #- [ ] Color opacity
 #- [ ] Outline opacity
 #
-##TODO other constants
+# #TODO other constants
 #- [ ] Button h separation
 
 
 @export_multiline var apply_styles := "":
-	set(value): set_apply_styles(value)
+	set(value):
+		apply_styles = value
+		send_update()
 
-@export var default_style_names := "default":
-	set(value): set_default_style_names(value)
+@export var default_style_names := "normal":
+	set(value):
+		default_style_names = value
+		send_update()
 
 
-## Method overriden in inherited classes
-func set_apply_styles(value: String) -> void:
-	apply_styles = value
-
-
-## Method overriden in inherited classes
-func set_default_style_names(value: String) -> void:
-	default_style_names = value
+func send_update() -> void:
+	pass
 
 
 func parse_style_name(style_string: String) -> Dictionary:
@@ -63,11 +61,10 @@ static func parse_color_string(color_string: String) -> Color:
 	if len(values) <= 2: return Color.WHITE
 	var color_name: String = values[1].strip_edges()
 	var color_number := values[2].strip_edges().to_int()
-	
 	if (
 		"PALETTE" in StyleSheetConstants 
-		and StyleSheetConstants.PALETTE[color_name]
-		and StyleSheetConstants.PALETTE[color_name][color_number]
+		and color_name in StyleSheetConstants.PALETTE
+		and color_number in StyleSheetConstants.PALETTE[color_name]
 	):
 		return StyleSheetConstants.PALETTE[color_name][color_number]
 	

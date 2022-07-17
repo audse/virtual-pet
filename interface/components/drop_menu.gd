@@ -221,7 +221,7 @@ func _reset_triangle() -> void:
 	
 	if container_node:
 		container_node.global_position = container_rect.position
-		container_node.size = container_rect.size
+		container_node.set_deferred("size", container_rect.size)
 
 
 var triangle_bound_rect: Rect2:
@@ -244,7 +244,6 @@ var triangle_bound_rect: Rect2:
 
 func _get_container_rect(max_size := Vector2.ZERO) -> Rect2:
 	var has_max_size: bool = max_size.distance_to(Vector2.ZERO) > 1.0
-	var start_rect := get_global_rect()
 	var triangle := triangle_bound_rect
 	
 	# If not provided, the max size defaults to the screen size
@@ -397,9 +396,26 @@ func _ready() -> void:
 	_reset()
 
 
+var _is_animating := false
+
+func queue_open() -> void:
+	if _is_animating and not is_open:
+		closed.connect(open, CONNECT_ONESHOT)
+	elif not _is_animating:
+		open()
+
+
+func queue_close() -> void:
+	if _is_animating and is_open:
+		opened.connect(close, CONNECT_ONESHOT)
+	elif not _is_animating:
+		close()
+
+
 func open() -> void:
 	if not is_inside_tree(): return
 	opening.emit()
+	_is_animating = true
 	_reset()
 	
 	if triangle_node: (
@@ -429,20 +445,18 @@ func open() -> void:
 				open = v(1.05, 1.1),
 				settle = Vector2.ONE 
 			})
-#			.prop("rotation", { 
-#				open = deg2rad(1) * origin_point_centered.y,
-#				settle = 0,
-#			})
 			.complete()
 	)
 	await get_tree().create_timer(0.5).timeout
 	is_open = true
+	_is_animating = false
 	opened.emit()
 
 
 func close() -> void:
 	if not is_inside_tree(): return
 	closing.emit()
+	_is_animating = true
 	_reset()
 	if triangle_node: (
 		AnimBuilder.new(triangle_node)
@@ -494,4 +508,5 @@ func close() -> void:
 	)
 	await get_tree().create_timer(0.35).timeout
 	is_open = false
+	_is_animating = false
 	closed.emit()

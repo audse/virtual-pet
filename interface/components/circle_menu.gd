@@ -349,17 +349,15 @@ var _is_animating: bool = false
 
 
 func queue_open() -> void:
-	if _state == BEFORE_OPEN:
-		if _is_animating:
-			close_complete.connect(open)
-		else: open()
+	if _state == BEFORE_OPEN and _is_animating:
+		close_complete.connect(open, CONNECT_ONESHOT)
+	elif not _is_animating: open()
 
 
 func queue_close() -> void:
-	if _state == AFTER_OPEN:
-		if _is_animating:
-			open_complete.connect(close)
-		else: close()
+	if _state == AFTER_OPEN and _is_animating:
+		open_complete.connect(close, CONNECT_ONESHOT)
+	elif not _is_animating: close()
 
 
 func open() -> void:

@@ -149,10 +149,10 @@ _global_script_classes=[{
 "language": &"GDScript",
 "path": "res://utils/stylesheet/nodes/style_sheet_mixin.gd"
 }, {
-"base": "Control",
+"base": "Node",
 "class": &"StyleSheetSetter",
 "language": &"GDScript",
-"path": "res://utils/stylesheet/nodes/style_sheet_node.gd"
+"path": "res://utils/stylesheet/nodes/style_sheet_setter.gd"
 }, {
 "base": "Resource",
 "class": &"StyleSheetUtils",
@@ -218,7 +218,7 @@ _global_script_class_icons={
 "StyleSheet": "",
 "StyleSheetConstants": "",
 "StyleSheetMixin": "",
-"StyleSheetSetter": "",
+"StyleSheetSetter": "res://utils/stylesheet/icons/wand-magic-sparkles-solid.svg",
 "StyleSheetUtils": "",
 "UnevenGrid": "",
 "UnevenPoint": "",

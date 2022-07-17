@@ -43,33 +43,44 @@ const PROPERTY_GROUPS := {
 	set(value):
 		preset = value
 		if "STYLEBOX_PRESETS" in StyleSheetConstants and StyleSheetConstants.STYLEBOX_PRESETS[preset]:
-			self.apply_styles = StyleSheetConstants.STYLEBOX_PRESETS[preset]
-	
+			apply_styles = StyleSheetConstants.STYLEBOX_PRESETS[preset]
+			send_update()
+
 @export var base_stylebox: StyleBoxFlat
 
-var stylebox: StyleBoxFlat
-
-
-func set_apply_styles(apply_styles_value: String) -> void:
-	apply_styles = apply_styles_value
-	send_update()
-
-
-func set_default_style_names(value: String) -> void:
-	default_style_names = value
-	send_update()
+var base_node: Control
 
 
 func send_update() -> void:
 	var new_styleboxes := get_styleboxes()
-	for name in new_styleboxes.keys():
-		emit_signal("stylebox_changed", new_styleboxes[name], name)
+	for name in new_styleboxes:
+		stylebox_changed.emit(new_styleboxes[name], name)
+
+
+func get_base_styleboxes() -> Dictionary:
+	var styles: Dictionary = {}
+	for default_name in get_default_style_names():
+		if base_stylebox != null:
+			styles[default_name] = base_stylebox
+		elif base_node and base_node is Control:
+			var style := _get_stylebox_from_theme(default_name)
+			styles[default_name] = style if style else new_reset_stylebox()
+		else:
+			styles[default_name] = new_reset_stylebox()
+	return styles
+
+
+func _get_stylebox_from_theme(style: String) -> StyleBoxFlat:
+	if base_node and base_node is Control:
+		if base_node.has_theme_stylebox_override(style):
+			base_node.remove_theme_stylebox_override(style)
+		return base_node.get_theme_stylebox(style)
+	return null
 
 
 func get_styleboxes() -> Dictionary:
-	var new_stylebox: StyleBoxFlat
-	if not base_stylebox: new_stylebox = new_reset_stylebox()
-	else: new_stylebox = base_stylebox.duplicate()
+	# key/value pairs of style names and their new styleboxes
+	var styleboxes = get_base_styleboxes()
 	
 	# list of styles that are applied to all styleboxes
 	var default_styles := []
@@ -81,7 +92,6 @@ func get_styleboxes() -> Dictionary:
 	var default_name_list := get_default_style_names()
 	for default_name in default_name_list:
 		styles[default_name] = []
-	
 	
 	for style_string in apply_styles.split(" "):
 		# parse the style string into style name (e.g. "pressed") and value (e.g. "bg_red_500")
@@ -99,12 +109,9 @@ func get_styleboxes() -> Dictionary:
 			# add this style to the list according to its name
 			styles[name].append(style_string)
 	
-	# key/value pairs of style names and their new styleboxes
-	var styleboxes: Dictionary = {}
-
-	for name in styles.keys():
+	for name in styles:
 		# apply default styles to all styleboxes
-		styleboxes[name] = apply_styles_from(new_stylebox.duplicate(), default_styles + styles[name])
+		styleboxes[name] = apply_styles_from(styleboxes[name].duplicate(), default_styles + styles[name])
 	
 	return styleboxes
 
@@ -166,13 +173,14 @@ func new_reset_stylebox() -> StyleBoxFlat:
 
 func parse_size_string(size_string: String) -> int:
 	var size := size_string.strip_edges()
-	if "SIZES" in StyleSheetConstants and StyleSheetConstants.SIZES[size]:
+	if "SIZES" in StyleSheetConstants and size in StyleSheetConstants.SIZES:
 		return StyleSheetConstants.SIZES[size]
 	else:
 		return size.to_int()
 
 
 func parse_style_string(style_string: String) -> Dictionary:
+	@warning_ignore(standalone_expression, standalone_expression)
 	""" parse_style_string
 	
 		:param style_string: String
