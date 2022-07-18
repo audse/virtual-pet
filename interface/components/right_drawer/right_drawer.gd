@@ -15,7 +15,7 @@ signal closed
 ## After close animation is completed
 signal is_closed
 
-const ANIMS: AnimationLibrary = preload("res://interface/components/right_drawer_animations.res")
+const ANIMS: AnimationLibrary = preload("res://interface/components/right_drawer/right_drawer_animations.res")
 const ANIM_LIB_NAME := "right_drawer_animations"
 const PLAYER_NODE := "_RightDrawerAnimationPlayer"
 const REF_RECT_NODE := "_RightDrawerReferenceRect"

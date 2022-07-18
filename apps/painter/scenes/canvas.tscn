@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://bn5p31m1beflu"]
+[gd_scene load_steps=11 format=3 uid="uid://bn5p31m1beflu"]
 
 [ext_resource type="Script" path="res://apps/painter/nodes/canvas.gd" id="1_m4qb3"]
 [ext_resource type="Texture2D" uid="uid://xtyu065fl2xv" path="res://apps/painter/assets/shapes/square.svg" id="2_i46ic"]
@@ -15,22 +15,32 @@ shader_param/grid_y = 50.0
 shader_param/minigrid_x = -1.0
 shader_param/minigrid_y = -1.0
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_5sk27"]
-viewport_path = NodePath("SubViewport")
+[sub_resource type="ViewportTexture" id="ViewportTexture_vrdc2"]
+viewport_path = NodePath("Canvas/SubViewport")
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_efslj"]
+viewport_path = NodePath("Canvas/SubViewport")
 
 [sub_resource type="Gradient" id="Gradient_s0c46"]
-colors = PackedColorArray(0.117647, 0.160784, 0.231373, 1, 0.117647, 0.160784, 0.231373, 0)
+offsets = PackedFloat32Array(0, 0.0818713, 0.266082, 0.625731, 1)
+colors = PackedColorArray(0.117647, 0.160784, 0.231373, 1, 0.117647, 0.160784, 0.231373, 0.805969, 0.117647, 0.160784, 0.231373, 0.624324, 0.117647, 0.160784, 0.231373, 0.312865, 0.117647, 0.160784, 0.231373, 0)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_65wri"]
 gradient = SubResource("Gradient_s0c46")
-width = 1000
-height = 1000
+width = 800
+height = 800
 fill = 1
 fill_from = Vector2(0.5, 0.5)
 fill_to = Vector2(1, 0.5)
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_vrdc2"]
-viewport_path = NodePath("Canvas/SubViewport")
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_f1txh"]
+draw_center = false
+border_width_left = 12
+border_width_top = 12
+border_width_right = 12
+border_width_bottom = 12
+border_color = Color(0.376471, 0.647059, 0.980392, 0.196078)
+border_blend = true
 
 [node name="Control" type="Control"]
 anchor_right = 1.0
@@ -40,12 +50,17 @@ script = ExtResource("1_m4qb3")
 [node name="Canvas" type="SubViewportContainer" parent="."]
 clip_contents = true
 custom_minimum_size = Vector2(800, 800)
-anchor_right = 1.0
-anchor_bottom = 1.0
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -414.0
+offset_top = -896.0
+offset_right = 414.0
+offset_bottom = 896.0
 size_flags_horizontal = 4
 size_flags_vertical = 4
 mouse_force_pass_scroll_events = false
-stretch = true
 
 [node name="SubViewport" type="SubViewport" parent="Canvas"]
 unique_name_in_owner = true
@@ -54,7 +69,7 @@ handle_input_locally = false
 screen_space_aa = 1
 canvas_item_default_texture_filter = 3
 gui_disable_input = true
-size = Vector2i(828, 1792)
+size = Vector2i(800, 800)
 render_target_update_mode = 4
 
 [node name="Canvas" type="ColorRect" parent="Canvas/SubViewport"]
@@ -62,16 +77,8 @@ unique_name_in_owner = true
 material = SubResource("ShaderMaterial_tmijp")
 clip_contents = true
 custom_minimum_size = Vector2(800, 800)
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -400.0
-offset_top = -400.0
-offset_right = 400.0
-offset_bottom = 400.0
-grow_horizontal = 2
-grow_vertical = 2
+offset_right = 800.0
+offset_bottom = 800.0
 size_flags_horizontal = 4
 size_flags_vertical = 4
 mouse_filter = 2
@@ -128,28 +135,10 @@ region_filter_clip_enabled = true
 [node name="Ghost" type="Sprite2D" parent="Canvas/SubViewport/Canvas"]
 modulate = Color(1, 1, 1, 0.490196)
 
-[node name="Minimap" type="Sprite2D" parent="Canvas"]
-unique_name_in_owner = true
-visible = false
-position = Vector2(770, 30)
-scale = Vector2(0.2, 0.2)
-texture = SubResource("ViewportTexture_5sk27")
-centered = false
-offset = Vector2(-800, 0)
-region_rect = Rect2(0, 0, 990, 990)
-
-[node name="Shadow" type="Sprite2D" parent="Canvas/Minimap"]
-modulate = Color(1, 1, 1, 0.294118)
-show_behind_parent = true
-scale = Vector2(1.4, 1.4)
-texture = SubResource("GradientTexture2D_65wri")
-centered = false
-offset = Vector2(-700, -300)
-
 [node name="Backdrop" type="ColorRect" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
-color = Color(0.278431, 0.333333, 0.411765, 1)
+color = Color(0.117647, 0.160784, 0.231373, 1)
 
 [node name="CanvasCopy" type="TextureRect" parent="."]
 unique_name_in_owner = true
@@ -167,3 +156,54 @@ size_flags_vertical = 4
 texture = SubResource("ViewportTexture_vrdc2")
 ignore_texture_size = true
 stretch_mode = 6
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+theme_override_constants/margin_top = 224
+theme_override_constants/margin_bottom = 350
+
+[node name="Control" type="Control" parent="MarginContainer"]
+offset_left = 24.0
+offset_top = 224.0
+offset_right = 804.0
+offset_bottom = 1442.0
+mouse_filter = 2
+
+[node name="Minimap" type="TextureRect" parent="MarginContainer/Control"]
+unique_name_in_owner = true
+visible = false
+custom_minimum_size = Vector2(50, 50)
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -50.0
+offset_right = 50.0
+size_flags_horizontal = 8
+size_flags_vertical = 0
+mouse_filter = 0
+texture = SubResource("ViewportTexture_efslj")
+ignore_texture_size = true
+stretch_mode = 6
+
+[node name="Shadow" type="Sprite2D" parent="MarginContainer/Control/Minimap"]
+modulate = Color(1, 1, 1, 0.294118)
+show_behind_parent = true
+scale = Vector2(0.42, 0.42)
+texture = SubResource("GradientTexture2D_65wri")
+centered = false
+offset = Vector2(-200, -200)
+
+[node name="Control" type="Control" parent="MarginContainer/Control/Minimap"]
+clip_contents = true
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="MinimapRefRect" type="Panel" parent="MarginContainer/Control/Minimap/Control"]
+unique_name_in_owner = true
+offset_right = 50.0
+offset_bottom = 50.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_f1txh")
+metadata/_edit_layout_mode = 1

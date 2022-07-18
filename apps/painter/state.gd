@@ -28,6 +28,7 @@ signal rotation_changed(to: int)
 signal shape_changed(to: Shape)
 signal size_changed(to: Size)
 signal zoom_changed(to: float)
+signal recenter
 
 signal canvas_selected(canvas: SubViewport)
 
@@ -165,6 +166,10 @@ func is_zoomed() -> bool:
 	return abs(1.0 - zoom) > 0.05
 
 
-func toggle_precision() -> void:
+func is_precision_mode() -> bool:
+	return precision > 0.0
+
+
+func toggle_precision_mode() -> void:
 	if precision < 0.0: precision = 0.25
 	else: precision = -1.0

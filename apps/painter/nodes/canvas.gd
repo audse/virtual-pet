@@ -1,9 +1,11 @@
 extends Control
 
 signal action_completed(action: int, pixels: Array)
+signal resume_draw
 
 const GALLERY_PATH := "user://gallery/"
 const EXTENSION := ".canvas"
+const MINIMAP_SCALE := 0.25
 
 const Action = States.PaintState.Action
 
@@ -20,6 +22,18 @@ var canvas_rect: Rect2:
 		rect.size *= %CanvasCopy.scale
 		return rect
 
+var minimap_size: Vector2:
+	get: return %CanvasCopy.get_rect().size * MINIMAP_SCALE
+
+var minimap_ref_size: Vector2:
+	get:
+		var ref_size: Vector2 = Vector2Ref.get_display_area(self).size * MINIMAP_SCALE
+		if ref_size.y > ref_size.x: 
+			ref_size *= (minimap_size.x / ref_size.x)
+		else:
+			ref_size *= (minimap_size.y / ref_size.y)
+		return ref_size
+
 
 func _ready() -> void:
 	States.Paint.size_changed.connect(resize)
@@ -31,6 +45,11 @@ func _ready() -> void:
 		func(_x): move_cursor_to(cursor_position)
 	)
 	States.Paint.canvas_selected.connect(load_canvas)
+	
+	%Minimap.set_deferred("size", minimap_size)
+	%Minimap.set_deferred("anchors_preset", PRESET_BOTTOM_LEFT)
+	%MinimapRefRect.set_deferred("size", minimap_ref_size)
+	%MinimapRefRect.set_deferred("position", ((minimap_ref_size - minimap_size) / 2) * -1)
 
 
 func _input(event: InputEvent) -> void:
@@ -138,6 +157,7 @@ var _dragging: int = 0
 func _gui_input(event: InputEvent) -> void:
 	if event is InputEventScreenDrag:
 		%CanvasCopy.position += event.relative
+		%MinimapRefRect.position = - ((%CanvasCopy.position * MINIMAP_SCALE) / States.Paint.zoom)
 		_dragging += 1
 	
 	if event is InputEventMouseMotion:
@@ -209,8 +229,8 @@ func draw_segment(is_ghost: bool = false) -> void:
 		
 		if action == Action.LINE and not clicked_prev_pixel_again:
 			States.Paint.line = end
-#		else: TODO
-#			_on_tool_button_pressed(Action.DRAW) # go back to pen tool
+		else:
+			resume_draw.emit()
 
 
 func erase() -> void:
@@ -279,7 +299,13 @@ func _on_change_zoom(new_zoom: float) -> void:
 			.prop("scale", { zoom = Vector2(new_zoom, new_zoom) })
 			.complete()
 	)
-
+	(
+		AnimBuilder
+			.new(%MinimapRefRect)
+			.keyframe("zoom", 0.125)
+			.prop("size", { zoom = minimap_ref_size / new_zoom })
+			.complete()
+	)
 
 func _on_change_action(_new_action: int) -> void:
 	clear_ghosts()

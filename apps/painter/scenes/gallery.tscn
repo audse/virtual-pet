@@ -1,12 +1,10 @@
-[gd_scene load_steps=26 format=3 uid="uid://crve60i1q2pr1"]
+[gd_scene load_steps=22 format=3 uid="uid://bl7rg3ye1ye3q"]
 
-[ext_resource type="Script" path="res://interface/components/right_drawer.gd" id="1_38vuy"]
 [ext_resource type="Script" path="res://apps/painter/nodes/gallery.gd" id="1_adm4l"]
 [ext_resource type="Theme" uid="uid://cq8mh6dl8s7wt" path="res://apps/painter/assets/themes/painter.tres" id="2_5mtns"]
 [ext_resource type="Shader" path="res://apps/painter/assets/shaders/rounded_blur.gdshader" id="3_p8s5q"]
+[ext_resource type="Script" path="res://interface/components/right_drawer/right_drawer.gd" id="3_t15gq"]
 [ext_resource type="Texture2D" uid="uid://3pjhr6dgoo5i" path="res://apps/painter/assets/icons/forward.svg" id="4_amgs2"]
-[ext_resource type="FontData" uid="uid://b6r7yrlh6rrnh" path="res://static/fonts/Nunito/Nunito-ExtraBold.ttf" id="6_vauo3"]
-[ext_resource type="FontData" uid="uid://bp5ue6xh64brk" path="res://static/fonts/Nunito/Nunito-SemiBold.ttf" id="7_f63pj"]
 [ext_resource type="Texture2D" uid="uid://wd0fvsupe5ip" path="res://apps/painter/assets/icons/download_file.svg" id="8_u4v3k"]
 [ext_resource type="Texture2D" uid="uid://b2lpdvuywdedv" path="res://apps/painter/assets/icons/check.svg" id="9_6k4ib"]
 
@@ -18,7 +16,7 @@ colors = PackedColorArray(0.0705882, 0.109804, 0.160784, 0, 0.0705882, 0.109804,
 gradient = SubResource("Gradient_iq207")
 width = 1080
 
-[sub_resource type="Shader" id="Shader_nyeia"]
+[sub_resource type="Shader" id="Shader_xq3rk"]
 code = "// NOTE: Shader automatically converted from Godot Engine 4.0.alpha11's CanvasItemMaterial.
 
 shader_type canvas_item;
@@ -39,9 +37,9 @@ void fragment() {
 "
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_dq2yc"]
-shader = SubResource("Shader_nyeia")
+shader = SubResource("Shader_xq3rk")
 
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_5y42p"]
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_n4tfn"]
 seed = 2
 fractal_octaves = 6
 fractal_lacunarity = 32.0
@@ -50,7 +48,7 @@ fractal_gain = -2.5
 [sub_resource type="NoiseTexture" id="NoiseTexture_1f7a8"]
 width = 1080
 height = 1920
-noise = SubResource("FastNoiseLite_5y42p")
+noise = SubResource("FastNoiseLite_n4tfn")
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_mu0vi"]
 
@@ -68,9 +66,6 @@ shader_param/blur_amount = 2.5
 shader_param/radius = 0.04
 shader_param/size = null
 
-[sub_resource type="Font" id="Font_m45nl"]
-data/0 = ExtResource("6_vauo3")
-
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tiwwn"]
 content_margin_left = 24.0
 content_margin_top = 22.0
@@ -80,9 +75,6 @@ draw_center = false
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_1oih1"]
 viewport_path = NodePath("GalleryDrawer/Viewports/ViewportTemplate")
-
-[sub_resource type="Font" id="Font_3dt2t"]
-data/0 = ExtResource("7_f63pj")
 
 [node name="Gallery" type="Control"]
 anchor_right = 1.0
@@ -96,7 +88,7 @@ unique_name_in_owner = true
 anchor_left = 1.0
 anchor_right = 2.0
 anchor_bottom = 1.0
-script = ExtResource("1_38vuy")
+script = ExtResource("3_t15gq")
 
 [node name="Gradient" type="TextureRect" parent="GalleryDrawer"]
 anchor_right = 1.0
@@ -191,7 +183,6 @@ offset_bottom = 70.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 size_flags_stretch_ratio = 3.0
-theme_override_fonts/font = SubResource("Font_m45nl")
 theme_override_font_sizes/font_size = 26
 text = "G  A  L  L  E  R  Y  "
 vertical_alignment = 1
@@ -228,8 +219,6 @@ size_flags_vertical = 3
 
 [node name="CanvasGrid" type="GridContainer" parent="GalleryDrawer/MarginContainer/PanelContainer/VBoxContainer/ScrollContainer"]
 unique_name_in_owner = true
-offset_right = 732.0
-offset_bottom = 1450.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 columns = 4
@@ -260,7 +249,6 @@ offset_bottom = 270.0
 size_flags_vertical = 0
 theme_override_colors/font_color = Color(0.796078, 0.835294, 0.882353, 1)
 theme_override_constants/line_spacing = 0
-theme_override_fonts/font = SubResource("Font_3dt2t")
 theme_override_font_sizes/font_size = 36
 text = "Canvas 1"
 horizontal_alignment = 1

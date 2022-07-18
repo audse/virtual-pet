@@ -1,4 +1,5 @@
 @tool
+class_name CircleMenu
 extends CircleContainer
 
 signal opening

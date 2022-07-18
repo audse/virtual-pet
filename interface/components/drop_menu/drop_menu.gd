@@ -247,14 +247,8 @@ func _get_container_rect(max_size := Vector2.ZERO) -> Rect2:
 	var triangle := triangle_bound_rect
 	
 	# If not provided, the max size defaults to the screen size
-	if Engine.is_editor_hint() and not has_max_size:
-		max_size = Vector2(
-			ProjectSettings.get_setting("display/window/size/viewport_width"),
-			ProjectSettings.get_setting("display/window/size/viewport_height")
-		)
-	elif not has_max_size:
-		var max_size_rect := DisplayServer.get_display_safe_area()
-		max_size = Vector2(max_size_rect.size.x as float, max_size_rect.size.y as float)
+	if not has_max_size:
+		max_size = Vector2Ref.get_display_area(self).size
 	
 	var min_x_pos: float = (
 		max(0, triangle.position.x)

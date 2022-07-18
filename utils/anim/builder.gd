@@ -46,7 +46,7 @@ func prop(prop_name: String, value: Dictionary) -> AnimBuilder:
 
 ## Changes alpha smoothly throughout entire animation.
 ## Add this method after all keyframes to be faded have been defined.
-func fade(from: float, to: float) -> AnimBuilder:
+func fade(from: float, to: float, self_only: bool = false) -> AnimBuilder:
 	var mod_prop := {}
 	var num_keys := len(anim.keyframes.keys())
 	var mod = base_node.modulate
@@ -56,21 +56,33 @@ func fade(from: float, to: float) -> AnimBuilder:
 		var a := ease(lerp(from, to, weight), 0.3)
 		mod_prop[key] = Color(mod.r, mod.g, mod.b, a)
 		i += 1
-	anim.props["modulate"] = mod_prop
-	anim.setup["modulate"] = Color(mod.r, mod.g, mod.b, from)
+	var key_name := "modulate" if not self_only else "self_modulate"
+	anim.props[key_name] = mod_prop
+	anim.setup[key_name] = Color(mod.r, mod.g, mod.b, from)
 	return self
 
 
 ## Increases alpha smoothly throughout entire animation.
 ## Add this method after all keyframes to be faded have been defined.
 func fade_in() -> AnimBuilder:
-	return fade(0.0, base_node.modulate.a)
+	return fade(0.0, 1.0)
+
+## Increases alpha smoothly throughout entire animation.
+## Add this method after all keyframes to be faded have been defined.
+func self_fade_in() -> AnimBuilder:
+	return fade(0.0, 1.0, true)
 
 
 ## Decreases alpha smoothly throughout entire animation.
 ## Add this method after all keyframes to be faded have been defined.
 func fade_out() -> AnimBuilder:
 	return fade(base_node.modulate.a, 0.0)
+
+
+## Decreases alpha smoothly throughout entire animation.
+## Add this method after all keyframes to be faded have been defined.
+func self_fade_out() -> AnimBuilder:
+	return fade(base_node.modulate.a, 0.0, true)
 
 
 func keyframes(value: Dictionary) -> AnimBuilder:

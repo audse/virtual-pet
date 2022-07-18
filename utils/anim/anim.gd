@@ -2,6 +2,26 @@ class_name Anim
 extends Object
 
 
+static func fade_in(node: Node, duration: float = 0.25) -> void:
+	await (
+		AnimBuilder
+			.new(node)
+			.keyframe("fade", duration, Tween.EASE_IN_OUT, Tween.TRANS_SINE)
+			.fade_in()
+			.complete()
+	)
+
+
+static func fade_out(node: Node, duration: float = 0.25) -> void:
+	await (
+		AnimBuilder
+			.new(node)
+			.keyframe("fade", duration, Tween.EASE_IN_OUT, Tween.TRANS_SINE)
+			.fade_out()
+			.complete()
+	)
+
+
 static func pop_enter_base(node: Node) -> AnimBuilder:
 	return (
 		AnimBuilder

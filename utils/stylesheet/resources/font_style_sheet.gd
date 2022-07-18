@@ -2,7 +2,7 @@
 class_name FontStyleSheet
 extends StyleSheet
 
-signal font_changed(new_font: FontData, which: String)
+signal font_changed(new_font: FontFile, which: String)
 signal color_changed(new_color: Color, which: String)
 
 @export var preset: StyleSheetConstants.FontPresets:
@@ -17,7 +17,7 @@ signal color_changed(new_color: Color, which: String)
 		base_color = value
 		send_update()
 
-@export var base_font: FontData = StyleSheetConstants.FONTS.regular:
+@export var base_font: FontFile = StyleSheetConstants.FONTS.regular:
 	set(value):
 		base_font = value
 		send_update()

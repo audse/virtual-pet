@@ -28,21 +28,13 @@ const Shape = States.PaintState.Shape
 # color picker
 
 func _ready() -> void:
-	for tool in tool_buttons.keys():
+	for tool in tool_buttons:
 		tool_buttons[tool].pressed.connect(_on_tool_button_pressed.bind(tool))
-	
+#
 	States.Paint.action_changed.connect(_on_action_changed)
 	States.Paint.size_changed.connect(_on_size_changed)
-	States.Paint.ratio_changed.connect(_on_ratio_changed)
-	States.Paint.precision_changed.connect(_on_precision_changed)
 	
 #	%CanvasNameField.text = "Canvas %d" % (%Gallery.num_canvases + 1)
-	
-	%DrawToolsWindow.opening.connect(%ViewToolsWindow.queue_close)
-	%ViewToolsWindow.opening.connect(%DrawToolsWindow.queue_close)
-	
-	print(%Canvas.scale)
-
 
 var event_map := {
 #	"number_key": func(event: InputEventKey):
@@ -155,24 +147,6 @@ func _on_undo_updated() -> void:
 	%RedoButton.disabled = not %Undo.can_redo()
 
 
-func _on_odd_button_pressed() -> void:
-	States.Paint.ratio = States.PaintState.Ratio.ODD
-
-
-func _on_even_button_pressed() -> void:
-	States.Paint.ratio = States.PaintState.Ratio.EVEN
-
-
-func _on_ratio_changed(ratio: int) -> void:
-	var is_even: bool = ratio == States.PaintState.Ratio.EVEN
-	if is_even:
-		selected(%EvenButton)
-		deselected(%OddButton)
-	else:
-		deselected(%EvenButton)
-		selected(%OddButton)
-
-
 func _on_increase_size_button_pressed() -> void:
 	States.Paint.size += 1
 
@@ -194,10 +168,6 @@ func _on_zoom_out_button_pressed() -> void:
 	States.Paint.zoom -= 0.2
 
 
-func _on_recenter_button_pressed() -> void:
-	States.Paint.zoom = 1.0
-
-
 func _on_save_button_pressed() -> void:
 	var canvas_texture: ImageTexture = %Canvas.get_texture()
 	%SaveButton.update_texture(canvas_texture)
@@ -215,19 +185,9 @@ func _on_ok_button_pressed() -> void:
 	States.Paint.set_action(States.Paint.prev_action)
 
 
-func _on_precision_button_pressed() -> void:
-	States.Paint.toggle_precision()
-
-
-func _on_precision_changed(precision: float) -> void:
-	if precision < 0.0: deselected(%PrecisionButton)
-	else: selected(%PrecisionButton)
-
-
 func _on_canvas_action_completed(action: int, pixels: Array) -> void:
 	%Undo.add(action, pixels)
-	pass # Replace with function body.
 
 
-func _on_rotate_right_button_pressed() -> void:
-	pass # Replace with function body.
+func _on_canvas_resume_draw() -> void:
+	_on_tool_button_pressed(Action.DRAW)

@@ -1,0 +1,12 @@
+[gd_scene load_steps=2 format=3 uid="uid://bju1oloy4xlnu"]
+
+[ext_resource type="Script" path="res://interface/components/panel_button/panel_button_group.gd" id="1_urogc"]
+
+[node name="VBoxContainer" type="VBoxContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource("1_urogc")
+
+[node name="Button" type="Button" parent="."]
+offset_right = 828.0
+offset_bottom = 32.0

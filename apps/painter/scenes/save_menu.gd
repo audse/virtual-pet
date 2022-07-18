@@ -8,8 +8,17 @@ extends Button
 
 
 func _ready() -> void:
-	menu.opening.connect(func(): area_button.visible = true)
-	menu.closing.connect(func(): area_button.visible = false)
+	menu.opening.connect(toggle_area_button.bind(true))
+	menu.closing.connect(toggle_area_button.bind(false))
+
+
+func toggle_area_button(to_show: bool) -> void:
+	if to_show:
+		area_button.visible = true
+		await Anim.fade_in(area_button)
+	else: 
+		await Anim.fade_out(area_button)
+		area_button.visible = false
 
 
 func update_texture(canvas_texture: Texture2D) -> void:

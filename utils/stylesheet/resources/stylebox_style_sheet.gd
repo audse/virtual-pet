@@ -60,14 +60,16 @@ func send_update() -> void:
 func get_base_styleboxes() -> Dictionary:
 	var styles: Dictionary = {}
 	for default_name in get_default_style_names():
-		if base_stylebox != null:
-			styles[default_name] = base_stylebox
-		elif base_node and base_node is Control:
-			var style := _get_stylebox_from_theme(default_name)
-			styles[default_name] = style if style else new_reset_stylebox()
-		else:
-			styles[default_name] = new_reset_stylebox()
+		styles[default_name] = get_base_stylebox(default_name)
 	return styles
+
+
+func get_base_stylebox(default_name: String) -> StyleBoxFlat:
+	if base_stylebox != null: return base_stylebox
+	elif base_node and base_node is Control:
+		var style := _get_stylebox_from_theme(default_name)
+		return style if style else new_reset_stylebox()
+	else: return new_reset_stylebox()
 
 
 func _get_stylebox_from_theme(style: String) -> StyleBoxFlat:
@@ -98,6 +100,7 @@ func get_styleboxes() -> Dictionary:
 		var style_info := parse_style_name(style_string)
 		var name: String = style_info.name
 		var string: String = style_info.string
+		print(name, string)
 
 		if name == default_style_names:
 			default_styles.append(string)
@@ -110,6 +113,8 @@ func get_styleboxes() -> Dictionary:
 			styles[name].append(style_string)
 	
 	for name in styles:
+		if not name in styleboxes: styleboxes[name] = get_base_stylebox(name)
+		
 		# apply default styles to all styleboxes
 		styleboxes[name] = apply_styles_from(styleboxes[name].duplicate(), default_styles + styles[name])
 	
@@ -180,7 +185,7 @@ func parse_size_string(size_string: String) -> int:
 
 
 func parse_style_string(style_string: String) -> Dictionary:
-	@warning_ignore(standalone_expression, standalone_expression)
+	@warning_ignore(standalone_expression)
 	""" parse_style_string
 	
 		:param style_string: String
