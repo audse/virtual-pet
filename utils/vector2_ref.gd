@@ -13,8 +13,12 @@ static func get_line_points_in_grid(start: Vector2, end: Vector2, grid_size: Vec
 	
 	var last_pos: Vector2 = start
 	
-	while end.distance_to(last_pos) > 10:
+	while end.distance_to(last_pos) > max(size.x, size.y):
 		var new_pos = last_pos.move_toward(end, delta).snapped(grid_size)
+		
+		if new_pos.distance_to(points[len(points) - 1]) < min(size.x, size.y) / 2:
+			break
+		
 		points.append(new_pos)
 		last_pos = new_pos
 	

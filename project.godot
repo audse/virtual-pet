@@ -243,8 +243,11 @@ _global_script_class_icons={
 [application]
 
 config/name="pet-sim"
+run/main_scene="res://main_menu.tscn"
 config/features=PackedStringArray("4.0", "Vulkan Mobile")
-config/icon="res://icon.png"
+config/icon="res://static/app/app_icon.svg"
+config/macos_native_icon="res://static/app/app_icon.svg"
+config/windows_native_icon="res://static/app/app_icon.svg"
 
 [autoload]
 
@@ -258,9 +261,12 @@ States="*res://utils/states.gd"
 window/size/viewport_width=828
 window/size/viewport_height=1792
 window/handheld/orientation=1
+window/stretch/mode="viewport"
+window/stretch/aspect="expand"
 
 [gui]
 
+common/default_scroll_deadzone=100
 theme/custom="res://static/main.theme"
 
 [input]

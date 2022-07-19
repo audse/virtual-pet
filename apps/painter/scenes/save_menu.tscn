@@ -176,15 +176,15 @@ visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_top = 62.0
-offset_right = -57.0
+offset_right = -339.0
 mouse_filter = 2
 theme = ExtResource("1_frw0o")
 theme_override_constants/margin_right = 0
 
 [node name="PanelContainer" type="PanelContainer" parent="CanvasLayer/SaveMenu"]
-offset_left = 306.0
+offset_left = 24.0
 offset_top = 24.0
-offset_right = 771.0
+offset_right = 489.0
 offset_bottom = 847.0
 size_flags_horizontal = 8
 size_flags_vertical = 0

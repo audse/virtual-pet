@@ -23,3 +23,7 @@ func _on_mouse_entered() -> void:
 
 func _on_mouse_exited() -> void:
 	exited.emit()
+
+
+func _on_main_menu_button_pressed() -> void:
+	get_tree().change_scene_to(load("res://main_menu.tscn"))

@@ -25,7 +25,9 @@ const Shape = States.PaintState.Shape
 # preset canvases
 # fill tool ???
 # optimization ???
+# - remove stuff under "square" shape
 # color picker
+
 
 func _ready() -> void:
 	for tool in tool_buttons:
@@ -34,13 +36,15 @@ func _ready() -> void:
 	States.Paint.action_changed.connect(_on_action_changed)
 	States.Paint.size_changed.connect(_on_size_changed)
 	
-#	%CanvasNameField.text = "Canvas %d" % (%Gallery.num_canvases + 1)
+	%SaveButton.name_field.text = "Canvas %d" % (%Gallery.num_canvases + 1)
+	%SaveButton.save_pressed.connect(
+		func(canvas_name: String):
+			%Canvas.save_canvas(canvas_name)
+			%Gallery.load_gallery()
+	)
+
 
 var event_map := {
-#	"number_key": func(event: InputEventKey):
-#		var k := clampi(event.keycode - 49, 0, 9)
-#		var swatch = %Swatches.get_child(k)
-#		if swatch: _on_swatch_button_pressed(swatch),
 	"redo": func(_e): _on_redo_button_pressed(),
 	"undo": func(_e): _on_undo_button_pressed(),
 	"forward": func(_e): States.Paint.shape += 1,
@@ -106,7 +110,8 @@ func _on_action_changed(action: int) -> void:
 		Action.ERASE: icon = load("res://apps/painter/assets/icons/eraser.svg")
 		Action.LINE: icon = load("res://apps/painter/assets/icons/line.svg")
 		Action.RECT: icon = load("res://apps/painter/assets/icons/rectangle.svg")
-	%DrawToolsWindow.menu_open_icon = icon
+	%ToolsPanelButton.start_icon = icon
+	%CurrentTool.texture = icon
 	
 	# toggle "ok" button (to complete/end current action)
 	match action:
@@ -140,6 +145,8 @@ func _on_redo_button_pressed() -> void:
 
 func _on_tool_button_pressed(tool: int) -> void:
 	States.Paint.set_action(tool)
+	if %ToolsPanelButton.button_pressed:
+		%ToolsPanelButton.close()
 
 
 func _on_undo_updated() -> void:
@@ -169,12 +176,8 @@ func _on_zoom_out_button_pressed() -> void:
 
 
 func _on_save_button_pressed() -> void:
-	var canvas_texture: ImageTexture = %Canvas.get_texture()
+	var canvas_texture: ImageTexture = await %Canvas.get_texture()
 	%SaveButton.update_texture(canvas_texture)
-#	var canvas_name: String = %CanvasNameField.text
-#	if len(canvas_name) < 1: return
-#	%Canvas.save_canvas(canvas_name)
-#	%Gallery.load_gallery() # reload gallery grid
 
 
 func _on_gallery_button_pressed() -> void:
@@ -191,3 +194,7 @@ func _on_canvas_action_completed(action: int, pixels: Array) -> void:
 
 func _on_canvas_resume_draw() -> void:
 	_on_tool_button_pressed(Action.DRAW)
+
+
+func _on_main_menu_button_pressed() -> void:
+	get_tree().change_scene_to(load("res://main_menu.tscn"))

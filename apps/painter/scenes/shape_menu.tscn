@@ -1,0 +1,269 @@
+[gd_scene load_steps=8 format=3 uid="uid://bh7h5y83bw4o4"]
+
+[ext_resource type="Script" path="res://apps/painter/scenes/shape_menu.gd" id="1_lv1tk"]
+[ext_resource type="Script" path="res://apps/painter/nodes/shape_button.gd" id="2_ufv41"]
+[ext_resource type="FontFile" uid="uid://doyre2d68vvpi" path="res://static/fonts/Nunito/Nunito-Bold.ttf" id="4_q7dpf"]
+[ext_resource type="Texture2D" uid="uid://dxpyxfysoqmyu" path="res://apps/painter/assets/icons/rotate_left.svg" id="5_vlw62"]
+[ext_resource type="Texture2D" uid="uid://by73s6jeshln5" path="res://apps/painter/assets/icons/decrease_size.svg" id="6_8ylm1"]
+[ext_resource type="Texture2D" uid="uid://26p63shqhm1k" path="res://apps/painter/assets/icons/rotate_right.svg" id="18_aiin7"]
+[ext_resource type="Texture2D" uid="uid://4vh1caqutpo" path="res://apps/painter/assets/icons/increase_size.svg" id="19_urgnv"]
+
+[node name="ShapePanelButton" type="Button"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(80, 80)
+offset_right = 80.0
+offset_bottom = 80.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+toggle_mode = true
+keep_pressed_outside = true
+expand_icon = true
+script = ExtResource("1_lv1tk")
+container_path = NodePath("MarginContainer")
+
+[node name="CurrentShape" type="Button" parent="."]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(80, 80)
+offset_right = 80.0
+offset_bottom = 80.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+mouse_filter = 2
+theme_type_variation = &"SuccessButton"
+disabled = true
+flat = true
+script = ExtResource("2_ufv41")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+visible = false
+offset_right = 648.0
+offset_bottom = 326.0
+pivot_offset = Vector2(40, 40)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+offset_left = 24.0
+offset_top = 24.0
+offset_right = 624.0
+offset_bottom = 302.0
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer"]
+offset_right = 600.0
+offset_bottom = 84.0
+theme_override_colors/font_color = Color(0.580392, 0.639216, 0.721569, 1)
+theme_override_constants/line_spacing = 50
+theme_override_fonts/font = ExtResource("4_q7dpf")
+theme_override_font_sizes/font_size = 24
+text = "S H A P E S"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+offset_top = 108.0
+offset_right = 600.0
+offset_bottom = 278.0
+theme_override_constants/separation = 10
+
+[node name="LeftDrawTools" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+offset_right = 90.0
+offset_bottom = 170.0
+size_flags_vertical = 3
+theme_override_constants/separation = 10
+alignment = 1
+
+[node name="RotateLeftButton" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer/LeftDrawTools"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(90, 80)
+offset_right = 90.0
+offset_bottom = 80.0
+text = "
+"
+icon = ExtResource("5_vlw62")
+icon_alignment = 1
+expand_icon = true
+
+[node name="DecreaseSizeButton" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer/LeftDrawTools"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(80, 80)
+offset_top = 90.0
+offset_right = 90.0
+offset_bottom = 170.0
+icon = ExtResource("6_8ylm1")
+icon_alignment = 1
+expand_icon = true
+
+[node name="ShapeButtons" type="ScrollContainer" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(400, 100)
+offset_left = 100.0
+offset_right = 500.0
+offset_bottom = 170.0
+size_flags_vertical = 3
+horizontal_scroll_mode = 2
+vertical_scroll_mode = 0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/ShapeButtons"]
+offset_right = 1048.0
+offset_bottom = 170.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 8
+
+[node name="SquareButton" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer/ShapeButtons/HBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(80, 80)
+offset_top = 41.0
+offset_right = 80.0
+offset_bottom = 121.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_type_variation = &"SuccessButton"
+script = ExtResource("2_ufv41")
+
+[node name="SharpButton" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer/ShapeButtons/HBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(80, 80)
+offset_left = 88.0
+offset_top = 41.0
+offset_right = 168.0
+offset_bottom = 121.0
+size_flags_horizontal = 0
+size_flags_vertical = 4
+script = ExtResource("2_ufv41")
+shape = 2
+
+[node name="RoundButton" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer/ShapeButtons/HBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(80, 80)
+offset_left = 176.0
+offset_top = 41.0
+offset_right = 256.0
+offset_bottom = 121.0
+size_flags_horizontal = 0
+size_flags_vertical = 4
+script = ExtResource("2_ufv41")
+shape = 3
+
+[node name="ConcaveButton" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer/ShapeButtons/HBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(80, 80)
+offset_left = 264.0
+offset_top = 41.0
+offset_right = 344.0
+offset_bottom = 121.0
+size_flags_horizontal = 0
+size_flags_vertical = 4
+script = ExtResource("2_ufv41")
+shape = 4
+
+[node name="ConcaveSharpButton2" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer/ShapeButtons/HBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(80, 80)
+offset_left = 352.0
+offset_top = 41.0
+offset_right = 432.0
+offset_bottom = 121.0
+size_flags_horizontal = 0
+size_flags_vertical = 4
+script = ExtResource("2_ufv41")
+shape = 5
+
+[node name="SquareEdgeButton" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer/ShapeButtons/HBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(80, 80)
+offset_left = 440.0
+offset_top = 41.0
+offset_right = 520.0
+offset_bottom = 121.0
+size_flags_horizontal = 0
+size_flags_vertical = 4
+script = ExtResource("2_ufv41")
+shape = 6
+
+[node name="RoundEdgeButton" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer/ShapeButtons/HBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(80, 80)
+offset_left = 528.0
+offset_top = 41.0
+offset_right = 608.0
+offset_bottom = 121.0
+size_flags_horizontal = 0
+size_flags_vertical = 4
+script = ExtResource("2_ufv41")
+shape = 7
+
+[node name="CircleButton" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer/ShapeButtons/HBoxContainer"]
+custom_minimum_size = Vector2(80, 80)
+offset_left = 616.0
+offset_top = 41.0
+offset_right = 696.0
+offset_bottom = 121.0
+size_flags_vertical = 4
+script = ExtResource("2_ufv41")
+shape = 8
+
+[node name="FlowerButton" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer/ShapeButtons/HBoxContainer"]
+custom_minimum_size = Vector2(80, 80)
+offset_left = 704.0
+offset_top = 41.0
+offset_right = 784.0
+offset_bottom = 121.0
+size_flags_vertical = 4
+script = ExtResource("2_ufv41")
+shape = 9
+
+[node name="HeartButton" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer/ShapeButtons/HBoxContainer"]
+custom_minimum_size = Vector2(80, 80)
+offset_left = 792.0
+offset_top = 41.0
+offset_right = 872.0
+offset_bottom = 121.0
+size_flags_vertical = 4
+script = ExtResource("2_ufv41")
+shape = 10
+
+[node name="StarButton" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer/ShapeButtons/HBoxContainer"]
+custom_minimum_size = Vector2(80, 80)
+offset_left = 880.0
+offset_top = 41.0
+offset_right = 960.0
+offset_bottom = 121.0
+size_flags_vertical = 4
+script = ExtResource("2_ufv41")
+shape = 11
+
+[node name="PawPrintButton" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer/ShapeButtons/HBoxContainer"]
+custom_minimum_size = Vector2(80, 80)
+offset_left = 968.0
+offset_top = 41.0
+offset_right = 1048.0
+offset_bottom = 121.0
+size_flags_vertical = 4
+script = ExtResource("2_ufv41")
+shape = 12
+
+[node name="RightDrawTools" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+offset_left = 510.0
+offset_right = 600.0
+offset_bottom = 170.0
+theme_override_constants/separation = 10
+alignment = 1
+
+[node name="RotateRightButton" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer/RightDrawTools"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(90, 80)
+offset_right = 90.0
+offset_bottom = 80.0
+text = "
+"
+icon = ExtResource("18_aiin7")
+icon_alignment = 1
+expand_icon = true
+
+[node name="IncreaseSizeButton" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer/RightDrawTools"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(80, 80)
+offset_top = 90.0
+offset_right = 90.0
+offset_bottom = 170.0
+icon = ExtResource("19_urgnv")
+icon_alignment = 1
+expand_icon = true

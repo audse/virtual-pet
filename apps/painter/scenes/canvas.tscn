@@ -64,7 +64,6 @@ mouse_force_pass_scroll_events = false
 
 [node name="SubViewport" type="SubViewport" parent="Canvas"]
 unique_name_in_owner = true
-transparent_bg = true
 handle_input_locally = false
 screen_space_aa = 1
 canvas_item_default_texture_filter = 3
@@ -207,3 +206,5 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_f1txh")
 metadata/_edit_layout_mode = 1
+
+[connection signal="gui_input" from="Backdrop" to="." method="_on_backdrop_gui_input"]

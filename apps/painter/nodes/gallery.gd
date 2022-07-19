@@ -23,7 +23,7 @@ func close() -> void:
 
 func clear_gallery() -> void:
 	for child in %CanvasGrid.get_children():
-		if child != %CanvasTemplate: child.queue_free()
+		if child != %CanvasTemplateSection: child.queue_free()
 	
 	for child in %Viewports.get_children():
 		if child != %ViewportTemplate: child.queue_free()
@@ -51,6 +51,8 @@ func create_canvas_viewport() -> SubViewport:
 
 
 func create_canvas_texture(canvas: SubViewport, canvas_name: String) -> VBoxContainer:
+	var canvas_name_text := canvas_name.replace(".canvas", "")
+	canvas.set_meta("canvas_name", canvas_name_text)
 	var container: VBoxContainer = %CanvasTemplateSection.duplicate()
 	%CanvasGrid.add_child(container)
 	container.visible = true
@@ -60,7 +62,7 @@ func create_canvas_texture(canvas: SubViewport, canvas_name: String) -> VBoxCont
 	button.mouse_exited.connect(_on_canvas_mouse_exited.bind(button))
 	button.pressed.connect(_on_canvas_pressed.bind(canvas))
 	var label: Label = container.get_child(1)
-	label.text = canvas_name.replace(".canvas", "")
+	label.text = canvas_name_text
 	
 	var button_container = container.get_child(2)
 	var download_button: Button = button_container.get_child(0)
@@ -71,7 +73,7 @@ func create_canvas_texture(canvas: SubViewport, canvas_name: String) -> VBoxCont
 
 
 func _on_canvas_pressed(canvas: SubViewport) -> void:
-	States.Paint.canvas_selected.emit(canvas)
+	States.Paint.canvas_selected.emit(canvas, canvas.get_meta("canvas_name"))
 	close()
 
 

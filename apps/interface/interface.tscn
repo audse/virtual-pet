@@ -13,30 +13,36 @@ script = ExtResource("1_hdehv")
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 offset_left = 24.0
 offset_top = 100.0
-offset_right = 1056.0
-offset_bottom = 1820.0
+offset_right = 804.0
+offset_bottom = 1692.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 mouse_filter = 2
 
 [node name="TopActions" type="HFlowContainer" parent="VBoxContainer"]
 unique_name_in_owner = true
-offset_right = 1032.0
+offset_right = 780.0
+offset_bottom = 77.0
 size_flags_vertical = 0
+
+[node name="MainMenuButton" type="Button" parent="VBoxContainer/TopActions"]
+offset_right = 152.0
+offset_bottom = 77.0
+text = "Home"
 
 [node name="CenterActions" type="HFlowContainer" parent="VBoxContainer"]
 unique_name_in_owner = true
-offset_top = 24.0
-offset_right = 1032.0
-offset_bottom = 1619.0
+offset_top = 101.0
+offset_right = 780.0
+offset_bottom = 1491.0
 size_flags_vertical = 3
 mouse_filter = 2
 
 [node name="BottomActions" type="HFlowContainer" parent="VBoxContainer"]
 unique_name_in_owner = true
-offset_top = 1643.0
-offset_right = 1032.0
-offset_bottom = 1720.0
+offset_top = 1515.0
+offset_right = 780.0
+offset_bottom = 1592.0
 size_flags_vertical = 8
 
 [node name="CancelButton" type="Button" parent="VBoxContainer/BottomActions"]
@@ -58,6 +64,7 @@ text = "Build here"
 
 [connection signal="mouse_entered" from="VBoxContainer/TopActions" to="." method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="VBoxContainer/TopActions" to="." method="_on_mouse_exited"]
+[connection signal="pressed" from="VBoxContainer/TopActions/MainMenuButton" to="." method="_on_main_menu_button_pressed"]
 [connection signal="mouse_entered" from="VBoxContainer/CenterActions" to="." method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="VBoxContainer/CenterActions" to="." method="_on_mouse_exited"]
 [connection signal="mouse_entered" from="VBoxContainer/BottomActions" to="." method="_on_mouse_entered"]

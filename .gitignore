@@ -3,3 +3,6 @@
 .DS_STORE
 .gitattributes
 *.blend1
+*.png
+static/app
+builds/ios

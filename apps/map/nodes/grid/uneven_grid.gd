@@ -15,7 +15,7 @@ extends Resource
 ## on the z axis. For creating irregular grids.
 @export var z_offset_range: Array[float] = [-0.15, 0.15]
 
-var points: Array[UnevenPoint] = make_grid()
+var points: Array = make_grid()
 
 
 ## Returns a list of grid points and their metadata

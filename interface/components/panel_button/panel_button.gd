@@ -19,6 +19,11 @@ var panel: Panel = null
 	hover = get_theme_stylebox("hover", "Button")
 }
 
+@onready var start_icon: Texture = icon:
+	set(value):
+		start_icon = value
+		if not button_pressed:
+			icon = value
 @onready var start_min_size: Vector2 = custom_minimum_size
 @onready var start_size: Vector2 = size
 @onready var container_scale: Vector2 = container.scale if container else Vector2.ONE
@@ -47,102 +52,115 @@ func toggle(is_opened: bool) -> void:
 
 func open() -> void:
 	_reset()
-	if not panel_disabled:
-		opening.emit()
+	
+	opening.emit()
+	
+	if not panel_disabled: _continue_open()
+
+
+func _continue_open() -> void:
+	var keyframes := {
+		open = { duration = 0.25, ease_type = Tween.EASE_OUT },
+		settle = { duration = 0.25 },
+	}
+	(
+		AnimBuilder.new(self)
+			.setup({ "custom_minimum_size": size, "text": "", "icon": null })
+			.keyframe("open", 0.25)
+			.self_fade_out()
+			.prop("custom_minimum_size", { open = container.size })
+			.tear_down({ "text": text, "icon": start_icon })
+			.complete()
+	)
+	if container:
 		(
-			AnimBuilder.new(self)
-				.setup({ "custom_minimum_size": max(size, custom_minimum_size), "text": "", "icon": null })
-				.keyframe("open", 0.25)
-				.self_fade_out()
-				.prop("custom_minimum_size", { open = container.size })
-				.tear_down({ "text": text, "icon": icon })
-				.complete()
-		)
-		if container:
-			(
-				AnimBuilder.new(container)
-					.setup({ "scale": container_start_scale, "visible": true, "rotation": deg2rad(2.0) })
-					.keyframe("open", 0.25, Tween.EASE_OUT, Tween.TRANS_SINE)
-					.keyframe("settle", 0.25, Tween.EASE_IN_OUT, Tween.TRANS_SINE)
-					.fade_in()
-					.prop("scale", { 
+			AnimBuilder.new(container)
+				.setup({ "scale": container_start_scale, "visible": true, "rotation": deg2rad(2.0) })
+				.keyframes(keyframes)
+				.fade_in()
+				.props({
+					"scale": { 
 						open = container_scale * 1.05,
 						settle = container_scale
-					})
-					.prop("rotation", { 
+					},
+					"rotation": { 
 						open = deg2rad(-0.5),
 						settle = 0.0,
-					})
-					.complete()
-			)
-		
-		if panel:
-			add_theme_stylebox_override("pressed", _empty_stylebox(styleboxes.pressed))
-			await (
-				AnimBuilder.new(panel)
-					.setup({ "size": start_size, "visible": true, "rotation": deg2rad(2.0), })
-					.keyframe("open", 0.25, Tween.EASE_OUT, Tween.TRANS_SINE)
-					.keyframe("settle", 0.15, Tween.EASE_IN_OUT, Tween.TRANS_SINE)
-					.prop("size", { 
+					}
+				})
+				.complete()
+		)
+	
+	if panel:
+		add_theme_stylebox_override("pressed", _empty_stylebox(styleboxes.pressed))
+		await (
+			AnimBuilder.new(panel)
+				.setup({ "visible": true, "rotation": deg2rad(2.0) })
+				.keyframes(keyframes)
+				.props({
+					"size": {
 						open = container.size * 1.05,
-						settle = container.size 
-					})
-					.prop("rotation", { 
+						settle = container.size
+					},
+					"rotation": { 
 						open = deg2rad(-0.5),
 						settle = 0.0,
-					})
-					.complete()
-			)
-		opened.emit()
+					},
+				})
+				.complete()
+		)
+	opened.emit()
 
 
 func close() -> void:
 	button_pressed = false
 	_reset()
-	if not panel_disabled:
-		closing.emit()
-		add_theme_stylebox_override("normal", _empty_stylebox(styleboxes.normal))
-		add_theme_stylebox_override("hover", _empty_stylebox(styleboxes.normal))
-		(
-			AnimBuilder.new(self)
-				.keyframe("close", 0.25)
-				.self_fade_in()
-				.prop("custom_minimum_size", { close = start_min_size })
-				.tear_down({ "text": text, "icon": icon })
+	closing.emit()
+	
+	var keyframes := {
+		anticipation = { duration = 0.1 },
+		close = { duration = 0.15, ease_type = Tween.EASE_IN }
+	}
+	add_theme_stylebox_override("normal", _empty_stylebox(styleboxes.normal))
+	add_theme_stylebox_override("hover", _empty_stylebox(styleboxes.normal))
+	
+	(
+		AnimBuilder.new(self)
+			.keyframe("close", 0.25)
+			.self_fade_in()
+			.prop("custom_minimum_size", { close = start_min_size })
+			.tear_down({ "text": text, "icon": start_icon })
+			.complete()
+	)
+	
+	if container: (
+			AnimBuilder.new(container)
+				.keyframes(keyframes)
+				.fade_out()
+				.prop("scale", { 
+					anticipation = container.scale * 1.05,
+					close = container_start_scale
+				})
+				.then_hide()
 				.complete()
 		)
-		
-		if container:
-			(
-				AnimBuilder.new(container)
-					.keyframe("anticipation", 0.1, Tween.EASE_IN_OUT, Tween.TRANS_SINE)
-					.keyframe("close", 0.15, Tween.EASE_IN, Tween.TRANS_SINE)
-					.fade_out()
-					.prop("scale", { 
-						anticipation = container.scale * 1.05,
-						close = container_start_scale
-					})
-					.tear_down({ "visible": false })
-					.complete()
-			)
-		
-		if panel:
-			await get_tree().create_timer(0.05).timeout
-			await (
-				AnimBuilder.new(panel)
-					.keyframe("anticipation", 0.1, Tween.EASE_IN_OUT, Tween.TRANS_SINE)
-					.keyframe("close", 0.15, Tween.EASE_IN_OUT, Tween.TRANS_SINE)
-					.prop("size", { 
-						anticipation = panel.size * 1.05,
-						close = start_size,
-					})
-					.tear_down({ "visible": false })
-					.complete()
-			)
-		
-		for style in styleboxes:
-			add_theme_stylebox_override(style, styleboxes[style])
-		closed.emit()
+	
+	if panel:
+		await get_tree().create_timer(0.05).timeout
+		await (
+			AnimBuilder.new(panel)
+				.keyframes(keyframes)
+				.prop("size", { 
+					anticipation = panel.size * 1.05,
+					close = start_size,
+				})
+				.then_hide()
+				.complete()
+		)
+	
+	for style in styleboxes:
+		add_theme_stylebox_override(style, styleboxes[style])
+	closed.emit()
 
 
 func _empty_stylebox(box: StyleBox) -> StyleBox:
@@ -163,23 +181,22 @@ func _reset():
 	if container:
 		container.pivot_offset = start_size / 2
 	
-	if panel:
-		panel.pivot_offset = start_size / 2
-	
 	_make_panel()
 
 
 func _make_panel() -> void:
-	if not panel:
+	if not panel and container:
 		panel = Panel.new()
 		add_child(panel)
 		move_child(panel, 0)
-		panel.show_behind_parent = true
-		panel.mouse_filter = Control.MOUSE_FILTER_IGNORE
-		panel.add_theme_stylebox_override(
-			"panel", 
-			get_theme_stylebox("pressed", "Button")
-		)
+	panel.show_behind_parent = true
+	panel.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	panel.pivot_offset = start_size / 2
+	
+	panel.add_theme_stylebox_override(
+		"panel", 
+		styleboxes.pressed
+	)
 
 
 func _remake_panel() -> void:

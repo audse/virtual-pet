@@ -52,9 +52,14 @@ func _ready() -> void:
 	%MinimapRefRect.set_deferred("position", ((minimap_ref_size - minimap_size) / 2) * -1)
 
 
-func _input(event: InputEvent) -> void:
+var events := {}
+var last_drag_distance := 0.0
+var zoom_speed := 0.05
+var zoom_sensitivity := 10.0
+
+func _unhandled_input(event: InputEvent) -> void:
+	
 	if event is InputEventKey and event.is_pressed():
-		
 		match event.keycode:
 			# Zoom
 			KEY_MINUS: zoom_out()
@@ -64,14 +69,28 @@ func _input(event: InputEvent) -> void:
 			KEY_SPACE: draw_shape()
 			
 			KEY_LEFT, KEY_RIGHT, KEY_UP, KEY_DOWN: pan(event.keycode)
+	
+	if event is InputEventScreenTouch:
+		if event.pressed: events[event.index] = event
+		else: events.erase(event.index)
+		
+	if event is InputEventScreenDrag:
+		if events.size() == 2:
+			var drag_distance = events[0].position.distance_to(events[1].position)
+			if abs(drag_distance - last_drag_distance) > zoom_sensitivity:
+				var new_zoom = (1 + zoom_speed) if drag_distance < last_drag_distance else (1 - zoom_speed)
+				States.Paint.zoom = Vector2.ONE * new_zoom
+				last_drag_distance = drag_distance
+
+
 
 
 func get_texture() -> ImageTexture:
 	clear_ghosts()
 	cursor.visible = false
-	var img: Image = %CanvasCopy.texture.get_image()
-	var tex := ImageTexture.new()
-	tex.create_from_image(img)
+	await RenderingServer.frame_post_draw
+	var img: Image = %SubViewport.get_texture().get_image()
+	var tex := ImageTexture.new().create_from_image(img)
 	cursor.visible = true
 	return tex
 
@@ -193,7 +212,7 @@ func _on_canvas_pressed(pos: Vector2) -> void:
 			erase()
 		Action.LINE, Action.RECT:
 			if not States.Paint.has_line():
-				States.Paint.line = pos
+				States.Paint.line = (pos + cursor.get_offset()).snapped(States.Paint.size_px)
 			else:
 				draw_segment(false)
 
@@ -208,7 +227,7 @@ func draw_shape() -> Sprite2D:
 func draw_segment(is_ghost: bool = false) -> void:
 	var action = States.Paint.action
 	var start = States.Paint.line
-	var end: Vector2 = cursor_position
+	var end: Vector2 = (cursor_position + cursor.get_offset()).snapped(States.Paint.size_px)
 	var px: Vector2 = States.Paint.size_px
 	
 	clear_ghosts()
@@ -225,7 +244,7 @@ func draw_segment(is_ghost: bool = false) -> void:
 	if not is_ghost:
 		action_completed.emit(action, pixels)
 		
-		var clicked_prev_pixel_again: bool = start.distance_to(end) <= px.x
+		var clicked_prev_pixel_again: bool = start.distance_to(end) <= min(px.x, px.y)
 		
 		if action == Action.LINE and not clicked_prev_pixel_again:
 			States.Paint.line = end
@@ -314,3 +333,9 @@ func _on_change_action(_new_action: int) -> void:
 func _on_precision_changed(precision: float) -> void:
 	canvas.material.set_shader_param("minigrid_x", precision)
 	canvas.material.set_shader_param("minigrid_y", precision)
+
+
+func _on_backdrop_gui_input(event: InputEvent) -> void:
+	if event is InputEventScreenDrag:
+		%CanvasCopy.position += event.relative
+		%MinimapRefRect.position = - ((%CanvasCopy.position * MINIMAP_SCALE) / States.Paint.zoom)

@@ -1,34 +1,9 @@
-[gd_scene load_steps=9 format=3]
+[gd_scene load_steps=5 format=3 uid="uid://dox6igj0hpbjq"]
 
 [ext_resource type="Texture2D" uid="uid://bneve00ab2acy" path="res://apps/painter/assets/icons/color_drop.svg" id="1_lcekl"]
 [ext_resource type="Script" path="res://apps/painter/scenes/palette.gd" id="2_37rmj"]
-[ext_resource type="Script" path="res://interface/components/drop_menu/drop_menu.gd" id="2_cbc7u"]
+[ext_resource type="FontFile" uid="uid://doyre2d68vvpi" path="res://static/fonts/Nunito/Nunito-Bold.ttf" id="4_ite47"]
 [ext_resource type="Script" path="res://apps/painter/nodes/swatch_button.gd" id="4_v73hg"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_jbo1o"]
-
-[sub_resource type="Gradient" id="Gradient_pserq"]
-offsets = PackedFloat32Array(0, 0.41055, 0.733945, 0.981735)
-colors = PackedColorArray(0.117647, 0.160784, 0.231373, 0.490196, 0.117647, 0.160784, 0.231373, 0.196078, 0.117647, 0.160784, 0.231373, 0.0392157, 0.117647, 0.160784, 0.231373, 0)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_fvk5r"]
-gradient = SubResource("Gradient_pserq")
-fill = 1
-fill_from = Vector2(0.5, 0.5)
-fill_to = Vector2(1, 0.5)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6vs4u"]
-content_margin_left = 24.0
-content_margin_top = 36.0
-content_margin_right = 24.0
-content_margin_bottom = 24.0
-bg_color = Color(0.2, 0.254902, 0.333333, 0.941176)
-border_width_top = 30
-border_color = Color(0.278431, 0.333333, 0.411765, 1)
-border_blend = true
-corner_radius_top_right = 20
-corner_radius_bottom_right = 20
-corner_radius_bottom_left = 20
 
 [node name="PaletteButton" type="Button"]
 custom_minimum_size = Vector2(80, 80)
@@ -36,206 +11,147 @@ offset_right = 82.0
 offset_bottom = 82.0
 size_flags_horizontal = 4
 size_flags_vertical = 4
+toggle_mode = true
+keep_pressed_outside = true
 script = ExtResource("2_37rmj")
+container_path = NodePath("MarginContainer2")
 
-[node name="Icon" type="TextureRect" parent="."]
+[node name="MarginContainer" type="MarginContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 12
+
+[node name="Icon" type="TextureRect" parent="MarginContainer"]
 unique_name_in_owner = true
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -25.0
-offset_top = -25.0
-offset_right = 25.0
-offset_bottom = 25.0
+custom_minimum_size = Vector2(60, 60)
+offset_left = 12.0
+offset_top = 12.0
+offset_right = 72.0
+offset_bottom = 72.0
 grow_horizontal = 2
 grow_vertical = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
 texture = ExtResource("1_lcekl")
 ignore_texture_size = true
 stretch_mode = 5
 
-[node name="MenuControl" type="Control" parent="."]
-unique_name_in_owner = true
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-script = ExtResource("2_cbc7u")
-container = NodePath("../MenuOverlay/PaletteMenu")
-triangle_size = Vector2(50, 28)
-triangle_outline_width = {
-"bottom": 0,
-"left": 0,
-"right": 0,
-"top": 0
-}
-right_angle = true
-margin = Vector2(0, -30)
-triangle_color = Color(0.278431, 0.333333, 0.411765, 1)
-triangle_outline_color = Color(0.278431, 0.333333, 0.411765, 1)
-remake = false
-test_open = false
-test_close = false
-
-[node name="MenuOverlay" type="CanvasLayer" parent="."]
-
-[node name="AreaButton" type="Button" parent="MenuOverlay"]
-unique_name_in_owner = true
+[node name="MarginContainer2" type="MarginContainer" parent="."]
 visible = false
-anchor_right = 1.0
-anchor_bottom = 1.0
-theme_override_styles/normal = SubResource("StyleBoxEmpty_jbo1o")
-theme_override_styles/hover = SubResource("StyleBoxEmpty_jbo1o")
-theme_override_styles/pressed = SubResource("StyleBoxEmpty_jbo1o")
-theme_override_styles/disabled = SubResource("StyleBoxEmpty_jbo1o")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_jbo1o")
+custom_minimum_size = Vector2(500, 0)
+offset_right = 370.0
+offset_bottom = 429.0
 
-[node name="PaletteMenu" type="MarginContainer" parent="MenuOverlay"]
-visible = false
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 41.0
-offset_top = 52.0
-mouse_filter = 2
-theme_override_constants/margin_left = 0
-
-[node name="DropShadowContainer" type="MarginContainer" parent="MenuOverlay/PaletteMenu"]
-offset_top = 24.0
-offset_right = 763.0
-offset_bottom = 1716.0
-mouse_filter = 2
-theme_override_constants/margin_left = -80
-theme_override_constants/margin_top = -100
-
-[node name="DropShadow" type="TextureRect" parent="MenuOverlay/PaletteMenu/DropShadowContainer"]
-custom_minimum_size = Vector2(660, 760)
-offset_left = -80.0
-offset_top = -100.0
-offset_right = 580.0
-offset_bottom = 660.0
-size_flags_horizontal = 0
-size_flags_vertical = 0
-mouse_filter = 2
-texture = SubResource("GradientTexture2D_fvk5r")
-ignore_texture_size = true
-
-[node name="PanelContainer" type="PanelContainer" parent="MenuOverlay/PaletteMenu"]
-custom_minimum_size = Vector2(350, 0)
-offset_top = 24.0
-offset_right = 350.0
-offset_bottom = 154.0
-size_flags_horizontal = 0
-size_flags_vertical = 0
-theme_override_styles/panel = SubResource("StyleBoxFlat_6vs4u")
-
-[node name="VBoxContainer" type="VBoxContainer" parent="MenuOverlay/PaletteMenu/PanelContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer2"]
 offset_left = 24.0
-offset_top = 36.0
-offset_right = 326.0
-offset_bottom = 379.0
-
-[node name="ColorsLabel" type="Label" parent="MenuOverlay/PaletteMenu/PanelContainer/VBoxContainer"]
-offset_right = 302.0
-offset_bottom = 46.0
-theme_override_colors/font_color = Color(0.580392, 0.639216, 0.721569, 1)
-theme_override_font_sizes/font_size = 24
-text = " P A L E T T E"
-vertical_alignment = 1
-
-[node name="Swatches" type="HFlowContainer" parent="MenuOverlay/PaletteMenu/PanelContainer/VBoxContainer"]
-unique_name_in_owner = true
-offset_top = 70.0
-offset_right = 302.0
-offset_bottom = 343.0
+offset_top = 24.0
+offset_right = 476.0
+offset_bottom = 405.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="Button1" type="Button" parent="MenuOverlay/PaletteMenu/PanelContainer/VBoxContainer/Swatches"]
+[node name="ColorsLabel" type="Label" parent="MarginContainer2/VBoxContainer"]
+offset_right = 452.0
+offset_bottom = 84.0
+theme_override_colors/font_color = Color(0.580392, 0.639216, 0.721569, 1)
+theme_override_constants/line_spacing = 50
+theme_override_fonts/font = ExtResource("4_ite47")
+theme_override_font_sizes/font_size = 24
+text = " P A L E T T E"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Swatches" type="HFlowContainer" parent="MarginContainer2/VBoxContainer"]
+unique_name_in_owner = true
+offset_top = 108.0
+offset_right = 452.0
+offset_bottom = 381.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Button1" type="Button" parent="MarginContainer2/VBoxContainer/Swatches"]
 custom_minimum_size = Vector2(75, 75)
-offset_right = 84.0
+offset_right = 95.0
 offset_bottom = 75.0
 size_flags_horizontal = 3
 script = ExtResource("4_v73hg")
 swatch = Color(0.972549, 0.980392, 0.988235, 1)
 
-[node name="Button2" type="Button" parent="MenuOverlay/PaletteMenu/PanelContainer/VBoxContainer/Swatches"]
+[node name="Button2" type="Button" parent="MarginContainer2/VBoxContainer/Swatches"]
 custom_minimum_size = Vector2(75, 75)
-offset_left = 108.0
-offset_right = 192.0
+offset_left = 119.0
+offset_right = 214.0
 offset_bottom = 75.0
 size_flags_horizontal = 3
 script = ExtResource("4_v73hg")
 swatch = Color(0.945098, 0.960784, 0.976471, 1)
 
-[node name="Button3" type="Button" parent="MenuOverlay/PaletteMenu/PanelContainer/VBoxContainer/Swatches"]
+[node name="Button3" type="Button" parent="MarginContainer2/VBoxContainer/Swatches"]
 custom_minimum_size = Vector2(75, 75)
-offset_left = 216.0
-offset_right = 300.0
+offset_left = 238.0
+offset_right = 333.0
 offset_bottom = 75.0
 size_flags_horizontal = 3
 script = ExtResource("4_v73hg")
 swatch = Color(0.886275, 0.909804, 0.941176, 1)
 
-[node name="Button4" type="Button" parent="MenuOverlay/PaletteMenu/PanelContainer/VBoxContainer/Swatches"]
+[node name="Button4" type="Button" parent="MarginContainer2/VBoxContainer/Swatches"]
 custom_minimum_size = Vector2(75, 75)
-offset_top = 99.0
-offset_right = 84.0
-offset_bottom = 174.0
+offset_left = 357.0
+offset_right = 452.0
+offset_bottom = 75.0
 size_flags_horizontal = 3
 theme_type_variation = &"SuccessButton"
 script = ExtResource("4_v73hg")
 swatch = Color(0.796078, 0.835294, 0.882353, 1)
 
-[node name="Button5" type="Button" parent="MenuOverlay/PaletteMenu/PanelContainer/VBoxContainer/Swatches"]
+[node name="Button5" type="Button" parent="MarginContainer2/VBoxContainer/Swatches"]
 custom_minimum_size = Vector2(75, 75)
-offset_left = 108.0
 offset_top = 99.0
-offset_right = 192.0
+offset_right = 95.0
 offset_bottom = 174.0
 size_flags_horizontal = 3
 script = ExtResource("4_v73hg")
 swatch = Color(0.580392, 0.639216, 0.721569, 1)
 
-[node name="Button6" type="Button" parent="MenuOverlay/PaletteMenu/PanelContainer/VBoxContainer/Swatches"]
+[node name="Button6" type="Button" parent="MarginContainer2/VBoxContainer/Swatches"]
 custom_minimum_size = Vector2(75, 75)
-offset_left = 216.0
+offset_left = 119.0
 offset_top = 99.0
-offset_right = 300.0
+offset_right = 214.0
 offset_bottom = 174.0
 size_flags_horizontal = 3
 script = ExtResource("4_v73hg")
 swatch = Color(0.392157, 0.454902, 0.545098, 1)
 
-[node name="Button7" type="Button" parent="MenuOverlay/PaletteMenu/PanelContainer/VBoxContainer/Swatches"]
+[node name="Button7" type="Button" parent="MarginContainer2/VBoxContainer/Swatches"]
 custom_minimum_size = Vector2(75, 75)
-offset_top = 198.0
-offset_right = 84.0
-offset_bottom = 273.0
+offset_left = 238.0
+offset_top = 99.0
+offset_right = 333.0
+offset_bottom = 174.0
 size_flags_horizontal = 3
 script = ExtResource("4_v73hg")
 swatch = Color(0.278431, 0.333333, 0.411765, 1)
 
-[node name="Button8" type="Button" parent="MenuOverlay/PaletteMenu/PanelContainer/VBoxContainer/Swatches"]
+[node name="Button8" type="Button" parent="MarginContainer2/VBoxContainer/Swatches"]
 custom_minimum_size = Vector2(75, 75)
-offset_left = 108.0
-offset_top = 198.0
-offset_right = 192.0
-offset_bottom = 273.0
+offset_left = 357.0
+offset_top = 99.0
+offset_right = 452.0
+offset_bottom = 174.0
 size_flags_horizontal = 3
 script = ExtResource("4_v73hg")
 swatch = Color(0.2, 0.254902, 0.333333, 1)
 
-[node name="Button9" type="Button" parent="MenuOverlay/PaletteMenu/PanelContainer/VBoxContainer/Swatches"]
+[node name="Button9" type="Button" parent="MarginContainer2/VBoxContainer/Swatches"]
 custom_minimum_size = Vector2(75, 75)
-offset_left = 216.0
 offset_top = 198.0
-offset_right = 300.0
+offset_right = 452.0
 offset_bottom = 273.0
 size_flags_horizontal = 3
 script = ExtResource("4_v73hg")
 swatch = Color(0.117647, 0.160784, 0.231373, 1)
-
-[connection signal="pressed" from="." to="." method="_on_palette_button_pressed"]
-[connection signal="closing" from="MenuControl" to="." method="_on_palette_menu_closing"]
-[connection signal="opening" from="MenuControl" to="." method="_on_palette_menu_opening"]
-[connection signal="pressed" from="MenuOverlay/AreaButton" to="." method="_on_area_button_pressed"]

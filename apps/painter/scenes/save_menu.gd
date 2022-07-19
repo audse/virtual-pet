@@ -1,15 +1,23 @@
 extends Button
 
+signal save_pressed(save_name: String)
+
 @onready var menu: DropMenu = %MenuControl
 @onready var canvas: TextureRect = %CanvasTexture
 @onready var area_button: Button = %AreaButton
 @onready var save_button: Button = %SaveAsButton
 @onready var success_button: Button = %SaveSuccessButton
+@onready var name_field: LineEdit = %CanvasNameField
 
 
 func _ready() -> void:
 	menu.opening.connect(toggle_area_button.bind(true))
 	menu.closing.connect(toggle_area_button.bind(false))
+	
+	States.Paint.canvas_selected.connect(
+		func(_canvas: SubViewport, canvas_name: String):
+			name_field.text = canvas_name + " copy"
+	)
 
 
 func toggle_area_button(to_show: bool) -> void:
@@ -22,7 +30,7 @@ func toggle_area_button(to_show: bool) -> void:
 
 
 func update_texture(canvas_texture: Texture2D) -> void:
-	canvas.texture = canvas_texture
+	canvas.set_deferred("texture", canvas_texture)
 
 
 func _on_pressed() -> void:
@@ -31,6 +39,7 @@ func _on_pressed() -> void:
 
 
 func _on_save_button_pressed() -> void:
+	save_pressed.emit(name_field.text)
 	await Anim.pop_spin_exit(save_button)
 	await Anim.pop_spin_enter(success_button)
 	await get_tree().create_timer(1.0).timeout

@@ -4,7 +4,7 @@ extends Button
 const Paint = States.PaintState
 const Shape = Paint.Shape
 
-const BUTTON_SIZE = Vector2(75, 75)
+const BUTTON_SIZE = Vector2(80, 80)
 const TEXTURE_SIZE = Vector2(60, 60)
 
 @export var shape: States.PaintState.Shape = Shape.SQUARE

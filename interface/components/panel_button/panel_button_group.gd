@@ -9,11 +9,22 @@ enum Flow {
 
 @export var flow: Flow = Flow.HORIZONTAL
 
-@onready var left_container: Container = HFlowContainer.new() if flow == Flow.HORIZONTAL else VFlowContainer.new()
-@onready var right_container: Container = HFlowContainer.new() if flow == Flow.HORIZONTAL else VFlowContainer.new()
-@onready var containers := [left_container, right_container]
-
 var buttons: Array[PanelButton] = []
+var container_base: Container:
+	get: 
+		var base: Container
+		match flow:
+			Flow.HORIZONTAL: base = HFlowContainer.new()
+			_: base = VFlowContainer.new()
+		
+		base.visible = false
+#		base.size_flags_horizontal = SIZE_EXPAND_FILL
+#		base.size_flags_vertical = SIZE_EXPAND_FILL
+		return base
+
+@onready var left_container := container_base
+@onready var right_container := container_base
+@onready var containers = [left_container, right_container]
 
 
 func _ready() -> void:
@@ -25,42 +36,35 @@ func _ready() -> void:
 		if child is PanelButton: 
 			buttons.append(child)
 			child.panel_disabled = true
-			child.pressed.connect(_on_button_pressed.bind(child))
+			child.opening.connect(_on_button_opening.bind(child))
+			child.closing.connect(
+				func():
+					await get_tree().create_timer(0.2525).timeout
+					unsort_children()
+			)
+		
 		child.set_meta("index", i)
 		i += 1
-	
-	for container in containers:
-		container.visible = false
-		container.size_flags_horizontal = SIZE_EXPAND_FILL
-		container.size_flags_vertical = SIZE_EXPAND_FILL
 
 
-func _on_button_pressed(button: PanelButton) -> void:
-	button.panel_disabled = false
-	if button.button_pressed:
-		await close_other_buttons(button)
-		unsort_children()
-		resort_children(button)
-		button.open()
-	else:
-		button.close()
-		await get_tree().create_timer(0.25).timeout
-		unsort_children()
-	button.panel_disabled = true
+func _on_button_opening(button: PanelButton) -> void:
+	await close_other_buttons(button)
+	resort_children(button)
+	button._continue_open()
 
 
 func close_other_buttons(exclude: PanelButton) -> void:
 	var closing := false
 	for button in buttons:
 		if button.button_pressed and button != exclude:
-			button.panel_disabled = false
 			closing = true
 			button.close()
-			button.panel_disabled = true
 	if closing: await get_tree().create_timer(0.25).timeout
+	unsort_children()
 
 
 func resort_children(button: PanelButton) -> void:
+	unsort_children()
 	var button_index: int = button.get_meta("index")
 	
 	for child in get_children():
@@ -76,7 +80,6 @@ func resort_children(button: PanelButton) -> void:
 	
 	for container in containers:
 		if container.get_child_count() > 0: container.visible = true
-		print(container.get_child_count())
 
 
 func unsort_children() -> void:
@@ -88,6 +91,9 @@ func unsort_children() -> void:
 	
 	for child in get_children():
 		move_child(child, child.get_meta("index"))
+	
+	left_container.reset_size()
+	right_container.reset_size()
 	
 	left_container.visible = false
 	right_container.visible = false

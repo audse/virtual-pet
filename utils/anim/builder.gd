@@ -11,6 +11,8 @@ var anim := {
 	tear_down = {},
 }
 
+# keyframes: { duration = 0.25, ease_type = Tween.EASE_IN, trans_type = Tween.TRANS_SINE }
+
 var ease_override: int = -1
 
 
@@ -86,14 +88,20 @@ func self_fade_out() -> AnimBuilder:
 
 
 func keyframes(value: Dictionary) -> AnimBuilder:
-	for keyframe_name in value:
-		anim.keyframes[keyframe_name] = value[keyframe_name]
+	for key_name in value:
+		if not "ease_type" in value[key_name]:
+			value[key_name].ease_type = Tween.EASE_IN_OUT
+		if not "trans_type" in value[key_name]:
+			value[key_name].trans_type = Tween.TRANS_SINE
+		
+		anim.keyframes[key_name] = value[key_name]
+		
 	if ease_override != -1:
 		for key_name in anim.keyframes: anim.keyframes[key_name].ease_type = ease_override
 	return self
 
 
-func keyframe(key_name: String, duration: float, ease_val: int = Tween.EASE_IN_OUT, trans_val: int = Tween.TRANS_CUBIC) -> AnimBuilder:
+func keyframe(key_name: String, duration: float, ease_val: int = Tween.EASE_IN_OUT, trans_val: int = Tween.TRANS_SINE) -> AnimBuilder:
 	anim.keyframes[key_name] = { 
 		ease_type = ease_val if ease_override == -1 else ease_override,
 		duration = duration,
@@ -117,6 +125,11 @@ func tear_down(value: Dictionary) -> AnimBuilder:
 
 func tear_down_prop(prop_name: String, value) -> AnimBuilder:
 	anim.tear_down[prop_name] = value
+	return self
+
+
+func then_hide() -> AnimBuilder:
+	anim.tear_down.visible = false
 	return self
 
 
