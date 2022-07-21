@@ -1,5 +1,8 @@
 extends Control
 
+
+signal canvas_selected (canvas: SubViewport, path: String)
+
 const GALLERY_PATH := "user://gallery"
 
 var num_canvases: int:
@@ -11,6 +14,24 @@ var current_canvases: Array[String] = []
 
 func _ready() -> void:
 	load_gallery()
+	%PanelContainer.sort_children.connect(fit_panel)
+
+
+func _notification(what: int) -> void:
+	match what:
+		NOTIFICATION_RESIZED: fit_panel()
+
+
+func fit_panel() -> void:
+	var display_rect := Utils.get_display_area(self)
+	var max_width = min(1200, display_rect.size.x - 48)
+	
+	if %PanelContainer.size.x < max_width:
+		%PanelContainer.size_flags_horizontal = SIZE_EXPAND_FILL
+	else:
+		%PanelContainer.size_flags_horizontal = SIZE_SHRINK_END
+		%PanelContainer.custom_minimum_size.x = max_width
+	%Blur.size.x = %PanelContainer.size.x
 
 
 func open() -> void:
@@ -73,7 +94,7 @@ func create_canvas_texture(canvas: SubViewport, canvas_name: String) -> VBoxCont
 
 
 func _on_canvas_pressed(canvas: SubViewport) -> void:
-	States.Paint.canvas_selected.emit(canvas, canvas.get_meta("canvas_name"))
+	canvas_selected.emit(canvas, canvas.get_meta("canvas_name"))
 	close()
 
 

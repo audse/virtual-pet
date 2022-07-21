@@ -1,6 +1,6 @@
 [gd_resource type="Theme" load_steps=26 format=3 uid="uid://wbvix152d8b5"]
 
-[ext_resource type="FontFile" uid="uid://doyre2d68vvpi" path="res://static/fonts/Nunito/Nunito-Bold.ttf" id="1_85ce7"]
+[ext_resource type="FontFile" uid="uid://cgf6tr8wj2gby" path="res://static/fonts/Nunito/Nunito-Black.ttf" id="1_22rho"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5gmqv"]
 bg_color = Color(0.117647, 0.160784, 0.231373, 0.490196)
@@ -91,10 +91,10 @@ content_margin_top = 12.0
 content_margin_right = 12.0
 content_margin_bottom = 12.0
 bg_color = Color(0.2, 0.254902, 0.333333, 0.686275)
-border_width_left = 3
-border_width_top = 3
-border_width_right = 3
-border_width_bottom = 3
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
 border_color = Color(0.2, 0.254902, 0.333333, 0)
 border_blend = true
 corner_radius_top_left = 33
@@ -333,7 +333,7 @@ Button/colors/icon_hover_color = Color(0.972549, 0.980392, 0.988235, 1)
 Button/colors/icon_normal_color = Color(0.972549, 0.980392, 0.988235, 1)
 Button/colors/icon_pressed_color = Color(0.945098, 0.960784, 0.976471, 1)
 Button/font_sizes/font_size = 28
-Button/fonts/font = ExtResource("1_85ce7")
+Button/fonts/font = null
 Button/styles/disabled = SubResource("StyleBoxFlat_ybt13")
 Button/styles/focus = SubResource("StyleBoxEmpty_mxak2")
 Button/styles/hover = SubResource("StyleBoxFlat_j03sr")
@@ -361,6 +361,8 @@ FloatingPanelButton/styles/focus = SubResource("StyleBoxEmpty_wknlr")
 FloatingPanelButton/styles/hover = SubResource("StyleBoxEmpty_wknlr")
 FloatingPanelButton/styles/normal = SubResource("StyleBoxEmpty_wknlr")
 Label/constants/line_spacing = 0
+Overline/base_type = &"Label"
+Overline/fonts/font = ExtResource("1_22rho")
 Selected_Button/base_type = &"Button"
 Selected_Button/colors/font_color = Color(0.733333, 0.968627, 0.815686, 1)
 Selected_Button/colors/font_disabled_color = Color(0.733333, 0.968627, 0.815686, 0.686275)

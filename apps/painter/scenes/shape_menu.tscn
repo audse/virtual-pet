@@ -1,8 +1,7 @@
-[gd_scene load_steps=8 format=3 uid="uid://bh7h5y83bw4o4"]
+[gd_scene load_steps=7 format=3 uid="uid://bh7h5y83bw4o4"]
 
 [ext_resource type="Script" path="res://apps/painter/scenes/shape_menu.gd" id="1_lv1tk"]
 [ext_resource type="Script" path="res://apps/painter/nodes/shape_button.gd" id="2_ufv41"]
-[ext_resource type="FontFile" uid="uid://doyre2d68vvpi" path="res://static/fonts/Nunito/Nunito-Bold.ttf" id="4_q7dpf"]
 [ext_resource type="Texture2D" uid="uid://dxpyxfysoqmyu" path="res://apps/painter/assets/icons/rotate_left.svg" id="5_vlw62"]
 [ext_resource type="Texture2D" uid="uid://by73s6jeshln5" path="res://apps/painter/assets/icons/decrease_size.svg" id="6_8ylm1"]
 [ext_resource type="Texture2D" uid="uid://26p63shqhm1k" path="res://apps/painter/assets/icons/rotate_right.svg" id="18_aiin7"]
@@ -49,9 +48,9 @@ offset_bottom = 302.0
 [node name="Label" type="Label" parent="MarginContainer/VBoxContainer"]
 offset_right = 600.0
 offset_bottom = 84.0
+theme_type_variation = &"Overline"
 theme_override_colors/font_color = Color(0.580392, 0.639216, 0.721569, 1)
 theme_override_constants/line_spacing = 50
-theme_override_fonts/font = ExtResource("4_q7dpf")
 theme_override_font_sizes/font_size = 24
 text = "S H A P E S"
 horizontal_alignment = 2
@@ -267,3 +266,8 @@ offset_bottom = 170.0
 icon = ExtResource("19_urgnv")
 icon_alignment = 1
 expand_icon = true
+
+[connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/LeftDrawTools/RotateLeftButton" to="." method="_on_rotate_button_pressed" binds= [-90.0]]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/LeftDrawTools/DecreaseSizeButton" to="." method="_on_decrease_size_button_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/RightDrawTools/RotateRightButton" to="." method="_on_rotate_button_pressed" binds= [90.0]]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/RightDrawTools/IncreaseSizeButton" to="." method="_on_increase_size_button_pressed"]

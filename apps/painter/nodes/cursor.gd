@@ -18,6 +18,7 @@ func _ready() -> void:
 	States.Paint.color_changed.connect(_on_color_changed)
 	States.Paint.shape_changed.connect(_on_change_shape)
 	States.Paint.rotation_changed.connect(_on_rotation_changed)
+	modulate = Color("#a3a3a3")
 
 
 func move_by_unit(keycode: int) -> void:
@@ -82,6 +83,8 @@ func into_pixel() -> Sprite2D:
 	var shadow = p.get_child(0)
 	if shadow: shadow.queue_free()
 	p.set_script(null)
+	p.modulate.a = 1.0
+	p.self_modulate.a = 1.0
 	return p
 
 

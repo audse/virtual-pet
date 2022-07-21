@@ -183,7 +183,7 @@ var triangle_offset: Vector2:
 var triangle_node: Polygon2D = null:
 	get:
 		if triangle_node: return triangle_node
-		triangle_node = get_child(0)
+		if get_child_count() > 0: return get_child(0)
 		if triangle_node: return triangle_node
 		triangle_node = _remake_triangle()
 		return triangle_node
@@ -191,7 +191,7 @@ var triangle_node: Polygon2D = null:
 var triangle_outline_node: Polygon2D = null:
 	get:
 		if triangle_outline_node: return triangle_outline_node
-		if triangle_node:
+		if triangle_node and triangle_node.get_child_count() > 0:
 			triangle_outline_node = triangle_node.get_child(0)
 			if triangle_outline_node: return triangle_outline_node
 		triangle_outline_node = _remake_triangle_outline()
@@ -221,6 +221,7 @@ func _reset_triangle() -> void:
 	
 	if container_node:
 		container_node.global_position = container_rect.position
+		await RenderingServer.frame_post_draw
 		container_node.set_deferred("size", container_rect.size)
 
 
@@ -248,7 +249,7 @@ func _get_container_rect(max_size := Vector2.ZERO) -> Rect2:
 	
 	# If not provided, the max size defaults to the screen size
 	if not has_max_size:
-		max_size = Vector2Ref.get_display_area(self).size
+		max_size = Utils.get_display_area(self).size
 	
 	var min_x_pos: float = (
 		max(0, triangle.position.x)
@@ -361,7 +362,7 @@ var origin_point_centered: Vector2:
 
 
 func _reset() -> void:
-	scale = Vector2.ONE
+	scale = v(1)
 	modulate.a = 1.0
 	visible = true
 	

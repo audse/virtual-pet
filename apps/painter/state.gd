@@ -1,6 +1,5 @@
 extends Object
 
-
 enum Action { DRAW, ERASE, LINE, RECT }
 enum Shape { 
 	SQUARE = 1,
@@ -18,6 +17,7 @@ enum Shape {
 }
 enum Size { XXS, XS, SM, MD, LG, XL, XXL }
 enum Ratio { ODD, EVEN }
+enum Tiling { NONE, HORIZONTAL, VERTICAL, ALL }
 
 signal action_changed(to: Action)
 signal aspect_ratio_changed(to: Dictionary)
@@ -27,10 +27,11 @@ signal ratio_changed(to: Ratio)
 signal rotation_changed(to: int)
 signal shape_changed(to: Shape)
 signal size_changed(to: Size)
+signal tiling_changed(to: Tiling)
 signal zoom_changed(to: float)
 signal recenter
 
-signal canvas_selected(canvas: SubViewport)
+signal canvas_selected(canvas: SubViewport, canvas_name: String)
 
 const CANVAS_SIZE := 800.0
 
@@ -83,12 +84,29 @@ var color := Color.WHITE:
 		color_changed.emit(value)
 
 var line = null
+
+var precision := -1.0:
+	set(value):
+		precision = value
+		precision_changed.emit(value)
+
+var precision_factor: Vector2:
+	get: return Vector2(abs(precision), abs(precision))
+
 var prev_action := Action.DRAW
 
 var ratio := Ratio.EVEN:
 	set(value):
 		ratio = value
 		ratio_changed.emit(value)
+
+var rotation := 0:
+	set(value):
+		rotation = value
+		# Keep rotation within 360 degrees
+		if rotation > 360: rotation -= 360
+		elif rotation < 0: rotation += 360
+		rotation_changed.emit(value)
 
 var shape := Shape.SQUARE:
 	set(value):
@@ -99,35 +117,10 @@ var shape := Shape.SQUARE:
 			shape = Shape.CONCAVE_SHARP
 		shape_changed.emit(value)
 
-var rotation := 0:
-	set(value):
-		rotation = value
-		# Keep rotation within 360 degrees
-		if rotation > 360: rotation -= 360
-		elif rotation < 0: rotation += 360
-		rotation_changed.emit(value)
-
 var size := Size.MD:
 	set(value):
 		size = clamp(value, Size.XS, Size.XXL)
 		size_changed.emit(value)
-
-
-var precision := -1.0:
-	set(value):
-		precision = value
-		precision_changed.emit(value)
-
-
-var precision_factor: Vector2:
-	get: return Vector2(abs(precision), abs(precision))
-
-
-var zoom := 1.0:
-	set(value):
-		zoom = clamp(value, 0.1, 20.0)
-		zoom_changed.emit(value)
-
 
 var size_px: Vector2:
 	get: 
@@ -137,6 +130,16 @@ var size_px: Vector2:
 				else OddSizePx[size]
 		)
 		return Vector2(s, s) * precision_factor * aspect_ratio
+
+var tiling := Tiling.NONE:
+	set(value):
+		tiling = value
+		tiling_changed.emit(value)
+
+var zoom := 1.0:
+	set(value):
+		zoom = clamp(value, 0.1, 20.0)
+		zoom_changed.emit(value)
 
 
 func _ready() -> void:

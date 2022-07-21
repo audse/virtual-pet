@@ -12,13 +12,19 @@ const Action = States.PaintState.Action
 @onready var canvas = %Canvas
 @onready var cursor = %Cursor
 @onready var ghost = %Canvas/Ghost
+@onready var grid = %Grid
+@onready var h_tiles = [%TileLeft, %TileRight]
+@onready var v_tiles = [%TileTop, %TileBottom]
+@onready var all_tiles = h_tiles + v_tiles + [%TileTopLeft, %TileTopRight, %TileBottomLeft, %TileBottomRight]
+
+@onready var current_canvas = %CanvasCopy
 
 var cursor_position: Vector2:
-	get: return %CanvasCopy.get_local_mouse_position()
+	get: return current_canvas.get_local_mouse_position()
 
 var canvas_rect: Rect2:
 	get:
-		var rect: Rect2 = %CanvasCopy.get_rect()
+		var rect := Rect2(current_canvas.position, current_canvas.get_parent_area_size())
 		rect.size *= %CanvasCopy.scale
 		return rect
 
@@ -27,7 +33,7 @@ var minimap_size: Vector2:
 
 var minimap_ref_size: Vector2:
 	get:
-		var ref_size: Vector2 = Vector2Ref.get_display_area(self).size * MINIMAP_SCALE
+		var ref_size: Vector2 = Utils.get_display_area(self).size * MINIMAP_SCALE
 		if ref_size.y > ref_size.x: 
 			ref_size *= (minimap_size.x / ref_size.x)
 		else:
@@ -44,12 +50,31 @@ func _ready() -> void:
 	States.Paint.rotation_changed.connect(
 		func(_x): move_cursor_to(cursor_position)
 	)
+	States.Paint.tiling_changed.connect(
+		func(value: int) -> void:
+			for tile in all_tiles: tile.visible = false
+			match value:
+				States.PaintState.Tiling.HORIZONTAL: 
+					for tile in h_tiles: tile.visible = true
+				States.PaintState.Tiling.VERTICAL: 
+					for tile in v_tiles: tile.visible = true
+				States.PaintState.Tiling.ALL: 
+					for tile in all_tiles: tile.visible = true
+	)
+	
 	States.Paint.canvas_selected.connect(load_canvas)
 	
 	%Minimap.set_deferred("size", minimap_size)
-	%Minimap.set_deferred("anchors_preset", PRESET_BOTTOM_LEFT)
+	%Minimap.set_deferred("anchors_preset", PRESET_BOTTOM_RIGHT)
 	%MinimapRefRect.set_deferred("size", minimap_ref_size)
 	%MinimapRefRect.set_deferred("position", ((minimap_ref_size - minimap_size) / 2) * -1)
+	
+	var display_rect := Utils.get_display_area(self)
+	
+	# landscape
+	if display_rect.size.x > display_rect.size.y:
+		%MinimapMarginContainer.add_theme_constant_override("margin_left", display_rect.size.x * 0.05)
+		%MinimapMarginContainer.add_theme_constant_override("margin_right", display_rect.size.x * 0.05)
 
 
 var events := {}
@@ -81,8 +106,6 @@ func _unhandled_input(event: InputEvent) -> void:
 				var new_zoom = (1 + zoom_speed) if drag_distance < last_drag_distance else (1 - zoom_speed)
 				States.Paint.zoom = Vector2.ONE * new_zoom
 				last_drag_distance = drag_distance
-
-
 
 
 func get_texture() -> ImageTexture:
@@ -139,7 +162,7 @@ func resize_axis(axis: String, to: float) -> void:
 		.create_tween()
 		.tween_method(
 			set_shader_param.bind(axis), 
-			float(canvas.material.get_shader_param(axis)), 
+			float(grid.material.get_shader_param(axis)), 
 			to,
 			0.15
 		)
@@ -149,7 +172,7 @@ func resize_axis(axis: String, to: float) -> void:
 
 func set_shader_param(to: float, axis: String) -> void:
 	# this just changes the order of the args so we can bind them
-	canvas.material.set_shader_param(axis, to)
+	grid.material.set_shader_param(axis, to)
 
 
 func add(pixels: Array[Sprite2D], is_ghost: bool = false) -> void:
@@ -174,8 +197,9 @@ func clear_ghosts() -> void:
 var _dragging: int = 0
 
 func _gui_input(event: InputEvent) -> void:
+	cursor.modulate.a = 1
 	if event is InputEventScreenDrag:
-		%CanvasCopy.position += event.relative
+		%CanvasCopy.position += (event.relative * States.Paint.zoom)
 		%MinimapRefRect.position = - ((%CanvasCopy.position * MINIMAP_SCALE) / States.Paint.zoom)
 		_dragging += 1
 	
@@ -189,13 +213,8 @@ func _gui_input(event: InputEvent) -> void:
 
 
 var _debounce_draw_ghost: int = 0
-func _on_mouse_motion(event: InputEventMouseMotion) -> void:
+func _on_mouse_motion(_event: InputEventMouseMotion) -> void:
 	move_cursor_to(cursor_position)
-	
-	# Hide cursor when outside of canvas
-	if canvas_rect.has_point(event.position):
-		cursor.modulate.a = 1
-	else: cursor.modulate.a = 0
 	
 	if States.Paint.has_line():
 		if _debounce_draw_ghost > 5:
@@ -289,7 +308,7 @@ func clear_canvas() -> void:
 		if pixel not in [cursor, ghost]: pixel.queue_free()
 
 
-func load_canvas(from_canvas: SubViewport) -> void:
+func load_canvas(from_canvas: SubViewport, _canvas_name: String) -> void:
 	clear_canvas()
 	for pixel in from_canvas.get_children():
 		if pixel is Node2D: canvas.add_child(pixel.duplicate())
@@ -331,11 +350,16 @@ func _on_change_action(_new_action: int) -> void:
 
 
 func _on_precision_changed(precision: float) -> void:
-	canvas.material.set_shader_param("minigrid_x", precision)
-	canvas.material.set_shader_param("minigrid_y", precision)
+	grid.material.set_shader_param("minigrid_x", precision)
+	grid.material.set_shader_param("minigrid_y", precision)
 
 
-func _on_backdrop_gui_input(event: InputEvent) -> void:
-	if event is InputEventScreenDrag:
-		%CanvasCopy.position += event.relative
-		%MinimapRefRect.position = - ((%CanvasCopy.position * MINIMAP_SCALE) / States.Paint.zoom)
+func _on_tile_gui_input(event: InputEvent, tile: String) -> void:
+	var tile_node: TextureRect = %CanvasCopy.get_node(tile) if tile != "." else %CanvasCopy
+	current_canvas = tile_node
+	_gui_input(event)
+
+
+func _on_backdrop_gui_input(_event: InputEvent) -> void:
+	# Hide cursor when outside of canvas
+	cursor.modulate.a = 0

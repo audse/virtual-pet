@@ -19,6 +19,11 @@ _global_script_classes=[{
 "language": &"GDScript",
 "path": "res://utils/anim/builder.gd"
 }, {
+"base": "Resource",
+"class": &"AnimBuilderResource",
+"language": &"GDScript",
+"path": "res://utils/anim/builder_resource.gd"
+}, {
 "base": "Object",
 "class": &"AnimProperty",
 "language": &"GDScript",
@@ -73,6 +78,11 @@ _global_script_classes=[{
 "class": &"FontStyleSheet",
 "language": &"GDScript",
 "path": "res://utils/stylesheet/resources/font_style_sheet.gd"
+}, {
+"base": "ColorRect",
+"class": &"GradientNoiseRect",
+"language": &"GDScript",
+"path": "res://utils/nodes/noise_rect.gd"
 }, {
 "base": "Node",
 "class": &"GuideMap",
@@ -202,6 +212,7 @@ _global_script_classes=[{
 _global_script_class_icons={
 "Anim": "",
 "AnimBuilder": "",
+"AnimBuilderResource": "",
 "AnimProperty": "",
 "BitMask": "",
 "Bits": "",
@@ -213,6 +224,7 @@ _global_script_class_icons={
 "CustomSizeTexture2D": "",
 "DropMenu": "res://interface/components/drop_menu/drop_menu.svg",
 "FontStyleSheet": "",
+"GradientNoiseRect": "res://utils/nodes/noise_rect.svg",
 "GuideMap": "",
 "Math": "",
 "MeshDataToolPlus": "",
@@ -245,9 +257,6 @@ _global_script_class_icons={
 config/name="pet-sim"
 run/main_scene="res://main_menu.tscn"
 config/features=PackedStringArray("4.0", "Vulkan Mobile")
-config/icon="res://static/app/app_icon.svg"
-config/macos_native_icon="res://static/app/app_icon.svg"
-config/windows_native_icon="res://static/app/app_icon.svg"
 
 [autoload]
 
@@ -255,19 +264,23 @@ Utils="*res://utils/utils.gd"
 Module="*res://utils/module.gd"
 Assets="*res://utils/assets.gd"
 States="*res://utils/states.gd"
+Scenes="*res://utils/scenes.gd"
 
 [display]
 
 window/size/viewport_width=828
 window/size/viewport_height=1792
+window/size/window_width_override=2880
+window/size/window_height_override=1620
 window/handheld/orientation=1
-window/stretch/mode="viewport"
+window/stretch/mode="canvas_items"
 window/stretch/aspect="expand"
 
 [gui]
 
 common/default_scroll_deadzone=100
 theme/custom="res://static/main.theme"
+common/snap_controls_to_pixels=false
 
 [input]
 

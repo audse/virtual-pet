@@ -1,54 +1,39 @@
-[gd_scene load_steps=22 format=3 uid="uid://bl7rg3ye1ye3q"]
+[gd_scene load_steps=23 format=3 uid="uid://xok03fqn1ehk"]
 
 [ext_resource type="Script" path="res://apps/painter/nodes/gallery.gd" id="1_adm4l"]
 [ext_resource type="Theme" uid="uid://cq8mh6dl8s7wt" path="res://apps/painter/assets/themes/painter.tres" id="2_5mtns"]
-[ext_resource type="Shader" path="res://apps/painter/assets/shaders/rounded_blur.gdshader" id="3_p8s5q"]
 [ext_resource type="Script" path="res://interface/components/right_drawer/right_drawer.gd" id="3_t15gq"]
 [ext_resource type="Texture2D" uid="uid://3pjhr6dgoo5i" path="res://apps/painter/assets/icons/forward.svg" id="4_amgs2"]
+[ext_resource type="Shader" path="res://static/shaders/gradient_noise.gdshader" id="4_b68v5"]
+[ext_resource type="Script" path="res://utils/nodes/noise_rect.gd" id="5_o4yr7"]
 [ext_resource type="Texture2D" uid="uid://wd0fvsupe5ip" path="res://apps/painter/assets/icons/download_file.svg" id="8_u4v3k"]
 [ext_resource type="Texture2D" uid="uid://b2lpdvuywdedv" path="res://apps/painter/assets/icons/check.svg" id="9_6k4ib"]
 
 [sub_resource type="Gradient" id="Gradient_iq207"]
-offsets = PackedFloat32Array(0, 0.06621, 0.19863, 0.504566, 0.751142)
-colors = PackedColorArray(0.0705882, 0.109804, 0.160784, 0, 0.0705882, 0.109804, 0.160784, 0.171326, 0.0431373, 0.0705882, 0.160784, 0.556863, 0.0431373, 0.0823529, 0.160784, 0.882353, 0.0705882, 0.109804, 0.160784, 0.960784)
+offsets = PackedFloat32Array(0, 0.263158, 0.447368, 0.769006, 1)
+colors = PackedColorArray(0.0705882, 0.109804, 0.160784, 0, 0.0673286, 0.104733, 0.153359, 0.046178, 0.0608093, 0.0945924, 0.13851, 0.138534, 0.0279237, 0.043437, 0.063604, 0.604414, 0, 0, 0, 1)
 
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_adqlb"]
 gradient = SubResource("Gradient_iq207")
 width = 1080
 
-[sub_resource type="Shader" id="Shader_xq3rk"]
-code = "// NOTE: Shader automatically converted from Godot Engine 4.0.alpha11's CanvasItemMaterial.
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_obbuu"]
+frequency = 1.0
 
-shader_type canvas_item;
-render_mode blend_mul;
+[sub_resource type="NoiseTexture" id="NoiseTexture_ic5jw"]
+width = 828
+height = 1792
+noise = SubResource("FastNoiseLite_obbuu")
 
-varying vec2 vert;
-
-void vertex() {
-	vert = VERTEX;
-}
-
-void fragment() {
-	float x = 0.5 - (vert.x / 1080.0 / 2.0);
-	COLOR.r += x;
-	COLOR.g += x;
-	COLOR.b += x;
-}
-"
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_dq2yc"]
-shader = SubResource("Shader_xq3rk")
-
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_n4tfn"]
-seed = 2
-fractal_octaves = 6
-fractal_lacunarity = 32.0
-fractal_gain = -2.5
-
-[sub_resource type="NoiseTexture" id="NoiseTexture_1f7a8"]
-width = 1080
-height = 1920
-noise = SubResource("FastNoiseLite_n4tfn")
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_1ksm0"]
+shader = ExtResource("4_b68v5")
+shader_param/alpha = 0.5
+shader_param/flip_x = true
+shader_param/flip_y = false
+shader_param/noise = SubResource("NoiseTexture_ic5jw")
+shader_param/noise_size = Vector2(828, 1792)
+shader_param/origin = Vector2(0, 1)
+shader_param/weight = 0.25
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_mu0vi"]
 
@@ -60,8 +45,30 @@ noise = SubResource("FastNoiseLite_n4tfn")
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_1xeos"]
 
+[sub_resource type="Shader" id="Shader_nibya"]
+code = "shader_type canvas_item;
+render_mode blend_mix,unshaded;
+
+uniform float radius : hint_range(0.0, 1.0) = 0.0;
+uniform vec2 size = vec2(1.0, 1.0);
+
+uniform float blur_amount : hint_range(0, 5);
+
+void fragment() {
+	vec4 texture_color = texture(TEXTURE, UV);
+
+	vec2 size_ratio = vec2(max(1.0, size.x / size.y), max(1.0, size.y / size.x));
+	float half_radius = 0.5 * radius;
+	vec2 dist_max = half_radius / size_ratio;
+	vec2 edge_pos = clamp(UV, dist_max, 1.0 - dist_max);
+	float edge_dist = distance(UV * size_ratio, edge_pos * size_ratio);
+
+	COLOR = textureLod(SCREEN_TEXTURE, SCREEN_UV, blur_amount);
+	COLOR.a *= step(edge_dist, half_radius + 0.000001);
+}"
+
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ib1yt"]
-shader = ExtResource("3_p8s5q")
+shader = SubResource("Shader_nibya")
 shader_param/blur_amount = 2.5
 shader_param/radius = 0.04
 shader_param/size = null
@@ -91,6 +98,7 @@ anchor_bottom = 1.0
 script = ExtResource("3_t15gq")
 
 [node name="Gradient" type="TextureRect" parent="GalleryDrawer"]
+modulate = Color(1, 1, 1, 0.784314)
 anchor_right = 1.0
 anchor_bottom = 1.0
 size_flags_vertical = 3
@@ -98,13 +106,14 @@ mouse_filter = 2
 texture = SubResource("GradientTexture1D_adqlb")
 ignore_texture_size = true
 
-[node name="Noise" type="TextureRect" parent="GalleryDrawer"]
-material = SubResource("ShaderMaterial_dq2yc")
+[node name="GradientNoiseRect" type="ColorRect" parent="GalleryDrawer"]
+material = SubResource("ShaderMaterial_1ksm0")
 anchor_right = 1.0
 anchor_bottom = 1.0
-mouse_filter = 2
-texture = SubResource("NoiseTexture_1f7a8")
-ignore_texture_size = true
+script = ExtResource("5_o4yr7")
+origin = 4
+weight = 0.25
+alpha = 0.5
 
 [node name="Viewports" type="SubViewportContainer" parent="GalleryDrawer"]
 unique_name_in_owner = true
@@ -153,32 +162,35 @@ copy_mode = 2
 rect = Rect2(0, 0, 0, 0)
 
 [node name="Blur" type="ColorRect" parent="GalleryDrawer/MarginContainer"]
+unique_name_in_owner = true
 material = SubResource("ShaderMaterial_ib1yt")
-offset_left = 24.0
+offset_left = 804.0
 offset_top = 100.0
 offset_right = 804.0
 offset_bottom = 1692.0
-size_flags_horizontal = 3
+size_flags_horizontal = 8
 size_flags_vertical = 3
 
 [node name="PanelContainer" type="PanelContainer" parent="GalleryDrawer/MarginContainer"]
-offset_left = 24.0
+unique_name_in_owner = true
+offset_left = 474.0
 offset_top = 100.0
 offset_right = 804.0
 offset_bottom = 1692.0
+size_flags_horizontal = 8
 
 [node name="VBoxContainer" type="VBoxContainer" parent="GalleryDrawer/MarginContainer/PanelContainer"]
 offset_left = 24.0
 offset_top = 36.0
-offset_right = 756.0
+offset_right = 306.0
 offset_bottom = 1556.0
 
 [node name="HBoxContainer" type="HBoxContainer" parent="GalleryDrawer/MarginContainer/PanelContainer/VBoxContainer"]
-offset_right = 732.0
+offset_right = 282.0
 offset_bottom = 70.0
 
 [node name="Label" type="Label" parent="GalleryDrawer/MarginContainer/PanelContainer/VBoxContainer/HBoxContainer"]
-offset_right = 549.0
+offset_right = 212.0
 offset_bottom = 70.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -189,8 +201,8 @@ vertical_alignment = 1
 
 [node name="CloseButton" type="Button" parent="GalleryDrawer/MarginContainer/PanelContainer/VBoxContainer/HBoxContainer"]
 custom_minimum_size = Vector2(70, 70)
-offset_left = 549.0
-offset_right = 732.0
+offset_left = 212.0
+offset_right = 282.0
 offset_bottom = 70.0
 size_flags_horizontal = 3
 size_flags_vertical = 4
@@ -213,13 +225,13 @@ expand_icon = true
 [node name="ScrollContainer" type="ScrollContainer" parent="GalleryDrawer/MarginContainer/PanelContainer/VBoxContainer"]
 clip_contents = false
 offset_top = 70.0
-offset_right = 732.0
+offset_right = 282.0
 offset_bottom = 1520.0
 size_flags_vertical = 3
 
 [node name="CanvasGrid" type="GridContainer" parent="GalleryDrawer/MarginContainer/PanelContainer/VBoxContainer/ScrollContainer"]
 unique_name_in_owner = true
-offset_right = 732.0
+offset_right = 282.0
 offset_bottom = 1450.0
 size_flags_horizontal = 3
 size_flags_vertical = 3

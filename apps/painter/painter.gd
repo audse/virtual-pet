@@ -13,13 +13,10 @@ const Shape = States.PaintState.Shape
 
 # TODO features:
 # mirror mode
-# tile mode
 # in-game preview
 # pixel size ratio / width + height
-# "advanced" menu
 # height map
-# save as JSON
-# upload JSON
+# save as JSON / upload JSON
 # shape libraries
 # max number of pictures
 # preset canvases
@@ -27,20 +24,38 @@ const Shape = States.PaintState.Shape
 # optimization ???
 # - remove stuff under "square" shape
 # color picker
+# alert before exiting
+# rectangular select
+# replace color
+# overwriting warning
 
 
 func _ready() -> void:
 	for tool in tool_buttons:
 		tool_buttons[tool].pressed.connect(_on_tool_button_pressed.bind(tool))
-#
+		
 	States.Paint.action_changed.connect(_on_action_changed)
-	States.Paint.size_changed.connect(_on_size_changed)
 	
 	%SaveButton.name_field.text = "Canvas %d" % (%Gallery.num_canvases + 1)
 	%SaveButton.save_pressed.connect(
 		func(canvas_name: String):
 			%Canvas.save_canvas(canvas_name)
 			%Gallery.load_gallery()
+	)
+	
+	var display_rect := Utils.get_display_area(self)
+	
+	# landscape
+	if display_rect.size.x > display_rect.size.y:
+		%ShapePanelButton.button_pressed = true
+		%SwatchPanelButton.button_pressed = true
+		%ToolsPanelButton.button_pressed = true
+		%CanvasTools.add_theme_constant_override("margin_left", display_rect.size.x * 0.05)
+		%CanvasTools.add_theme_constant_override("margin_right", display_rect.size.x * 0.05)
+	
+	%Gallery.canvas_selected.connect(
+		func(canvas: SubViewport, canvas_name: String):
+			States.Paint.canvas_selected.emit(canvas, canvas_name)
 	)
 
 
@@ -61,12 +76,12 @@ func _input(event: InputEvent) -> void:
 		match event.keycode:
 			
 			# Rotation
-			KEY_COMMA: _on_rotate_button_pressed(-90)
-			KEY_PERIOD: _on_rotate_button_pressed(90)
+			KEY_COMMA: States.Paint.rotation -= 90
+			KEY_PERIOD: States.Paint.rotation += 90
 			
 			# Size
-			KEY_BRACELEFT: _on_decrease_size_button_pressed()
-			KEY_BRACERIGHT: _on_increase_size_button_pressed()
+			KEY_BRACELEFT: States.Paint.size -= 1
+			KEY_BRACERIGHT: States.Paint.size += 1
 			
 			# Cancel action
 			KEY_ESCAPE:
@@ -88,7 +103,7 @@ func _input(event: InputEvent) -> void:
 
 
 func selected(button: Button) -> void:
-	button.theme_type_variation = "SuccessButton"
+	button.theme_type_variation = "Selected_Button"
 
 
 func deselected(button: Button) -> void:
@@ -117,10 +132,6 @@ func _on_action_changed(action: int) -> void:
 	match action:
 		Action.LINE, Action.RECT: Anim.pop_enter(%OkButton)
 		_: Anim.pop_exit(%OkButton)
-
-
-func _on_rotate_button_pressed(delta: int) -> void:
-	States.Paint.rotation += delta
 
 
 func _on_undo_button_pressed() -> void:
@@ -152,19 +163,6 @@ func _on_tool_button_pressed(tool: int) -> void:
 func _on_undo_updated() -> void:
 	%UndoButton.disabled = not %Undo.can_undo()
 	%RedoButton.disabled = not %Undo.can_redo()
-
-
-func _on_increase_size_button_pressed() -> void:
-	States.Paint.size += 1
-
-
-func _on_decrease_size_button_pressed() -> void:
-	States.Paint.size -= 1
-
-
-func _on_size_changed(new_size: int) -> void:
-	%IncreaseSizeButton.disabled = new_size >= Size.XXL
-	%DecreaseSizeButton.disabled = new_size <= Size.XS
 
 
 func _on_zoom_in_button_pressed() -> void:

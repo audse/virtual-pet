@@ -1,16 +1,20 @@
-[gd_scene load_steps=18 format=3 uid="uid://c7532vujfwgmn"]
+[gd_scene load_steps=22 format=3 uid="uid://c7532vujfwgmn"]
 
 [ext_resource type="Theme" uid="uid://wbvix152d8b5" path="res://apps/painter/assets/themes/draw_tools.tres" id="1_cdixw"]
 [ext_resource type="Texture2D" uid="uid://c1oyf7lcynirk" path="res://apps/painter/assets/icons/advanced_view.svg" id="2_abnjo"]
 [ext_resource type="Script" path="res://apps/painter/scenes/view_tools.gd" id="3_amfqc"]
-[ext_resource type="FontFile" uid="uid://doyre2d68vvpi" path="res://static/fonts/Nunito/Nunito-Bold.ttf" id="4_cjkh7"]
+[ext_resource type="FontFile" uid="uid://daeq7jndm4031" path="res://static/fonts/Nunito/Nunito-Bold.ttf" id="4_cjkh7"]
 [ext_resource type="Script" path="res://interface/components/drop_menu/drop_menu.gd" id="4_p4ikt"]
 [ext_resource type="Texture2D" uid="uid://desksw0jv238g" path="res://apps/painter/assets/icons/even.svg" id="5_kwijp"]
 [ext_resource type="Texture2D" uid="uid://crfk2s5k2gfli" path="res://apps/painter/assets/icons/odd.svg" id="6_gqbvh"]
 [ext_resource type="Texture2D" uid="uid://bqrpqs6dqd7lo" path="res://apps/painter/assets/icons/precision.svg" id="7_cnrms"]
+[ext_resource type="Texture2D" uid="uid://blm6hmntxbe4y" path="res://apps/painter/assets/icons/tile_none.svg" id="8_0er15"]
 [ext_resource type="Texture2D" uid="uid://feal5xxkatsd" path="res://apps/painter/assets/icons/recenter.svg" id="8_a43ac"]
 [ext_resource type="Script" path="res://utils/stylesheet/nodes/style_sheet_setter.gd" id="9_t0rfg"]
+[ext_resource type="Texture2D" uid="uid://c3dujumthhag2" path="res://apps/painter/assets/icons/tile.svg" id="9_tcioc"]
 [ext_resource type="Script" path="res://utils/stylesheet/resources/stylebox_style_sheet.gd" id="10_5u8l2"]
+[ext_resource type="Texture2D" uid="uid://cbrhl7qb3hu48" path="res://apps/painter/assets/icons/tile_horizontal.svg" id="10_gampn"]
+[ext_resource type="Texture2D" uid="uid://bsx2yxdr88hku" path="res://apps/painter/assets/icons/tile_vertical.svg" id="11_kw14v"]
 
 [sub_resource type="Gradient" id="Gradient_84slf"]
 offsets = PackedFloat32Array(0, 0.41055, 0.733945, 0.981735)
@@ -121,10 +125,10 @@ texture = SubResource("GradientTexture2D_6xsj8")
 ignore_texture_size = true
 
 [node name="PanelContainer" type="PanelContainer" parent="CanvasLayer/MarginContainer"]
-custom_minimum_size = Vector2(440, 200)
+custom_minimum_size = Vector2(490, 200)
 offset_top = 24.0
-offset_right = 440.0
-offset_bottom = 755.0
+offset_right = 490.0
+offset_bottom = 1322.0
 size_flags_horizontal = 0
 size_flags_vertical = 0
 theme_type_variation = &"DropMenuPanel"
@@ -139,44 +143,130 @@ update_base_node = false
 [node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/MarginContainer/PanelContainer"]
 offset_left = 24.0
 offset_top = 42.0
-offset_right = 416.0
-offset_bottom = 695.0
+offset_right = 466.0
+offset_bottom = 1262.0
 theme_override_constants/separation = 0
 
-[node name="Label" type="Label" parent="CanvasLayer/MarginContainer/PanelContainer/VBoxContainer"]
-offset_right = 392.0
+[node name="TileModeLabel" type="Label" parent="CanvasLayer/MarginContainer/PanelContainer/VBoxContainer"]
+offset_right = 442.0
 offset_bottom = 45.0
+theme_override_constants/line_spacing = 0
+theme_override_fonts/font = ExtResource("4_cjkh7")
+text = "Tile mode"
+vertical_alignment = 2
+
+[node name="TileModeDescription" type="Label" parent="CanvasLayer/MarginContainer/PanelContainer/VBoxContainer"]
+offset_top = 45.0
+offset_right = 442.0
+offset_bottom = 113.0
+theme_type_variation = &"SmallLabel"
+text = "Tile mode allows you to see how your canvas looks when repeated."
+vertical_alignment = 2
+autowrap_mode = 3
+
+[node name="HSeparator" type="HSeparator" parent="CanvasLayer/MarginContainer/PanelContainer/VBoxContainer"]
+offset_top = 113.0
+offset_right = 442.0
+offset_bottom = 133.0
+theme_override_constants/separation = 20
+theme_override_styles/separator = SubResource("StyleBoxEmpty_14nvp")
+
+[node name="TileOptions" type="VBoxContainer" parent="CanvasLayer/MarginContainer/PanelContainer/VBoxContainer"]
+offset_top = 133.0
+offset_right = 442.0
+offset_bottom = 525.0
+size_flags_horizontal = 3
+
+[node name="TileNoneButton" type="Button" parent="CanvasLayer/MarginContainer/PanelContainer/VBoxContainer/TileOptions"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(80, 80)
+offset_right = 442.0
+offset_bottom = 80.0
+theme_type_variation = &"Selected_Button"
+theme_override_constants/h_separation = 20
+text = "No tiling"
+icon = ExtResource("8_0er15")
+alignment = 0
+expand_icon = true
+
+[node name="TileAllButton" type="Button" parent="CanvasLayer/MarginContainer/PanelContainer/VBoxContainer/TileOptions"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(80, 80)
+offset_top = 104.0
+offset_right = 442.0
+offset_bottom = 184.0
+theme_override_constants/h_separation = 20
+text = "All directions"
+icon = ExtResource("9_tcioc")
+alignment = 0
+expand_icon = true
+
+[node name="TileHButton" type="Button" parent="CanvasLayer/MarginContainer/PanelContainer/VBoxContainer/TileOptions"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(80, 80)
+offset_top = 208.0
+offset_right = 442.0
+offset_bottom = 288.0
+theme_override_constants/h_separation = 20
+text = "Horizontal"
+icon = ExtResource("10_gampn")
+alignment = 0
+expand_icon = true
+
+[node name="TileVButton" type="Button" parent="CanvasLayer/MarginContainer/PanelContainer/VBoxContainer/TileOptions"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(80, 80)
+offset_top = 312.0
+offset_right = 442.0
+offset_bottom = 392.0
+theme_override_constants/h_separation = 20
+text = "Vertical"
+icon = ExtResource("11_kw14v")
+alignment = 0
+expand_icon = true
+
+[node name="HSeparator2" type="HSeparator" parent="CanvasLayer/MarginContainer/PanelContainer/VBoxContainer"]
+offset_top = 525.0
+offset_right = 442.0
+offset_bottom = 585.0
+theme_override_constants/separation = 60
+theme_override_styles/separator = SubResource("StyleBoxLine_pt6kw")
+
+[node name="RatioModeLabel" type="Label" parent="CanvasLayer/MarginContainer/PanelContainer/VBoxContainer"]
+offset_top = 585.0
+offset_right = 442.0
+offset_bottom = 630.0
 theme_override_constants/line_spacing = 0
 theme_override_fonts/font = ExtResource("4_cjkh7")
 text = "Ratio mode"
 vertical_alignment = 2
 
-[node name="Label2" type="Label" parent="CanvasLayer/MarginContainer/PanelContainer/VBoxContainer"]
-offset_top = 45.0
-offset_right = 392.0
-offset_bottom = 147.0
+[node name="RatioModeDescription" type="Label" parent="CanvasLayer/MarginContainer/PanelContainer/VBoxContainer"]
+offset_top = 630.0
+offset_right = 442.0
+offset_bottom = 732.0
 theme_type_variation = &"SmallLabel"
 text = "The ratio mode defines whether the canvas is divided into multiples of two, or multiples of three."
 vertical_alignment = 2
 autowrap_mode = 3
 
-[node name="HSeparator" type="HSeparator" parent="CanvasLayer/MarginContainer/PanelContainer/VBoxContainer"]
-offset_top = 147.0
-offset_right = 392.0
-offset_bottom = 167.0
+[node name="HSeparator5" type="HSeparator" parent="CanvasLayer/MarginContainer/PanelContainer/VBoxContainer"]
+offset_top = 732.0
+offset_right = 442.0
+offset_bottom = 752.0
 theme_override_constants/separation = 20
 theme_override_styles/separator = SubResource("StyleBoxEmpty_14nvp")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/MarginContainer/PanelContainer/VBoxContainer"]
-offset_top = 167.0
-offset_right = 392.0
-offset_bottom = 247.0
+[node name="HBoxContainer2" type="HBoxContainer" parent="CanvasLayer/MarginContainer/PanelContainer/VBoxContainer"]
+offset_top = 752.0
+offset_right = 442.0
+offset_bottom = 832.0
 size_flags_horizontal = 3
 
-[node name="EvenButton" type="Button" parent="CanvasLayer/MarginContainer/PanelContainer/VBoxContainer/HBoxContainer"]
+[node name="EvenButton" type="Button" parent="CanvasLayer/MarginContainer/PanelContainer/VBoxContainer/HBoxContainer2"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(80, 80)
-offset_right = 184.0
+offset_right = 209.0
 offset_bottom = 80.0
 pivot_offset = Vector2(40, 40)
 size_flags_horizontal = 3
@@ -186,11 +276,11 @@ icon = ExtResource("5_kwijp")
 icon_alignment = 1
 expand_icon = true
 
-[node name="OddButton" type="Button" parent="CanvasLayer/MarginContainer/PanelContainer/VBoxContainer/HBoxContainer"]
+[node name="OddButton" type="Button" parent="CanvasLayer/MarginContainer/PanelContainer/VBoxContainer/HBoxContainer2"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(80, 80)
-offset_left = 208.0
-offset_right = 392.0
+offset_left = 233.0
+offset_right = 442.0
 offset_bottom = 80.0
 pivot_offset = Vector2(40.0001, 40)
 size_flags_horizontal = 3
@@ -199,62 +289,42 @@ icon = ExtResource("6_gqbvh")
 icon_alignment = 1
 expand_icon = true
 
-[node name="HSeparator4" type="HSeparator" parent="CanvasLayer/MarginContainer/PanelContainer/VBoxContainer"]
-offset_top = 247.0
-offset_right = 392.0
-offset_bottom = 267.0
-theme_override_constants/separation = 20
-theme_override_styles/separator = SubResource("StyleBoxEmpty_14nvp")
-
-[node name="HSeparator2" type="HSeparator" parent="CanvasLayer/MarginContainer/PanelContainer/VBoxContainer"]
-offset_top = 267.0
-offset_right = 392.0
-offset_bottom = 287.0
-theme_override_constants/separation = 20
+[node name="HSeparator7" type="HSeparator" parent="CanvasLayer/MarginContainer/PanelContainer/VBoxContainer"]
+offset_top = 832.0
+offset_right = 442.0
+offset_bottom = 882.0
+theme_override_constants/separation = 50
 theme_override_styles/separator = SubResource("StyleBoxLine_pt6kw")
 
-[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/MarginContainer/PanelContainer/VBoxContainer"]
-offset_top = 287.0
-offset_right = 392.0
-offset_bottom = 548.0
-theme_override_constants/margin_left = 0
-theme_override_constants/margin_right = 0
-
-[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/MarginContainer/PanelContainer/VBoxContainer/MarginContainer"]
-offset_top = 24.0
-offset_right = 392.0
-offset_bottom = 237.0
-size_flags_horizontal = 3
-theme_override_constants/separation = 0
-
-[node name="Label" type="Label" parent="CanvasLayer/MarginContainer/PanelContainer/VBoxContainer/MarginContainer/VBoxContainer"]
-offset_right = 392.0
-offset_bottom = 45.0
+[node name="PrecisionModeLabel" type="Label" parent="CanvasLayer/MarginContainer/PanelContainer/VBoxContainer"]
+offset_top = 882.0
+offset_right = 442.0
+offset_bottom = 927.0
 size_flags_horizontal = 3
 theme_override_fonts/font = ExtResource("4_cjkh7")
 text = "Precision mode"
 
-[node name="Label2" type="Label" parent="CanvasLayer/MarginContainer/PanelContainer/VBoxContainer/MarginContainer/VBoxContainer"]
-offset_top = 45.0
-offset_right = 392.0
-offset_bottom = 113.0
+[node name="PrecisionModeDescription" type="Label" parent="CanvasLayer/MarginContainer/PanelContainer/VBoxContainer"]
+offset_top = 927.0
+offset_right = 442.0
+offset_bottom = 995.0
 theme_type_variation = &"SmallLabel"
 text = "Precision mode allows for more detailed placement."
 autowrap_mode = 3
 
-[node name="HSeparator5" type="HSeparator" parent="CanvasLayer/MarginContainer/PanelContainer/VBoxContainer/MarginContainer/VBoxContainer"]
-offset_top = 113.0
-offset_right = 392.0
-offset_bottom = 133.0
+[node name="HSeparator9" type="HSeparator" parent="CanvasLayer/MarginContainer/PanelContainer/VBoxContainer"]
+offset_top = 995.0
+offset_right = 442.0
+offset_bottom = 1015.0
 theme_override_constants/separation = 20
 theme_override_styles/separator = SubResource("StyleBoxEmpty_14nvp")
 
-[node name="PrecisionToggle" type="Button" parent="CanvasLayer/MarginContainer/PanelContainer/VBoxContainer/MarginContainer/VBoxContainer"]
+[node name="PrecisionToggle" type="Button" parent="CanvasLayer/MarginContainer/PanelContainer/VBoxContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(80, 80)
-offset_top = 133.0
-offset_right = 392.0
-offset_bottom = 213.0
+offset_top = 1015.0
+offset_right = 442.0
+offset_bottom = 1095.0
 theme_override_constants/h_separation = 20
 text = "Enable"
 icon = ExtResource("7_cnrms")
@@ -262,18 +332,18 @@ alignment = 0
 expand_icon = true
 
 [node name="HSeparator3" type="HSeparator" parent="CanvasLayer/MarginContainer/PanelContainer/VBoxContainer"]
-offset_top = 548.0
-offset_right = 392.0
-offset_bottom = 578.0
-theme_override_constants/separation = 30
+offset_top = 1095.0
+offset_right = 442.0
+offset_bottom = 1145.0
+theme_override_constants/separation = 50
 theme_override_styles/separator = SubResource("StyleBoxLine_pt6kw")
 
 [node name="RecenterButton" type="Button" parent="CanvasLayer/MarginContainer/PanelContainer/VBoxContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(250, 75)
-offset_top = 578.0
-offset_right = 392.0
-offset_bottom = 653.0
+offset_top = 1145.0
+offset_right = 442.0
+offset_bottom = 1220.0
 pivot_offset = Vector2(40, 40.0001)
 size_flags_horizontal = 3
 size_flags_vertical = 4
@@ -287,7 +357,7 @@ expand_icon = true
 [connection signal="closing" from="DropMenu" to="." method="_on_menu_closing"]
 [connection signal="opening" from="DropMenu" to="." method="_on_menu_opening"]
 [connection signal="pressed" from="CanvasLayer/AreaButton" to="." method="_on_area_button_pressed"]
-[connection signal="pressed" from="CanvasLayer/MarginContainer/PanelContainer/VBoxContainer/HBoxContainer/EvenButton" to="." method="_on_even_button_pressed"]
-[connection signal="pressed" from="CanvasLayer/MarginContainer/PanelContainer/VBoxContainer/HBoxContainer/OddButton" to="." method="_on_odd_button_pressed"]
-[connection signal="pressed" from="CanvasLayer/MarginContainer/PanelContainer/VBoxContainer/MarginContainer/VBoxContainer/PrecisionToggle" to="." method="_on_precision_toggle_pressed"]
+[connection signal="pressed" from="CanvasLayer/MarginContainer/PanelContainer/VBoxContainer/HBoxContainer2/EvenButton" to="." method="_on_even_button_pressed"]
+[connection signal="pressed" from="CanvasLayer/MarginContainer/PanelContainer/VBoxContainer/HBoxContainer2/OddButton" to="." method="_on_odd_button_pressed"]
+[connection signal="pressed" from="CanvasLayer/MarginContainer/PanelContainer/VBoxContainer/PrecisionToggle" to="." method="_on_precision_toggle_pressed"]
 [connection signal="pressed" from="CanvasLayer/MarginContainer/PanelContainer/VBoxContainer/RecenterButton" to="." method="_on_recenter_button_pressed"]

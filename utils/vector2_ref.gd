@@ -40,14 +40,3 @@ static func get_rect_points_in_grid(start: Vector2, end: Vector2, grid_size: Vec
 	
 	return points
 
-
-static func get_display_area(node: Node) -> Rect2:
-	if Engine.is_editor_hint():
-		return Rect2(
-			Vector2.ZERO, 
-			Vector2(
-				ProjectSettings.get_setting("display/window/size/viewport_width"),
-				ProjectSettings.get_setting("display/window/size/viewport_height")
-			)
-		)
-	else: return node.get_viewport().get_visible_rect()

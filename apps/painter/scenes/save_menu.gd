@@ -33,6 +33,10 @@ func update_texture(canvas_texture: Texture2D) -> void:
 	canvas.set_deferred("texture", canvas_texture)
 
 
+func update_name_field(canvas_name: String) -> void:
+	name_field.text = canvas_name + " copy"
+
+
 func _on_pressed() -> void:
 	if not menu.is_open: menu.open()
 	else: menu.close()

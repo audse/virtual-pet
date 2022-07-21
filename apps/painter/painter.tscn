@@ -9,7 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://dox6igj0hpbjq" path="res://apps/painter/scenes/palette.tscn" id="12_4owpo"]
 [ext_resource type="Texture2D" uid="uid://bhvq4marly1o0" path="res://apps/painter/assets/icons/rectangle.svg" id="12_geruk"]
 [ext_resource type="Texture2D" uid="uid://mexdj1uqwyjs" path="res://apps/painter/assets/icons/gallery.svg" id="13_f0mbl"]
-[ext_resource type="FontFile" uid="uid://doyre2d68vvpi" path="res://static/fonts/Nunito/Nunito-Bold.ttf" id="13_jl8jr"]
+[ext_resource type="FontFile" uid="uid://daeq7jndm4031" path="res://static/fonts/Nunito/Nunito-Bold.ttf" id="13_jl8jr"]
 [ext_resource type="Texture2D" uid="uid://b24vngv1jm71o" path="res://apps/painter/assets/icons/line.svg" id="13_monbh"]
 [ext_resource type="Texture2D" uid="uid://ch7l34kkmaatb" path="res://apps/painter/assets/icons/eraser.svg" id="14_umeww"]
 [ext_resource type="Texture2D" uid="uid://o6p0w2gruix" path="res://apps/painter/assets/icons/pencil.svg" id="15_bphgi"]
@@ -20,13 +20,14 @@
 [ext_resource type="Texture2D" uid="uid://bn61fbcpokvek" path="res://apps/painter/assets/icons/back.svg" id="16_sdttm"]
 [ext_resource type="Texture2D" uid="uid://dp0xkjoprvqm7" path="res://apps/painter/assets/icons/redo.svg" id="17_nvjsf"]
 [ext_resource type="Texture2D" uid="uid://bapda8bny76r5" path="res://apps/painter/assets/icons/zoom_in.svg" id="24_4mq7p"]
-[ext_resource type="PackedScene" uid="uid://bl7rg3ye1ye3q" path="res://apps/painter/scenes/gallery.tscn" id="25_1hssg"]
+[ext_resource type="PackedScene" uid="uid://xok03fqn1ehk" path="res://apps/painter/scenes/gallery.tscn" id="25_1hssg"]
 [ext_resource type="Texture2D" uid="uid://6t2bh8qv4gjy" path="res://apps/painter/assets/icons/zoom_out.svg" id="25_4dkvo"]
 [ext_resource type="Texture2D" uid="uid://dnyt7rc2qfo58" path="res://temp/ios_guide-01.svg" id="27_frdcy"]
 
 [node name="Painter" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+mouse_filter = 2
 theme = ExtResource("15_icrpu")
 script = ExtResource("1_r1smx")
 
@@ -36,13 +37,14 @@ script = ExtResource("2_fbwuv")
 
 [node name="Canvas" parent="." instance=ExtResource("3_bo72m")]
 unique_name_in_owner = true
+mouse_filter = 1
 
 [node name="CanvasTools" type="MarginContainer" parent="."]
+unique_name_in_owner = true
 clip_contents = true
 anchor_right = 1.0
 anchor_bottom = 1.0
 mouse_filter = 2
-theme = ExtResource("15_icrpu")
 theme_override_constants/margin_top = 110
 theme_override_constants/margin_bottom = 130
 
@@ -178,6 +180,7 @@ theme_override_constants/separation = 36
 [node name="ShapePanelButton" parent="CanvasTools/VBoxContainer/HBoxContainer3/VBoxContainer" instance=ExtResource("10_fmos1")]
 
 [node name="SwatchPanelButton" parent="CanvasTools/VBoxContainer/HBoxContainer3/VBoxContainer" instance=ExtResource("12_4owpo")]
+unique_name_in_owner = true
 offset_top = 116.0
 offset_right = 80.0
 offset_bottom = 196.0

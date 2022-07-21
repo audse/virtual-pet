@@ -107,7 +107,9 @@ static func make(tile_set: int, id := "CENTER", distort_amount := Vector3.ZERO) 
 		tile.set_surface_override_material(outer_wall_base_surface, shader)
 	
 	if floor_surface != -1:
-		var args := { "albedo_texture": textures.floor, "normal_texture": normals.floor }
+#		var f = Image.load_from_file("user://gallery/floor2.png")
+#		var t = ImageTexture.new().create_from_image(f)
+		var args := { "albedo_texture": textures.floor }
 		var shader := make_shader(id, tile_type, distort_amount, true, args)
 		tile.set_surface_override_material(floor_surface, shader)
 	

@@ -185,8 +185,7 @@ func parse_size_string(size_string: String) -> int:
 
 
 func parse_style_string(style_string: String) -> Dictionary:
-	@warning_ignore(standalone_expression)
-	""" parse_style_string
+	var _c = """ parse_style_string
 	
 		:param style_string: String
 		accepts a string indicating the direction and size of a style

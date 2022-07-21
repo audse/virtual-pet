@@ -1,10 +1,11 @@
-[gd_scene load_steps=8 format=3 uid="uid://clj0r2ev2hngc"]
+[gd_scene load_steps=9 format=3 uid="uid://clj0r2ev2hngc"]
 
 [ext_resource type="Texture2D" uid="uid://buwktwc0xbscl" path="res://static/app/app_icon.svg" id="1_4c12n"]
 [ext_resource type="Script" path="res://main_menu.gd" id="1_8arsa"]
 [ext_resource type="FontFile" uid="uid://cgf6tr8wj2gby" path="res://static/fonts/Nunito/Nunito-Black.ttf" id="2_sg20j"]
 [ext_resource type="Texture2D" uid="uid://cudspscvutcxu" path="res://static/icons/paint_brush.svg" id="3_slndd"]
 [ext_resource type="Texture2D" uid="uid://e4gv483kggl0" path="res://static/icons/build_bricks.svg" id="5_0u5xu"]
+[ext_resource type="Texture2D" uid="uid://4mgd6hote25m" path="res://static/icons/3d_illusion.svg" id="5_kre2m"]
 
 [sub_resource type="Gradient" id="Gradient_1wda5"]
 offsets = PackedFloat32Array(0.564987, 0.671088, 0.827586, 1)
@@ -48,11 +49,12 @@ offset_bottom = 544.0
 theme_override_constants/margin_bottom = 70
 
 [node name="TextureRect" type="TextureRect" parent="MarginContainer/VBoxContainer/MarginContainer"]
-custom_minimum_size = Vector2(0, 450)
-offset_left = 24.0
+custom_minimum_size = Vector2(450, 450)
+offset_left = 141.0
 offset_top = 24.0
-offset_right = 708.0
+offset_right = 591.0
 offset_bottom = 474.0
+size_flags_horizontal = 4
 texture = ExtResource("1_4c12n")
 ignore_texture_size = true
 stretch_mode = 5
@@ -61,51 +63,66 @@ stretch_mode = 5
 show_behind_parent = true
 anchor_right = 1.0
 anchor_bottom = 1.0
-theme_override_constants/margin_left = 0
+theme_override_constants/margin_left = -100
 theme_override_constants/margin_top = -100
-theme_override_constants/margin_right = 0
+theme_override_constants/margin_right = -100
 theme_override_constants/margin_bottom = -100
 
 [node name="TextureRect" type="TextureRect" parent="MarginContainer/VBoxContainer/MarginContainer/TextureRect/MarginContainer"]
+offset_left = -100.0
 offset_top = -100.0
-offset_right = 684.0
+offset_right = 550.0
 offset_bottom = 550.0
 texture = SubResource("GradientTexture2D_8s2yq")
 
 [node name="Label" type="Label" parent="MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 110)
-offset_left = 209.0
+offset_left = 153.0
 offset_top = 568.0
-offset_right = 523.0
+offset_right = 578.0
 offset_bottom = 678.0
 size_flags_horizontal = 4
 theme_override_fonts/font = ExtResource("2_sg20j")
 theme_override_font_sizes/font_size = 48
-text = "Pet simulator"
+text = "Pet simulator v0.1"
 
 [node name="PaintingButton" type="Button" parent="MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(400, 0)
-offset_left = 166.0
+custom_minimum_size = Vector2(450, 0)
+offset_left = 141.0
 offset_top = 702.0
-offset_right = 566.0
+offset_right = 591.0
 offset_bottom = 779.0
 size_flags_horizontal = 4
 text = "Do some painting"
 icon = ExtResource("3_slndd")
 expand_icon = true
 
+[node name="NormalMapButton" type="Button" parent="MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(450, 0)
+offset_left = 141.0
+offset_top = 803.0
+offset_right = 591.0
+offset_bottom = 880.0
+size_flags_horizontal = 4
+theme_override_constants/h_separation = 20
+text = "Make a normal map"
+icon = ExtResource("5_kre2m")
+expand_icon = true
+
 [node name="BuildingButton" type="Button" parent="MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(400, 0)
-offset_left = 166.0
-offset_top = 803.0
-offset_right = 566.0
-offset_bottom = 880.0
+custom_minimum_size = Vector2(450, 0)
+offset_left = 141.0
+offset_top = 904.0
+offset_right = 591.0
+offset_bottom = 981.0
 size_flags_horizontal = 4
 text = "Build something"
 icon = ExtResource("5_0u5xu")
 expand_icon = true
 
 [connection signal="pressed" from="MarginContainer/VBoxContainer/PaintingButton" to="." method="_on_painting_button_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/NormalMapButton" to="." method="_on_normal_map_button_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/BuildingButton" to="." method="_on_building_button_pressed"]

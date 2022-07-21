@@ -4,19 +4,17 @@
 [ext_resource type="Texture2D" uid="uid://xtyu065fl2xv" path="res://apps/painter/assets/shapes/square.svg" id="2_i46ic"]
 [ext_resource type="Shader" path="res://apps/painter/assets/shaders/grid.gdshader" id="2_ir7hh"]
 [ext_resource type="Script" path="res://apps/painter/nodes/cursor.gd" id="4_6ws3i"]
+[ext_resource type="Texture2D" uid="uid://c0j4jpxyh071g" path="res://apps/painter/assets/resources/canvas_texture.tres" id="5_63mbt"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_tmijp"]
 shader = ExtResource("2_ir7hh")
-shader_param/background = Color(1, 1, 1, 1)
+shader_param/background = Color(1, 1, 1, 0)
 shader_param/dot_size = null
 shader_param/dots = Color(0.64, 0.886, 1, 1)
 shader_param/grid_x = 50.0
 shader_param/grid_y = 50.0
 shader_param/minigrid_x = -1.0
 shader_param/minigrid_y = -1.0
-
-[sub_resource type="ViewportTexture" id="ViewportTexture_vrdc2"]
-viewport_path = NodePath("Canvas/SubViewport")
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_efslj"]
 viewport_path = NodePath("Canvas/SubViewport")
@@ -73,7 +71,6 @@ render_target_update_mode = 4
 
 [node name="Canvas" type="ColorRect" parent="Canvas/SubViewport"]
 unique_name_in_owner = true
-material = SubResource("ShaderMaterial_tmijp")
 clip_contents = true
 custom_minimum_size = Vector2(800, 800)
 offset_right = 800.0
@@ -134,9 +131,20 @@ region_filter_clip_enabled = true
 [node name="Ghost" type="Sprite2D" parent="Canvas/SubViewport/Canvas"]
 modulate = Color(1, 1, 1, 0.490196)
 
+[node name="Grid" type="ColorRect" parent="Canvas/SubViewport"]
+unique_name_in_owner = true
+material = SubResource("ShaderMaterial_tmijp")
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(1, 1, 1, 0)
+metadata/_edit_layout_mode = 1
+
 [node name="Backdrop" type="ColorRect" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
+mouse_filter = 1
 color = Color(0.117647, 0.160784, 0.231373, 1)
 
 [node name="CanvasCopy" type="TextureRect" parent="."]
@@ -152,32 +160,248 @@ offset_right = 414.0
 offset_bottom = 414.0
 size_flags_horizontal = 4
 size_flags_vertical = 4
-texture = SubResource("ViewportTexture_vrdc2")
+mouse_filter = 0
+texture = ExtResource("5_63mbt")
 ignore_texture_size = true
 stretch_mode = 6
 
-[node name="MarginContainer" type="MarginContainer" parent="."]
+[node name="TileTopLeft" type="TextureRect" parent="CanvasCopy"]
+unique_name_in_owner = true
+visible = false
+modulate = Color(1, 1, 1, 0.960784)
+custom_minimum_size = Vector2(828, 828)
+offset_left = -828.0
+offset_top = -828.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+mouse_filter = 0
+texture = ExtResource("5_63mbt")
+ignore_texture_size = true
+stretch_mode = 6
+
+[node name="ReferenceRect" type="ReferenceRect" parent="CanvasCopy/TileTopLeft"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+border_color = Color(0.376471, 0.647059, 0.980392, 0.0980392)
+border_width = 5.0
+editor_only = false
+
+[node name="TileTop" type="TextureRect" parent="CanvasCopy"]
+unique_name_in_owner = true
+visible = false
+modulate = Color(1, 1, 1, 0.960784)
+custom_minimum_size = Vector2(828, 828)
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -414.0
+offset_top = -828.0
+offset_right = 414.0
+grow_horizontal = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+mouse_filter = 0
+texture = ExtResource("5_63mbt")
+ignore_texture_size = true
+stretch_mode = 6
+
+[node name="ReferenceRect2" type="ReferenceRect" parent="CanvasCopy/TileTop"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+border_color = Color(0.376471, 0.647059, 0.980392, 0.0980392)
+border_width = 5.0
+editor_only = false
+
+[node name="TileTopRight" type="TextureRect" parent="CanvasCopy"]
+unique_name_in_owner = true
+visible = false
+modulate = Color(1, 1, 1, 0.960784)
+custom_minimum_size = Vector2(828, 828)
+anchor_left = 1.0
+anchor_right = 1.0
+offset_top = -828.0
+offset_right = 828.0
+grow_horizontal = 0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+mouse_filter = 0
+texture = ExtResource("5_63mbt")
+ignore_texture_size = true
+stretch_mode = 6
+
+[node name="ReferenceRect3" type="ReferenceRect" parent="CanvasCopy/TileTopRight"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+border_color = Color(0.376471, 0.647059, 0.980392, 0.0980392)
+border_width = 5.0
+editor_only = false
+
+[node name="TileLeft" type="TextureRect" parent="CanvasCopy"]
+unique_name_in_owner = true
+visible = false
+modulate = Color(1, 1, 1, 0.960784)
+custom_minimum_size = Vector2(828, 828)
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = -828.0
+offset_top = -414.0
+offset_bottom = 414.0
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+mouse_filter = 0
+texture = ExtResource("5_63mbt")
+ignore_texture_size = true
+stretch_mode = 6
+
+[node name="ReferenceRect4" type="ReferenceRect" parent="CanvasCopy/TileLeft"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+border_color = Color(0.376471, 0.647059, 0.980392, 0.0980392)
+border_width = 5.0
+editor_only = false
+
+[node name="TileRight" type="TextureRect" parent="CanvasCopy"]
+unique_name_in_owner = true
+visible = false
+modulate = Color(1, 1, 1, 0.960784)
+custom_minimum_size = Vector2(828, 828)
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -414.0
+offset_right = 828.0
+offset_bottom = 414.0
+grow_horizontal = 0
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+mouse_filter = 0
+texture = ExtResource("5_63mbt")
+ignore_texture_size = true
+stretch_mode = 6
+
+[node name="ReferenceRect5" type="ReferenceRect" parent="CanvasCopy/TileRight"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+border_color = Color(0.376471, 0.647059, 0.980392, 0.0980392)
+border_width = 5.0
+editor_only = false
+
+[node name="TileBottomLeft" type="TextureRect" parent="CanvasCopy"]
+unique_name_in_owner = true
+visible = false
+modulate = Color(1, 1, 1, 0.960784)
+custom_minimum_size = Vector2(828, 828)
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = -828.0
+offset_bottom = 828.0
+grow_vertical = 0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+mouse_filter = 0
+texture = ExtResource("5_63mbt")
+ignore_texture_size = true
+stretch_mode = 6
+
+[node name="ReferenceRect6" type="ReferenceRect" parent="CanvasCopy/TileBottomLeft"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+border_color = Color(0.376471, 0.647059, 0.980392, 0.0980392)
+border_width = 5.0
+editor_only = false
+
+[node name="TileBottom" type="TextureRect" parent="CanvasCopy"]
+unique_name_in_owner = true
+visible = false
+modulate = Color(1, 1, 1, 0.960784)
+custom_minimum_size = Vector2(828, 828)
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -414.0
+offset_right = 414.0
+offset_bottom = 828.0
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+mouse_filter = 0
+texture = ExtResource("5_63mbt")
+ignore_texture_size = true
+stretch_mode = 6
+
+[node name="ReferenceRect7" type="ReferenceRect" parent="CanvasCopy/TileBottom"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+border_color = Color(0.376471, 0.647059, 0.980392, 0.0980392)
+border_width = 5.0
+editor_only = false
+
+[node name="TileBottomRight" type="TextureRect" parent="CanvasCopy"]
+unique_name_in_owner = true
+visible = false
+modulate = Color(1, 1, 1, 0.960784)
+custom_minimum_size = Vector2(828, 828)
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 828.0
+offset_bottom = 828.0
+grow_horizontal = 0
+grow_vertical = 0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+mouse_filter = 0
+texture = ExtResource("5_63mbt")
+ignore_texture_size = true
+stretch_mode = 6
+
+[node name="ReferenceRect8" type="ReferenceRect" parent="CanvasCopy/TileBottomRight"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+border_color = Color(0.376471, 0.647059, 0.980392, 0.0980392)
+border_width = 5.0
+editor_only = false
+
+[node name="MinimapMarginContainer" type="MarginContainer" parent="."]
+unique_name_in_owner = true
 anchor_right = 1.0
 anchor_bottom = 1.0
 mouse_filter = 2
 theme_override_constants/margin_top = 224
 theme_override_constants/margin_bottom = 350
 
-[node name="Control" type="Control" parent="MarginContainer"]
+[node name="Control" type="Control" parent="MinimapMarginContainer"]
 offset_left = 24.0
 offset_top = 224.0
 offset_right = 804.0
 offset_bottom = 1442.0
 mouse_filter = 2
 
-[node name="Minimap" type="TextureRect" parent="MarginContainer/Control"]
+[node name="Minimap" type="TextureRect" parent="MinimapMarginContainer/Control"]
 unique_name_in_owner = true
 visible = false
 custom_minimum_size = Vector2(50, 50)
+anchor_left = 1.0
 anchor_top = 1.0
+anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = -50.0
 offset_top = -50.0
-offset_right = 50.0
+grow_horizontal = 0
+grow_vertical = 0
 size_flags_horizontal = 8
 size_flags_vertical = 0
 mouse_filter = 0
@@ -185,7 +409,7 @@ texture = SubResource("ViewportTexture_efslj")
 ignore_texture_size = true
 stretch_mode = 6
 
-[node name="Shadow" type="Sprite2D" parent="MarginContainer/Control/Minimap"]
+[node name="Shadow" type="Sprite2D" parent="MinimapMarginContainer/Control/Minimap"]
 modulate = Color(1, 1, 1, 0.294118)
 show_behind_parent = true
 scale = Vector2(0.42, 0.42)
@@ -193,12 +417,12 @@ texture = SubResource("GradientTexture2D_65wri")
 centered = false
 offset = Vector2(-200, -200)
 
-[node name="Control" type="Control" parent="MarginContainer/Control/Minimap"]
+[node name="Control" type="Control" parent="MinimapMarginContainer/Control/Minimap"]
 clip_contents = true
 anchor_right = 1.0
 anchor_bottom = 1.0
 
-[node name="MinimapRefRect" type="Panel" parent="MarginContainer/Control/Minimap/Control"]
+[node name="MinimapRefRect" type="Panel" parent="MinimapMarginContainer/Control/Minimap/Control"]
 unique_name_in_owner = true
 offset_right = 50.0
 offset_bottom = 50.0
@@ -208,3 +432,12 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_f1txh")
 metadata/_edit_layout_mode = 1
 
 [connection signal="gui_input" from="Backdrop" to="." method="_on_backdrop_gui_input"]
+[connection signal="gui_input" from="CanvasCopy" to="." method="_on_tile_gui_input" binds= ["."]]
+[connection signal="gui_input" from="CanvasCopy/TileTopLeft" to="." method="_on_tile_gui_input" binds= ["TileTopLeft"]]
+[connection signal="gui_input" from="CanvasCopy/TileTop" to="." method="_on_tile_gui_input" binds= ["TileTop"]]
+[connection signal="gui_input" from="CanvasCopy/TileTopRight" to="." method="_on_tile_gui_input" binds= [NodePath(".")]]
+[connection signal="gui_input" from="CanvasCopy/TileLeft" to="." method="_on_tile_gui_input" binds= ["TileLeft"]]
+[connection signal="gui_input" from="CanvasCopy/TileRight" to="." method="_on_tile_gui_input" binds= ["TileRight"]]
+[connection signal="gui_input" from="CanvasCopy/TileBottomLeft" to="." method="_on_tile_gui_input" binds= ["TileBottomLeft"]]
+[connection signal="gui_input" from="CanvasCopy/TileBottom" to="." method="_on_tile_gui_input" binds= ["TileBottom"]]
+[connection signal="gui_input" from="CanvasCopy/TileBottomRight" to="." method="_on_tile_gui_input" binds= ["TileBottomRight"]]

@@ -1,0 +1,167 @@
+[gd_scene load_steps=9 format=3 uid="uid://bqw5hgdufaenc"]
+
+[ext_resource type="Script" path="res://apps/normal_map_maker/normal_map_maker.gd" id="1_0pb7g"]
+[ext_resource type="Theme" uid="uid://wbvix152d8b5" path="res://apps/painter/assets/themes/draw_tools.tres" id="1_4jlm2"]
+[ext_resource type="Shader" path="res://apps/normal_map_maker/assets/shaders/height_map_to_normal_map.gdshader" id="3_kmcqq"]
+[ext_resource type="PackedScene" uid="uid://xok03fqn1ehk" path="res://apps/painter/scenes/gallery.tscn" id="3_uakcc"]
+[ext_resource type="Texture2D" uid="uid://mexdj1uqwyjs" path="res://apps/painter/assets/icons/gallery.svg" id="4_faqui"]
+[ext_resource type="Texture2D" uid="uid://cfd4gcr5qvsj7" path="res://static/icons/left_arrow.svg" id="4_td2cn"]
+[ext_resource type="PackedScene" uid="uid://b7ovq30s6xpbu" path="res://apps/painter/scenes/save_menu.tscn" id="5_tp5cb"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_gm46l"]
+shader = ExtResource("3_kmcqq")
+shader_param/power = null
+shader_param/resolution = null
+
+[node name="NormalMapMaker" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+theme = ExtResource("1_4jlm2")
+script = ExtResource("1_0pb7g")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+theme_override_constants/margin_top = 110
+theme_override_constants/margin_bottom = 130
+
+[node name="AspectRatioContainer" type="AspectRatioContainer" parent="MarginContainer"]
+offset_left = 24.0
+offset_top = 110.0
+offset_right = 814.0
+offset_bottom = 1662.0
+mouse_filter = 2
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="MarginContainer/AspectRatioContainer"]
+offset_top = 381.0
+offset_right = 790.0
+offset_bottom = 1171.0
+mouse_filter = 2
+stretch = true
+
+[node name="CanvasViewport" type="SubViewport" parent="MarginContainer/AspectRatioContainer/SubViewportContainer"]
+unique_name_in_owner = true
+handle_input_locally = false
+gui_disable_input = true
+size = Vector2i(790, 790)
+render_target_update_mode = 4
+
+[node name="Canvas" type="ColorRect" parent="MarginContainer/AspectRatioContainer/SubViewportContainer/CanvasViewport"]
+unique_name_in_owner = true
+material = SubResource("ShaderMaterial_gm46l")
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+offset_left = 24.0
+offset_top = 110.0
+offset_right = 814.0
+offset_bottom = 1662.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+offset_right = 790.0
+offset_bottom = 101.0
+mouse_filter = 2
+alignment = 2
+
+[node name="MainMenuButton" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(80, 80)
+offset_top = 10.0
+offset_right = 80.0
+offset_bottom = 90.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+icon = ExtResource("4_td2cn")
+expand_icon = true
+
+[node name="PanelContainer" type="PanelContainer" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+offset_left = 104.0
+offset_right = 578.0
+offset_bottom = 101.0
+size_flags_vertical = 4
+theme_type_variation = &"FloatingPanel"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/PanelContainer"]
+offset_left = 12.0
+offset_top = 12.0
+offset_right = 462.0
+offset_bottom = 89.0
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/PanelContainer/HBoxContainer"]
+offset_top = 16.0
+offset_right = 93.0
+offset_bottom = 61.0
+text = "Power"
+
+[node name="PowerSpinBox" type="SpinBox" parent="MarginContainer/VBoxContainer/HBoxContainer/PanelContainer/HBoxContainer"]
+unique_name_in_owner = true
+offset_left = 117.0
+offset_right = 305.0
+offset_bottom = 77.0
+value = 10.0
+
+[node name="InvertCheckbox" type="CheckBox" parent="MarginContainer/VBoxContainer/HBoxContainer/PanelContainer/HBoxContainer"]
+unique_name_in_owner = true
+offset_left = 329.0
+offset_right = 450.0
+offset_bottom = 77.0
+text = "Invert"
+flat = true
+
+[node name="GalleryButtons" type="PanelContainer" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+offset_left = 602.0
+offset_top = 3.0
+offset_right = 790.0
+offset_bottom = 97.0
+size_flags_horizontal = 8
+size_flags_vertical = 4
+theme_type_variation = &"FloatingPanel"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/GalleryButtons"]
+offset_left = 12.0
+offset_top = 12.0
+offset_right = 176.0
+offset_bottom = 82.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 24
+alignment = 1
+
+[node name="GalleryButton" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer/GalleryButtons/HBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(70, 70)
+offset_right = 70.0
+offset_bottom = 70.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_type_variation = &"FloatingPanelButton"
+icon = ExtResource("4_faqui")
+icon_alignment = 1
+expand_icon = true
+
+[node name="SaveButton" parent="MarginContainer/VBoxContainer/HBoxContainer/GalleryButtons/HBoxContainer" instance=ExtResource("5_tp5cb")]
+custom_minimum_size = Vector2(70, 60)
+anchor_left = 0.0
+anchor_right = 0.0
+offset_left = 94.0
+offset_top = 5.0
+offset_right = 164.0
+offset_bottom = 65.0
+size_flags_horizontal = 8
+
+[node name="Gallery" parent="." instance=ExtResource("3_uakcc")]
+unique_name_in_owner = true
+mouse_filter = 2
+
+[connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/MainMenuButton" to="." method="_on_main_menu_button_pressed"]
+[connection signal="value_changed" from="MarginContainer/VBoxContainer/HBoxContainer/PanelContainer/HBoxContainer/PowerSpinBox" to="." method="_on_spin_box_value_changed"]
+[connection signal="toggled" from="MarginContainer/VBoxContainer/HBoxContainer/PanelContainer/HBoxContainer/InvertCheckbox" to="." method="_on_invert_checkbox_toggled"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/GalleryButtons/HBoxContainer/GalleryButton" to="." method="_on_gallery_button_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/GalleryButtons/HBoxContainer/SaveButton" to="." method="_on_save_button_pressed"]
+[connection signal="save_pressed" from="MarginContainer/VBoxContainer/HBoxContainer/GalleryButtons/HBoxContainer/SaveButton" to="." method="_on_save_pressed"]
+[connection signal="canvas_selected" from="Gallery" to="." method="_on_gallery_canvas_selected"]

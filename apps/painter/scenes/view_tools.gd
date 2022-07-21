@@ -1,5 +1,7 @@
 extends Button
 
+const Tiling = States.PaintState.Tiling
+
 @onready var menu = %DropMenu
 @onready var area_button: Button = %AreaButton
 @onready var even_button: Button = %EvenButton
@@ -7,10 +9,29 @@ extends Button
 @onready var precision_toggle: Button = %PrecisionToggle
 @onready var recenter_button: Button = %RecenterButton
 
+@onready var tiling_buttons := {
+	Tiling.NONE: %TileNoneButton,
+	Tiling.ALL: %TileAllButton,
+	Tiling.HORIZONTAL: %TileHButton,
+	Tiling.VERTICAL: %TileVButton
+}
+
 
 func _ready() -> void:
 	menu.opening.connect(toggle_area_button.bind(true))
 	menu.closing.connect(toggle_area_button.bind(false))
+	
+	for tile_mode in tiling_buttons:
+		tiling_buttons[tile_mode].pressed.connect(
+			func(): States.Paint.tiling = tile_mode
+		)
+	
+	States.Paint.tiling_changed.connect(
+		func(value: int):
+			for tile_mode in tiling_buttons:
+				if tile_mode != value: Themes.deselect(tiling_buttons[tile_mode])
+				else: Themes.select(tiling_buttons[tile_mode])
+	)
 
 
 func toggle_area_button(to_show: bool) -> void:
@@ -64,3 +85,19 @@ func _on_menu_closing() -> void:
 
 func _on_area_button_pressed() -> void:
 	menu.queue_close()
+
+
+func _on_tile_none_button_pressed() -> void:
+	States.Paint.tiling = States.PaintState.Tiling.NONE
+
+
+func _on_tile_all_button_pressed() -> void:
+	States.Paint.tiling = States.PaintState.Tiling.ALL
+
+
+func _on_tile_h_button_pressed() -> void:
+	States.Paint.tiling = States.PaintState.Tiling.HORIZONTAL
+
+
+func _on_tile_v_button_pressed() -> void:
+	States.Paint.tiling = States.PaintState.Tiling.VERTICAL
