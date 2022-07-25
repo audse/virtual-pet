@@ -100,7 +100,6 @@ func get_styleboxes() -> Dictionary:
 		var style_info := parse_style_name(style_string)
 		var name: String = style_info.name
 		var string: String = style_info.string
-		print(name, string)
 
 		if name == default_style_names:
 			default_styles.append(string)

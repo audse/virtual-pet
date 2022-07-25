@@ -1,26 +1,18 @@
-@tool
 extends Button
-
-const Paint = States.PaintState
-const Shape = Paint.Shape
 
 const BUTTON_SIZE = Vector2(80, 80)
 const TEXTURE_SIZE = Vector2(60, 60)
 
-@export var shape: States.PaintState.Shape = Shape.SQUARE
-@export var reload: bool = false:
-	get: return false
-	set(_value): remake_texture()
-
+@export var shape: PaintState.Shape = PaintState.Shape.SQUARE
 
 func _notification(what: int) -> void:
 	match what:
 		NOTIFICATION_RESIZED, NOTIFICATION_VISIBILITY_CHANGED:
-			remake_texture()
+			update()
 
 
 func _ready() -> void:
-	remake_texture()
+	update()
 	pressed.connect(set_shape.bind(shape))
 	if not Engine.is_editor_hint():
 		States.Paint.shape_changed.connect(_on_shape_changed)
@@ -33,36 +25,19 @@ func set_shape(value: int) -> void:
 
 
 func get_texture() -> Texture:
-	return States.PaintState.ShapeTexture[shape]
+	return PaintState.ShapeTexture[shape]
 
 
-func remake_texture() -> void:
-	var texture_rect
-	if get_child_count() > 0:
-		texture_rect = get_child(0)
-		if texture_rect:
-			remove_child(texture_rect)
-	texture_rect = TextureRect.new()
-	add_child(texture_rect)
-	
-	texture_rect.texture = get_texture()
-	texture_rect.ignore_texture_size = true
-	texture_rect.pivot_offset = TEXTURE_SIZE / 2
-	texture_rect.size = TEXTURE_SIZE
-	texture_rect.position = (BUTTON_SIZE - TEXTURE_SIZE) / 2
-	texture_rect.set_anchors_preset(Control.PRESET_CENTER)
-	custom_minimum_size = BUTTON_SIZE
-	size = BUTTON_SIZE
-	if not Engine.is_editor_hint():
-		modulate = States.Paint.color
+func _draw() -> void:
+	draw_texture_rect(get_texture(), Rect2((BUTTON_SIZE - TEXTURE_SIZE) / 2, TEXTURE_SIZE), false, States.Paint.color)
 
 
 func _on_shape_changed(new_shape: int) -> void:
-	theme_type_variation = "" if new_shape != shape else "SuccessButton"
+	theme_type_variation = "" if new_shape != shape else "Selected_Button"
 
 
 func _on_action_changed(new_action: int) -> void:
-	disabled = new_action == Paint.Action.ERASE
+	disabled = new_action == PaintState.Action.ERASE
 
 
 func _on_rotation_changed(value: int) -> void:

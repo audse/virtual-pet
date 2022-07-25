@@ -1,26 +1,26 @@
-[gd_scene load_steps=24 format=3 uid="uid://cytv8wbjpo8ms"]
+[gd_scene load_steps=24 format=3 uid="uid://c7el7easmjxrd"]
 
 [ext_resource type="Script" path="res://apps/painter/painter.gd" id="1_r1smx"]
 [ext_resource type="Script" path="res://apps/painter/nodes/undo.gd" id="2_fbwuv"]
 [ext_resource type="PackedScene" uid="uid://bn5p31m1beflu" path="res://apps/painter/scenes/canvas.tscn" id="3_bo72m"]
-[ext_resource type="PackedScene" uid="uid://c7532vujfwgmn" path="res://apps/painter/scenes/view_tools.tscn" id="5_xnosc"]
+[ext_resource type="PackedScene" uid="uid://be6w6bw466eev" path="res://apps/painter/scenes/view_tools.tscn" id="5_xnosc"]
 [ext_resource type="PackedScene" uid="uid://bh7h5y83bw4o4" path="res://apps/painter/scenes/shape_menu.tscn" id="10_fmos1"]
 [ext_resource type="Script" path="res://interface/components/panel_button/panel_button.gd" id="10_hbpj8"]
 [ext_resource type="PackedScene" uid="uid://dox6igj0hpbjq" path="res://apps/painter/scenes/palette.tscn" id="12_4owpo"]
-[ext_resource type="Texture2D" uid="uid://bhvq4marly1o0" path="res://apps/painter/assets/icons/rectangle.svg" id="12_geruk"]
-[ext_resource type="Texture2D" uid="uid://mexdj1uqwyjs" path="res://apps/painter/assets/icons/gallery.svg" id="13_f0mbl"]
+[ext_resource type="Texture2D" uid="uid://xhdcehevvme1" path="res://apps/painter/assets/icons/pencil.tres" id="13_83ghg"]
+[ext_resource type="Texture2D" uid="uid://mexdj1uqwyjs" path="res://apps/gallery/assets/icons/gallery.svg" id="13_f0mbl"]
 [ext_resource type="FontFile" uid="uid://daeq7jndm4031" path="res://static/fonts/Nunito/Nunito-Bold.ttf" id="13_jl8jr"]
-[ext_resource type="Texture2D" uid="uid://b24vngv1jm71o" path="res://apps/painter/assets/icons/line.svg" id="13_monbh"]
-[ext_resource type="Texture2D" uid="uid://ch7l34kkmaatb" path="res://apps/painter/assets/icons/eraser.svg" id="14_umeww"]
-[ext_resource type="Texture2D" uid="uid://o6p0w2gruix" path="res://apps/painter/assets/icons/pencil.svg" id="15_bphgi"]
 [ext_resource type="Theme" uid="uid://wbvix152d8b5" path="res://apps/painter/assets/themes/draw_tools.tres" id="15_icrpu"]
-[ext_resource type="PackedScene" uid="uid://b7ovq30s6xpbu" path="res://apps/painter/scenes/save_menu.tscn" id="16_0ik5s"]
+[ext_resource type="PackedScene" path="res://apps/gallery/save_menu.tscn" id="16_0ik5s"]
 [ext_resource type="Texture2D" uid="uid://dwlu8jm1xyn6t" path="res://apps/painter/assets/icons/undo.svg" id="16_bta2x"]
 [ext_resource type="Texture2D" uid="uid://b2lpdvuywdedv" path="res://apps/painter/assets/icons/check.svg" id="16_m0h7j"]
+[ext_resource type="Texture2D" uid="uid://doiww8ogpl5kj" path="res://apps/painter/assets/icons/eraser.tres" id="16_plrep"]
 [ext_resource type="Texture2D" uid="uid://bn61fbcpokvek" path="res://apps/painter/assets/icons/back.svg" id="16_sdttm"]
 [ext_resource type="Texture2D" uid="uid://dp0xkjoprvqm7" path="res://apps/painter/assets/icons/redo.svg" id="17_nvjsf"]
+[ext_resource type="Texture2D" uid="uid://di8kl8pxuqm8w" path="res://apps/painter/assets/icons/line.tres" id="17_peo66"]
+[ext_resource type="Texture2D" uid="uid://rpab4o4s3gdg" path="res://apps/painter/assets/icons/rectangle.tres" id="18_womtx"]
+[ext_resource type="PackedScene" uid="uid://6ulp2gk1mb2g" path="res://apps/gallery/gallery.tscn" id="22_n25rq"]
 [ext_resource type="Texture2D" uid="uid://bapda8bny76r5" path="res://apps/painter/assets/icons/zoom_in.svg" id="24_4mq7p"]
-[ext_resource type="PackedScene" uid="uid://xok03fqn1ehk" path="res://apps/painter/scenes/gallery.tscn" id="25_1hssg"]
 [ext_resource type="Texture2D" uid="uid://6t2bh8qv4gjy" path="res://apps/painter/assets/icons/zoom_out.svg" id="25_4dkvo"]
 [ext_resource type="Texture2D" uid="uid://dnyt7rc2qfo58" path="res://temp/ios_guide-01.svg" id="27_frdcy"]
 
@@ -70,11 +70,10 @@ offset_bottom = 94.0
 icon = ExtResource("16_sdttm")
 expand_icon = true
 
-[node name="ViewToolsWindow" parent="CanvasTools/VBoxContainer/MetaToolsContainer" instance=ExtResource("5_xnosc")]
+[node name="ViewToolsButton" parent="CanvasTools/VBoxContainer/MetaToolsContainer" instance=ExtResource("5_xnosc")]
 offset_left = 104.0
 offset_right = 184.0
 offset_bottom = 94.0
-size_flags_horizontal = 0
 
 [node name="UndoButtons" type="PanelContainer" parent="CanvasTools/VBoxContainer/MetaToolsContainer"]
 offset_left = 208.0
@@ -197,7 +196,7 @@ size_flags_horizontal = 0
 size_flags_vertical = 0
 toggle_mode = true
 keep_pressed_outside = true
-icon = ExtResource("15_bphgi")
+icon = ExtResource("13_83ghg")
 expand_icon = true
 script = ExtResource("10_hbpj8")
 container_path = NodePath("MarginContainer")
@@ -212,7 +211,7 @@ offset_bottom = 70.0
 size_flags_horizontal = 0
 size_flags_vertical = 0
 mouse_filter = 2
-texture = ExtResource("15_bphgi")
+texture = ExtResource("13_83ghg")
 ignore_texture_size = true
 
 [node name="MarginContainer" type="MarginContainer" parent="CanvasTools/VBoxContainer/HBoxContainer3/VBoxContainer/ToolsPanelButton"]
@@ -254,7 +253,7 @@ pivot_offset = Vector2(40, 40.0001)
 size_flags_horizontal = 4
 size_flags_vertical = 4
 theme_type_variation = &"Selected_Button"
-icon = ExtResource("15_bphgi")
+icon = ExtResource("13_83ghg")
 icon_alignment = 1
 expand_icon = true
 
@@ -267,7 +266,7 @@ offset_bottom = 80.0
 pivot_offset = Vector2(40, 40)
 size_flags_horizontal = 4
 size_flags_vertical = 4
-icon = ExtResource("14_umeww")
+icon = ExtResource("16_plrep")
 icon_alignment = 1
 expand_icon = true
 
@@ -280,7 +279,7 @@ offset_bottom = 80.0
 pivot_offset = Vector2(40, 40)
 size_flags_horizontal = 4
 size_flags_vertical = 4
-icon = ExtResource("13_monbh")
+icon = ExtResource("17_peo66")
 icon_alignment = 1
 expand_icon = true
 
@@ -293,7 +292,7 @@ offset_bottom = 80.0
 pivot_offset = Vector2(40, 40.0001)
 size_flags_horizontal = 4
 size_flags_vertical = 4
-icon = ExtResource("12_geruk")
+icon = ExtResource("18_womtx")
 icon_alignment = 1
 expand_icon = true
 
@@ -357,12 +356,9 @@ text = "Ok "
 icon = ExtResource("16_m0h7j")
 expand_icon = true
 
-[node name="Gallery" parent="." instance=ExtResource("25_1hssg")]
+[node name="Gallery" parent="." instance=ExtResource("22_n25rq")]
 unique_name_in_owner = true
-grow_horizontal = 2
-grow_vertical = 2
 mouse_filter = 2
-metadata/_edit_layout_mode = 1
 
 [node name="IosGuide" type="TextureRect" parent="."]
 visible = false

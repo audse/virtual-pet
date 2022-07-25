@@ -68,7 +68,6 @@ func get_next_tile(cell: Cell, distort_amount: Vector3) -> SpacialTile:
 
 	# Otherwise, create the new tile
 	return SpacialTileFactory.make_from_bitmask(
-		SpacialTileFactory.Sets.BUILDING_01,
 		cell.bitmask,
 		distort_amount
 	)

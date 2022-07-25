@@ -1,4 +1,5 @@
-extends Object
+class_name PaintState
+extends Node
 
 enum Action { DRAW, ERASE, LINE, RECT }
 enum Shape { 
@@ -54,18 +55,25 @@ const OddSizePx := {
 }
 
 const ShapeTexture := {
-	Shape.SQUARE: preload("res://apps/painter/assets/shapes/square.svg"),
-	Shape.SHARP: preload("res://apps/painter/assets/shapes/sharp.svg"),
-	Shape.ROUND: preload("res://apps/painter/assets/shapes/round.svg"),
-	Shape.CONCAVE: preload("res://apps/painter/assets/shapes/concave.svg"),
-	Shape.CONCAVE_SHARP: preload("res://apps/painter/assets/shapes/concave_sharp.svg"),
-	Shape.SQUARE_EDGE: preload("res://apps/painter/assets/shapes/square_edge.svg"),
-	Shape.ROUND_EDGE: preload("res://apps/painter/assets/shapes/round_edge.svg"),
-	Shape.CIRCLE: preload("res://apps/painter/assets/stamps/circle.svg"),
-	Shape.FLOWER: preload("res://apps/painter/assets/stamps/flower.svg"),
-	Shape.HEART: preload("res://apps/painter/assets/stamps/heart.svg"),
-	Shape.STAR: preload("res://apps/painter/assets/stamps/star.svg"),
-	Shape.PAW_PRINT: preload("res://apps/painter/assets/stamps/paw_print.svg"),
+	Shape.SQUARE: preload("res://apps/painter/assets/shapes/square.tres"),
+	Shape.SHARP: preload("res://apps/painter/assets/shapes/sharp.tres"),
+	Shape.ROUND: preload("res://apps/painter/assets/shapes/round.tres"),
+	Shape.CONCAVE: preload("res://apps/painter/assets/shapes/concave.tres"),
+	Shape.CONCAVE_SHARP: preload("res://apps/painter/assets/shapes/concave_sharp.tres"),
+	Shape.SQUARE_EDGE: preload("res://apps/painter/assets/shapes/square_edge.tres"),
+	Shape.ROUND_EDGE: preload("res://apps/painter/assets/shapes/round_edge.tres"),
+	Shape.CIRCLE: preload("res://apps/painter/assets/stamps/circle.tres"),
+	Shape.FLOWER: preload("res://apps/painter/assets/stamps/flower.tres"),
+	Shape.HEART: preload("res://apps/painter/assets/stamps/heart.tres"),
+	Shape.STAR: preload("res://apps/painter/assets/stamps/star.tres"),
+	Shape.PAW_PRINT: preload("res://apps/painter/assets/stamps/paw_print.tres"),
+}
+
+const ToolIcon := {
+	Action.DRAW:  preload("res://apps/painter/assets/icons/pencil.tres"),
+	Action.ERASE: preload("res://apps/painter/assets/icons/eraser.tres"),
+	Action.LINE:  preload("res://apps/painter/assets/icons/line.tres"),
+	Action.RECT:  preload("res://apps/painter/assets/icons/rectangle.tres")
 }
 
 var action := Action.DRAW:

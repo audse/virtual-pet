@@ -1,4 +1,6 @@
-[gd_scene format=3 uid="uid://b0ts5rd3750f3"]
+[gd_scene load_steps=2 format=3 uid="uid://b0ts5rd3750f3"]
+
+[ext_resource type="Script" path="res://interface/components/checkbox_button.gd" id="1_u3gav"]
 
 [node name="MainThemePreview" type="Control"]
 anchor_right = 1.0
@@ -9,14 +11,14 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 
 [node name="HFlowContainer" type="HFlowContainer" parent="MarginContainer"]
-offset_left = 12.0
-offset_top = 12.0
-offset_right = 1068.0
-offset_bottom = 1908.0
+offset_left = 24.0
+offset_top = 24.0
+offset_right = 804.0
+offset_bottom = 1768.0
 
 [node name="DefaultButtonContainer" type="VBoxContainer" parent="MarginContainer/HFlowContainer"]
 offset_right = 282.0
-offset_bottom = 166.0
+offset_bottom = 178.0
 
 [node name="DefaultButton" type="Button" parent="MarginContainer/HFlowContainer/DefaultButtonContainer"]
 offset_right = 282.0
@@ -24,16 +26,16 @@ offset_bottom = 77.0
 text = "Default button"
 
 [node name="DefaultButton2" type="Button" parent="MarginContainer/HFlowContainer/DefaultButtonContainer"]
-offset_top = 89.0
+offset_top = 101.0
 offset_right = 282.0
-offset_bottom = 166.0
+offset_bottom = 178.0
 disabled = true
 text = "(disabled)"
 
 [node name="SuccessButtonContainer" type="VBoxContainer" parent="MarginContainer/HFlowContainer"]
-offset_left = 294.0
-offset_right = 583.0
-offset_bottom = 166.0
+offset_left = 306.0
+offset_right = 595.0
+offset_bottom = 178.0
 
 [node name="SuccessButton" type="Button" parent="MarginContainer/HFlowContainer/SuccessButtonContainer"]
 offset_right = 289.0
@@ -42,9 +44,23 @@ theme_type_variation = &"SuccessButton"
 text = "Success button"
 
 [node name="SuccessButton2" type="Button" parent="MarginContainer/HFlowContainer/SuccessButtonContainer"]
-offset_top = 89.0
+offset_top = 101.0
 offset_right = 289.0
-offset_bottom = 166.0
+offset_bottom = 178.0
 theme_type_variation = &"SuccessButton"
 disabled = true
 text = "(disabled)"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/HFlowContainer"]
+offset_left = 619.0
+offset_right = 659.0
+offset_bottom = 178.0
+
+[node name="CheckBoxButton" type="Button" parent="MarginContainer/HFlowContainer/VBoxContainer"]
+custom_minimum_size = Vector2(40, 40)
+offset_right = 40.0
+offset_bottom = 40.0
+size_flags_horizontal = 4
+size_flags_vertical = 0
+theme_type_variation = &"CheckBoxButton"
+script = ExtResource("1_u3gav")

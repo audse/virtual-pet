@@ -6,10 +6,13 @@ const SHADER = preload("res://apps/normal_map_maker/assets/shaders/height_map_to
 @onready var canvas: ColorRect = %Canvas
 
 @onready var power: float:
-	get: return %PowerSpinBox.value if not inverted else -%PowerSpinBox.value
+	get: return %PowerRange.value if not inverted else -%PowerRange.value
 
 @onready var inverted: bool:
 	get: return not %InvertCheckbox.button_pressed
+
+@onready var depth: float:
+	get: return %DepthRange.value
 
 
 func _ready() -> void:	
@@ -50,13 +53,17 @@ func _on_invert_checkbox_toggled(_button_pressed: bool) -> void:
 	canvas.material.set_shader_param("power", power)
 
 
-func _on_spin_box_value_changed(_value: float) -> void:
-	canvas.material.set_shader_param("power", power)
-
-
 func _on_save_button_pressed() -> void:
 	%SaveButton.update_texture(%CanvasViewport.get_texture())
 
 
 func _on_main_menu_button_pressed() -> void:
-	get_tree().change_scene_to(MainMenuScene)
+	get_tree().change_scene_to(load("res://main_menu.tscn"))
+
+
+func _on_depth_value_changed(_value: float) -> void:
+	canvas.material.set_shader_param("depth", depth)
+
+
+func _on_power_value_changed(_value: float) -> void:
+	canvas.material.set_shader_param("power", power)

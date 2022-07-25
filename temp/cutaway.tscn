@@ -1,6 +1,6 @@
-[gd_scene load_steps=4 format=3 uid="uid://q23185624qbj"]
+[gd_scene load_steps=4 format=3]
 
-[ext_resource type="Shader" path="res://temp/distort.gdshader" id="1_ai56q"]
+[ext_resource type="Shader" path="res://apps/map/assets/shaders/distort.gdshader" id="1_ai56q"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_rv8ja"]
 render_priority = 0

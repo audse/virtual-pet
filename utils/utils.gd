@@ -1,9 +1,5 @@
-extends Node
-
-var Random = RandomNumberGenerator.new()
-
-func _ready() -> void:
-	Random.randomize()
+class_name Utils
+extends Object
 
 
 static func add_child_at(to: Node, child: Node, index: int) -> void:
@@ -17,6 +13,12 @@ static func transfer_child(from: Node, to: Node, child: Node, index: int = -1) -
 		add_child_at(to, child, index)
 	else:
 		to.add_child(child)
+
+
+static func first_non_null(items: Array):
+	for item in items:
+		if item != null: return item
+	return null
 
 
 static func get_display_area(node: Node) -> Rect2:

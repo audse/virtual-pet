@@ -1,8 +1,5 @@
 extends Sprite2D
 
-const Paint = States.PaintState
-const Size = Paint.Size
-
 @onready var shadows = [
 	%Cursor/Shadow, 
 	%Cursor/Shadow/Shadow2, 
@@ -18,7 +15,7 @@ func _ready() -> void:
 	States.Paint.color_changed.connect(_on_color_changed)
 	States.Paint.shape_changed.connect(_on_change_shape)
 	States.Paint.rotation_changed.connect(_on_rotation_changed)
-	modulate = Color("#a3a3a3")
+	self_modulate = Color("#a3a3a3")
 
 
 func move_by_unit(keycode: int) -> void:
@@ -41,12 +38,12 @@ func move_to(pos: Vector2) -> void:
 
 
 func _on_change_shape(new_shape: int) -> void:
-	shape(States.PaintState.ShapeTexture[new_shape])
+	shape(PaintState.ShapeTexture[new_shape])
 
 
 func _on_change_action(new_action: int) -> void:
 	match new_action:
-		Paint.Action.ERASE: self_modulate.a = 0
+		PaintState.Action.ERASE: self_modulate.a = 0
 		_: self_modulate.a = 1
 
 

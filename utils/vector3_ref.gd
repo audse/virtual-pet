@@ -22,3 +22,17 @@ static func sign_no_zeros(a: Vector3i, replacement: int = 1) -> Vector3i:
 	if sign.y == 0: sign.y = replacement
 	if sign.z == 0: sign.z = replacement
 	return sign
+
+
+static func to_rect3(rect: Rect2, ignore_axis = "y") -> Dictionary:
+	var to_vec3 = func (p: Vector2) -> Vector3:
+		match ignore_axis.to_lower():
+			"x": return Vector3(0, p.x, p.x)
+			"y": return Vector3(p.x, 0, p.y)
+			"z": return Vector3(p.x, p.y, 0)
+	
+	return {
+		position = to_vec3.call(rect.position),
+		size = to_vec3.call(rect.size),
+		end = to_vec3.call(rect.end)
+	}

@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://c7532vujfwgmn"]
+[gd_scene load_steps=23 format=3 uid="uid://be6w6bw466eev"]
 
 [ext_resource type="Theme" uid="uid://wbvix152d8b5" path="res://apps/painter/assets/themes/draw_tools.tres" id="1_cdixw"]
 [ext_resource type="Texture2D" uid="uid://c1oyf7lcynirk" path="res://apps/painter/assets/icons/advanced_view.svg" id="2_abnjo"]
@@ -15,6 +15,7 @@
 [ext_resource type="Script" path="res://utils/stylesheet/resources/stylebox_style_sheet.gd" id="10_5u8l2"]
 [ext_resource type="Texture2D" uid="uid://cbrhl7qb3hu48" path="res://apps/painter/assets/icons/tile_horizontal.svg" id="10_gampn"]
 [ext_resource type="Texture2D" uid="uid://bsx2yxdr88hku" path="res://apps/painter/assets/icons/tile_vertical.svg" id="11_kw14v"]
+[ext_resource type="Script" path="res://interface/components/toggle_switch.gd" id="15_8sgps"]
 
 [sub_resource type="Gradient" id="Gradient_84slf"]
 offsets = PackedFloat32Array(0, 0.41055, 0.733945, 0.981735)
@@ -98,16 +99,16 @@ theme_type_variation = &"AreaButtonTopLeft"
 visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 40.0
-offset_top = 60.0
+offset_right = -200.0
+offset_bottom = -476.0
 mouse_filter = 2
 theme = ExtResource("1_cdixw")
 theme_override_constants/margin_left = 0
 
 [node name="DropShadowContainer" type="MarginContainer" parent="CanvasLayer/MarginContainer"]
 offset_top = 24.0
-offset_right = 764.0
-offset_bottom = 1708.0
+offset_right = 604.0
+offset_bottom = 1292.0
 mouse_filter = 2
 theme_override_constants/margin_left = -80
 theme_override_constants/margin_top = -100
@@ -128,7 +129,7 @@ ignore_texture_size = true
 custom_minimum_size = Vector2(490, 200)
 offset_top = 24.0
 offset_right = 490.0
-offset_bottom = 1322.0
+offset_bottom = 1292.0
 size_flags_horizontal = 0
 size_flags_vertical = 0
 theme_type_variation = &"DropMenuPanel"
@@ -144,7 +145,7 @@ update_base_node = false
 offset_left = 24.0
 offset_top = 42.0
 offset_right = 466.0
-offset_bottom = 1262.0
+offset_bottom = 1232.0
 theme_override_constants/separation = 0
 
 [node name="TileModeLabel" type="Label" parent="CanvasLayer/MarginContainer/PanelContainer/VBoxContainer"]
@@ -319,31 +320,55 @@ offset_bottom = 1015.0
 theme_override_constants/separation = 20
 theme_override_styles/separator = SubResource("StyleBoxEmpty_14nvp")
 
-[node name="PrecisionToggle" type="Button" parent="CanvasLayer/MarginContainer/PanelContainer/VBoxContainer"]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(80, 80)
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/MarginContainer/PanelContainer/VBoxContainer"]
 offset_top = 1015.0
 offset_right = 442.0
-offset_bottom = 1095.0
-theme_override_constants/h_separation = 20
-text = "Enable"
-icon = ExtResource("7_cnrms")
-alignment = 0
-expand_icon = true
+offset_bottom = 1065.0
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/MarginContainer/PanelContainer/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(50, 0)
+offset_right = 50.0
+offset_bottom = 50.0
+texture = ExtResource("7_cnrms")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="PrecisionToggleLabel" type="Label" parent="CanvasLayer/MarginContainer/PanelContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+modulate = Color(1, 1, 1, 0.784314)
+offset_left = 74.0
+offset_top = 5.0
+offset_right = 298.0
+offset_bottom = 44.0
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 28
+text = "Disabled"
+
+[node name="PrecisionToggle" type="Button" parent="CanvasLayer/MarginContainer/PanelContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(120, 50)
+offset_left = 322.0
+offset_right = 442.0
+offset_bottom = 50.0
+size_flags_horizontal = 0
+theme_type_variation = &"CheckBoxButton"
+toggle_mode = true
+script = ExtResource("15_8sgps")
+on_color = Color(0.0627451, 0.72549, 0.505882, 1)
 
 [node name="HSeparator3" type="HSeparator" parent="CanvasLayer/MarginContainer/PanelContainer/VBoxContainer"]
-offset_top = 1095.0
+offset_top = 1065.0
 offset_right = 442.0
-offset_bottom = 1145.0
+offset_bottom = 1115.0
 theme_override_constants/separation = 50
 theme_override_styles/separator = SubResource("StyleBoxLine_pt6kw")
 
 [node name="RecenterButton" type="Button" parent="CanvasLayer/MarginContainer/PanelContainer/VBoxContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(250, 75)
-offset_top = 1145.0
+offset_top = 1115.0
 offset_right = 442.0
-offset_bottom = 1220.0
+offset_bottom = 1190.0
 pivot_offset = Vector2(40, 40.0001)
 size_flags_horizontal = 3
 size_flags_vertical = 4
@@ -359,5 +384,5 @@ expand_icon = true
 [connection signal="pressed" from="CanvasLayer/AreaButton" to="." method="_on_area_button_pressed"]
 [connection signal="pressed" from="CanvasLayer/MarginContainer/PanelContainer/VBoxContainer/HBoxContainer2/EvenButton" to="." method="_on_even_button_pressed"]
 [connection signal="pressed" from="CanvasLayer/MarginContainer/PanelContainer/VBoxContainer/HBoxContainer2/OddButton" to="." method="_on_odd_button_pressed"]
-[connection signal="pressed" from="CanvasLayer/MarginContainer/PanelContainer/VBoxContainer/PrecisionToggle" to="." method="_on_precision_toggle_pressed"]
+[connection signal="toggled" from="CanvasLayer/MarginContainer/PanelContainer/VBoxContainer/HBoxContainer/PrecisionToggle" to="." method="_on_precision_toggled"]
 [connection signal="pressed" from="CanvasLayer/MarginContainer/PanelContainer/VBoxContainer/RecenterButton" to="." method="_on_recenter_button_pressed"]

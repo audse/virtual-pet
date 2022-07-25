@@ -7,7 +7,6 @@ const GALLERY_PATH := "user://gallery/"
 const EXTENSION := ".canvas"
 const MINIMAP_SCALE := 0.25
 
-const Action = States.PaintState.Action
 
 @onready var canvas = %Canvas
 @onready var cursor = %Cursor
@@ -54,11 +53,11 @@ func _ready() -> void:
 		func(value: int) -> void:
 			for tile in all_tiles: tile.visible = false
 			match value:
-				States.PaintState.Tiling.HORIZONTAL: 
+				PaintState.Tiling.HORIZONTAL: 
 					for tile in h_tiles: tile.visible = true
-				States.PaintState.Tiling.VERTICAL: 
+				PaintState.Tiling.VERTICAL: 
 					for tile in v_tiles: tile.visible = true
-				States.PaintState.Tiling.ALL: 
+				PaintState.Tiling.ALL: 
 					for tile in all_tiles: tile.visible = true
 	)
 	
@@ -180,6 +179,7 @@ func add(pixels: Array[Sprite2D], is_ghost: bool = false) -> void:
 		if not is_ghost:
 			canvas.add_child(pixel)
 			cursor.raise()
+			ghost.raise()
 		else:
 			ghost.add_child(pixel)
 
@@ -225,11 +225,11 @@ func _on_mouse_motion(_event: InputEventMouseMotion) -> void:
 
 func _on_canvas_pressed(pos: Vector2) -> void:
 	match States.Paint.action:
-		Action.DRAW:
+		PaintState.Action.DRAW:
 			draw_shape()
-		Action.ERASE:
+		PaintState.Action.ERASE:
 			erase()
-		Action.LINE, Action.RECT:
+		PaintState.Action.LINE, PaintState.Action.RECT:
 			if not States.Paint.has_line():
 				States.Paint.line = (pos + cursor.get_offset()).snapped(States.Paint.size_px)
 			else:
@@ -239,7 +239,7 @@ func _on_canvas_pressed(pos: Vector2) -> void:
 func draw_shape() -> Sprite2D:
 	var pixel: Sprite2D = draw_pixel()
 	var pixels: Array[Sprite2D] = [pixel]
-	action_completed.emit(Action.DRAW, pixels)
+	action_completed.emit(PaintState.Action.DRAW, pixels)
 	return pixel
 
 
@@ -253,9 +253,9 @@ func draw_segment(is_ghost: bool = false) -> void:
 	var points: Array[Vector2] = []
 	
 	match action:
-		Action.LINE:
+		PaintState.Action.LINE:
 			points = Vector2Ref.get_line_points_in_grid(start, end, px)
-		Action.RECT:
+		PaintState.Action.RECT:
 			points = Vector2Ref.get_rect_points_in_grid(start, end, px)
 	
 	var pixels: Array[Sprite2D] = draw_pixel_set(points, is_ghost)
@@ -265,7 +265,7 @@ func draw_segment(is_ghost: bool = false) -> void:
 		
 		var clicked_prev_pixel_again: bool = start.distance_to(end) <= min(px.x, px.y)
 		
-		if action == Action.LINE and not clicked_prev_pixel_again:
+		if action == PaintState.Action.LINE and not clicked_prev_pixel_again:
 			States.Paint.line = end
 		else:
 			resume_draw.emit()
@@ -274,7 +274,7 @@ func draw_segment(is_ghost: bool = false) -> void:
 func erase() -> void:
 	var pixels: Array[Sprite2D] = get_pixels_under_mouse()
 	clear(pixels)
-	action_completed.emit(Action.ERASE, pixels)
+	action_completed.emit(PaintState.Action.ERASE, pixels)
 
 
 func pan(keycode: int) -> void:

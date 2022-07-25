@@ -1,0 +1,52 @@
+[gd_scene load_steps=9 format=3 uid="uid://bptb8uiwg5db8"]
+
+[ext_resource type="Script" path="res://apps/interface/placement/placement.gd" id="1_3fc3g"]
+[ext_resource type="Script" path="res://utils/nodes/quick_spatial_grid.gd" id="2_865ks"]
+[ext_resource type="PackedScene" uid="uid://b6dya0dbxdg1f" path="res://environment/scenes/environment.tscn" id="2_i6inh"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_u6xk5"]
+albedo_color = Color(1, 0, 0, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_s1506"]
+material = SubResource("StandardMaterial3D_u6xk5")
+radius = 0.05
+height = 0.05
+radial_segments = 8
+rings = 4
+is_hemisphere = true
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_m7t18"]
+size = Vector2(0.1, 0.1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_frwyy"]
+albedo_color = Color(1, 0, 1, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6syx3"]
+albedo_color = Color(1, 0, 0, 1)
+
+[node name="Node3D" type="Node3D"]
+script = ExtResource("1_3fc3g")
+rect = Rect2(-1, -1, 3, 3)
+
+[node name="QuickSpatialGrid" type="Node3D" parent="."]
+script = ExtResource("2_865ks")
+origin = Vector3(-10, 0, -10)
+bounds = Vector3(20, 1, 20)
+mesh = SubResource("SphereMesh_s1506")
+
+[node name="Environment" parent="." instance=ExtResource("2_i6inh")]
+
+[node name="Marker" type="MeshInstance3D" parent="."]
+unique_name_in_owner = true
+mesh = SubResource("PlaneMesh_m7t18")
+surface_material_override/0 = SubResource("StandardMaterial3D_frwyy")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(0.766045, -0.413176, 0.492403, 0, 0.766044, 0.642788, -0.642787, -0.492404, 0.586824, 5, 7.5, 5)
+projection = 1
+current = true
+size = 10.0
+
+[node name="Rect" type="MeshInstance3D" parent="."]
+unique_name_in_owner = true
+material_override = SubResource("StandardMaterial3D_6syx3")

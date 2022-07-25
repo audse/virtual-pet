@@ -1,8 +1,8 @@
-[gd_scene load_steps=20 format=3 uid="uid://b7ovq30s6xpbu"]
+[gd_scene load_steps=20 format=3]
 
 [ext_resource type="Theme" uid="uid://wbvix152d8b5" path="res://apps/painter/assets/themes/draw_tools.tres" id="1_frw0o"]
-[ext_resource type="Texture2D" uid="uid://o871cmutas55" path="res://apps/painter/assets/icons/save.svg" id="1_kgwxk"]
-[ext_resource type="Script" path="res://apps/painter/scenes/save_menu.gd" id="2_qsjbt"]
+[ext_resource type="Texture2D" path="res://apps/gallery/assets/icons/save.svg" id="1_kgwxk"]
+[ext_resource type="Script" path="res://apps/gallery/save_menu.gd" id="2_qsjbt"]
 [ext_resource type="FontFile" uid="uid://daeq7jndm4031" path="res://static/fonts/Nunito/Nunito-Bold.ttf" id="4_kdu1y"]
 [ext_resource type="Script" path="res://interface/components/drop_menu/drop_menu.gd" id="4_nmw1w"]
 [ext_resource type="FontFile" uid="uid://cgf6tr8wj2gby" path="res://static/fonts/Nunito/Nunito-Black.ttf" id="5_326a4"]

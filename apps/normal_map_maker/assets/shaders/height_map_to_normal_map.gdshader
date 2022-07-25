@@ -3,6 +3,7 @@ shader_type canvas_item;
 uniform sampler2D image;
 uniform vec2 resolution;
 uniform float power: hint_range(-64.0, 64.0, 1.0);
+uniform float depth: hint_range(0.0, 10.0, 0.5) = 2.0;
 
 float gray (vec3 rgb) {
 	return rgb.r * 0.299 + rgb.g * 0.587 + rgb.b * 0.114;
@@ -22,22 +23,22 @@ void fragment () {
     vec2 a = calcAspect(resolution.xy);
 	
 	vec2 uv = UV;
-    
+	
     // It is more correct to take the resolution of the original texture
     vec2 ts = (1.0 / resolution.xy); // texel step
     
-    vec3 t1 = texture(image, uv + vec2( 1.0,  0.0) * ts).xyz;
-    vec3 t2 = texture(image, uv + vec2(-1.0,  0.0) * ts).xyz;
-    vec3 t3 = texture(image, uv + vec2( 0.0,  1.0) * ts).xyz;
-    vec3 t4 = texture(image, uv + vec2( 0.0, -1.0) * ts).xyz;
+    vec3 t1 = texture(image, uv + vec2( depth,  0.0) * ts).xyz;
+    vec3 t2 = texture(image, uv + vec2(-depth,  0.0) * ts).xyz;
+    vec3 t3 = texture(image, uv + vec2( 0.0,  depth) * ts).xyz;
+    vec3 t4 = texture(image, uv + vec2( 0.0, -depth) * ts).xyz;
     
     float b1 = 0.5 + gray(vec3(t1 * power - t2 * power)); // left bevel
     float b2 = 0.5 + gray(vec3(t3 * power - t4 * power)); // top  bevel
     
-    vec3 r = (1.0 - b1) * vec3( 1.0,  0.0, 1.0); // triplanar multiply
-    vec3 l =        b1  * vec3(-1.0,  0.0, 1.0);
-    vec3 t = (1.0 - b2) * vec3( 0.0,  1.0, 1.0);
-    vec3 d =        b2  * vec3( 0.0, -1.0, 1.0);
+    vec3 r = (1.0 - b1) * vec3( depth,  0.0, depth); // triplanar multiply
+    vec3 l =        b1  * vec3(-depth,  0.0, depth);
+    vec3 t = (1.0 - b2) * vec3( 0.0,  depth, depth);
+    vec3 d =        b2  * vec3( 0.0, -depth, depth);
     
     vec3 n = normalize(r + l + t + d); // result normal
     

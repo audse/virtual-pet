@@ -4,9 +4,9 @@ signal updated
 
 class Action:
 	var pixels: Array[Sprite2D]
-	var action: States.PaintState.Action
+	var action: PaintState.Action
 	
-	func _init(t: States.PaintState.Action, p: Array[Sprite2D]) -> void:
+	func _init(t: PaintState.Action, p: Array[Sprite2D]) -> void:
 		action = t
 		pixels = p
 
@@ -19,7 +19,7 @@ func _ready() -> void:
 	updated.emit()
 
 
-func add(type: States.PaintState.Action, pixels: Array[Sprite2D]) -> void:
+func add(type: PaintState.Action, pixels: Array[Sprite2D]) -> void:
 	undo_stack.append(Action.new(type, pixels))
 	redo_stack = []
 	updated.emit()

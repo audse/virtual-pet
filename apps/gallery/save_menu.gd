@@ -13,11 +13,6 @@ signal save_pressed(save_name: String)
 func _ready() -> void:
 	menu.opening.connect(toggle_area_button.bind(true))
 	menu.closing.connect(toggle_area_button.bind(false))
-	
-	States.Paint.canvas_selected.connect(
-		func(_canvas: SubViewport, canvas_name: String):
-			name_field.text = canvas_name + " copy"
-	)
 
 
 func toggle_area_button(to_show: bool) -> void:
@@ -34,7 +29,7 @@ func update_texture(canvas_texture: Texture2D) -> void:
 
 
 func update_name_field(canvas_name: String) -> void:
-	name_field.text = canvas_name + " copy"
+	name_field.text = canvas_name
 
 
 func _on_pressed() -> void:
@@ -43,12 +38,16 @@ func _on_pressed() -> void:
 
 
 func _on_save_button_pressed() -> void:
+	save_button.text = "Saving..."
+	save_button.disabled = true
 	save_pressed.emit(name_field.text)
 	await Anim.pop_spin_exit(save_button)
 	await Anim.pop_spin_enter(success_button)
 	await get_tree().create_timer(1.0).timeout
 	await Anim.pop_spin_exit(success_button)
 	await Anim.pop_spin_enter(save_button)
+	save_button.text = "Save"
+	save_button.disabled = false
 	menu.close()
 
 

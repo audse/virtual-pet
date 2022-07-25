@@ -49,6 +49,11 @@ _global_script_classes=[{
 "language": &"GDScript",
 "path": "res://apps/map/nodes/cell_map/cell_map.gd"
 }, {
+"base": "Button",
+"class": &"CheckBoxButton",
+"language": &"GDScript",
+"path": "res://interface/components/checkbox_button.gd"
+}, {
 "base": "Container",
 "class": &"CircleContainer",
 "language": &"GDScript",
@@ -89,6 +94,11 @@ _global_script_classes=[{
 "language": &"GDScript",
 "path": "res://apps/map/nodes/guide/guide_map.gd"
 }, {
+"base": "Node",
+"class": &"MapState",
+"language": &"GDScript",
+"path": "res://apps/map/state.gd"
+}, {
 "base": "Object",
 "class": &"Math",
 "language": &"GDScript",
@@ -109,6 +119,11 @@ _global_script_classes=[{
 "language": &"GDScript",
 "path": "res://utils/anim/node_anim.gd"
 }, {
+"base": "Node",
+"class": &"PaintState",
+"language": &"GDScript",
+"path": "res://apps/painter/state.gd"
+}, {
 "base": "Button",
 "class": &"PanelButton",
 "language": &"GDScript",
@@ -119,10 +134,25 @@ _global_script_classes=[{
 "language": &"GDScript",
 "path": "res://interface/components/panel_button/panel_button_group.gd"
 }, {
+"base": "Range",
+"class": &"PillRange",
+"language": &"GDScript",
+"path": "res://interface/components/pill_range.gd"
+}, {
+"base": "Node3D",
+"class": &"QuickSpatialGrid",
+"language": &"GDScript",
+"path": "res://utils/nodes/quick_spatial_grid.gd"
+}, {
 "base": "Container",
 "class": &"RightDrawerComponent",
 "language": &"GDScript",
 "path": "res://interface/components/right_drawer/right_drawer.gd"
+}, {
+"base": "Object",
+"class": &"Scenes",
+"language": &"GDScript",
+"path": "res://utils/scenes.gd"
 }, {
 "base": "Object",
 "class": &"ScriptRef",
@@ -184,6 +214,11 @@ _global_script_classes=[{
 "language": &"GDScript",
 "path": "res://utils/themes.gd"
 }, {
+"base": "Button",
+"class": &"ToggleSwitch",
+"language": &"GDScript",
+"path": "res://interface/components/toggle_switch.gd"
+}, {
 "base": "Resource",
 "class": &"UnevenGrid",
 "language": &"GDScript",
@@ -193,6 +228,11 @@ _global_script_classes=[{
 "class": &"UnevenPoint",
 "language": &"GDScript",
 "path": "res://apps/map/nodes/grid/uneven_grid_point.gd"
+}, {
+"base": "Object",
+"class": &"Utils",
+"language": &"GDScript",
+"path": "res://utils/utils.gd"
 }, {
 "base": "Object",
 "class": &"Vector2Ref",
@@ -218,6 +258,7 @@ _global_script_class_icons={
 "Bits": "",
 "Cell": "",
 "CellMap": "res://apps/map/nodes/cell_map/cell_map_icon.svg",
+"CheckBoxButton": "",
 "CircleContainer": "res://interface/components/circle_container/circle_container.svg",
 "CircleMenu": "",
 "ControlRef": "",
@@ -226,13 +267,18 @@ _global_script_class_icons={
 "FontStyleSheet": "",
 "GradientNoiseRect": "res://utils/nodes/noise_rect.svg",
 "GuideMap": "",
+"MapState": "",
 "Math": "",
 "MeshDataToolPlus": "",
 "NeighborGroup": "",
 "NodeAnim": "",
+"PaintState": "",
 "PanelButton": "res://interface/components/panel_button/panel_button.svg",
 "PanelButtonGroup": "res://interface/components/panel_button/panel_button_group.svg",
+"PillRange": "res://interface/components/pill_range.svg",
+"QuickSpatialGrid": "res://utils/nodes/quick_spatial_grid.svg",
 "RightDrawerComponent": "res://interface/components/right_drawer/right_drawer.svg",
+"Scenes": "",
 "ScriptRef": "",
 "SpacialTile": "res://apps/map/nodes/tile_set/spacial_tile_icon.svg",
 "SpacialTileFactory": "res://apps/map/nodes/tile_set/spacial_tile_factory_icon.svg",
@@ -245,8 +291,10 @@ _global_script_class_icons={
 "StyleSheetSetter": "res://utils/stylesheet/icons/wand-magic-sparkles-solid.svg",
 "StyleSheetUtils": "",
 "Themes": "",
+"ToggleSwitch": "",
 "UnevenGrid": "",
 "UnevenPoint": "",
+"Utils": "",
 "Vector2Ref": "",
 "Vector3Ref": "",
 "VertexGroup": ""
@@ -260,11 +308,10 @@ config/features=PackedStringArray("4.0", "Vulkan Mobile")
 
 [autoload]
 
-Utils="*res://utils/utils.gd"
 Module="*res://utils/module.gd"
 Assets="*res://utils/assets.gd"
 States="*res://utils/states.gd"
-Scenes="*res://utils/scenes.gd"
+Auto="*res://utils/auto.gd"
 
 [display]
 
@@ -275,6 +322,10 @@ window/size/window_height_override=1620
 window/handheld/orientation=1
 window/stretch/mode="canvas_items"
 window/stretch/aspect="expand"
+
+[filesystem]
+
+import/blender/enabled=false
 
 [gui]
 
@@ -332,5 +383,8 @@ pointing/emulate_touch_from_mouse=true
 
 [rendering]
 
+global_illumination/gi/use_half_resolution=true
+global_illumination/sdfgi/frames_to_converge=1
+global_illumination/sdfgi/frames_to_update_lights=3
 anti_aliasing/quality/screen_space_aa=1
 anti_aliasing/quality/use_debanding=true

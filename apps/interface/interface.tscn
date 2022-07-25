@@ -1,51 +1,122 @@
-[gd_scene load_steps=2 format=3 uid="uid://duklyahfnuqrq"]
+[gd_scene load_steps=5 format=3 uid="uid://duklyahfnuqrq"]
 
 [ext_resource type="Script" path="res://apps/interface/interface.gd" id="1_hdehv"]
+[ext_resource type="Texture2D" uid="uid://cfd4gcr5qvsj7" path="res://static/icons/left_arrow.svg" id="2_rvcuj"]
+[ext_resource type="PackedScene" uid="uid://6ulp2gk1mb2g" path="res://apps/gallery/gallery.tscn" id="3_t82ij"]
 
-[node name="Interface" type="MarginContainer"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_cjinj"]
+
+[node name="Interface" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 mouse_filter = 2
-theme_override_constants/margin_top = 100
-theme_override_constants/margin_bottom = 100
 script = ExtResource("1_hdehv")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
+[node name="MarginContainer" type="MarginContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+theme_override_constants/margin_top = 110
+theme_override_constants/margin_bottom = 130
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
 offset_left = 24.0
-offset_top = 100.0
+offset_top = 110.0
 offset_right = 804.0
-offset_bottom = 1692.0
+offset_bottom = 1662.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 mouse_filter = 2
 
-[node name="TopActions" type="HFlowContainer" parent="VBoxContainer"]
+[node name="TopActions" type="HFlowContainer" parent="MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
 offset_right = 780.0
-offset_bottom = 77.0
+offset_bottom = 465.0
 size_flags_vertical = 0
 
-[node name="MainMenuButton" type="Button" parent="VBoxContainer/TopActions"]
-offset_right = 152.0
-offset_bottom = 77.0
-text = "Home"
+[node name="MainMenuButton" type="Button" parent="MarginContainer/VBoxContainer/TopActions"]
+custom_minimum_size = Vector2(100, 80)
+offset_right = 100.0
+offset_bottom = 80.0
+size_flags_vertical = 0
+icon = ExtResource("2_rvcuj")
+expand_icon = true
 
-[node name="CenterActions" type="HFlowContainer" parent="VBoxContainer"]
-unique_name_in_owner = true
-offset_top = 101.0
+[node name="VSeparator" type="VSeparator" parent="MarginContainer/VBoxContainer/TopActions"]
+offset_left = 124.0
+offset_right = 500.0
+offset_bottom = 465.0
+size_flags_horizontal = 3
+theme_override_styles/separator = SubResource("StyleBoxEmpty_cjinj")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/TopActions"]
+offset_left = 524.0
 offset_right = 780.0
-offset_bottom = 1491.0
+offset_bottom = 465.0
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/TopActions/VBoxContainer"]
+offset_right = 256.0
+offset_bottom = 49.0
+theme_type_variation = &"Overline"
+text = "D E S I G N"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="OuterWallGalleryButton" type="Button" parent="MarginContainer/VBoxContainer/TopActions/VBoxContainer"]
+custom_minimum_size = Vector2(120, 80)
+offset_left = 52.0
+offset_top = 73.0
+offset_right = 256.0
+offset_bottom = 153.0
+size_flags_horizontal = 8
+text = "Exterior..."
+expand_icon = true
+
+[node name="InnerWallGalleryButton" type="Button" parent="MarginContainer/VBoxContainer/TopActions/VBoxContainer"]
+custom_minimum_size = Vector2(120, 80)
+offset_left = 60.0
+offset_top = 177.0
+offset_right = 256.0
+offset_bottom = 257.0
+size_flags_horizontal = 8
+text = "Interior..."
+expand_icon = true
+
+[node name="FoundationGalleryButton" type="Button" parent="MarginContainer/VBoxContainer/TopActions/VBoxContainer"]
+custom_minimum_size = Vector2(120, 80)
+offset_top = 281.0
+offset_right = 256.0
+offset_bottom = 361.0
+size_flags_horizontal = 8
+text = "Foundation..."
+expand_icon = true
+
+[node name="FloorGalleryButton" type="Button" parent="MarginContainer/VBoxContainer/TopActions/VBoxContainer"]
+custom_minimum_size = Vector2(120, 80)
+offset_left = 91.0
+offset_top = 385.0
+offset_right = 256.0
+offset_bottom = 465.0
+size_flags_horizontal = 8
+text = "Floor..."
+expand_icon = true
+
+[node name="CenterActions" type="HFlowContainer" parent="MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+offset_top = 489.0
+offset_right = 780.0
+offset_bottom = 1451.0
 size_flags_vertical = 3
 mouse_filter = 2
 
-[node name="BottomActions" type="HFlowContainer" parent="VBoxContainer"]
+[node name="BottomActions" type="HFlowContainer" parent="MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
-offset_top = 1515.0
+offset_top = 1475.0
 offset_right = 780.0
-offset_bottom = 1592.0
+offset_bottom = 1552.0
 size_flags_vertical = 8
 
-[node name="CancelButton" type="Button" parent="VBoxContainer/BottomActions"]
+[node name="CancelButton" type="Button" parent="MarginContainer/VBoxContainer/BottomActions"]
 offset_right = 164.0
 offset_bottom = 77.0
 size_flags_horizontal = 4
@@ -53,7 +124,7 @@ size_flags_vertical = 8
 text = "Cancel
 "
 
-[node name="BuildButton" type="Button" parent="VBoxContainer/BottomActions"]
+[node name="BuildButton" type="Button" parent="MarginContainer/VBoxContainer/BottomActions"]
 offset_left = 188.0
 offset_right = 404.0
 offset_bottom = 77.0
@@ -62,12 +133,26 @@ size_flags_vertical = 8
 theme_type_variation = &"SuccessButton"
 text = "Build here"
 
-[connection signal="mouse_entered" from="VBoxContainer/TopActions" to="." method="_on_mouse_entered"]
-[connection signal="mouse_exited" from="VBoxContainer/TopActions" to="." method="_on_mouse_exited"]
-[connection signal="pressed" from="VBoxContainer/TopActions/MainMenuButton" to="." method="_on_main_menu_button_pressed"]
-[connection signal="mouse_entered" from="VBoxContainer/CenterActions" to="." method="_on_mouse_entered"]
-[connection signal="mouse_exited" from="VBoxContainer/CenterActions" to="." method="_on_mouse_exited"]
-[connection signal="mouse_entered" from="VBoxContainer/BottomActions" to="." method="_on_mouse_entered"]
-[connection signal="mouse_exited" from="VBoxContainer/BottomActions" to="." method="_on_mouse_exited"]
-[connection signal="pressed" from="VBoxContainer/BottomActions/CancelButton" to="." method="_on_button_pressed" binds= [&"CancelButton"]]
-[connection signal="pressed" from="VBoxContainer/BottomActions/BuildButton" to="." method="_on_button_pressed" binds= [&"BuildButton"]]
+[node name="Gallery" parent="." instance=ExtResource("3_t82ij")]
+unique_name_in_owner = true
+mouse_filter = 2
+show_download_buttons = false
+
+[connection signal="mouse_entered" from="MarginContainer/VBoxContainer/TopActions" to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="MarginContainer/VBoxContainer/TopActions" to="." method="_on_mouse_exited"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/TopActions/MainMenuButton" to="." method="_on_main_menu_button_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/TopActions/VBoxContainer/OuterWallGalleryButton" to="." method="_on_gallery_button_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/TopActions/VBoxContainer/OuterWallGalleryButton" to="." method="_on_outer_wall_gallery_button_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/TopActions/VBoxContainer/InnerWallGalleryButton" to="." method="_on_gallery_button_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/TopActions/VBoxContainer/InnerWallGalleryButton" to="." method="_on_inner_wall_gallery_button_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/TopActions/VBoxContainer/FoundationGalleryButton" to="." method="_on_gallery_button_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/TopActions/VBoxContainer/FoundationGalleryButton" to="." method="_on_foundation_gallery_button_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/TopActions/VBoxContainer/FloorGalleryButton" to="." method="_on_gallery_button_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/TopActions/VBoxContainer/FloorGalleryButton" to="." method="_on_floor_gallery_button_pressed"]
+[connection signal="mouse_entered" from="MarginContainer/VBoxContainer/CenterActions" to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="MarginContainer/VBoxContainer/CenterActions" to="." method="_on_mouse_exited"]
+[connection signal="mouse_entered" from="MarginContainer/VBoxContainer/BottomActions" to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="MarginContainer/VBoxContainer/BottomActions" to="." method="_on_mouse_exited"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/BottomActions/CancelButton" to="." method="_on_button_pressed" binds= ["CancelButton"]]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/BottomActions/BuildButton" to="." method="_on_button_pressed" binds= ["BuildButton"]]
+[connection signal="canvas_selected" from="Gallery" to="." method="_on_gallery_canvas_selected"]

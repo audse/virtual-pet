@@ -1,9 +1,11 @@
 extends Control
 
-
-signal canvas_selected (canvas: SubViewport, path: String)
+signal canvas_selected (canvas: SubViewport, canvas_name: String)
 
 const GALLERY_PATH := "user://gallery"
+
+@export var show_download_buttons: bool = true
+
 
 var num_canvases: int:
 	get: return %Viewports.get_child_count() - 1
@@ -87,8 +89,11 @@ func create_canvas_texture(canvas: SubViewport, canvas_name: String) -> VBoxCont
 	
 	var button_container = container.get_child(2)
 	var download_button: Button = button_container.get_child(0)
-	var success_button: Button = button_container.get_child(1)
-	download_button.pressed.connect(download_image.bind(canvas, download_button, success_button))
+	if show_download_buttons:
+		var success_button: Button = button_container.get_child(1)
+		download_button.pressed.connect(download_image.bind(canvas, download_button, success_button))
+	else:
+		download_button.visible = false
 	
 	return container
 

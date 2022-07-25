@@ -1,17 +1,22 @@
-[gd_scene load_steps=9 format=3 uid="uid://bqw5hgdufaenc"]
+[gd_scene load_steps=12 format=3 uid="uid://dj82sgm5f2jm6"]
 
 [ext_resource type="Script" path="res://apps/normal_map_maker/normal_map_maker.gd" id="1_0pb7g"]
 [ext_resource type="Theme" uid="uid://wbvix152d8b5" path="res://apps/painter/assets/themes/draw_tools.tres" id="1_4jlm2"]
 [ext_resource type="Shader" path="res://apps/normal_map_maker/assets/shaders/height_map_to_normal_map.gdshader" id="3_kmcqq"]
-[ext_resource type="PackedScene" uid="uid://xok03fqn1ehk" path="res://apps/painter/scenes/gallery.tscn" id="3_uakcc"]
-[ext_resource type="Texture2D" uid="uid://mexdj1uqwyjs" path="res://apps/painter/assets/icons/gallery.svg" id="4_faqui"]
+[ext_resource type="Texture2D" uid="uid://bq0fpkhfnr4a" path="res://temp/Exterior foundation 2.png" id="4_clusm"]
 [ext_resource type="Texture2D" uid="uid://cfd4gcr5qvsj7" path="res://static/icons/left_arrow.svg" id="4_td2cn"]
-[ext_resource type="PackedScene" uid="uid://b7ovq30s6xpbu" path="res://apps/painter/scenes/save_menu.tscn" id="5_tp5cb"]
+[ext_resource type="Texture2D" uid="uid://mexdj1uqwyjs" path="res://apps/gallery/assets/icons/gallery.svg" id="6_ibu1x"]
+[ext_resource type="Script" path="res://interface/components/pill_range.gd" id="7_6c60u"]
+[ext_resource type="Script" path="res://interface/components/checkbox_button.gd" id="7_dvyg1"]
+[ext_resource type="PackedScene" uid="uid://6ulp2gk1mb2g" path="res://apps/gallery/gallery.tscn" id="7_hb1b5"]
+[ext_resource type="PackedScene" path="res://apps/gallery/save_menu.tscn" id="7_hf0kx"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_gm46l"]
 shader = ExtResource("3_kmcqq")
-shader_param/power = null
-shader_param/resolution = null
+shader_param/depth = 2.0
+shader_param/image = ExtResource("4_clusm")
+shader_param/power = -10.0
+shader_param/resolution = Vector2(500, 500)
 
 [node name="NormalMapMaker" type="Control"]
 anchor_right = 1.0
@@ -19,6 +24,11 @@ anchor_bottom = 1.0
 mouse_filter = 2
 theme = ExtResource("1_4jlm2")
 script = ExtResource("1_0pb7g")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color(0.117647, 0.160784, 0.231373, 1)
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 anchor_right = 1.0
@@ -30,14 +40,14 @@ theme_override_constants/margin_bottom = 130
 [node name="AspectRatioContainer" type="AspectRatioContainer" parent="MarginContainer"]
 offset_left = 24.0
 offset_top = 110.0
-offset_right = 814.0
+offset_right = 804.0
 offset_bottom = 1662.0
 mouse_filter = 2
 
 [node name="SubViewportContainer" type="SubViewportContainer" parent="MarginContainer/AspectRatioContainer"]
-offset_top = 381.0
-offset_right = 790.0
-offset_bottom = 1171.0
+offset_top = 386.0
+offset_right = 780.0
+offset_bottom = 1166.0
 mouse_filter = 2
 stretch = true
 
@@ -45,7 +55,7 @@ stretch = true
 unique_name_in_owner = true
 handle_input_locally = false
 gui_disable_input = true
-size = Vector2i(790, 790)
+size = Vector2i(780, 780)
 render_target_update_mode = 4
 
 [node name="Canvas" type="ColorRect" parent="MarginContainer/AspectRatioContainer/SubViewportContainer/CanvasViewport"]
@@ -60,64 +70,38 @@ mouse_filter = 2
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
 offset_left = 24.0
 offset_top = 110.0
-offset_right = 814.0
+offset_right = 804.0
 offset_bottom = 1662.0
 
 [node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
-offset_right = 790.0
-offset_bottom = 101.0
+offset_right = 780.0
+offset_bottom = 94.0
 mouse_filter = 2
 alignment = 2
 
 [node name="MainMenuButton" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer"]
 custom_minimum_size = Vector2(80, 80)
-offset_top = 10.0
+offset_top = 7.0
 offset_right = 80.0
-offset_bottom = 90.0
+offset_bottom = 87.0
 size_flags_horizontal = 4
 size_flags_vertical = 4
 icon = ExtResource("4_td2cn")
 expand_icon = true
 
-[node name="PanelContainer" type="PanelContainer" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+[node name="VSeparator" type="VSeparator" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+modulate = Color(1, 1, 1, 0)
 offset_left = 104.0
-offset_right = 578.0
-offset_bottom = 101.0
-size_flags_vertical = 4
-theme_type_variation = &"FloatingPanel"
-
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/PanelContainer"]
-offset_left = 12.0
-offset_top = 12.0
-offset_right = 462.0
-offset_bottom = 89.0
-
-[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/PanelContainer/HBoxContainer"]
-offset_top = 16.0
-offset_right = 93.0
-offset_bottom = 61.0
-text = "Power"
-
-[node name="PowerSpinBox" type="SpinBox" parent="MarginContainer/VBoxContainer/HBoxContainer/PanelContainer/HBoxContainer"]
-unique_name_in_owner = true
-offset_left = 117.0
-offset_right = 305.0
-offset_bottom = 77.0
-value = 10.0
-
-[node name="InvertCheckbox" type="CheckBox" parent="MarginContainer/VBoxContainer/HBoxContainer/PanelContainer/HBoxContainer"]
-unique_name_in_owner = true
-offset_left = 329.0
-offset_right = 450.0
-offset_bottom = 77.0
-text = "Invert"
-flat = true
+offset_right = 568.0
+offset_bottom = 94.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 2
 
 [node name="GalleryButtons" type="PanelContainer" parent="MarginContainer/VBoxContainer/HBoxContainer"]
-offset_left = 602.0
-offset_top = 3.0
-offset_right = 790.0
-offset_bottom = 97.0
+offset_left = 592.0
+offset_right = 780.0
+offset_bottom = 94.0
 size_flags_horizontal = 8
 size_flags_vertical = 4
 theme_type_variation = &"FloatingPanel"
@@ -140,11 +124,11 @@ offset_bottom = 70.0
 size_flags_horizontal = 4
 size_flags_vertical = 4
 theme_type_variation = &"FloatingPanelButton"
-icon = ExtResource("4_faqui")
+icon = ExtResource("6_ibu1x")
 icon_alignment = 1
 expand_icon = true
 
-[node name="SaveButton" parent="MarginContainer/VBoxContainer/HBoxContainer/GalleryButtons/HBoxContainer" instance=ExtResource("5_tp5cb")]
+[node name="SaveButton" parent="MarginContainer/VBoxContainer/HBoxContainer/GalleryButtons/HBoxContainer" instance=ExtResource("7_hf0kx")]
 custom_minimum_size = Vector2(70, 60)
 anchor_left = 0.0
 anchor_right = 0.0
@@ -154,14 +138,216 @@ offset_right = 164.0
 offset_bottom = 65.0
 size_flags_horizontal = 8
 
-[node name="Gallery" parent="." instance=ExtResource("3_uakcc")]
+[node name="PanelContainer" type="PanelContainer" parent="MarginContainer/VBoxContainer"]
+offset_left = 111.0
+offset_top = 118.0
+offset_right = 780.0
+offset_bottom = 246.0
+size_flags_horizontal = 8
+size_flags_vertical = 4
+theme_type_variation = &"FloatingPanel"
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer/PanelContainer"]
+offset_left = 12.0
+offset_top = 12.0
+offset_right = 657.0
+offset_bottom = 116.0
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_bottom = 12
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/PanelContainer/MarginContainer"]
+offset_left = 24.0
+offset_top = 12.0
+offset_right = 621.0
+offset_bottom = 92.0
+theme_override_constants/separation = 36
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/PanelContainer/MarginContainer/HBoxContainer"]
+offset_right = 180.0
+offset_bottom = 80.0
+theme_override_constants/separation = 6
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/PanelContainer/MarginContainer/HBoxContainer/VBoxContainer"]
+offset_right = 180.0
+offset_bottom = 34.0
+theme_type_variation = &"Overline"
+text = "P O W E R"
+vertical_alignment = 2
+
+[node name="PowerRange" type="Range" parent="MarginContainer/VBoxContainer/PanelContainer/MarginContainer/HBoxContainer/VBoxContainer"]
+_import_path = NodePath("")
+unique_name_in_owner = true
+process_mode = 0
+process_priority = 0
+editor_description = ""
+visible = true
+modulate = Color(1, 1, 1, 1)
+self_modulate = Color(1, 1, 1, 1)
+show_behind_parent = false
+top_level = false
+clip_children = false
+light_mask = 1
+texture_filter = 0
+texture_repeat = 0
+material = null
+use_parent_material = false
+clip_contents = false
+custom_minimum_size = Vector2(180, 40)
+layout_direction = 0
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 0.0
+offset_top = 40.0
+offset_right = 180.0
+offset_bottom = 80.0
+grow_horizontal = 1
+grow_vertical = 1
+rotation = 0.0
+scale = Vector2(1, 1)
+pivot_offset = Vector2(0, 0)
+size_flags_horizontal = 1
+size_flags_vertical = 4
+size_flags_stretch_ratio = 1.0
+auto_translate = true
+hint_tooltip = ""
+focus_neighbor_left = NodePath("")
+focus_neighbor_top = NodePath("")
+focus_neighbor_right = NodePath("")
+focus_neighbor_bottom = NodePath("")
+focus_next = NodePath("")
+focus_previous = NodePath("")
+focus_mode = 0
+mouse_filter = 0
+mouse_force_pass_scroll_events = true
+mouse_default_cursor_shape = 0
+theme = null
+theme_type_variation = &""
+min_value = 0.0
+max_value = 40.0
+step = 5.0
+page = 0.0
+value = 10.0
+exp_edit = false
+rounded = false
+allow_greater = false
+allow_lesser = false
+script = ExtResource("7_6c60u")
+const_override_h_separation = 0
+const_override_v_separation = 0
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="MarginContainer/VBoxContainer/PanelContainer/MarginContainer/HBoxContainer"]
+offset_left = 216.0
+offset_right = 341.0
+offset_bottom = 80.0
+theme_override_constants/separation = 6
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/PanelContainer/MarginContainer/HBoxContainer/VBoxContainer2"]
+offset_right = 125.0
+offset_bottom = 34.0
+size_flags_horizontal = 3
+theme_type_variation = &"Overline"
+text = "I N V E R T"
+
+[node name="InvertCheckbox" type="Button" parent="MarginContainer/VBoxContainer/PanelContainer/MarginContainer/HBoxContainer/VBoxContainer2"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(40, 40)
+offset_top = 40.0
+offset_right = 40.0
+offset_bottom = 80.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+theme_type_variation = &"CheckBoxButton"
+toggle_mode = true
+script = ExtResource("7_dvyg1")
+corner_radius = 7
+
+[node name="VBoxContainer3" type="VBoxContainer" parent="MarginContainer/VBoxContainer/PanelContainer/MarginContainer/HBoxContainer"]
+offset_left = 377.0
+offset_right = 597.0
+offset_bottom = 80.0
+theme_override_constants/separation = 6
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/PanelContainer/MarginContainer/HBoxContainer/VBoxContainer3"]
+offset_right = 220.0
+offset_bottom = 34.0
+size_flags_horizontal = 3
+theme_type_variation = &"Overline"
+text = "D E P T H"
+
+[node name="DepthRange" type="Range" parent="MarginContainer/VBoxContainer/PanelContainer/MarginContainer/HBoxContainer/VBoxContainer3"]
+_import_path = NodePath("")
+unique_name_in_owner = true
+process_mode = 0
+process_priority = 0
+editor_description = ""
+visible = true
+modulate = Color(1, 1, 1, 1)
+self_modulate = Color(1, 1, 1, 1)
+show_behind_parent = false
+top_level = false
+clip_children = false
+light_mask = 1
+texture_filter = 0
+texture_repeat = 0
+material = null
+use_parent_material = false
+clip_contents = false
+custom_minimum_size = Vector2(220, 40)
+layout_direction = 0
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 0.0
+offset_top = 40.0
+offset_right = 220.0
+offset_bottom = 80.0
+grow_horizontal = 1
+grow_vertical = 1
+rotation = 0.0
+scale = Vector2(1, 1)
+pivot_offset = Vector2(0, 0)
+size_flags_horizontal = 1
+size_flags_vertical = 4
+size_flags_stretch_ratio = 1.0
+auto_translate = true
+hint_tooltip = ""
+focus_neighbor_left = NodePath("")
+focus_neighbor_top = NodePath("")
+focus_neighbor_right = NodePath("")
+focus_neighbor_bottom = NodePath("")
+focus_next = NodePath("")
+focus_previous = NodePath("")
+focus_mode = 0
+mouse_filter = 0
+mouse_force_pass_scroll_events = true
+mouse_default_cursor_shape = 0
+theme = null
+theme_type_variation = &""
+min_value = 0.0
+max_value = 10.0
+step = 1.0
+page = 0.0
+value = 2.0
+exp_edit = false
+rounded = false
+allow_greater = false
+allow_lesser = false
+script = ExtResource("7_6c60u")
+const_override_h_separation = 0
+const_override_v_separation = 0
+
+[node name="Gallery" parent="." instance=ExtResource("7_hb1b5")]
 unique_name_in_owner = true
 mouse_filter = 2
 
 [connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/MainMenuButton" to="." method="_on_main_menu_button_pressed"]
-[connection signal="value_changed" from="MarginContainer/VBoxContainer/HBoxContainer/PanelContainer/HBoxContainer/PowerSpinBox" to="." method="_on_spin_box_value_changed"]
-[connection signal="toggled" from="MarginContainer/VBoxContainer/HBoxContainer/PanelContainer/HBoxContainer/InvertCheckbox" to="." method="_on_invert_checkbox_toggled"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/GalleryButtons/HBoxContainer/GalleryButton" to="." method="_on_gallery_button_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/GalleryButtons/HBoxContainer/SaveButton" to="." method="_on_save_button_pressed"]
 [connection signal="save_pressed" from="MarginContainer/VBoxContainer/HBoxContainer/GalleryButtons/HBoxContainer/SaveButton" to="." method="_on_save_pressed"]
+[connection signal="value_changed" from="MarginContainer/VBoxContainer/PanelContainer/MarginContainer/HBoxContainer/VBoxContainer/PowerRange" to="." method="_on_power_value_changed"]
+[connection signal="toggled" from="MarginContainer/VBoxContainer/PanelContainer/MarginContainer/HBoxContainer/VBoxContainer2/InvertCheckbox" to="." method="_on_invert_checkbox_toggled"]
+[connection signal="value_changed" from="MarginContainer/VBoxContainer/PanelContainer/MarginContainer/HBoxContainer/VBoxContainer3/DepthRange" to="." method="_on_depth_value_changed"]
 [connection signal="canvas_selected" from="Gallery" to="." method="_on_gallery_canvas_selected"]

@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://ck5qdolgalm27"]
+
+[ext_resource type="Shader" path="res://apps/normal_map_maker/assets/shaders/height_map_to_normal_map.gdshader" id="1_kv0a5"]
+[ext_resource type="Texture2D" uid="uid://lkejm6kjash8" path="res://Canvas 1.png" id="2_lem2w"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_jhlr4"]
+shader = ExtResource("1_kv0a5")
+shader_param/image = ExtResource("2_lem2w")
+shader_param/power = 10.0
+shader_param/resolution = Vector2(500, 500)
+
+[node name="AspectRatioContainer" type="AspectRatioContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="ColorRect" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_jhlr4")
+offset_top = 482.0
+offset_right = 828.0
+offset_bottom = 1310.0
+size_flags_horizontal = 3

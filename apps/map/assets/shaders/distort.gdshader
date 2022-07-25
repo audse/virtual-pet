@@ -1,8 +1,8 @@
 shader_type spatial;
 
-uniform sampler2D albedo_texture: source_color;
+uniform sampler2D albedo_texture;
 uniform vec4 albedo_color: source_color = vec4(1.0);
-uniform sampler2D normal_texture: hint_normal;
+uniform sampler2D normal_texture;
 uniform float normal_depth = 1.0;
 uniform vec2 normal_scale = vec2(1.0);
 uniform bool is_corner = false;
@@ -25,8 +25,8 @@ void vertex() {
 	vec3 distortion = vec3(0.0);
 	
 	bool is_left = VERTEX.x <= -0.5;
-	bool is_right = VERTEX.x >= 0.5;
-	bool is_top = VERTEX.z <= -0.5;
+//	bool is_right = VERTEX.x >= 0.5;
+//	bool is_top = VERTEX.z <= -0.5;
 	bool is_bottom = VERTEX.z >= 0.5;
 
 	if (is_left && is_bottom && is_corner) {
@@ -39,18 +39,18 @@ void vertex() {
 			distortion = distort_amount / 3.0;
 		}
 	}
-	float y_offset = world_vertex.y / 4.0;
+//	float y_offset = world_vertex.y / 4.0;
 	
-	VERTEX += distortion * 1.5 * y_offset;
+	VERTEX += distortion * 1.5;
 }
 
 void fragment() {
 	vec2 uv = rotateUV(UV, vec2(0.0), uv_rotation);	
+	NORMAL_MAP_DEPTH = normal_depth;
 	
 	NORMAL_MAP = texture(normal_texture, uv * normal_scale).rgb;
-	NORMAL_MAP_DEPTH = normal_depth;
 	ALBEDO = texture(albedo_texture, uv).rgb * albedo_color.rgb;
-	AO = 1.0;
-	AO_LIGHT_AFFECT = 0.25;
+//	AO = 1.0;
+//	AO_LIGHT_AFFECT = 0.25;
 	
 }

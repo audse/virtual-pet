@@ -1,11 +1,20 @@
 # Todo
 
-## Codebase
-- [ ] Replace inheritance with composition
+# V 1.0
 
 ## Building
+- [ ] Outer walls
+- [ ] Roof
+- [ ] Door
+- [ ] Windows
 
 ## Animals
+- [ ] DNA
+	- [ ] Color
+	- [ ] Shape
+	- [ ] Personality
+- [ ] Colors/painting
+- [ ] Personality
 
 
 ## Design
@@ -44,6 +53,21 @@
 - Wood
 - Concrete
 
+
 ## Furniture
 ### Indoor
 ### Outdoor
+
+
+## World
+### Foliage
+- [ ] Trees
+- [ ] Flowers
+
+# V 2.0
+
+## Building
+- [ ] Inner walls / rooms
+
+## World
+- [ ] Paths

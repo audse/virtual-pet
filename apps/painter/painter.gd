@@ -1,14 +1,10 @@
 extends Control
 
-const Action = States.PaintState.Action
-const Size = States.PaintState.Size
-const Shape = States.PaintState.Shape
-
 @onready var tool_buttons := {
-	Action.DRAW: %DrawButton,
-	Action.ERASE: %EraseButton,
-	Action.LINE: %LineButton,
-	Action.RECT: %RectangleButton,
+	PaintState.Action.DRAW: %DrawButton,
+	PaintState.Action.ERASE: %EraseButton,
+	PaintState.Action.LINE: %LineButton,
+	PaintState.Action.RECT: %RectangleButton,
 }
 
 # TODO features:
@@ -28,6 +24,7 @@ const Shape = States.PaintState.Shape
 # rectangular select
 # replace color
 # overwriting warning
+# change canvas names
 
 
 func _ready() -> void:
@@ -57,6 +54,11 @@ func _ready() -> void:
 		func(canvas: SubViewport, canvas_name: String):
 			States.Paint.canvas_selected.emit(canvas, canvas_name)
 	)
+	
+	States.Paint.canvas_selected.connect(
+		func(_canvas: SubViewport, canvas_name: String):
+			%SaveButton.update_name_field(canvas_name + " copy")
+	)
 
 
 var event_map := {
@@ -79,26 +81,26 @@ func _input(event: InputEvent) -> void:
 			KEY_COMMA: States.Paint.rotation -= 90
 			KEY_PERIOD: States.Paint.rotation += 90
 			
-			# Size
+			# PaintState.Size
 			KEY_BRACELEFT: States.Paint.size -= 1
 			KEY_BRACERIGHT: States.Paint.size += 1
 			
-			# Cancel action
+			# Cancel PaintState.Action
 			KEY_ESCAPE:
 				match States.Paint.action:
-					Action.LINE, Action.RECT:
-						_on_tool_button_pressed(Action.DRAW)
+					PaintState.Action.LINE, PaintState.Action.RECT:
+						_on_tool_button_pressed(PaintState.Action.DRAW)
 			
-			KEY_R: _on_tool_button_pressed(Action.RECT)
-			KEY_L: _on_tool_button_pressed(Action.LINE)
-			KEY_E: _on_tool_button_pressed(Action.ERASE)
-			KEY_P, KEY_B: _on_tool_button_pressed(Action.DRAW)
+			KEY_R: _on_tool_button_pressed(PaintState.Action.RECT)
+			KEY_L: _on_tool_button_pressed(PaintState.Action.LINE)
+			KEY_E: _on_tool_button_pressed(PaintState.Action.ERASE)
+			KEY_P, KEY_B: _on_tool_button_pressed(PaintState.Action.DRAW)
 			
 			# Starts a line from the previous point
 			KEY_SHIFT:
 				var prev_point = %Undo.prev()
 				if prev_point:
-					_on_tool_button_pressed(Action.LINE)
+					_on_tool_button_pressed(PaintState.Action.LINE)
 					States.Paint.line = prev_point.pixels[0].position
 
 
@@ -116,21 +118,16 @@ func _on_action_changed(action: int) -> void:
 	selected(tool_buttons[action])
 	
 	match States.Paint.prev_action:
-		Action.LINE, Action.RECT: States.Paint.line = null
+		PaintState.Action.LINE, PaintState.Action.RECT: States.Paint.line = null
 	
 	# update current tool button icon
-	var icon: Texture
-	match action:
-		Action.DRAW: icon = load("res://apps/painter/assets/icons/pencil.svg")
-		Action.ERASE: icon = load("res://apps/painter/assets/icons/eraser.svg")
-		Action.LINE: icon = load("res://apps/painter/assets/icons/line.svg")
-		Action.RECT: icon = load("res://apps/painter/assets/icons/rectangle.svg")
+	var icon: Texture = PaintState.ToolIcon[States.Paint.action]
 	%ToolsPanelButton.start_icon = icon
 	%CurrentTool.texture = icon
 	
-	# toggle "ok" button (to complete/end current action)
-	match action:
-		Action.LINE, Action.RECT: Anim.pop_enter(%OkButton)
+	# toggle "ok" button (to complete/end current PaintState.Action)
+	match PaintState.Action:
+		PaintState.Action.LINE, PaintState.Action.RECT: Anim.pop_enter(%OkButton)
 		_: Anim.pop_exit(%OkButton)
 
 
@@ -138,7 +135,7 @@ func _on_undo_button_pressed() -> void:
 	if not %Undo.can_undo(): return
 	var action = %Undo.undo()
 	match action.action:
-		Action.ERASE:
+		PaintState.Action.ERASE:
 			%Canvas.add(action.pixels)
 		_: 
 			%Canvas.clear(action.pixels)
@@ -148,7 +145,7 @@ func _on_redo_button_pressed() -> void:
 	if not %Undo.can_redo(): return
 	var action = %Undo.redo()
 	match action.action:
-		Action.ERASE:
+		PaintState.Action.ERASE:
 			%Canvas.clear(action.pixels)
 		_: 
 			%Canvas.add(action.pixels)
@@ -191,7 +188,7 @@ func _on_canvas_action_completed(action: int, pixels: Array) -> void:
 
 
 func _on_canvas_resume_draw() -> void:
-	_on_tool_button_pressed(Action.DRAW)
+	_on_tool_button_pressed(PaintState.Action.DRAW)
 
 
 func _on_main_menu_button_pressed() -> void:

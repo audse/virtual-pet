@@ -1,4 +1,4 @@
-[gd_resource type="Theme" load_steps=26 format=3 uid="uid://wbvix152d8b5"]
+[gd_resource type="Theme" load_steps=31 format=3 uid="uid://wbvix152d8b5"]
 
 [ext_resource type="FontFile" uid="uid://cgf6tr8wj2gby" path="res://static/fonts/Nunito/Nunito-Black.ttf" id="1_22rho"]
 
@@ -105,6 +105,84 @@ corner_detail = 12
 shadow_color = Color(0.0588235, 0.0901961, 0.164706, 0.137255)
 shadow_size = 4
 shadow_offset = Vector2(0, 2)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_c60ju"]
+bg_color = Color(0.392157, 0.454902, 0.545098, 0.882353)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.356902, 0.414006, 0.496094, 0.882353)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+expand_margin_left = 4.0
+expand_margin_top = 4.0
+expand_margin_right = 4.0
+expand_margin_bottom = 4.0
+shadow_color = Color(0.0588235, 0.0901961, 0.164706, 0.0980392)
+shadow_size = 4
+shadow_offset = Vector2(0, 2)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_xf747"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8xwfj"]
+bg_color = Color(0.392157, 0.454902, 0.545098, 0.882353)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.356863, 0.415686, 0.498039, 0.882353)
+corner_radius_top_left = 18
+corner_radius_top_right = 18
+corner_radius_bottom_right = 18
+corner_radius_bottom_left = 18
+expand_margin_left = 6.0
+expand_margin_top = 6.0
+expand_margin_right = 6.0
+expand_margin_bottom = 6.0
+shadow_color = Color(0.0588235, 0.0901961, 0.164706, 0.0588235)
+shadow_size = 6
+shadow_offset = Vector2(0, 4)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ec3tw"]
+bg_color = Color(0.392157, 0.454902, 0.545098, 0.882353)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.356863, 0.415686, 0.498039, 0.882353)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+expand_margin_left = 4.0
+expand_margin_top = 4.0
+expand_margin_right = 4.0
+expand_margin_bottom = 4.0
+shadow_color = Color(0.0588235, 0.0901961, 0.164706, 0.0980392)
+shadow_size = 4
+shadow_offset = Vector2(0, 2)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hsx64"]
+bg_color = Color(0.392157, 0.454902, 0.545098, 0.686275)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.356863, 0.415686, 0.498039, 0.686275)
+corner_radius_top_left = 18
+corner_radius_top_right = 18
+corner_radius_bottom_right = 18
+corner_radius_bottom_left = 18
+expand_margin_left = 4.0
+expand_margin_top = 4.0
+expand_margin_right = 4.0
+expand_margin_bottom = 4.0
+shadow_color = Color(0.0588235, 0.0901961, 0.164706, 0.137255)
+shadow_size = 3
+shadow_offset = Vector2(0, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_scksv"]
 draw_center = false
@@ -339,6 +417,12 @@ Button/styles/focus = SubResource("StyleBoxEmpty_mxak2")
 Button/styles/hover = SubResource("StyleBoxFlat_j03sr")
 Button/styles/normal = SubResource("StyleBoxFlat_nacv8")
 Button/styles/pressed = SubResource("StyleBoxFlat_17udg")
+CheckBoxButton/base_type = &"Button"
+CheckBoxButton/styles/disabled = SubResource("StyleBoxFlat_c60ju")
+CheckBoxButton/styles/focus = SubResource("StyleBoxEmpty_xf747")
+CheckBoxButton/styles/hover = SubResource("StyleBoxFlat_8xwfj")
+CheckBoxButton/styles/normal = SubResource("StyleBoxFlat_ec3tw")
+CheckBoxButton/styles/pressed = SubResource("StyleBoxFlat_hsx64")
 CircleMenuCloseButton/base_type = &"Button"
 CircleMenuCloseButton/colors/icon_disabled_color = Color(0.117647, 0.160784, 0.231373, 0.490196)
 CircleMenuCloseButton/colors/icon_focus_color = Color(0.2, 0.254902, 0.333333, 1)
@@ -362,6 +446,8 @@ FloatingPanelButton/styles/hover = SubResource("StyleBoxEmpty_wknlr")
 FloatingPanelButton/styles/normal = SubResource("StyleBoxEmpty_wknlr")
 Label/constants/line_spacing = 0
 Overline/base_type = &"Label"
+Overline/colors/font_color = Color(0.662745, 0.717647, 0.8, 1)
+Overline/font_sizes/font_size = 24
 Overline/fonts/font = ExtResource("1_22rho")
 Selected_Button/base_type = &"Button"
 Selected_Button/colors/font_color = Color(0.733333, 0.968627, 0.815686, 1)

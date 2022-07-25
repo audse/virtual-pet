@@ -1,6 +1,5 @@
 extends Button
 
-const Tiling = States.PaintState.Tiling
 
 @onready var menu = %DropMenu
 @onready var area_button: Button = %AreaButton
@@ -10,10 +9,10 @@ const Tiling = States.PaintState.Tiling
 @onready var recenter_button: Button = %RecenterButton
 
 @onready var tiling_buttons := {
-	Tiling.NONE: %TileNoneButton,
-	Tiling.ALL: %TileAllButton,
-	Tiling.HORIZONTAL: %TileHButton,
-	Tiling.VERTICAL: %TileVButton
+	PaintState.Tiling.NONE: %TileNoneButton,
+	PaintState.Tiling.ALL: %TileAllButton,
+	PaintState.Tiling.HORIZONTAL: %TileHButton,
+	PaintState.Tiling.VERTICAL: %TileVButton
 }
 
 
@@ -51,23 +50,13 @@ func _on_view_tools_button_pressed() -> void:
 func _on_even_button_pressed() -> void:
 	Themes.select(even_button)
 	Themes.deselect(odd_button)
-	States.Paint.ratio = States.PaintState.Ratio.EVEN
+	States.Paint.ratio = PaintState.Ratio.EVEN
 
 
 func _on_odd_button_pressed() -> void:
 	Themes.deselect(even_button)
 	Themes.select(odd_button)
-	States.Paint.ratio = States.PaintState.Ratio.ODD
-
-
-func _on_precision_toggle_pressed() -> void:
-	if States.Paint.is_precision_mode():
-		Themes.deselect(precision_toggle)
-		precision_toggle.text = "Enabled"
-	else:
-		Themes.select(precision_toggle)
-		precision_toggle.text = "Enable"
-	States.Paint.toggle_precision_mode()
+	States.Paint.ratio = PaintState.Ratio.ODD
 
 
 func _on_recenter_button_pressed() -> void:
@@ -88,16 +77,24 @@ func _on_area_button_pressed() -> void:
 
 
 func _on_tile_none_button_pressed() -> void:
-	States.Paint.tiling = States.PaintState.Tiling.NONE
+	States.Paint.tiling = PaintState.Tiling.NONE
 
 
 func _on_tile_all_button_pressed() -> void:
-	States.Paint.tiling = States.PaintState.Tiling.ALL
+	States.Paint.tiling = PaintState.Tiling.ALL
 
 
 func _on_tile_h_button_pressed() -> void:
-	States.Paint.tiling = States.PaintState.Tiling.HORIZONTAL
+	States.Paint.tiling = PaintState.Tiling.HORIZONTAL
 
 
 func _on_tile_v_button_pressed() -> void:
-	States.Paint.tiling = States.PaintState.Tiling.VERTICAL
+	States.Paint.tiling = PaintState.Tiling.VERTICAL
+
+
+func _on_precision_toggled(_button_pressed: bool) -> void:
+	States.Paint.toggle_precision_mode()
+	if States.Paint.is_precision_mode():
+		%PrecisionToggleLabel.text = "Enabled"
+	else:
+		%PrecisionToggleLabel.text = "Disabled"

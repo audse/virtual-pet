@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://dui0t6vapx0xy"]
+[gd_scene load_steps=21 format=3 uid="uid://dui0t6vapx0xy"]
 
 [ext_resource type="Script" path="res://apps/map/scenes/uneven_grid.gd" id="1_nh8qm"]
 [ext_resource type="Script" path="res://apps/map/nodes/cell_map/cell_map.gd" id="2_c2lv2"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://b6dya0dbxdg1f" path="res://environment/scenes/environment.tscn" id="6_uc22u"]
 [ext_resource type="PackedScene" uid="uid://duklyahfnuqrq" path="res://apps/interface/interface.tscn" id="7_6t2cm"]
 [ext_resource type="Script" path="res://apps/map/nodes/grid/uneven_grid.gd" id="8_s7iql"]
+[ext_resource type="ArrayMesh" uid="uid://b2cklcajgwfef" path="res://temp/rabbit.obj" id="8_spr5x"]
 [ext_resource type="Script" path="res://apps/map/nodes/tile_set/spacial_tile_factory.gd" id="17_aug0w"]
 
 [sub_resource type="Resource" id="Resource_2qypc"]
@@ -16,6 +17,62 @@ z_offset_range = [-0.75, 0.75]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_on456"]
 size = Vector3(50, 0.5, 50)
+
+[sub_resource type="Gradient" id="Gradient_u647y"]
+offsets = PackedFloat32Array(0, 0.286472, 1)
+colors = PackedColorArray(0.788235, 0.788235, 0.788235, 1, 0.776471, 0.776471, 0.776471, 1, 0.811871, 0.811871, 0.811871, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_7ece0"]
+noise_type = 2
+frequency = 0.05
+fractal_octaves = 1
+fractal_lacunarity = 25.0
+fractal_gain = -0.5
+cellular_distance_function = 1
+cellular_jitter = 1.0
+cellular_return_type = 0
+domain_warp_amplitude = 15.0
+domain_warp_fractal_octaves = 1
+domain_warp_fractal_lacunarity = 4.0
+
+[sub_resource type="NoiseTexture" id="NoiseTexture_bg2y7"]
+width = 2160
+height = 2160
+invert = true
+seamless = true
+color_ramp = SubResource("Gradient_u647y")
+noise = SubResource("FastNoiseLite_7ece0")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_t7ecs"]
+albedo_color = Color(0.670588, 0.670588, 0.670588, 1)
+albedo_texture = SubResource("NoiseTexture_bg2y7")
+metallic_specular = 0.0
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_t2roi"]
+material = SubResource("StandardMaterial3D_t7ecs")
+size = Vector2(100, 100)
+
+[sub_resource type="Gradient" id="Gradient_2cwlf"]
+interpolation_mode = 1
+offsets = PackedFloat32Array(0, 0.450928, 0.586331)
+colors = PackedColorArray(0.356863, 0.356863, 0.356863, 1, 0.572549, 0.572549, 0.572549, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_js48r"]
+gradient = SubResource("Gradient_2cwlf")
+width = 512
+height = 512
+fill = 1
+fill_from = Vector2(0.807692, 0.346154)
+fill_to = Vector2(0.34188, 0.598291)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5d838"]
+albedo_texture = SubResource("GradientTexture2D_js48r")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2ug7d"]
+albedo_color = Color(0.71, 0.5964, 0.60776, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yj30b"]
+albedo_color = Color(0.835294, 0.835294, 0.835294, 1)
 
 [node name="UnevenGrid" type="Node3D"]
 script = ExtResource("1_nh8qm")
@@ -52,6 +109,17 @@ shape = SubResource("BoxShape3D_on456")
 
 [node name="Interface" parent="CanvasLayer" instance=ExtResource("7_6t2cm")]
 unique_name_in_owner = true
+
+[node name="Floor" type="MeshInstance3D" parent="."]
+mesh = SubResource("PlaneMesh_t2roi")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.34202, 0, 0.939693, 0, 1, 0, -0.939693, 0, 0.34202, -10, 0, -10)
+visible = false
+mesh = ExtResource("8_spr5x")
+surface_material_override/1 = SubResource("StandardMaterial3D_5d838")
+surface_material_override/2 = SubResource("StandardMaterial3D_2ug7d")
+surface_material_override/3 = SubResource("StandardMaterial3D_yj30b")
 
 [connection signal="input_event" from="DrawArea" to="." method="_on_area_3d_input_event"]
 [connection signal="button_pressed" from="CanvasLayer/Interface" to="." method="_on_interface_button_pressed"]
