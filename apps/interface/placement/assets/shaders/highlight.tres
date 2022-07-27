@@ -1,0 +1,19 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://dax3j8xd0m8ie"]
+
+[ext_resource type="Shader" path="res://apps/interface/placement/assets/shaders/placement_rect.gdshader" id="1_vw1f7"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_vw1f7")
+shader_param/flickering = 0.75
+shader_param/glow_amount = 4.0
+shader_param/glow_color = Color(1, 1, 1, 1)
+shader_param/glow_itensity = 1.0
+shader_param/interrupt_blur = 0.25
+shader_param/interrupt_speed = 0.15
+shader_param/interrupt_width = 0.25
+shader_param/line_blur = 0.4
+shader_param/line_color = Color(1, 1, 1, 1)
+shader_param/line_speed = 0.02
+shader_param/line_width = 0.001
+shader_param/straight_lines = false

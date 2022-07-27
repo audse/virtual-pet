@@ -42,4 +42,10 @@ func exit() -> void:
 	tween.tween_property(self, "scale:y", 0.25, 0.5)
 	tween.parallel().tween_property(self, "scale:x", 0.5, 0.5)
 	tween.parallel().tween_property(self, "scale:z", 0.5, 0.5)
-	tween.tween_callback(queue_free)
+	await tween.finished
+	
+	# materials need to be deleted first
+	for surface in get_surface_override_material_count():
+		set_surface_override_material(surface, null)
+	
+	queue_free()

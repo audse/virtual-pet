@@ -33,6 +33,7 @@ ssil_sharpness = 0.75
 sdfgi_enabled = true
 sdfgi_cascades = 2
 sdfgi_max_distance = 51.2
+glow_enabled = true
 fog_light_color = Color(0.44, 0.44, 0.44, 1)
 fog_light_energy = 0.25
 fog_sun_scatter = 1.0

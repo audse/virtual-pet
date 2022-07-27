@@ -1,62 +1,45 @@
 shader_type spatial;
+//render_mode unshaded;
 
-varying vec3 position;
-varying float direction;
-varying vec3 next;
-varying vec3 previous;
+uniform sampler2D texture_image;
 
-uniform float aspect;
-uniform float thickness;
-uniform int miter;
+uniform mediump vec4 line_color : source_color = vec4(0.0, 1.0, 0.0, 1.0);
+uniform mediump float line_width : hint_range(0, 1) = 0.005;
+uniform mediump float line_blur : hint_range(0, 1) = 0.2;
+uniform mediump float line_speed : hint_range(-1, 1) = 0.02;
+uniform  bool straight_lines = true;
 
-void vertex () {
-	vec2 aspectVec = vec2(aspect, 1.0);
-	vec4 previousProjected = MODELVIEW_MATRIX * vec4(previous, 1.0);
-	vec4 currentProjected = MODELVIEW_MATRIX * vec4(position, 1.0);
-	vec4 nextProjected = MODELVIEW_MATRIX * vec4(next, 1.0);
+uniform mediump float interrupt_width : hint_range(0, 1) = 0.5;
+uniform mediump float interrupt_blur : hint_range(0, 1) = 0.25;
+uniform mediump float interrupt_speed : hint_range(-1, 1) = 0.2;
 
-	//get 2D screen space with W divide and aspect correction
-	vec2 currentScreen = currentProjected.xy / currentProjected.w * aspectVec;
-	vec2 previousScreen = previousProjected.xy / previousProjected.w * aspectVec;
-	vec2 nextScreen = nextProjected.xy / nextProjected.w * aspectVec;
+uniform mediump vec4 glow_color : source_color = vec4(0.5, 0.75, 1.0, 1.0);
+uniform lowp float glow_itensity : hint_range(0, 20) = 4.5;
+uniform lowp float glow_amount : hint_range(0, 20) = 4.5;
+uniform lowp float flickering : hint_range(0, 1) = 0.55;
 
-	float len = thickness;
-	float orientation = direction;
-
-	//starting point uses (next - current)
-	vec2 dir = vec2(0.0);
-	if (currentScreen == previousScreen) {
-		dir = normalize(nextScreen - currentScreen);
-	} 
-	//ending point uses (current - previous)
-	else if (currentScreen == nextScreen) {
-		dir = normalize(currentScreen - previousScreen);
-	}
-	//somewhere in middle, needs a join
-	else {
-		//get directions from (C - B) and (B - A)
-  		vec2 dirA = normalize((currentScreen - previousScreen));
-		if (miter == 1) {
-			vec2 dirB = normalize((nextScreen - currentScreen));
-			//now compute the miter join normal and length
-			vec2 tangent = normalize(dirA + dirB);
-			vec2 perp = vec2(-dirA.y, dirA.x);
-			vec2 miter_len = vec2(-tangent.y, tangent.x);
-			dir = tangent;
-			len = thickness / dot(miter_len, perp);
-	  	} else {
-			dir = dirA;
-		}
-	}
-	vec2 normal = vec2(-dir.y, dir.x);
-	normal *= len/2.0;
-	normal.x /= aspect;
-	
-	vec4 offset = vec4(normal * orientation, 0.0, 1.0);
-	VERTEX = (currentProjected + offset).xyz;
-	POINT_SIZE = 1.0;
+vec3 fresnel_glow(float amount, float intensity, vec3 color, vec3 normal, vec3 view) {
+	return pow((1.0 - dot(normalize(normal), normalize(view))), amount) * color * intensity;
 }
 
 void fragment () {
-	ALBEDO = vec3(1.0, 0.0, 0.0);
+	vec2 canvas;
+	if (straight_lines) {
+			canvas = SCREEN_UV;
+	} else {
+		canvas = vec2(VIEW.x, VIEW.y);
+	}
+	vec2 lines = vec2(clamp(sin((TIME * line_speed + canvas.y) / line_width), line_blur, 1.0 - line_blur), canvas.x);
+	vec2 interupts = vec2(clamp(sin((TIME * interrupt_speed + canvas.y) / interrupt_width * 3.0), interrupt_blur, 1.0 - interrupt_blur), canvas.x);
+	
+	float flicker = clamp(fract(cos(TIME) * 43758.5453123), flickering, 1.0);
+	vec4 imgtex = flicker * line_color * texture(texture_image, lines * interupts);
+	vec3 imgtex_color = vec3(imgtex.r, imgtex.g, imgtex.b);
+	vec3 fresnel_color = vec3(glow_color.r, glow_color.g, glow_color.b);
+	vec3 fresnel = fresnel_glow(glow_amount, glow_itensity, fresnel_color, NORMAL, VIEW);
+	ALBEDO = imgtex_color + fresnel;
+	
+	//ALBEDO = vec3(imgtex.r, imgtex.g, imgtex.b);
+	EMISSION = glow_amount * vec3(glow_color.r, glow_color.g, glow_color.b);
+	ALPHA = lines.x * interupts.x;
 }

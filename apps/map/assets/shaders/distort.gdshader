@@ -52,5 +52,5 @@ void fragment() {
 	ALBEDO = texture(albedo_texture, uv).rgb * albedo_color.rgb;
 //	AO = 1.0;
 //	AO_LIGHT_AFFECT = 0.25;
-	
+	EMISSION = vec3(0);
 }

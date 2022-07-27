@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://dui0t6vapx0xy"]
+[gd_scene load_steps=37 format=3 uid="uid://dui0t6vapx0xy"]
 
 [ext_resource type="Script" path="res://apps/map/scenes/uneven_grid.gd" id="1_nh8qm"]
 [ext_resource type="Script" path="res://apps/map/nodes/cell_map/cell_map.gd" id="2_c2lv2"]
@@ -7,6 +7,10 @@
 [ext_resource type="PackedScene" uid="uid://duklyahfnuqrq" path="res://apps/interface/interface.tscn" id="7_6t2cm"]
 [ext_resource type="Script" path="res://apps/map/nodes/grid/uneven_grid.gd" id="8_s7iql"]
 [ext_resource type="ArrayMesh" uid="uid://b2cklcajgwfef" path="res://temp/rabbit.obj" id="8_spr5x"]
+[ext_resource type="ArrayMesh" uid="uid://c8d8cubej3tcw" path="res://apps/world/assets/meshes/foliage/tree_01.obj" id="9_84osm"]
+[ext_resource type="Texture2D" uid="uid://bk7kthq1jpa7c" path="res://apps/world/assets/textures/foliage/tree_01_leaves_normal.png" id="10_dfixq"]
+[ext_resource type="Texture2D" uid="uid://dx856ysoocsbm" path="res://apps/world/assets/textures/foliage/tree_01_trunk_normal.png" id="10_eif42"]
+[ext_resource type="ArrayMesh" uid="uid://b5kt7pwlnmp00" path="res://apps/world/assets/meshes/foliage/rock_01.obj" id="12_td56b"]
 [ext_resource type="Script" path="res://apps/map/nodes/tile_set/spacial_tile_factory.gd" id="17_aug0w"]
 
 [sub_resource type="Resource" id="Resource_2qypc"]
@@ -74,6 +78,67 @@ albedo_color = Color(0.71, 0.5964, 0.60776, 1)
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yj30b"]
 albedo_color = Color(0.835294, 0.835294, 0.835294, 1)
 
+[sub_resource type="Gradient" id="Gradient_h2utp"]
+colors = PackedColorArray(0.784314, 0.784314, 0.784314, 1, 1, 1, 1, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_2aqwq"]
+noise_type = 2
+frequency = 0.05
+fractal_octaves = 2
+fractal_gain = 0.25
+cellular_distance_function = 3
+cellular_jitter = 1.0
+cellular_return_type = 0
+
+[sub_resource type="NoiseTexture" id="NoiseTexture_yx4lr"]
+color_ramp = SubResource("Gradient_h2utp")
+noise = SubResource("FastNoiseLite_2aqwq")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_nk41o"]
+frequency = 0.05
+
+[sub_resource type="NoiseTexture" id="NoiseTexture_varqh"]
+noise = SubResource("FastNoiseLite_nk41o")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_15fou"]
+albedo_color = Color(0.294118, 0.294118, 0.294118, 1)
+albedo_texture = SubResource("NoiseTexture_yx4lr")
+metallic_specular = 0.0
+normal_enabled = true
+normal_scale = 1.5
+normal_texture = ExtResource("10_eif42")
+heightmap_scale = 0.1
+heightmap_texture = SubResource("NoiseTexture_varqh")
+
+[sub_resource type="Gradient" id="Gradient_brqs6"]
+offsets = PackedFloat32Array(0.296196, 0.744565, 1)
+colors = PackedColorArray(0.954568, 0.954568, 0.954568, 1, 0.611765, 0.611765, 0.611765, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_kdj5a"]
+gradient = SubResource("Gradient_brqs6")
+fill_to = Vector2(0.989316, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_pc1pg"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_umomg"]
+albedo_color = Color(0.32549, 0.32549, 0.32549, 1)
+albedo_texture = SubResource("GradientTexture2D_kdj5a")
+metallic_specular = 0.0
+normal_enabled = true
+normal_scale = 0.75
+normal_texture = ExtResource("10_dfixq")
+subsurf_scatter_strength = 0.5
+backlight = Color(0.952941, 0.952941, 0.952941, 1)
+detail_mask = SubResource("GradientTexture1D_pc1pg")
+detail_blend_mode = 3
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_f8j6g"]
+albedo_color = Color(0.509804, 0.509804, 0.509804, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7qcli"]
+albedo_color = Color(0.392157, 0.392157, 0.392157, 1)
+metallic_specular = 0.0
+
 [node name="UnevenGrid" type="Node3D"]
 script = ExtResource("1_nh8qm")
 
@@ -120,6 +185,18 @@ mesh = ExtResource("8_spr5x")
 surface_material_override/1 = SubResource("StandardMaterial3D_5d838")
 surface_material_override/2 = SubResource("StandardMaterial3D_2ug7d")
 surface_material_override/3 = SubResource("StandardMaterial3D_yj30b")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.34202, 0, 0.939693, 0, 1, 0, -0.939693, 0, 0.34202, -6, 0, -14)
+mesh = ExtResource("9_84osm")
+surface_material_override/0 = SubResource("StandardMaterial3D_15fou")
+surface_material_override/1 = SubResource("StandardMaterial3D_umomg")
+surface_material_override/2 = SubResource("StandardMaterial3D_f8j6g")
+
+[node name="MeshInstance3D4" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.34472, 0, -0.289254, 0, 0.45, 0, 0.289254, 0, 0.34472, -5.5, 0, -17)
+mesh = ExtResource("12_td56b")
+surface_material_override/0 = SubResource("StandardMaterial3D_7qcli")
 
 [connection signal="input_event" from="DrawArea" to="." method="_on_area_3d_input_event"]
 [connection signal="button_pressed" from="CanvasLayer/Interface" to="." method="_on_interface_button_pressed"]
