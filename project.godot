@@ -54,6 +54,16 @@ _global_script_classes=[{
 "language": &"GDScript",
 "path": "res://interface/components/checkbox_button.gd"
 }, {
+"base": "CSGMesh3D",
+"class": &"ChopSlice",
+"language": &"GDScript",
+"path": "res://apps/cooking/chopping/slice.gd"
+}, {
+"base": "CSGCombiner3D",
+"class": &"Choppable",
+"language": &"GDScript",
+"path": "res://apps/cooking/chopping/choppable.gd"
+}, {
 "base": "Container",
 "class": &"CircleContainer",
 "language": &"GDScript",
@@ -138,6 +148,11 @@ _global_script_classes=[{
 "class": &"PillRange",
 "language": &"GDScript",
 "path": "res://interface/components/pill_range.gd"
+}, {
+"base": "CSGPolygon3D",
+"class": &"PlacementRect",
+"language": &"GDScript",
+"path": "res://apps/interface/placement/placement.gd"
 }, {
 "base": "Node3D",
 "class": &"QuickSpatialGrid",
@@ -259,6 +274,8 @@ _global_script_class_icons={
 "Cell": "",
 "CellMap": "res://apps/map/nodes/cell_map/cell_map_icon.svg",
 "CheckBoxButton": "",
+"ChopSlice": "res://apps/cooking/chopping/slice.svg",
+"Choppable": "res://apps/cooking/chopping/choppable.svg",
 "CircleContainer": "res://interface/components/circle_container/circle_container.svg",
 "CircleMenu": "",
 "ControlRef": "",
@@ -276,6 +293,7 @@ _global_script_class_icons={
 "PanelButton": "res://interface/components/panel_button/panel_button.svg",
 "PanelButtonGroup": "res://interface/components/panel_button/panel_button_group.svg",
 "PillRange": "res://interface/components/pill_range.svg",
+"PlacementRect": "",
 "QuickSpatialGrid": "res://utils/nodes/quick_spatial_grid.svg",
 "RightDrawerComponent": "res://interface/components/right_drawer/right_drawer.svg",
 "Scenes": "",

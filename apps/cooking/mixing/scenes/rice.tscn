@@ -1,0 +1,231 @@
+[gd_scene load_steps=5 format=3 uid="uid://cpvj2e375k3y5"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_2t5gp"]
+friction = 0.25
+bounce = 0.25
+absorbent = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_sf6n0"]
+shading_mode = 0
+albedo_color = Color(0.74902, 0.760784, 0.717647, 1)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_xks5k"]
+material = SubResource("StandardMaterial3D_sf6n0")
+radius = 0.12
+height = 0.6
+radial_segments = 4
+rings = 2
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_t8air"]
+margin = 0.05
+size = Vector3(0.24, 0.6, 0.24)
+
+[node name="Rice" type="Node3D"]
+
+[node name="Grain1" type="RigidDynamicBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.947447, 0)
+collision_layer = 7
+collision_mask = 7
+mass = 0.06
+physics_material_override = SubResource("PhysicsMaterial_2t5gp")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Grain1"]
+mesh = SubResource("CapsuleMesh_xks5k")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Grain1"]
+shape = SubResource("BoxShape3D_t8air")
+
+[node name="Grain2" type="RigidDynamicBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.523834, 0.947447, 0)
+collision_layer = 7
+collision_mask = 7
+mass = 0.06
+physics_material_override = SubResource("PhysicsMaterial_2t5gp")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Grain2"]
+mesh = SubResource("CapsuleMesh_xks5k")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Grain2"]
+shape = SubResource("BoxShape3D_t8air")
+
+[node name="Grain3" type="RigidDynamicBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.02869, 0.947447, 0)
+collision_layer = 7
+collision_mask = 7
+mass = 0.06
+physics_material_override = SubResource("PhysicsMaterial_2t5gp")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Grain3"]
+mesh = SubResource("CapsuleMesh_xks5k")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Grain3"]
+shape = SubResource("BoxShape3D_t8air")
+
+[node name="Grain4" type="RigidDynamicBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.52979, 0.947447, 0)
+collision_layer = 7
+collision_mask = 7
+mass = 0.06
+physics_material_override = SubResource("PhysicsMaterial_2t5gp")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Grain4"]
+mesh = SubResource("CapsuleMesh_xks5k")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Grain4"]
+shape = SubResource("BoxShape3D_t8air")
+
+[node name="Grain5" type="RigidDynamicBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.947447, 0.675293)
+collision_layer = 7
+collision_mask = 7
+mass = 0.06
+physics_material_override = SubResource("PhysicsMaterial_2t5gp")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Grain5"]
+mesh = SubResource("CapsuleMesh_xks5k")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Grain5"]
+shape = SubResource("BoxShape3D_t8air")
+
+[node name="Grain6" type="RigidDynamicBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.523834, 0.947447, 0.675293)
+collision_layer = 7
+collision_mask = 7
+mass = 0.06
+physics_material_override = SubResource("PhysicsMaterial_2t5gp")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Grain6"]
+mesh = SubResource("CapsuleMesh_xks5k")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Grain6"]
+shape = SubResource("BoxShape3D_t8air")
+
+[node name="Grain7" type="RigidDynamicBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.02869, 0.947447, 0.675293)
+collision_layer = 7
+collision_mask = 7
+mass = 0.06
+physics_material_override = SubResource("PhysicsMaterial_2t5gp")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Grain7"]
+mesh = SubResource("CapsuleMesh_xks5k")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Grain7"]
+shape = SubResource("BoxShape3D_t8air")
+
+[node name="Grain8" type="RigidDynamicBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.52979, 0.947447, 0.675293)
+collision_layer = 7
+collision_mask = 7
+mass = 0.06
+physics_material_override = SubResource("PhysicsMaterial_2t5gp")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Grain8"]
+mesh = SubResource("CapsuleMesh_xks5k")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Grain8"]
+shape = SubResource("BoxShape3D_t8air")
+
+[node name="Grain9" type="RigidDynamicBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.947447, 1.3335)
+collision_layer = 7
+collision_mask = 7
+mass = 0.06
+physics_material_override = SubResource("PhysicsMaterial_2t5gp")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Grain9"]
+mesh = SubResource("CapsuleMesh_xks5k")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Grain9"]
+shape = SubResource("BoxShape3D_t8air")
+
+[node name="Grain10" type="RigidDynamicBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.523834, 0.947447, 1.3335)
+collision_layer = 7
+collision_mask = 7
+mass = 0.06
+physics_material_override = SubResource("PhysicsMaterial_2t5gp")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Grain10"]
+mesh = SubResource("CapsuleMesh_xks5k")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Grain10"]
+shape = SubResource("BoxShape3D_t8air")
+
+[node name="Grain11" type="RigidDynamicBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.02869, 0.947447, 1.3335)
+collision_layer = 7
+collision_mask = 7
+mass = 0.06
+physics_material_override = SubResource("PhysicsMaterial_2t5gp")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Grain11"]
+mesh = SubResource("CapsuleMesh_xks5k")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Grain11"]
+shape = SubResource("BoxShape3D_t8air")
+
+[node name="Grain12" type="RigidDynamicBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.52979, 0.947447, 1.3335)
+collision_layer = 7
+collision_mask = 7
+mass = 0.06
+physics_material_override = SubResource("PhysicsMaterial_2t5gp")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Grain12"]
+mesh = SubResource("CapsuleMesh_xks5k")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Grain12"]
+shape = SubResource("BoxShape3D_t8air")
+
+[node name="Grain13" type="RigidDynamicBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.947447, 2.00879)
+collision_layer = 7
+collision_mask = 7
+mass = 0.06
+physics_material_override = SubResource("PhysicsMaterial_2t5gp")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Grain13"]
+mesh = SubResource("CapsuleMesh_xks5k")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Grain13"]
+shape = SubResource("BoxShape3D_t8air")
+
+[node name="Grain14" type="RigidDynamicBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.523834, 0.947447, 2.00879)
+collision_layer = 7
+collision_mask = 7
+mass = 0.06
+physics_material_override = SubResource("PhysicsMaterial_2t5gp")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Grain14"]
+mesh = SubResource("CapsuleMesh_xks5k")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Grain14"]
+shape = SubResource("BoxShape3D_t8air")
+
+[node name="Grain15" type="RigidDynamicBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.02869, 0.947447, 2.00879)
+collision_layer = 7
+collision_mask = 7
+mass = 0.06
+physics_material_override = SubResource("PhysicsMaterial_2t5gp")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Grain15"]
+mesh = SubResource("CapsuleMesh_xks5k")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Grain15"]
+shape = SubResource("BoxShape3D_t8air")
+
+[node name="Grain16" type="RigidDynamicBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.52979, 0.947447, 2.00879)
+collision_layer = 7
+collision_mask = 7
+mass = 0.06
+physics_material_override = SubResource("PhysicsMaterial_2t5gp")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Grain16"]
+mesh = SubResource("CapsuleMesh_xks5k")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Grain16"]
+shape = SubResource("BoxShape3D_t8air")

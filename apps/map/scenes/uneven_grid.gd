@@ -23,6 +23,10 @@ func await_confirmation(start_coord: Vector3i, end_coord: Vector3i) -> void:
 	
 	# draw guide map cells (as they are automatically deleted when drag is finished)
 	guide_map.set_cells_betweenv(start_coord, end_coord)
+#	var pos := Vector2(start_coord.x * 2, start_coord.z * 2)
+#	var size := end_coord - start_coord * 2
+#	%PlacementRect.rect = Rect2(pos, Vector2(size.x, size.z))
+#	%PlacementRect.draw_curve()
 
 
 func complete_build() -> void:

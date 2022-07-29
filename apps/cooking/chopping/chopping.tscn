@@ -1,0 +1,65 @@
+[gd_scene load_steps=13 format=3 uid="uid://cy771dko6h24k"]
+
+[ext_resource type="Script" path="res://apps/cooking/chopping/chopping.gd" id="1_arfqk"]
+[ext_resource type="PackedScene" uid="uid://b2p4cagood7ix" path="res://apps/cooking/chopping/scenes/chop_apple.tscn" id="3_bv3d5"]
+[ext_resource type="ArrayMesh" uid="uid://hn68ijd3mhm0" path="res://apps/cooking/assets/meshes/knife.obj" id="4_fdgtm"]
+[ext_resource type="PackedScene" uid="uid://b6dya0dbxdg1f" path="res://environment/scenes/environment.tscn" id="7_5a356"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_p3v4n"]
+diffuse_mode = 2
+albedo_color = Color(0.243137, 0.243137, 0.243137, 1)
+
+[sub_resource type="Gradient" id="Gradient_7ckjr"]
+colors = PackedColorArray(0.545098, 0.545098, 0.545098, 1, 0.611765, 0.611765, 0.611765, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_10lne"]
+noise_type = 2
+frequency = 0.015
+fractal_octaves = 2
+cellular_jitter = 1.0
+cellular_return_type = 0
+
+[sub_resource type="NoiseTexture" id="NoiseTexture_q5jsx"]
+color_ramp = SubResource("Gradient_7ckjr")
+noise = SubResource("FastNoiseLite_10lne")
+
+[sub_resource type="Gradient" id="Gradient_7rhm4"]
+colors = PackedColorArray(0.788235, 0.788235, 0.788235, 1, 1, 1, 1, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_qh0i1"]
+noise_type = 2
+cellular_return_type = 0
+
+[sub_resource type="NoiseTexture" id="NoiseTexture_vrnp6"]
+as_normal_map = true
+bump_strength = 16.0
+color_ramp = SubResource("Gradient_7rhm4")
+noise = SubResource("FastNoiseLite_qh0i1")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vfdvl"]
+albedo_texture = SubResource("NoiseTexture_q5jsx")
+metallic = 1.0
+roughness = 0.7
+normal_enabled = true
+normal_texture = SubResource("NoiseTexture_vrnp6")
+
+[node name="Node3D" type="Node3D"]
+script = ExtResource("1_arfqk")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(0.766045, -0.413176, 0.492403, 0, 0.766044, 0.642788, -0.642787, -0.492404, 0.586824, 5, 7.5, 5)
+projection = 1
+current = true
+size = 10.0
+
+[node name="Environment" parent="." instance=ExtResource("7_5a356")]
+
+[node name="Knife" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.984808, 0.173648, 0, -0.17101, 0.969846, 0.173648, 0.0301537, -0.17101, 0.984808, 2, 3, -0.5)
+visible = false
+mesh = ExtResource("4_fdgtm")
+surface_material_override/0 = SubResource("StandardMaterial3D_p3v4n")
+surface_material_override/1 = SubResource("StandardMaterial3D_vfdvl")
+
+[node name="Choppable" parent="." instance=ExtResource("3_bv3d5")]
+transform = Transform3D(0.5, 0, -0.866025, 0, 1, 0, 0.866025, 0, 0.5, 0, 0, 0)

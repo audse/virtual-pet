@@ -50,7 +50,7 @@ void fragment() {
 	
 	NORMAL_MAP = texture(normal_texture, uv * normal_scale).rgb;
 	ALBEDO = texture(albedo_texture, uv).rgb * albedo_color.rgb;
-//	AO = 1.0;
-//	AO_LIGHT_AFFECT = 0.25;
-	EMISSION = vec3(0);
+	AO = 1.0;
+	AO_LIGHT_AFFECT = 0.25;
+//	EMISSION = vec3(0);
 }

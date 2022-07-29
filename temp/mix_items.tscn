@@ -1,0 +1,337 @@
+[gd_scene load_steps=4 format=3 uid="uid://cjihmvu8a8rfd"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_2t5gp"]
+friction = 0.25
+bounce = 0.25
+absorbent = true
+
+[sub_resource type="SphereMesh" id="SphereMesh_ntk1b"]
+radius = 0.4
+height = 0.8
+radial_segments = 12
+rings = 6
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_gc4p6"]
+radius = 0.425
+
+[node name="Items" type="Node3D"]
+
+[node name="RigidDynamicBody3D" type="RigidDynamicBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.699951, 2.6936, 0.666626)
+collision_layer = 7
+collision_mask = 7
+input_ray_pickable = false
+mass = 0.06
+physics_material_override = SubResource("PhysicsMaterial_2t5gp")
+gravity_scale = 0.5
+linear_damp = 0.25
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="RigidDynamicBody3D"]
+mesh = SubResource("SphereMesh_ntk1b")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RigidDynamicBody3D"]
+shape = SubResource("SphereShape3D_gc4p6")
+
+[node name="RigidDynamicBody3D2" type="RigidDynamicBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.699951, 2.6936, -0.964722)
+collision_layer = 7
+collision_mask = 7
+input_ray_pickable = false
+mass = 0.06
+physics_material_override = SubResource("PhysicsMaterial_2t5gp")
+gravity_scale = 0.5
+linear_damp = 0.25
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="RigidDynamicBody3D2"]
+mesh = SubResource("SphereMesh_ntk1b")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RigidDynamicBody3D2"]
+shape = SubResource("SphereShape3D_gc4p6")
+
+[node name="RigidDynamicBody3D3" type="RigidDynamicBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.183685, 2.6936, 1.62378)
+collision_layer = 7
+collision_mask = 7
+input_ray_pickable = false
+mass = 0.06
+physics_material_override = SubResource("PhysicsMaterial_2t5gp")
+gravity_scale = 0.5
+linear_damp = 0.25
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="RigidDynamicBody3D3"]
+mesh = SubResource("SphereMesh_ntk1b")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RigidDynamicBody3D3"]
+shape = SubResource("SphereShape3D_gc4p6")
+
+[node name="RigidDynamicBody3D4" type="RigidDynamicBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.00891, 2.6936, 1.29175)
+collision_layer = 7
+collision_mask = 7
+input_ray_pickable = false
+mass = 0.06
+physics_material_override = SubResource("PhysicsMaterial_2t5gp")
+gravity_scale = 0.5
+linear_damp = 0.25
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="RigidDynamicBody3D4"]
+mesh = SubResource("SphereMesh_ntk1b")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RigidDynamicBody3D4"]
+shape = SubResource("SphereShape3D_gc4p6")
+
+[node name="RigidDynamicBody3D5" type="RigidDynamicBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.699951, 2.6936, 1.66089)
+collision_layer = 7
+collision_mask = 7
+input_ray_pickable = false
+mass = 0.06
+physics_material_override = SubResource("PhysicsMaterial_2t5gp")
+gravity_scale = 0.5
+linear_damp = 0.25
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="RigidDynamicBody3D5"]
+mesh = SubResource("SphereMesh_ntk1b")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RigidDynamicBody3D5"]
+shape = SubResource("SphereShape3D_gc4p6")
+
+[node name="RigidDynamicBody3D6" type="RigidDynamicBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.699951, 2.6936, 0.029541)
+collision_layer = 7
+collision_mask = 7
+input_ray_pickable = false
+mass = 0.06
+physics_material_override = SubResource("PhysicsMaterial_2t5gp")
+gravity_scale = 0.5
+linear_damp = 0.25
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="RigidDynamicBody3D6"]
+mesh = SubResource("SphereMesh_ntk1b")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RigidDynamicBody3D6"]
+shape = SubResource("SphereShape3D_gc4p6")
+
+[node name="RigidDynamicBody3D7" type="RigidDynamicBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.183685, 2.6936, 2.61804)
+collision_layer = 5
+collision_mask = 5
+input_ray_pickable = false
+mass = 0.06
+physics_material_override = SubResource("PhysicsMaterial_2t5gp")
+gravity_scale = 0.5
+linear_damp = 0.25
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="RigidDynamicBody3D7"]
+mesh = SubResource("SphereMesh_ntk1b")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RigidDynamicBody3D7"]
+shape = SubResource("SphereShape3D_gc4p6")
+
+[node name="RigidDynamicBody3D8" type="RigidDynamicBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.00891, 2.6936, 0.297485)
+collision_layer = 7
+collision_mask = 7
+input_ray_pickable = false
+mass = 0.06
+physics_material_override = SubResource("PhysicsMaterial_2t5gp")
+gravity_scale = 0.5
+linear_damp = 0.25
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="RigidDynamicBody3D8"]
+mesh = SubResource("SphereMesh_ntk1b")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RigidDynamicBody3D8"]
+shape = SubResource("SphereShape3D_gc4p6")
+
+[node name="RigidDynamicBody3D9" type="RigidDynamicBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.699951, 2.6936, 0.666626)
+collision_layer = 7
+collision_mask = 7
+input_ray_pickable = false
+mass = 0.06
+physics_material_override = SubResource("PhysicsMaterial_2t5gp")
+gravity_scale = 0.5
+linear_damp = 0.25
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="RigidDynamicBody3D9"]
+mesh = SubResource("SphereMesh_ntk1b")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RigidDynamicBody3D9"]
+shape = SubResource("SphereShape3D_gc4p6")
+
+[node name="RigidDynamicBody3D10" type="RigidDynamicBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.699951, 2.6936, -0.964722)
+collision_layer = 7
+collision_mask = 7
+input_ray_pickable = false
+mass = 0.06
+physics_material_override = SubResource("PhysicsMaterial_2t5gp")
+gravity_scale = 0.5
+linear_damp = 0.25
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="RigidDynamicBody3D10"]
+mesh = SubResource("SphereMesh_ntk1b")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RigidDynamicBody3D10"]
+shape = SubResource("SphereShape3D_gc4p6")
+
+[node name="RigidDynamicBody3D11" type="RigidDynamicBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.183685, 2.6936, 1.62378)
+collision_layer = 7
+collision_mask = 7
+input_ray_pickable = false
+mass = 0.06
+physics_material_override = SubResource("PhysicsMaterial_2t5gp")
+gravity_scale = 0.5
+linear_damp = 0.25
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="RigidDynamicBody3D11"]
+mesh = SubResource("SphereMesh_ntk1b")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RigidDynamicBody3D11"]
+shape = SubResource("SphereShape3D_gc4p6")
+
+[node name="RigidDynamicBody3D12" type="RigidDynamicBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.00891, 2.6936, 0.297485)
+collision_layer = 7
+collision_mask = 7
+input_ray_pickable = false
+mass = 0.06
+physics_material_override = SubResource("PhysicsMaterial_2t5gp")
+gravity_scale = 0.5
+linear_damp = 0.25
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="RigidDynamicBody3D12"]
+mesh = SubResource("SphereMesh_ntk1b")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RigidDynamicBody3D12"]
+shape = SubResource("SphereShape3D_gc4p6")
+
+[node name="RigidDynamicBody3D13" type="RigidDynamicBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.699951, 2.6936, 0.666626)
+collision_layer = 7
+collision_mask = 7
+input_ray_pickable = false
+mass = 0.06
+physics_material_override = SubResource("PhysicsMaterial_2t5gp")
+gravity_scale = 0.5
+linear_damp = 0.25
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="RigidDynamicBody3D13"]
+mesh = SubResource("SphereMesh_ntk1b")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RigidDynamicBody3D13"]
+shape = SubResource("SphereShape3D_gc4p6")
+
+[node name="RigidDynamicBody3D14" type="RigidDynamicBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.699951, 2.6936, -0.964722)
+collision_layer = 7
+collision_mask = 7
+input_ray_pickable = false
+mass = 0.06
+physics_material_override = SubResource("PhysicsMaterial_2t5gp")
+gravity_scale = 0.5
+linear_damp = 0.25
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="RigidDynamicBody3D14"]
+mesh = SubResource("SphereMesh_ntk1b")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RigidDynamicBody3D14"]
+shape = SubResource("SphereShape3D_gc4p6")
+
+[node name="RigidDynamicBody3D15" type="RigidDynamicBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.183685, 2.6936, 1.62378)
+collision_layer = 5
+collision_mask = 5
+input_ray_pickable = false
+mass = 0.06
+physics_material_override = SubResource("PhysicsMaterial_2t5gp")
+gravity_scale = 0.5
+linear_damp = 0.25
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="RigidDynamicBody3D15"]
+mesh = SubResource("SphereMesh_ntk1b")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RigidDynamicBody3D15"]
+shape = SubResource("SphereShape3D_gc4p6")
+
+[node name="RigidDynamicBody3D16" type="RigidDynamicBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.00891, 2.6936, 0.297485)
+collision_layer = 7
+collision_mask = 7
+input_ray_pickable = false
+mass = 0.06
+physics_material_override = SubResource("PhysicsMaterial_2t5gp")
+gravity_scale = 0.5
+linear_damp = 0.25
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="RigidDynamicBody3D16"]
+mesh = SubResource("SphereMesh_ntk1b")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RigidDynamicBody3D16"]
+shape = SubResource("SphereShape3D_gc4p6")
+
+[node name="RigidDynamicBody3D17" type="RigidDynamicBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.699951, 2.6936, 0.666626)
+collision_layer = 7
+collision_mask = 7
+input_ray_pickable = false
+mass = 0.06
+physics_material_override = SubResource("PhysicsMaterial_2t5gp")
+gravity_scale = 0.5
+linear_damp = 0.25
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="RigidDynamicBody3D17"]
+mesh = SubResource("SphereMesh_ntk1b")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RigidDynamicBody3D17"]
+shape = SubResource("SphereShape3D_gc4p6")
+
+[node name="RigidDynamicBody3D18" type="RigidDynamicBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.699951, 2.6936, -0.964722)
+collision_layer = 7
+collision_mask = 7
+input_ray_pickable = false
+mass = 0.06
+physics_material_override = SubResource("PhysicsMaterial_2t5gp")
+gravity_scale = 0.5
+linear_damp = 0.25
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="RigidDynamicBody3D18"]
+mesh = SubResource("SphereMesh_ntk1b")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RigidDynamicBody3D18"]
+shape = SubResource("SphereShape3D_gc4p6")
+
+[node name="RigidDynamicBody3D19" type="RigidDynamicBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.183685, 2.6936, 1.62378)
+collision_layer = 7
+collision_mask = 7
+input_ray_pickable = false
+mass = 0.06
+physics_material_override = SubResource("PhysicsMaterial_2t5gp")
+gravity_scale = 0.5
+linear_damp = 0.25
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="RigidDynamicBody3D19"]
+mesh = SubResource("SphereMesh_ntk1b")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RigidDynamicBody3D19"]
+shape = SubResource("SphereShape3D_gc4p6")
+
+[node name="RigidDynamicBody3D20" type="RigidDynamicBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.00891, 2.6936, 0.297485)
+collision_layer = 7
+collision_mask = 7
+input_ray_pickable = false
+mass = 0.06
+physics_material_override = SubResource("PhysicsMaterial_2t5gp")
+gravity_scale = 0.5
+linear_damp = 0.25
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="RigidDynamicBody3D20"]
+mesh = SubResource("SphereMesh_ntk1b")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RigidDynamicBody3D20"]
+shape = SubResource("SphereShape3D_gc4p6")

@@ -1,0 +1,35 @@
+[gd_resource type="StandardMaterial3D" load_steps=7 format=3 uid="uid://cp6dhuo5tbnuq"]
+
+[ext_resource type="Texture2D" uid="uid://dx856ysoocsbm" path="res://apps/world/assets/textures/foliage/tree_01_trunk_normal.png" id="1_pw5v0"]
+
+[sub_resource type="Gradient" id="Gradient_h2utp"]
+colors = PackedColorArray(0.784314, 0.784314, 0.784314, 1, 1, 1, 1, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_2aqwq"]
+noise_type = 2
+frequency = 0.05
+fractal_octaves = 2
+fractal_gain = 0.25
+cellular_distance_function = 3
+cellular_jitter = 1.0
+cellular_return_type = 0
+
+[sub_resource type="NoiseTexture" id="NoiseTexture_yx4lr"]
+color_ramp = SubResource("Gradient_h2utp")
+noise = SubResource("FastNoiseLite_2aqwq")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_nk41o"]
+frequency = 0.05
+
+[sub_resource type="NoiseTexture" id="NoiseTexture_varqh"]
+noise = SubResource("FastNoiseLite_nk41o")
+
+[resource]
+diffuse_mode = 2
+albedo_color = Color(0.137255, 0.137255, 0.137255, 1)
+albedo_texture = SubResource("NoiseTexture_yx4lr")
+normal_enabled = true
+normal_scale = 1.5
+normal_texture = ExtResource("1_pw5v0")
+heightmap_scale = 0.1
+heightmap_texture = SubResource("NoiseTexture_varqh")

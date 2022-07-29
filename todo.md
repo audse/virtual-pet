@@ -16,6 +16,10 @@
 - [ ] Colors/painting
 - [ ] Personality
 
+## Cooking
+- [ ] Chop
+- [ ] Mix
+- [ ] Sizzle
 
 ## Design
 ### Inner walls
