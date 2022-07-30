@@ -1,6 +1,6 @@
-[gd_scene load_steps=13 format=3 uid="uid://doe2r77wqi8s2"]
+[gd_scene load_steps=13 format=3 uid="uid://dq75hxtnfdfli"]
 
-[ext_resource type="Script" path="res://apps/cooking/mixing/scenes/whisk.gd" id="1_rqe38"]
+[ext_resource type="Script" path="res://apps/cooking/mixing/scenes/utensil.gd" id="1_rqe38"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_r31j0"]
 friction = 0.0
@@ -9,7 +9,7 @@ friction = 0.0
 radius = 0.271353
 height = 2.86993
 
-[sub_resource type="Image" id="Image_74y3n"]
+[sub_resource type="Image" id="Image_te4iu"]
 data = {
 "data": PackedByteArray(0, 0, 0, 34, 35, 35, 67, 69, 73, 98, 104, 113, 130, 139, 152, 166, 174, 186, 205, 210, 218, 245, 247, 250, 98, 93, 84, 133, 117, 101, 158, 140, 121, 174, 161, 137, 187, 175, 164, 204, 195, 177, 234, 219, 201, 255, 243, 214, 88, 49, 38, 115, 61, 59, 136, 80, 65, 154, 98, 76, 173, 110, 81, 213, 141, 107, 251, 170, 132, 255, 206, 127, 0, 39, 53, 0, 56, 80, 0, 77, 94, 11, 102, 127, 0, 111, 137, 50, 140, 167, 36, 174, 214, 136, 214, 255, 102, 43, 41, 148, 54, 58, 182, 77, 70, 205, 94, 70, 227, 120, 64, 249, 155, 78, 255, 188, 78, 255, 233, 73, 40, 43, 74, 58, 69, 104, 97, 95, 132, 122, 119, 153, 134, 144, 178, 150, 178, 217, 199, 214, 255, 198, 236, 255, 0, 34, 25, 0, 50, 33, 23, 74, 27, 34, 89, 24, 47, 105, 12, 81, 136, 34, 125, 164, 45, 166, 204, 52, 24, 31, 47, 35, 50, 77, 37, 70, 107, 54, 107, 138, 49, 142, 184, 65, 178, 227, 82, 210, 255, 116, 245, 253, 26, 51, 44, 47, 63, 56, 56, 81, 64, 50, 92, 64, 65, 116, 85, 73, 137, 96, 85, 182, 125, 145, 218, 161, 94, 7, 17, 130, 33, 29, 182, 60, 53, 228, 92, 95, 255, 118, 118, 255, 155, 168, 255, 187, 199, 255, 219, 255, 45, 49, 54, 72, 71, 77, 91, 92, 105, 115, 115, 127, 132, 135, 149, 171, 174, 190, 186, 199, 219, 235, 240, 246, 59, 48, 60, 90, 60, 69, 138, 82, 88, 174, 107, 96, 199, 130, 108, 216, 159, 117, 236, 197, 129, 255, 250, 171, 49, 34, 42, 74, 53, 60, 94, 70, 70, 114, 90, 81, 126, 108, 84, 158, 138, 110, 192, 165, 136, 221, 191, 154, 46, 16, 38, 73, 40, 61, 102, 54, 89, 151, 84, 117, 185, 109, 145, 193, 120, 170, 219, 153, 191, 248, 198, 218, 0, 46, 73, 0, 64, 81, 0, 81, 98, 0, 107, 109, 0, 130, 121, 0, 160, 135, 0, 191, 163, 0, 222, 218, 69, 49, 37, 97, 74, 60, 126, 97, 68, 153, 121, 81, 178, 144, 98, 204, 169, 110, 232, 203, 130, 251, 234, 163, 95, 9, 38, 110, 36, 52, 144, 70, 71, 167, 96, 87, 189, 125, 100, 206, 151, 112, 237, 182, 124, 237, 212, 147, 50, 53, 88, 74, 82, 128, 100, 101, 157, 120, 119, 193, 142, 140, 226, 156, 155, 239, 184, 174, 255, 220, 212, 255, 67, 23, 41, 113, 43, 59, 159, 59, 82, 217, 74, 105, 248, 93, 128, 255, 125, 175, 255, 166, 197, 255, 205, 255, 73, 37, 28, 99, 52, 50, 124, 75, 71, 152, 89, 90, 172, 111, 110, 193, 126, 122, 210, 141, 122, 229, 154, 124, 32, 41, 0, 47, 79, 8, 73, 93, 0, 97, 115, 8, 124, 131, 30, 150, 154, 38, 180, 170, 51, 208, 204, 50, 98, 42, 0, 117, 59, 9, 133, 79, 18, 158, 101, 32, 186, 136, 46, 209, 170, 57, 232, 210, 75, 255, 246, 79, 38, 35, 61, 59, 56, 85, 86, 80, 111, 117, 104, 110, 145, 122, 123, 179, 151, 131, 207, 175, 142, 254, 223, 177, 29, 44, 67, 46, 61, 71, 57, 77, 60, 76, 95, 51, 88, 113, 44, 107, 132, 45, 120, 158, 36, 127, 189, 57, 55, 36, 35, 83, 57, 58, 120, 76, 73, 148, 93, 79, 169, 109, 88, 191, 126, 99, 215, 147, 116, 244, 163, 128, 45, 75, 71, 71, 101, 90, 91, 123, 105, 113, 149, 125, 135, 174, 142, 138, 193, 150, 169, 209, 193, 224, 250, 235, 0, 27, 64, 3, 49, 95, 7, 72, 124, 16, 93, 162, 20, 118, 192, 64, 151, 234, 85, 177, 241, 109, 204, 255, 85, 71, 105, 118, 93, 115, 151, 116, 136, 185, 140, 147, 213, 163, 154, 235, 189, 157, 255, 213, 155, 253, 247, 134, 29, 29, 33, 60, 49, 81, 88, 74, 127, 121, 100, 186, 149, 133, 241, 169, 150, 236, 186, 171, 247, 209, 189, 254, 38, 36, 80, 40, 51, 93, 45, 61, 114, 61, 80, 131, 81, 101, 174, 82, 116, 197, 108, 130, 196, 131, 147, 195, 73, 33, 41, 94, 65, 74, 119, 83, 91, 145, 96, 106, 173, 121, 132, 181, 139, 148, 212, 174, 170, 255, 226, 207, 114, 28, 3, 156, 51, 39, 191, 90, 62, 233, 134, 39, 255, 177, 8, 255, 207, 5, 255, 240, 43, 247, 244, 191),
 "format": "RGB8",
@@ -19,7 +19,7 @@ data = {
 }
 
 [sub_resource type="ImageTexture" id="ImageTexture_ag2n1"]
-image = SubResource("Image_74y3n")
+image = SubResource("Image_te4iu")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ww0bm"]
 resource_name = "Solid"
@@ -78,7 +78,7 @@ radius = 1.07685
 transform = Transform3D(1.25, 0, 0, 0, 1.25, 0, 0, 0, 1.25, 0, 0, 0)
 script = ExtResource("1_rqe38")
 
-[node name="WhiskCollider" type="RigidDynamicBody3D" parent="."]
+[node name="Collider" type="RigidDynamicBody3D" parent="."]
 transform = Transform3D(-0.383022, -0.321394, 0.866025, 0.642787, -0.766044, 3.91029e-08, 0.663414, 0.55667, 0.5, 0.5, 1.67164, -1)
 input_ray_pickable = false
 axis_lock_linear_y = true
@@ -90,11 +90,11 @@ contacts_reported = 5
 contact_monitor = true
 lock_rotation = true
 
-[node name="ItemCollision" type="CollisionShape3D" parent="WhiskCollider"]
+[node name="ItemCollision" type="CollisionShape3D" parent="Collider"]
 transform = Transform3D(0.546353, -0.434357, -0.716125, 0.509753, 0.850869, -0.127178, 0.66457, -0.295563, 0.686289, -0.350001, 8.34465e-07, 0.256)
 shape = SubResource("CapsuleShape3D_pfkav")
 
-[node name="WhiskBody" type="RigidDynamicBody3D" parent="."]
+[node name="Body" type="RigidDynamicBody3D" parent="."]
 transform = Transform3D(-0.383022, -0.321394, 0.866025, 0.642787, -0.766044, 0, 0.663414, 0.55667, 0.5, 0.5, 1.672, -1)
 collision_layer = 2
 collision_mask = 2
@@ -106,14 +106,14 @@ axis_lock_angular_z = true
 physics_material_override = SubResource("PhysicsMaterial_r31j0")
 lock_rotation = true
 
-[node name="Whisk" type="MeshInstance3D" parent="WhiskBody"]
+[node name="Whisk" type="MeshInstance3D" parent="Body"]
 transform = Transform3D(1, 0, -7.32491e-09, -2.98023e-08, 1, 1.04849e-08, -1.12469e-08, 2.00273e-08, 1, 0, -4, 0)
 mesh = SubResource("ArrayMesh_ywjmi")
 skeleton = NodePath("")
 surface_material_override/0 = SubResource("StandardMaterial3D_8hokt")
 
-[node name="BowlCollision" type="CollisionShape3D" parent="WhiskBody"]
+[node name="BowlCollision" type="CollisionShape3D" parent="Body"]
 transform = Transform3D(1, 4.17233e-07, 7.7486e-07, -3.03984e-06, 1, -6.85453e-07, 1.16229e-06, -7.15256e-07, 1, 0.0706568, -0.37617, 0.371219)
 shape = SubResource("SphereShape3D_gdodu")
 
-[connection signal="body_entered" from="WhiskCollider" to="." method="_on_whisk_collider_body_entered"]
+[connection signal="body_entered" from="Collider" to="." method="_on_collider_body_entered"]

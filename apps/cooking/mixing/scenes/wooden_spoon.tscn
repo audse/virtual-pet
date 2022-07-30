@@ -1,0 +1,107 @@
+[gd_scene load_steps=10 format=3 uid="uid://bqgvjcmg55mre"]
+
+[ext_resource type="ArrayMesh" uid="uid://dgvfd4h8hl1ho" path="res://apps/cooking/assets/meshes/wooden_spoon.obj" id="2_q2m25"]
+
+[sub_resource type="GDScript" id="GDScript_vekd5"]
+script/source = "extends Node3D
+
+@export var contacts_reported := 5
+@export var motion_rotation := Vector3i(10, 10, 20)
+
+@onready var body := $Body as RigidDynamicBody3D
+@onready var collider := $Collider as RigidDynamicBody3D
+
+
+func _ready() -> void:
+	collider.contacts_reported = contacts_reported
+
+
+func _process(_delta: float) -> void:
+	body.rotation.z = deg2rad(170) + deg2rad(motion_rotation.z) * body.position.x
+	body.rotation.y = deg2rad(60) - deg2rad(motion_rotation.y) * body.position.z
+	body.rotation.x = lerp(0, deg2rad(-motion_rotation.x), body.position.z)
+	collider.position = body.position
+
+
+func _on_collider_body_entered(node: Node):
+	if node is RigidDynamicBody3D or node is SoftDynamicBody3D:
+		node.apply_impulse(body.linear_velocity)
+
+
+func move_to(pos: Vector3) -> void:
+	body.move_and_collide(pos)
+"
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_r31j0"]
+friction = 0.0
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_pfkav"]
+radius = 0.271353
+height = 2.86993
+
+[sub_resource type="Gradient" id="Gradient_bmgqi"]
+colors = PackedColorArray(0.67275, 0.672752, 0.672751, 1, 1, 1, 1, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_d4lfg"]
+seed = 4
+frequency = 1.0
+fractal_lacunarity = 1.0
+fractal_gain = 1.5
+
+[sub_resource type="NoiseTexture" id="NoiseTexture_15nrn"]
+width = 1024
+height = 1024
+color_ramp = SubResource("Gradient_bmgqi")
+noise = SubResource("FastNoiseLite_d4lfg")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_aam85"]
+albedo_color = Color(0.47451, 0.47451, 0.47451, 1)
+albedo_texture = SubResource("NoiseTexture_15nrn")
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_1vlbe"]
+radius = 0.879265
+
+[node name="WoodenSpoon" type="Node3D"]
+transform = Transform3D(1.25, 0, 0, 0, 1.25, 0, 0, 0, 1.25, 0, 0, 0)
+script = SubResource("GDScript_vekd5")
+motion_rotation = Vector3i(10, 10, 10)
+
+[node name="Collider" type="RigidDynamicBody3D" parent="."]
+transform = Transform3D(-0.383022, -0.321394, 0.866025, 0.642787, -0.766044, 3.91029e-08, 0.663414, 0.55667, 0.5, 0.5, 1.67164, -1)
+input_ray_pickable = false
+axis_lock_linear_y = true
+axis_lock_angular_x = true
+axis_lock_angular_y = true
+axis_lock_angular_z = true
+physics_material_override = SubResource("PhysicsMaterial_r31j0")
+contacts_reported = 5
+contact_monitor = true
+lock_rotation = true
+
+[node name="ItemCollision" type="CollisionShape3D" parent="Collider"]
+transform = Transform3D(0.546353, -0.434357, -0.716125, 0.509753, 0.850869, -0.127178, 0.66457, -0.295563, 0.686289, -0.350001, 8.34465e-07, 0.256)
+shape = SubResource("CapsuleShape3D_pfkav")
+
+[node name="Body" type="RigidDynamicBody3D" parent="."]
+transform = Transform3D(-0.383022, -0.321394, 0.866025, 0.642787, -0.766044, 0, 0.663414, 0.55667, 0.5, 0.5, 1.672, -1)
+collision_layer = 2
+collision_mask = 2
+input_ray_pickable = false
+axis_lock_linear_y = true
+axis_lock_angular_x = true
+axis_lock_angular_y = true
+axis_lock_angular_z = true
+physics_material_override = SubResource("PhysicsMaterial_r31j0")
+lock_rotation = true
+
+[node name="Spoon" type="MeshInstance3D" parent="Body"]
+transform = Transform3D(0.999999, -5.96046e-08, 1.19209e-07, 1.49012e-07, 0.999999, -2.38419e-07, -1.49012e-07, -1.78814e-07, 1, 0.0681827, -4.00153, 0.399771)
+mesh = ExtResource("2_q2m25")
+skeleton = NodePath("")
+surface_material_override/0 = SubResource("StandardMaterial3D_aam85")
+
+[node name="BowlCollision" type="CollisionShape3D" parent="Body"]
+transform = Transform3D(1, 4.17233e-07, 8.64267e-07, -3.09944e-06, 1, -6.85453e-07, 1.19209e-06, -6.85453e-07, 1, 0.071, 0, 0.371)
+shape = SubResource("SphereShape3D_1vlbe")
+
+[connection signal="body_entered" from="Collider" to="." method="_on_collider_body_entered"]

@@ -1,0 +1,69 @@
+[gd_scene load_steps=9 format=3]
+
+[ext_resource type="Script" path="res://apps/cooking/mixing/scenes/utensil.gd" id="1_rqe38"]
+[ext_resource type="ArrayMesh" uid="uid://m3srw0n12bub" path="res://apps/cooking/assets/meshes/spatula.obj" id="2_acbli"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_r31j0"]
+friction = 0.0
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_y2h6b"]
+size = Vector3(1.26, 3, 0.2)
+
+[sub_resource type="Gradient" id="Gradient_owweo"]
+colors = PackedColorArray(0.301961, 0.301961, 0.301961, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_kpqur"]
+gradient = SubResource("Gradient_owweo")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_go1ty"]
+albedo_texture = SubResource("GradientTexture2D_kpqur")
+metallic = 0.5
+roughness = 0.5
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_e3457"]
+points = PackedVector3Array(1.37511, 4.32955, -0.458327, -1.37529, 3.37289, -0.458327, -1.37529, 3.37289, -0.33871, 0.178942, -2.96489, 0.139375, 0.0594066, -1.2898, 0.617717, 1.01623, 2.41623, -0.697691, -1.25549, 4.68839, -0.219221, -1.13595, 2.53534, -0.697691, -0.418467, -2.72442, 0.498099, 1.37511, 4.56853, -0.219221, 0.418014, -2.72442, 0.498099, -0.0598599, -2.12735, -0.099603, -1.13595, 4.68839, -0.458327, -0.418467, -2.72442, 0.139375, 1.01623, 3.25303, -0.697691, 1.25503, 2.77507, -0.577945, 0.418014, -2.72442, 0.139375, -0.298931, -2.00748, 0.617717, 1.37511, 3.37289, -0.33871, -1.37529, 4.56853, -0.219221, 1.13577, 4.68839, -0.458327, 0.298478, -2.36632, 0.617717, 1.25503, 4.68839, -0.219221, -1.25549, 3.97071, -0.577945, -1.01641, 2.41623, -0.697691, -0.179396, -2.96489, 0.498099, 1.13577, 2.53534, -0.697691, 0.0594066, -2.12735, -0.099603, 1.37511, 3.97071, -0.219221, -1.37529, 3.97071, -0.219221, -0.0598599, -1.2898, 0.617717, 0.298478, -2.00748, 0.617717)
+
+[node name="Spatula" type="Node3D"]
+transform = Transform3D(1.25, 0, 0, 0, 1.25, 0, 0, 0, 1.25, 0, 0, 0)
+script = ExtResource("1_rqe38")
+motion_rotation = Vector3i(5, 10, 5)
+
+[node name="Collider" type="RigidDynamicBody3D" parent="."]
+transform = Transform3D(-0.383022, -0.321394, 0.866025, 0.642787, -0.766044, 3.91029e-08, 0.663414, 0.55667, 0.5, 0.5, 1.67164, -1)
+input_ray_pickable = false
+axis_lock_linear_y = true
+axis_lock_angular_x = true
+axis_lock_angular_y = true
+axis_lock_angular_z = true
+physics_material_override = SubResource("PhysicsMaterial_r31j0")
+contacts_reported = 5
+contact_monitor = true
+lock_rotation = true
+
+[node name="ItemCollision" type="CollisionShape3D" parent="Collider"]
+transform = Transform3D(-4.30473e-08, 7.59039e-09, 1, 0.173648, 0.984806, 0, -0.984808, 0.173648, -4.37114e-08, -0.24017, -0.08461, 1.03722)
+shape = SubResource("BoxShape3D_y2h6b")
+
+[node name="Body" type="RigidDynamicBody3D" parent="."]
+transform = Transform3D(-0.383022, -0.321394, 0.866025, 0.642787, -0.766044, 0, 0.663414, 0.55667, 0.5, 0.5, 1.672, -1)
+collision_layer = 2
+collision_mask = 2
+input_ray_pickable = false
+axis_lock_linear_y = true
+axis_lock_angular_x = true
+axis_lock_angular_y = true
+axis_lock_angular_z = true
+physics_material_override = SubResource("PhysicsMaterial_r31j0")
+lock_rotation = true
+
+[node name="Spatula" type="MeshInstance3D" parent="Body"]
+transform = Transform3D(-4.30473e-08, 7.59039e-09, 1, 0.173648, 0.984807, 0, -0.984807, 0.173648, -4.37114e-08, 0.0681827, -4.00153, 0.399771)
+mesh = ExtResource("2_acbli")
+skeleton = NodePath("")
+surface_material_override/0 = SubResource("StandardMaterial3D_go1ty")
+
+[node name="BowlCollision" type="CollisionShape3D" parent="Body"]
+transform = Transform3D(-3.87426e-08, 7.5904e-09, 1, 0.156283, 0.984808, 0, -0.886327, 0.173648, -4.37114e-08, 0.068, -4.1, 0.3)
+shape = SubResource("ConvexPolygonShape3D_e3457")
+
+[connection signal="body_entered" from="Collider" to="." method="_on_collider_body_entered"]

@@ -1,0 +1,46 @@
+[gd_resource type="ShaderMaterial" load_steps=6 format=3 uid="uid://ccdi22v7kctob"]
+
+[ext_resource type="Shader" path="res://apps/cooking/assets/shaders/fluid.gdshader" id="1_m0lol"]
+[ext_resource type="Shader" path="res://apps/cooking/assets/shaders/vortex.gdshader" id="1_y4wqd"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_u38if"]
+noise_type = 2
+seed = 9
+frequency = 0.001
+fractal_octaves = 2
+cellular_distance_function = 3
+cellular_jitter = 1.0
+
+[sub_resource type="NoiseTexture" id="NoiseTexture_iagxc"]
+width = 1024
+height = 1024
+seamless = true
+seamless_blend_skirt = 0.2
+noise = SubResource("FastNoiseLite_u38if")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_irxdp"]
+render_priority = 0
+shader = ExtResource("1_y4wqd")
+shader_param/color = Color(0.980392, 0.992157, 1, 1)
+shader_param/noise_tex = SubResource("NoiseTexture_iagxc")
+shader_param/resolution = Vector2(1024, 1024)
+shader_param/vortex_direction = 0.0
+shader_param/vortex_strength = 0.5
+
+[resource]
+render_priority = 0
+next_pass = SubResource("ShaderMaterial_irxdp")
+shader = ExtResource("1_m0lol")
+shader_param/color = Color(0.572549, 0.572549, 0.572549, 1)
+shader_param/intensity = 0.55
+shader_param/light_color = Color(0.698039, 0.698039, 0.698039, 1)
+shader_param/mouse_pos = null
+shader_param/mouse_scale = 1.5
+shader_param/noise_scale = 0.21
+shader_param/range_high = 3
+shader_param/range_low = 2
+shader_param/resolution = Vector2(1024, 1024)
+shader_param/speed = 0.25
+shader_param/step_amount = 1
+shader_param/voronoi_scale = 12.0
+shader_param/wave_speed = Vector2(-1, -1)

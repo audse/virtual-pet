@@ -40,3 +40,5 @@ static func get_rect_points_in_grid(start: Vector2, end: Vector2, grid_size: Vec
 	
 	return points
 
+static func is_moving_clockwise(center_pos: Vector2, prev_pos: Vector2, current_pos: Vector2) -> bool:
+	return (prev_pos.x - center_pos.x) * (current_pos.y - center_pos.y) - (prev_pos.y - center_pos.y) * (current_pos.x - center_pos.x) > 0

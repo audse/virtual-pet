@@ -1,47 +1,38 @@
-[gd_scene load_steps=8 format=3 uid="uid://2xpyyatc1k4k"]
+[gd_scene load_steps=6 format=3 uid="uid://2xpyyatc1k4k"]
 
 [ext_resource type="Script" path="res://apps/cooking/mixing/mixing.gd" id="1_fkmqa"]
 [ext_resource type="PackedScene" uid="uid://l4kbab42quex" path="res://apps/cooking/mixing/scenes/mixing_bowl.tscn" id="3_23n1w"]
-[ext_resource type="PackedScene" uid="uid://doe2r77wqi8s2" path="res://apps/cooking/mixing/scenes/whisk.tscn" id="3_pjyyi"]
-[ext_resource type="ArrayMesh" uid="uid://c4rtxhx6285e8" path="res://apps/cooking/assets/meshes/bowl_fill.obj" id="5_vs3go"]
+[ext_resource type="PackedScene" uid="uid://bqgvjcmg55mre" path="res://apps/cooking/mixing/scenes/wooden_spoon.tscn" id="6_pgyp7"]
 [ext_resource type="PackedScene" uid="uid://b6dya0dbxdg1f" path="res://environment/scenes/environment.tscn" id="7_5a356"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_s5yhq"]
 size = Vector3(8, 3, 8)
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_v2oxf"]
-albedo_color = Color(0.823529, 0.823529, 0.823529, 1)
-
 [node name="Mixing" type="Node3D"]
 script = ExtResource("1_fkmqa")
+utensil_path = NodePath("WoodenSpoon")
+container_path = NodePath("MixingBowl")
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(0.642788, -0.586824, 0.492404, 0, 0.642787, 0.766044, -0.766044, -0.492404, 0.413176, 6, 12.5, 5)
+transform = Transform3D(0.642788, -0.586824, 0.492403, 0, 0.642787, 0.766045, -0.766044, -0.492404, 0.413176, 6, 12.5, 5)
 projection = 1
 current = true
 size = 10.0
 
 [node name="Environment" parent="." instance=ExtResource("7_5a356")]
 
-[node name="MixingBowl" parent="." instance=ExtResource("3_23n1w")]
-
 [node name="InputArea" type="Area3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
 collision_layer = 32768
 collision_mask = 32768
+priority = 2.0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="InputArea"]
 transform = Transform3D(1, 0, 0, 0, 0.995186, 0.0979998, 0, -0.0979998, 0.995186, 0, 0.280108, 0)
 shape = SubResource("BoxShape3D_s5yhq")
 
-[node name="Whisk" parent="." instance=ExtResource("3_pjyyi")]
-transform = Transform3D(1.25, 0, 0, 0, 1.25, 0, 0, 0, 1.25, 1.15103, 0, 0)
-contacts_reported = 32
+[node name="WoodenSpoon" parent="." instance=ExtResource("6_pgyp7")]
 
-[node name="Fill" type="MeshInstance3D" parent="."]
-transparency = 0.75
-mesh = ExtResource("5_vs3go")
-surface_material_override/0 = SubResource("StandardMaterial3D_v2oxf")
+[node name="MixingBowl" parent="." instance=ExtResource("3_23n1w")]
 
 [connection signal="input_event" from="InputArea" to="." method="_on_input_area_event"]
-[connection signal="body_entered" from="Whisk" to="." method="_on_whisk_body_entered"]
