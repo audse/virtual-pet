@@ -1,0 +1,29 @@
+[gd_scene load_steps=6 format=3 uid="uid://dl0xsg2h4hdp5"]
+
+[ext_resource type="Script" path="res://apps/furniture/scenes/item.gd" id="1_twalm"]
+[ext_resource type="Script" path="res://utils/nodes/draggable.gd" id="1_w8t0v"]
+[ext_resource type="ArrayMesh" uid="uid://cyu2w31uw1smp" path="res://temp/Furniture Assets/obj_mtl/chair.obj" id="3_y3mw5"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_knc5h"]
+friction = 0.0
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_ye6fi"]
+points = PackedVector3Array(-0.252331, 0, -0.192287, 0.252331, 0, -0.192287, -0.252331, 0, 0.192247, -0.200017, 0.394988, -0.195027, -0.195028, 0.394988, -0.2, -0.195028, 0.354973, -0.2, 0.252331, 0, 0.192247, 0.194979, 0.354973, -0.2, 0.244328, 0.794988, -0.2, 0.249367, 0.794988, -0.195027, -0.195028, 0.354973, 0.2, -0.195028, 0.394988, 0.2, -0.200017, 0.394988, 0.194988, -0.195028, 0.4, -0.195027, 0.214392, 0.794988, -0.2, 0.249367, 0.794988, 0.194988, 0.244328, 0.794988, 0.2, 0.194979, 0.354973, 0.2, 0.244971, 0.8, -0.195027, 0.214392, 0.794988, 0.2, -0.195028, 0.4, 0.194988, 0.209354, 0.794988, -0.195027, 0.214985, 0.8, -0.195027, 0.244971, 0.8, 0.194988, 0.214985, 0.8, 0.194988, 0.209354, 0.794988, 0.194988)
+
+[node name="Chair01" type="StaticBody3D"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0)
+collision_layer = 3
+collision_mask = 3
+physics_material_override = SubResource("PhysicsMaterial_knc5h")
+script = ExtResource("1_twalm")
+
+[node name="Draggable" type="Node" parent="."]
+script = ExtResource("1_w8t0v")
+node_path = NodePath("..")
+lock_y = true
+
+[node name="ItemMesh" type="MeshInstance3D" parent="."]
+mesh = ExtResource("3_y3mw5")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("ConvexPolygonShape3D_ye6fi")

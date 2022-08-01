@@ -1,0 +1,29 @@
+[gd_scene load_steps=6 format=3 uid="uid://b3qhcf31xsn1"]
+
+[ext_resource type="Script" path="res://apps/furniture/scenes/item.gd" id="1_twalm"]
+[ext_resource type="Script" path="res://utils/nodes/draggable.gd" id="1_w8t0v"]
+[ext_resource type="Material" uid="uid://d3a3haoplw6yp" path="res://temp/hologram.tres" id="2_e6c26"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_a0mqq"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_fqc2g"]
+size = Vector3(1.1, 1.5, 1.1)
+
+[node name="Item" type="Area3D"]
+collision_layer = 2
+collision_mask = 2
+script = ExtResource("1_twalm")
+
+[node name="Draggable" type="Node" parent="."]
+script = ExtResource("1_w8t0v")
+node_path = NodePath("..")
+click_area_path = NodePath("..")
+lock_y = true
+
+[node name="ItemMesh" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_a0mqq")
+skeleton = NodePath("../..")
+surface_material_override/0 = ExtResource("2_e6c26")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_fqc2g")

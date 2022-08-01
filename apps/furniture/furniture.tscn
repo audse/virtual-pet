@@ -1,0 +1,69 @@
+[gd_scene load_steps=10 format=3 uid="uid://bgsl3crrqv1x5"]
+
+[ext_resource type="Script" path="res://apps/furniture/furniture.gd" id="1_0o5tx"]
+[ext_resource type="PackedScene" uid="uid://b6dya0dbxdg1f" path="res://environment/scenes/environment.tscn" id="1_mtwka"]
+[ext_resource type="Script" path="res://apps/interface/placement/placement.gd" id="2_rb4e4"]
+[ext_resource type="Script" path="res://apps/map/nodes/cell_map/cell_map.gd" id="3_s4eub"]
+[ext_resource type="Script" path="res://apps/map/nodes/grid/uneven_grid.gd" id="4_46bic"]
+[ext_resource type="PackedScene" uid="uid://df6j2o5icioh0" path="res://apps/furniture/items/small_table_01.tscn" id="6_xa4qm"]
+[ext_resource type="PackedScene" uid="uid://dl0xsg2h4hdp5" path="res://apps/furniture/items/chair_01.tscn" id="7_t44ya"]
+
+[sub_resource type="Resource" id="Resource_13s5m"]
+script = ExtResource("4_46bic")
+cell_size = Vector3(0.5, 0.5, 0.5)
+x_offset_range = [0.0, 0.0]
+z_offset_range = [0.0, 0.0]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_cwlly"]
+size = Vector3(50, 0.1, 50)
+
+[node name="Furniture" type="Node3D"]
+script = ExtResource("1_0o5tx")
+
+[node name="Environment" parent="." instance=ExtResource("1_mtwka")]
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(0.766045, -0.413176, 0.492403, 0, 0.766044, 0.642788, -0.642787, -0.492404, 0.586824, 5, 7, 5)
+projection = 1
+current = true
+size = 5.0
+
+[node name="CellMap" type="Node3D" parent="."]
+script = ExtResource("3_s4eub")
+grid = SubResource("Resource_13s5m")
+use_autotile = false
+
+[node name="Floor" type="Area3D" parent="."]
+collision_layer = 4
+collision_mask = 4
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor"]
+shape = SubResource("BoxShape3D_cwlly")
+
+[node name="PlacementRect" type="CSGPolygon3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.05, 0, 0)
+polygon = PackedVector2Array()
+mode = 2
+path_node = NodePath("")
+path_interval_type = 0
+path_interval = 0.01
+path_simplify_angle = 0.0
+path_rotation = 2
+path_local = false
+path_continuous_u = true
+path_u_distance = 1.0
+path_joined = true
+smooth_faces = true
+script = ExtResource("2_rb4e4")
+rect = Rect2(0, 0, 0.5, 0.5)
+thickness = 0.0
+shape = 1
+
+[node name="SmallTable01" parent="." instance=ExtResource("6_xa4qm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1)
+map_path = NodePath("../CellMap")
+placement_rect_path = NodePath("../PlacementRect")
+
+[node name="Chair01" parent="." instance=ExtResource("7_t44ya")]
+map_path = NodePath("../CellMap")
+placement_rect_path = NodePath("../PlacementRect")

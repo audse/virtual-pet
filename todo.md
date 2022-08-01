@@ -3,7 +3,7 @@
 # V 1.0
 
 ## Building
-- [ ] Outer walls
+- [x] Outer walls
 - [ ] Roof
 - [ ] Door
 - [ ] Windows
@@ -13,35 +13,25 @@
 	- [ ] Color
 	- [ ] Shape
 	- [ ] Personality
-- [ ] Colors/painting
+- [ ] Colors potion
 - [ ] Personality
 
 ## Cooking
-- [ ] Chop
-- [ ] Mix
+- [-] Chop
+- [-] Mix
 - [ ] Sizzle
+- [ ] Potion
 
 ## Design
 ### Inner walls
 - Wallpaper
-	- [ ] Floral
-	- [ ] Retro
-	- [ ] Cutesy
-	- [ ] Modern
-	- [ ] Simple
 - Paint
 - Panelling
 
 ### Floors
 - Wood
 - Carpet
-	- [ ] Simple
-	- [ ] Textured
-	- [ ] Patterned
 - Tile
-	- [ ] Checkered
-	- [ ] Simple
-	- [ ] Ornate
 
 ### Outer walls
 - Siding
@@ -67,6 +57,7 @@
 ### Foliage
 - [ ] Trees
 - [ ] Flowers
+
 
 # V 2.0
 

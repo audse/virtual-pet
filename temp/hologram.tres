@@ -1,0 +1,33 @@
+[gd_resource type="ShaderMaterial" load_steps=4 format=3 uid="uid://d3a3haoplw6yp"]
+
+[ext_resource type="Shader" path="res://temp/scanned.gdshader" id="1_1s6fs"]
+[ext_resource type="Shader" path="res://temp/hologram.gdshader" id="1_cvvn3"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_monpc"]
+render_priority = 0
+shader = ExtResource("1_1s6fs")
+alpha = 0.25
+scan_color = Color(1, 1, 1, 1)
+scan_line_size = 0.03
+scan_line_width = 0.2
+shift = Vector3(0, 0, 0)
+time_shift_scale = Vector3(0.01, 0.01, 0.01)
+
+[resource]
+render_priority = 0
+next_pass = SubResource("ShaderMaterial_monpc")
+shader = ExtResource("1_cvvn3")
+alpha_max = 1.0
+alpha_min = 0.0
+flickering = 0.8
+glow_amount = 1.5
+glow_color = Color(0.862745, 0.94902, 0.964706, 1)
+glow_itensity = 5.0
+interrupt_blur = 0.5
+interrupt_speed = 0.1
+interrupt_width = 1.0
+line_blur = 0.4
+line_color = Color(0.61, 0.61, 0.61, 1)
+line_speed = 0.02
+line_width = 0.001
+straight_lines = false

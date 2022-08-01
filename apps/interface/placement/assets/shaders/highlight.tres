@@ -5,15 +5,15 @@
 [resource]
 render_priority = 0
 shader = ExtResource("1_vw1f7")
-shader_param/flickering = 0.75
-shader_param/glow_amount = 4.0
-shader_param/glow_color = Color(1, 1, 1, 1)
-shader_param/glow_itensity = 1.0
-shader_param/interrupt_blur = 0.25
-shader_param/interrupt_speed = 0.15
-shader_param/interrupt_width = 0.25
-shader_param/line_blur = 0.4
-shader_param/line_color = Color(1, 1, 1, 1)
-shader_param/line_speed = 0.02
-shader_param/line_width = 0.001
-shader_param/straight_lines = false
+flickering = 0.75
+glow_amount = 4.0
+glow_color = Color(1, 1, 1, 1)
+glow_itensity = 1.0
+interrupt_blur = 0.25
+interrupt_speed = 0.15
+interrupt_width = 0.25
+line_blur = 0.4
+line_color = Color(1, 1, 1, 1)
+line_speed = 0.02
+line_width = 0.001
+straight_lines = false

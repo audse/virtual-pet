@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://2xpyyatc1k4k"]
+[gd_scene load_steps=7 format=3 uid="uid://2xpyyatc1k4k"]
 
 [ext_resource type="Script" path="res://apps/cooking/mixing/mixing.gd" id="1_fkmqa"]
 [ext_resource type="PackedScene" uid="uid://l4kbab42quex" path="res://apps/cooking/mixing/scenes/mixing_bowl.tscn" id="3_23n1w"]
+[ext_resource type="PackedScene" uid="uid://cpvj2e375k3y5" path="res://apps/cooking/mixing/scenes/rice.tscn" id="5_i263g"]
 [ext_resource type="PackedScene" uid="uid://bqgvjcmg55mre" path="res://apps/cooking/mixing/scenes/wooden_spoon.tscn" id="6_pgyp7"]
 [ext_resource type="PackedScene" uid="uid://b6dya0dbxdg1f" path="res://environment/scenes/environment.tscn" id="7_5a356"]
 
@@ -34,5 +35,21 @@ shape = SubResource("BoxShape3D_s5yhq")
 [node name="WoodenSpoon" parent="." instance=ExtResource("6_pgyp7")]
 
 [node name="MixingBowl" parent="." instance=ExtResource("3_23n1w")]
+
+[node name="Rice" parent="." instance=ExtResource("5_i263g")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.40601, 0.865601, -0.659241)
+visible = false
+
+[node name="Rice2" parent="." instance=ExtResource("5_i263g")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.40601, 0.865601, -0.659241)
+visible = false
+
+[node name="Rice3" parent="." instance=ExtResource("5_i263g")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.40601, 0.865601, -0.659241)
+visible = false
+
+[node name="Rice4" parent="." instance=ExtResource("5_i263g")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.40601, 0.865601, -0.659241)
+visible = false
 
 [connection signal="input_event" from="InputArea" to="." method="_on_input_area_event"]

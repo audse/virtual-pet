@@ -7,7 +7,7 @@ absorbent = true
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_sf6n0"]
 shading_mode = 0
-albedo_color = Color(0.74902, 0.760784, 0.717647, 1)
+albedo_color = Color(0.207843, 0.196078, 0.184314, 1)
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_xks5k"]
 material = SubResource("StandardMaterial3D_sf6n0")

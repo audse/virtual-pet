@@ -1,6 +1,10 @@
 class_name PlacementRect
 extends CSGPolygon3D
 
+
+signal move_finished
+signal scale_finished
+
 enum Shape {
 	RECT,
 	ELLIPSE
@@ -8,8 +12,18 @@ enum Shape {
 
 const MATERIAL = preload("res://apps/interface/placement/assets/shaders/highlight.tres")
 
-@export var rect: Rect2
-@export var thickness := 0.1
+@export var rect: Rect2:
+	set(value):
+		rect = value
+		if is_inside_tree():
+			draw_curve()
+
+@export var thickness := 0.1:
+	set(value):
+		thickness = value
+		if is_inside_tree():
+			draw_curve()
+
 @export var shape: Shape = Shape.RECT
 
 var rect3: Dictionary:
@@ -79,7 +93,11 @@ func _ready():
 	mode = CSGPolygon3D.MODE_PATH
 	add_child(path)
 	path_node = get_path_to(path)
-	
+	smooth_faces = true
+	path_joined = true
+	path_interval_type = CSGPolygon3D.PATH_INTERVAL_DISTANCE
+	path_interval = 0.01
+	path_simplify_angle = deg2rad(1)
 	draw_curve()
 
 
@@ -87,7 +105,6 @@ func draw_curve() -> void:
 	polygon = polygon_points
 	material = MATERIAL
 	path.curve = Curve3D.new()
-	smooth_faces = true
 	
 	for i in [0, 1, 2, 3, 0]:
 		var vert := verts[i]
@@ -100,3 +117,51 @@ func draw_curve() -> void:
 					handle_points["in"],
 					handle_points["out"]
 				)
+				path.curve.set_point_tilt(i, deg2rad(i * 10))
+	
+	path.curve = Vector3Ref.smooth_curve(path.curve)
+
+
+func scale_to(size: Vector2) -> void:
+	var tween := _tween(Tween.EASE_OUT)
+	tween.tween_property(self, "rect:size", size, 0.25)
+	await tween.finished
+	scale_finished.emit()
+
+var is_moving: bool = false
+var _move_to_stack: Array[Vector2] = []
+
+
+func move_to(target: Vector2) -> void:
+	is_moving = true
+	var tween := _tween()
+	tween.tween_property(self, "rect:position", target, 0.15)
+	await tween.finished
+	is_moving = false
+	move_finished.emit()
+
+
+
+func thickness_to(target: float) -> void:
+	var tween := _tween()
+	tween.tween_property(self, "thickness", target, 0.2)
+	await tween.finished
+
+
+func queue_move_to(target: Vector2, skip_inbetweens: bool = true) -> void:
+	if skip_inbetweens: _move_to_stack = [target]
+	else: _move_to_stack.append(target)
+	if is_moving:
+		move_finished.connect(
+			func () -> void: 
+				if len(_move_to_stack) > 0:
+					await move_to(_move_to_stack.pop_back())
+					if len(_move_to_stack) > 0 and not skip_inbetweens: 
+						move_to(_move_to_stack.pop_back()),
+			CONNECT_ONESHOT
+		)
+	else: move_to(target)
+
+
+func _tween(easing := Tween.EASE_IN_OUT) -> Tween:
+	return create_tween().set_ease(easing).set_trans(Tween.TRANS_SINE).set_parallel()

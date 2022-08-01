@@ -160,6 +160,11 @@ func world_to_map(world_pos: Vector3) -> Vector3i:
 
 func map_to_world(coords: Vector3i, center: bool = false) -> Vector3:
 	if not grid: return Vector3.ZERO
-	var world_pos: Vector3 = coords * grid.cell_size
+	var world_pos: Vector3 = Vector3(coords) * grid.cell_size
 	if center: world_pos += (grid.cell_size / 2.0)
 	return world_pos
+
+
+func world_to_map_to_world(world_pos: Vector3, center: bool = false) -> Vector3:
+	var coords := world_to_map(world_pos)
+	return map_to_world(coords, center)

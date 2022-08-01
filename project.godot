@@ -84,6 +84,11 @@ _global_script_classes=[{
 "language": &"GDScript",
 "path": "res://utils/sized_texture.gd"
 }, {
+"base": "Node",
+"class": &"Draggable",
+"language": &"GDScript",
+"path": "res://utils/nodes/draggable.gd"
+}, {
 "base": "Control",
 "class": &"DropMenu",
 "language": &"GDScript",
@@ -280,6 +285,7 @@ _global_script_class_icons={
 "CircleMenu": "",
 "ControlRef": "",
 "CustomSizeTexture2D": "",
+"Draggable": "res://utils/nodes/draggable.svg",
 "DropMenu": "res://interface/components/drop_menu/drop_menu.svg",
 "FontStyleSheet": "",
 "GradientNoiseRect": "res://utils/nodes/noise_rect.svg",

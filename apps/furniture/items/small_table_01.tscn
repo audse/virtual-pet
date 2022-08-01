@@ -1,0 +1,29 @@
+[gd_scene load_steps=6 format=3 uid="uid://df6j2o5icioh0"]
+
+[ext_resource type="Script" path="res://apps/furniture/scenes/item.gd" id="1_twalm"]
+[ext_resource type="Script" path="res://utils/nodes/draggable.gd" id="1_w8t0v"]
+[ext_resource type="ArrayMesh" uid="uid://ckih70caht6m5" path="res://temp/Furniture Assets/obj_mtl/table-small.obj" id="3_52o4p"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_kpww1"]
+friction = 0.0
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_0cth0"]
+points = PackedVector3Array(-0.75, 0.549961, -0.4, -0.637529, 0, -0.287549, -0.75, 0.549961, 0.4, -0.75, 0.6, -0.4, 0.75, 0.549961, -0.4, -0.637529, 0, 0.287471, 0.637383, 0, -0.287549, -0.75, 0.6, 0.4, 0.75, 0.549961, 0.4, 0.75, 0.6, -0.4, 0.637383, 0, 0.287471, 0.75, 0.6, 0.4)
+
+[node name="SmallTable01" type="StaticBody3D"]
+collision_layer = 3
+collision_mask = 3
+physics_material_override = SubResource("PhysicsMaterial_kpww1")
+script = ExtResource("1_twalm")
+size = Vector3i(2, 1, 1)
+
+[node name="Draggable" type="Node" parent="."]
+script = ExtResource("1_w8t0v")
+node_path = NodePath("..")
+lock_y = true
+
+[node name="ItemMesh" type="MeshInstance3D" parent="."]
+mesh = ExtResource("3_52o4p")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("ConvexPolygonShape3D_0cth0")

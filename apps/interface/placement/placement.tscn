@@ -18,7 +18,7 @@ is_hemisphere = true
 
 [sub_resource type="Curve3D" id="Curve3D_85dy4"]
 _data = {
-"points": PackedVector3Array(0, 0, 0, 0, 0, 0, -2.37719, 0, -4.18839, 0, 0, 0, 0, 0, 0, 4.64135, 0, -4.12806, 0, 0, 0, 0, 0, 0, 4.33969, 0, 3.01114),
+"points": PackedVector3Array(-2.85184, -0.698881, 7.37908, 2.85184, 0.698881, -7.37908, -2.37719, 0, -4.18839, -1.54773, 0.822838, -3.07725, 1.54773, -0.822838, 3.07725, 4.64135, 0, -4.12806, 0, 0, 0, 0, 0, 0, 4.33969, 0, 3.01114),
 "tilts": PackedFloat32Array(0, 0, 0)
 }
 point_count = 3
@@ -26,6 +26,7 @@ point_count = 3
 [node name="Node3D" type="Node3D"]
 script = ExtResource("1_3fc3g")
 rect = Rect2(-1, -1, 2, 2)
+shape = 1
 
 [node name="QuickSpatialGrid" type="Node3D" parent="."]
 visible = false
@@ -47,9 +48,9 @@ unique_name_in_owner = true
 polygon = PackedVector2Array(0, 0, 0, 0.1, 0.1, 0.1, 0.1, 0)
 mode = 2
 path_node = NodePath("../Path")
-path_interval_type = 1
+path_interval_type = 0
 path_interval = 0.01
-path_simplify_angle = 0.0
+path_simplify_angle = 10.0
 path_rotation = 2
 path_local = false
 path_continuous_u = true
