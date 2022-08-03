@@ -34,8 +34,8 @@ albedo_color = Color(0.823529, 0.823529, 0.823529, 1)
 
 [node name="FryingPan" type="StaticBody3D"]
 transform = Transform3D(0.939693, 0, -0.34202, 0, 1, 0, 0.34202, 0, 0.939693, 0, 0.810244, 0)
-collision_layer = 2
-collision_mask = 2
+collision_layer = 10
+collision_mask = 10
 input_ray_pickable = false
 physics_material_override = SubResource("PhysicsMaterial_0xvmc")
 
@@ -46,10 +46,6 @@ surface_material_override/0 = SubResource("StandardMaterial3D_7wctf")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 5.96046e-08, 0, 1, 0, -5.96046e-08, 0, 1, 0, 0.177149, 0)
-shape = SubResource("ConcavePolygonShape3D_adeu3")
-
-[node name="CollisionShape3D2" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 5.96046e-08, 0, 1, 0, -5.96046e-08, 0, 1, 0, -0.324091, 0)
 shape = SubResource("ConcavePolygonShape3D_adeu3")
 
 [node name="Fill" type="MeshInstance3D" parent="."]

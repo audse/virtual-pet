@@ -2,10 +2,13 @@
 
 # V 1.0
 
+## Controls
+- [ ] Rotate camera
+
 ## Building
 - [x] Outer walls
-- [ ] Roof
-- [ ] Door
+- [ ] Flat roof
+- [ ] Door (archway)
 - [ ] Windows
 
 ## Animals
@@ -13,56 +16,49 @@
 	- [ ] Color
 	- [ ] Shape
 	- [ ] Personality
-- [ ] Colors potion
+- [ ] Colors (potion)
 - [ ] Personality
+- [ ] Needs
+- [ ] Wants
 
 ## Cooking
 - [-] Chop
 - [-] Mix
-- [ ] Sizzle
-- [ ] Potion
+- [ ] Potion (chop -> mix -> generate)
 
 ## Design
-### Inner walls
-- Wallpaper
-- Paint
-- Panelling
-
-### Floors
-- Wood
-- Carpet
-- Tile
-
-### Outer walls
-- Siding
-- Plaster/stucco
-- Concrete
-- Brick
-- Stone
-- Wood
-
-### Foundation
-- Brick
-- Stone
-- Wood
-- Concrete
-
+- [x] Outer walls
+- [x] Inner walls
+- [x] Floors
 
 ## Furniture
 ### Indoor
-### Outdoor
-
+- [ ] Pet beds
+- [ ] Lamps
+- [ ] Rugs
+- [ ] Wall art
+- [ ] Dishes
 
 ## World
 ### Foliage
 - [ ] Trees
 - [ ] Flowers
 
+## Meta
+### Economy
+### Settings
+### Mod/extension support
+
 
 # V 2.0
 
 ## Building
 - [ ] Inner walls / rooms
+- [ ] Outdoor furniture
+- [ ] Complex roofs (straight skeleton algorithm)
+- [ ] Non-arch doors
+- [ ] Foundation
 
 ## World
 - [ ] Paths
+- [ ] Bushes

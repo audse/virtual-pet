@@ -1,0 +1,36 @@
+[gd_resource type="StandardMaterial3D" load_steps=5 format=3 uid="uid://dytvfvosy03dm"]
+
+[ext_resource type="Shader" path="res://temp/underwater.gdshader" id="1_y8x4n"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_meo7c"]
+seed = 4
+frequency = 0.003
+fractal_octaves = 1
+fractal_lacunarity = 1.0
+cellular_jitter = 0.5
+cellular_return_type = 5
+domain_warp_type = 2
+domain_warp_amplitude = 2.0
+
+[sub_resource type="NoiseTexture" id="NoiseTexture_a6rsp"]
+width = 1024
+height = 1024
+in_3d_space = true
+seamless = true
+seamless_blend_skirt = 1.0
+noise = SubResource("FastNoiseLite_meo7c")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_iob5o"]
+render_priority = 0
+shader = ExtResource("1_y8x4n")
+noise = SubResource("NoiseTexture_a6rsp")
+noise_force = 0.008
+tint = Color(0.384314, 0.384314, 0.384314, 0.298039)
+wave_speed = 0.2
+
+[resource]
+render_priority = 1
+next_pass = SubResource("ShaderMaterial_iob5o")
+transparency = 1
+blend_mode = 1
+albedo_color = Color(0.470588, 0.470588, 0.470588, 0.85098)

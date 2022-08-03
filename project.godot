@@ -39,6 +39,11 @@ _global_script_classes=[{
 "language": &"GDScript",
 "path": "res://apps/map/nodes/cell_map/bits.gd"
 }, {
+"base": "StaticBody3D",
+"class": &"Bowl",
+"language": &"GDScript",
+"path": "res://apps/cooking/mixing/nodes/bowl.gd"
+}, {
 "base": "Object",
 "class": &"Cell",
 "language": &"GDScript",
@@ -249,6 +254,11 @@ _global_script_classes=[{
 "language": &"GDScript",
 "path": "res://apps/map/nodes/grid/uneven_grid_point.gd"
 }, {
+"base": "Node3D",
+"class": &"Utensil",
+"language": &"GDScript",
+"path": "res://apps/cooking/mixing/nodes/utensil.gd"
+}, {
 "base": "Object",
 "class": &"Utils",
 "language": &"GDScript",
@@ -276,6 +286,7 @@ _global_script_class_icons={
 "AnimProperty": "",
 "BitMask": "",
 "Bits": "",
+"Bowl": "res://apps/cooking/mixing/nodes/bowl.svg",
 "Cell": "",
 "CellMap": "res://apps/map/nodes/cell_map/cell_map_icon.svg",
 "CheckBoxButton": "",
@@ -318,6 +329,7 @@ _global_script_class_icons={
 "ToggleSwitch": "",
 "UnevenGrid": "",
 "UnevenPoint": "",
+"Utensil": "res://apps/cooking/mixing/nodes/utensil.svg",
 "Utils": "",
 "Vector2Ref": "",
 "Vector3Ref": "",

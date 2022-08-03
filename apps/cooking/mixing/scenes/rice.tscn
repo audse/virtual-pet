@@ -1,18 +1,31 @@
-[gd_scene load_steps=5 format=3 uid="uid://cpvj2e375k3y5"]
+[gd_scene load_steps=7 format=3 uid="uid://cpvj2e375k3y5"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_2t5gp"]
 friction = 0.25
 bounce = 0.25
 absorbent = true
 
+[sub_resource type="Gradient" id="Gradient_85kg3"]
+offsets = PackedFloat32Array(0.828025, 1)
+colors = PackedColorArray(1, 1, 1, 1, 0.918816, 0.918817, 0.918817, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_lkws6"]
+gradient = SubResource("Gradient_85kg3")
+width = 128
+height = 128
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.5, 1)
+
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_sf6n0"]
 shading_mode = 0
-albedo_color = Color(0.207843, 0.196078, 0.184314, 1)
+albedo_color = Color(0.890196, 0.890196, 0.890196, 1)
+albedo_texture = SubResource("GradientTexture2D_lkws6")
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_xks5k"]
 material = SubResource("StandardMaterial3D_sf6n0")
-radius = 0.12
-height = 0.6
+radius = 0.1
+height = 0.5
 radial_segments = 4
 rings = 2
 

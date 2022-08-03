@@ -56,8 +56,8 @@ var _last_pos: Vector2:
 func _ready() -> void:
 	if node and node is PhysicsBody3D:
 		node.input_event.connect(
-			func (_cam, event: InputEvent, _pos, _normal, _idx) -> void:
-				_area_input(event)
+			func (_cam, event: InputEvent, pos, _normal, _idx) -> void:
+				_area_input(event, pos)
 		)
 	if node and node is Control:
 		node.gui_input.connect(_area_input)
@@ -67,11 +67,10 @@ func _unhandled_input(event: InputEvent) -> void:
 	if is_dragging and event.is_action_released("tap"):
 		is_dragging = false
 
-
-func _area_input(event: InputEvent):
+func _area_input(event: InputEvent, pos_3d: Vector3 = Vector3.ZERO):
 	if disabled: return
 	if event is InputEventScreenTouch or event is InputEventScreenDrag:
-		if event.is_pressed() or event is InputEventScreenDrag: 
+		if event.is_pressed() or event is InputEventScreenDrag:
 			is_dragging = true
 			_drag_elapsed_frames += 1
 		else:
@@ -92,7 +91,8 @@ func _physics_process(_delta: float) -> void:
 			else:
 				var position := Vector3Ref.project_position_to_floor(
 					camera_3d, 
-					_last_pos + offset_from_mouse
+					_last_pos + offset_from_mouse,
+					[node]
 				)
 				if lock_x: position.x = _start_node_position_3d.x
 				if lock_y: position.y = _start_node_position_3d.y
@@ -100,7 +100,8 @@ func _physics_process(_delta: float) -> void:
 				target_position = offset_in_world + position
 			
 			if node is PhysicsBody3D and collide:
-				node.move_and_collide(target_position - node.position)
+				
+				node.move_and_collide(target_position - node.global_position)
 			else: node.position = target_position
 		
 		elif node is Control or node is Node2D:
@@ -111,6 +112,7 @@ func _physics_process(_delta: float) -> void:
 func start_drag() -> void:
 	drag_started.emit()
 	_start_pos = _last_pos
+	_drag_elapsed_frames = 0
 
 
 func end_drag() -> void:
@@ -118,7 +120,6 @@ func end_drag() -> void:
 	_start_pos = Vector2.ZERO
 	_last_pos = Vector2.ZERO
 	if _drag_elapsed_frames < 2: tapped.emit()
-	_drag_elapsed_frames = 0
 
 
 func get_pos() -> Vector2:

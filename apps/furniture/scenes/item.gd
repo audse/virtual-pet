@@ -29,13 +29,13 @@ var world_size: Vector3:
 
 var rect_size: Vector2:
 	get:
-		var deg: int = rad2deg(rotation.y)
-		var rect_size = (
+		var deg: int = rad2deg(rotation.y) as int
+		var rsize = (
 			Vector2(size.x, size.z) if deg == 0 or deg % 180 == 0
 			else Vector2(size.z, size.x)
 		)
-		if map: rect_size *= Vector2(map.grid.cell_size.x, map.grid.cell_size.z)
-		return rect_size
+		if map: rsize *= Vector2(map.grid.cell_size.x, map.grid.cell_size.z)
+		return rsize
 
 var rect_pos: Vector2:
 	get:
@@ -58,7 +58,10 @@ func _ready() -> void:
 	add_to_group("FurnitureItems")
 
 
+var _start_pos: Vector3
+
 func _on_drag_started() -> void:
+	_start_pos = map_pos
 	if rect:
 		rect.rect.size = rect_size
 		rect.thickness_to(0.02)
@@ -76,14 +79,15 @@ func _on_drag_ended() -> void:
 	var tween := _tween()
 	tween.tween_property(self, "position", Vector3(map_pos.x, 0, map_pos.z), 0.25)
 	if rect:
-		rect.rect.size = rect_size
 		await rect.thickness_to(0.0)
 
 
 func _on_tapped() -> void:
-	var tween := _tween()
-	tween.tween_property(self, "rotation:y", rotation.y + deg2rad(90), 0.25)
-	tween.tween_property(self, "position", Vector3(map_pos.x, 0, map_pos.z), 0.25)
+	if abs(_start_pos.distance_to(map_pos)) < 0.25:
+		var tween := _tween()
+		tween.tween_property(self, "rotation:y", rotation.y + deg2rad(90), 0.15)
+		tween.tween_property(self, "rect:rect:size", Vector2(rect.rect.size.y, rect.rect.size.x), 0.15)
+		tween.chain().tween_property(self, "position", Vector3(map_pos.x, 0, map_pos.z), 0.15)
 
 
 func _tween(easing: int = Tween.EASE_IN_OUT) -> Tween:

@@ -1,0 +1,68 @@
+[gd_scene load_steps=7 format=3 uid="uid://do1urx5tbfjas"]
+
+[ext_resource type="PackedScene" uid="uid://b6dya0dbxdg1f" path="res://environment/scenes/environment.tscn" id="1_0j80b"]
+[ext_resource type="ArrayMesh" uid="uid://putuhy81wxmr" path="res://apps/building/assets/tile_sets/building_01/meshes/building_02_edge_tile.obj" id="2_5ps1v"]
+[ext_resource type="Shader" path="res://static/shaders/mesh_distort.gdshader" id="3_068sf"]
+[ext_resource type="ArrayMesh" uid="uid://caq52ynhglstt" path="res://apps/building/assets/tile_sets/building_01/meshes/building_02_center_tile.obj" id="3_brs2y"]
+[ext_resource type="ArrayMesh" uid="uid://d2n73kmxajjpo" path="res://apps/building/assets/tile_sets/building_01/meshes/building_02_corner_tile.obj" id="4_te42v"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_pqnpl"]
+render_priority = 0
+shader = ExtResource("3_068sf")
+steps = 0.0
+seed = 1
+max_distort = Vector3(0, 0, 0)
+_albedo_color = Color(1, 1, 1, 1)
+_specular = 0.5
+_roughness = 1.0
+_metallic = null
+_ao_light_effect = 0.5
+_ao = 0.5
+_normal_strength = 0.0
+_uv1_offset = null
+_uv1_scale = null
+_uv2_offset = null
+_uv2_scale = null
+
+[node name="Node3D" type="Node3D"]
+
+[node name="Environment" parent="." instance=ExtResource("1_0j80b")]
+
+[node name="Edge" type="MeshInstance3D" parent="."]
+mesh = ExtResource("2_5ps1v")
+surface_material_override/0 = SubResource("ShaderMaterial_pqnpl")
+surface_material_override/1 = SubResource("ShaderMaterial_pqnpl")
+surface_material_override/2 = SubResource("ShaderMaterial_pqnpl")
+
+[node name="Edge2" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 0)
+mesh = ExtResource("2_5ps1v")
+surface_material_override/0 = SubResource("ShaderMaterial_pqnpl")
+surface_material_override/1 = SubResource("ShaderMaterial_pqnpl")
+surface_material_override/2 = SubResource("ShaderMaterial_pqnpl")
+
+[node name="Edge3" type="MeshInstance3D" parent="."]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -2, 0, -2)
+mesh = ExtResource("2_5ps1v")
+surface_material_override/0 = SubResource("ShaderMaterial_pqnpl")
+surface_material_override/1 = SubResource("ShaderMaterial_pqnpl")
+surface_material_override/2 = SubResource("ShaderMaterial_pqnpl")
+
+[node name="Center" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, -2)
+mesh = ExtResource("3_brs2y")
+surface_material_override/0 = SubResource("ShaderMaterial_pqnpl")
+
+[node name="Center2" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2)
+mesh = ExtResource("3_brs2y")
+surface_material_override/0 = SubResource("ShaderMaterial_pqnpl")
+
+[node name="Corner" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, 0)
+mesh = ExtResource("4_te42v")
+surface_material_override/0 = SubResource("ShaderMaterial_pqnpl")
+surface_material_override/1 = SubResource("ShaderMaterial_pqnpl")
+surface_material_override/2 = SubResource("ShaderMaterial_pqnpl")
+
+[node name="CSGCombiner3D" type="CSGCombiner3D" parent="."]

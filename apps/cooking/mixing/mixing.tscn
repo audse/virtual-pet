@@ -1,18 +1,44 @@
-[gd_scene load_steps=7 format=3 uid="uid://2xpyyatc1k4k"]
+[gd_scene load_steps=14 format=3 uid="uid://bay5g54xkrxup"]
 
 [ext_resource type="Script" path="res://apps/cooking/mixing/mixing.gd" id="1_fkmqa"]
-[ext_resource type="PackedScene" uid="uid://l4kbab42quex" path="res://apps/cooking/mixing/scenes/mixing_bowl.tscn" id="3_23n1w"]
+[ext_resource type="PackedScene" uid="uid://iqe4w2faqnb5" path="res://apps/cooking/mixing/scenes/bowls/pot.tscn" id="4_q71jr"]
 [ext_resource type="PackedScene" uid="uid://cpvj2e375k3y5" path="res://apps/cooking/mixing/scenes/rice.tscn" id="5_i263g"]
-[ext_resource type="PackedScene" uid="uid://bqgvjcmg55mre" path="res://apps/cooking/mixing/scenes/wooden_spoon.tscn" id="6_pgyp7"]
+[ext_resource type="PackedScene" uid="uid://dy8kuqmc4gsn1" path="res://apps/cooking/mixing/scenes/utensils/wooden_spoon.tscn" id="6_pgyp7"]
+[ext_resource type="Texture2D" uid="uid://b2wlpdrmebfdu" path="res://temp/cooked_rice_texture/food_0015_color_1k.jpg" id="6_tr1bp"]
 [ext_resource type="PackedScene" uid="uid://b6dya0dbxdg1f" path="res://environment/scenes/environment.tscn" id="7_5a356"]
+[ext_resource type="Texture2D" uid="uid://biixlp3fyfvke" path="res://temp/cooked_rice_texture/food_0015_ao_1k.jpg" id="7_oh0lc"]
+[ext_resource type="Texture2D" uid="uid://b7sx62ed6ixnv" path="res://temp/cooked_rice_texture/food_0015_height_1k.png" id="8_nl5dj"]
+[ext_resource type="Texture2D" uid="uid://bj0tnekcw8ve4" path="res://temp/cooked_rice_texture/food_0015_normal_opengl_1k.png" id="9_sp7ah"]
+[ext_resource type="Texture2D" uid="uid://caj2liq0xdgvm" path="res://temp/cooked_rice_texture/food_0015_subsurface_1k.jpg" id="10_1lgua"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_s5yhq"]
 size = Vector3(8, 3, 8)
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rq6tn"]
+albedo_color = Color(0.803922, 0.8, 0.8, 1)
+albedo_texture = ExtResource("6_tr1bp")
+normal_enabled = true
+normal_texture = ExtResource("9_sp7ah")
+ao_enabled = true
+ao_light_affect = 1.0
+ao_texture = ExtResource("7_oh0lc")
+heightmap_texture = ExtResource("8_nl5dj")
+subsurf_scatter_enabled = true
+subsurf_scatter_strength = 1.0
+subsurf_scatter_texture = ExtResource("10_1lgua")
+
+[sub_resource type="SphereMesh" id="SphereMesh_igosb"]
+material = SubResource("StandardMaterial3D_rq6tn")
+radius = 3.0
+height = 0.6
+radial_segments = 10
+rings = 10
+is_hemisphere = true
+
 [node name="Mixing" type="Node3D"]
 script = ExtResource("1_fkmqa")
 utensil_path = NodePath("WoodenSpoon")
-container_path = NodePath("MixingBowl")
+container_path = NodePath("Pot")
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(0.642788, -0.586824, 0.492403, 0, 0.642787, 0.766045, -0.766044, -0.492404, 0.413176, 6, 12.5, 5)
@@ -34,22 +60,58 @@ shape = SubResource("BoxShape3D_s5yhq")
 
 [node name="WoodenSpoon" parent="." instance=ExtResource("6_pgyp7")]
 
-[node name="MixingBowl" parent="." instance=ExtResource("3_23n1w")]
+[node name="Pot" parent="." instance=ExtResource("4_q71jr")]
+
+[node name="RiceBall" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.596694, 0)
+mesh = SubResource("SphereMesh_igosb")
 
 [node name="Rice" parent="." instance=ExtResource("5_i263g")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.40601, 0.865601, -0.659241)
-visible = false
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.69008, 0.675714, -1.15944)
 
 [node name="Rice2" parent="." instance=ExtResource("5_i263g")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.40601, 0.865601, -0.659241)
-visible = false
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.917184, 0.675714, 0.339262)
 
 [node name="Rice3" parent="." instance=ExtResource("5_i263g")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.40601, 0.865601, -0.659241)
-visible = false
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.449606, 0.675714, 0.149646)
 
 [node name="Rice4" parent="." instance=ExtResource("5_i263g")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.40601, 0.865601, -0.659241)
-visible = false
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.01582, 0.675714, 0.307686)
+
+[node name="Rice5" parent="." instance=ExtResource("5_i263g")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.40601, 0.675714, -0.659241)
+
+[node name="Rice6" parent="." instance=ExtResource("5_i263g")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.68142, 0.675714, 0.222599)
+
+[node name="Rice7" parent="." instance=ExtResource("5_i263g")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.413242, 0.675714, -2.4593)
+
+[node name="Rice8" parent="." instance=ExtResource("5_i263g")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.40601, 0.675714, -0.659241)
+
+[node name="Rice9" parent="." instance=ExtResource("5_i263g")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.40601, 0.675714, -0.659241)
+
+[node name="Rice10" parent="." instance=ExtResource("5_i263g")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.40601, 0.675714, -0.659241)
+
+[node name="Rice11" parent="." instance=ExtResource("5_i263g")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.40601, 0.675714, -0.659241)
+
+[node name="Rice12" parent="." instance=ExtResource("5_i263g")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.188034, 0.675714, -1.29922)
+
+[node name="Rice13" parent="." instance=ExtResource("5_i263g")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.188034, 1.84357, -1.29922)
+
+[node name="Rice14" parent="." instance=ExtResource("5_i263g")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.188034, 1.84357, -1.29922)
+
+[node name="Rice15" parent="." instance=ExtResource("5_i263g")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.188034, 1.58764, -1.29922)
+
+[node name="Rice16" parent="." instance=ExtResource("5_i263g")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.40601, 1.84357, -0.659241)
 
 [connection signal="input_event" from="InputArea" to="." method="_on_input_area_event"]
