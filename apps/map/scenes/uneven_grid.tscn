@@ -1,9 +1,10 @@
-[gd_scene load_steps=31 format=3 uid="uid://dui0t6vapx0xy"]
+[gd_scene load_steps=33 format=3 uid="uid://dui0t6vapx0xy"]
 
 [ext_resource type="Script" path="res://apps/map/scenes/uneven_grid.gd" id="1_nh8qm"]
 [ext_resource type="Script" path="res://apps/map/nodes/cell_map/cell_map.gd" id="2_c2lv2"]
 [ext_resource type="Script" path="res://apps/map/nodes/guide/guide_map.gd" id="2_yhlvb"]
 [ext_resource type="Script" path="res://apps/interface/placement/placement.gd" id="3_s4uet"]
+[ext_resource type="Script" path="res://utils/nodes/iso_camera.gd" id="3_tx6ct"]
 [ext_resource type="PackedScene" uid="uid://b6dya0dbxdg1f" path="res://environment/scenes/environment.tscn" id="6_uc22u"]
 [ext_resource type="PackedScene" uid="uid://duklyahfnuqrq" path="res://apps/interface/interface.tscn" id="7_6t2cm"]
 [ext_resource type="Script" path="res://apps/map/nodes/grid/uneven_grid.gd" id="8_s7iql"]
@@ -57,6 +58,9 @@ metallic_specular = 0.0
 material = SubResource("StandardMaterial3D_t7ecs")
 size = Vector2(100, 100)
 
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_wy6xf"]
+points = PackedVector3Array(-50, 0, -50, -50, 0, 50, 50, 0, -50, 50, 0, 50)
+
 [sub_resource type="Gradient" id="Gradient_2cwlf"]
 interpolation_mode = 1
 offsets = PackedFloat32Array(0, 0.450928, 0.586331)
@@ -109,6 +113,8 @@ transform = Transform3D(0.766045, -0.413176, 0.492404, 0, 0.766044, 0.642788, -0
 projection = 1
 current = true
 size = 22.0
+script = ExtResource("3_tx6ct")
+disable_rotation = null
 
 [node name="PlacementRect" type="CSGPolygon3D" parent="."]
 unique_name_in_owner = true
@@ -141,8 +147,14 @@ shape = SubResource("BoxShape3D_on456")
 [node name="Interface" parent="CanvasLayer" instance=ExtResource("7_6t2cm")]
 unique_name_in_owner = true
 
-[node name="Floor" type="MeshInstance3D" parent="."]
+[node name="Area3D" type="Area3D" parent="."]
+
+[node name="Floor" type="MeshInstance3D" parent="Area3D"]
 mesh = SubResource("PlaneMesh_t2roi")
+skeleton = NodePath("../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("ConvexPolygonShape3D_wy6xf")
 
 [node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
 transform = Transform3D(0.34202, 0, 0.939693, 0, 1, 0, -0.939693, 0, 0.34202, -10, 0, -10)

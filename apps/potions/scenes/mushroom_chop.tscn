@@ -1,0 +1,53 @@
+[gd_scene load_steps=8 format=3 uid="uid://duydy8408af7d"]
+
+[ext_resource type="PackedScene" uid="uid://dj05sufvsjbu0" path="res://apps/potions/scenes/mushroom.tscn" id="1_keqya"]
+[ext_resource type="Script" path="res://apps/potions/scenes/mushroom_chop.gd" id="1_u32ff"]
+[ext_resource type="PackedScene" uid="uid://b6dya0dbxdg1f" path="res://environment/scenes/environment.tscn" id="2_od0x8"]
+[ext_resource type="PackedScene" uid="uid://658iuoqddw7i" path="res://apps/cooking/mixing/scenes/utensils/knife.tscn" id="4_4y7xh"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_ytq8o"]
+rough = true
+absorbent = true
+
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_v0dyo"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_6pgms"]
+size = Vector3(10, 0.5, 10)
+
+[node name="ChopMushroom" type="Node3D"]
+script = ExtResource("1_u32ff")
+
+[node name="Floor" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1, 0)
+input_ray_pickable = false
+physics_material_override = SubResource("PhysicsMaterial_ytq8o")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor"]
+shape = SubResource("WorldBoundaryShape3D_v0dyo")
+
+[node name="Mushroom" parent="." instance=ExtResource("1_keqya")]
+transform = Transform3D(-0.485148, 0.120961, -0.866025, 0.241922, 0.970296, 0, 0.840301, -0.209511, -0.5, -1, 1.4, 2)
+chop_force = Vector3(0.5, 0.25, 0)
+grow_bounds = 0.5
+
+[node name="Environment" parent="." instance=ExtResource("2_od0x8")]
+
+[node name="Knife" parent="." instance=ExtResource("4_4y7xh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(0.766044, -0.413176, 0.492404, 0, 0.766044, 0.642788, -0.642788, -0.492404, 0.586824, 4, 7, 6)
+projection = 1
+current = true
+size = 8.0
+
+[node name="InputArea" type="Area3D" parent="."]
+collision_layer = 16
+collision_mask = 16
+priority = 1.0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="InputArea"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.10538, 0)
+shape = SubResource("BoxShape3D_6pgms")
+
+[connection signal="input_event" from="InputArea" to="." method="_on_input_area_event"]

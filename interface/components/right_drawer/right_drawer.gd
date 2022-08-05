@@ -90,7 +90,7 @@ func _create_ref_rect() -> ReferenceRect:
 	add_child(new_rect)
 	new_rect.visible = show_reference_rect
 	new_rect.name = REF_RECT_NODE
-	new_rect.set_anchors_and_offsets_preset(Control.PRESET_WIDE)
+	new_rect.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	new_rect.border_width = 3
 	new_rect.mouse_filter = MOUSE_FILTER_IGNORE
 	return new_rect

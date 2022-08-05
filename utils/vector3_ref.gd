@@ -39,8 +39,9 @@ static func to_rect3(rect: Rect2, ignore_axis = "y") -> Dictionary:
 
 
 static func project_position_to_floor(camera: Camera3D, pos: Vector2, exclude: Array = []) -> Vector3:
+	# NOTE: (since I know I will forget again)
+	# If `direct_space_state` is null, that means this call needs to go in `physics_process`
 	var origin := camera.project_ray_origin(pos)
-	var direction := camera.project_ray_normal(pos)
 	
 	var space_state := camera.get_world_3d().direct_space_state
 	var query := PhysicsRayQueryParameters3D.new()

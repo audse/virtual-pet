@@ -1,40 +1,46 @@
 class_name ChopSlice
-extends CSGMesh3D
+extends RigidDynamicBody3D
 @icon("slice.svg")
 
-## the amount that this object will slide horizontally with each chop
-@export var slide_amount: float = 0.1
+const COLLISION_OVERLAP := 0.005
+enum AutoCollisionShape {
+	NONE,
+	CYLINDER
+}
 
-## the amount that this object will slide vertically (bounce) with each chop
-@export var bounce_amount: float = 0.1
+## if `true`, the `linear_damp` property will automatically be calculated
+## from the inverse of the mass (so lighter objects will have more dampening)
+@export var calculate_damp_from_mass := true
+@export var damp_range := Vector2(1, 6)
 
-## the amount that this object is hovering above ground (e.g. the amount it will fall when chopped)
-@export var hover_amount: float = 0.0
+## creates a cylinder collision shape sibling (assumes the mesh is vertical, with slices stacked)
+## NEEDS WORK ...
+@export var auto_collision_shape: AutoCollisionShape = AutoCollisionShape.CYLINDER
 
-## the amount that this object will rotate with each chop
-@export var rotation_amount: int = 5
-
-## the amount that this object will need to fall upon each rotation
-@export var rotation_hover_offset_amount: float = 0.0
-
-func chop() -> void:
-	var tween := tweener()
-	tween.tween_property(self, "position:z", position.z - slide_amount, 0.25)
-	tween.tween_property(self, "rotation:x", rotation.x + deg2rad(rotation_amount), 0.25)
-	tween.tween_property(self, "position:y", position.y - rotation_hover_offset_amount, 0.15)
+@onready var mesh := get_child(0) as MeshInstance3D
 
 
-func bounce() -> void:
-	var tween := tweener()
-	tween.tween_property(self, "position:y", position.y + bounce_amount, 0.15)
-	tween.chain().tween_property(self, "position:y", position.y - hover_amount, 0.15)
+func _ready() -> void:
+	match auto_collision_shape:
+		AutoCollisionShape.CYLINDER:
+			var bounds := mesh.get_transformed_aabb()
+			var shape := CollisionShape3D.new()
+			shape.shape = CylinderShape3D.new()
+			shape.position = bounds.position
+			shape.shape.height = bounds.size.y - COLLISION_OVERLAP
+			shape.shape.radius = bounds.size.x / 2 - COLLISION_OVERLAP
+			add_child(shape)
+	
+	freeze = true
+	collision_layer = -1
+	collision_mask = -1
+	
+	if calculate_damp_from_mass:
+		linear_damp = lerp(damp_range.x, damp_range.y, 1.0 - mass)
 
 
-func tweener() -> Tween:
-	return (
-		get_tree()
-			.create_tween()
-			.set_ease(Tween.EASE_IN_OUT)
-			.set_trans(Tween.TRANS_SINE)
-			.set_parallel(true)
-	)
+func chop(chop_force: Vector3, target_collision_layer := 1) -> void:
+	freeze = false
+	collision_layer = target_collision_layer
+	collision_mask = target_collision_layer
+	apply_central_impulse(chop_force)

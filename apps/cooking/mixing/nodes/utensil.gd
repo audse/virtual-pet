@@ -4,6 +4,7 @@ extends Node3D
 
 
 @export var motion_rotation := Vector3i(10, 10, 20)
+@export var start_rotation := Vector3(0, 60, 170)
 
 @onready var body := $Body as RigidDynamicBody3D
 @onready var collider := $Collider as Area3D
@@ -19,9 +20,9 @@ func _ready() -> void:
 
 
 func _process(_d: float) -> void:
-	body.rotation.z = deg2rad(170) + deg2rad(motion_rotation.z) * body.position.x
-	body.rotation.y = deg2rad(60) - deg2rad(motion_rotation.y) * body.position.z
-	body.rotation.x = lerp(0, deg2rad(-motion_rotation.x), body.position.z)
+	body.rotation.z = deg2rad(start_rotation.z) + deg2rad(motion_rotation.z) * body.position.x
+	body.rotation.y = deg2rad(start_rotation.y) - deg2rad(motion_rotation.y) * body.position.z
+	body.rotation.x = deg2rad(start_rotation.x) + lerp(0, deg2rad(-motion_rotation.x), body.position.z)
 	
 	collider.position = body.position
 

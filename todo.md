@@ -3,7 +3,9 @@
 # V 1.0
 
 ## Controls
-- [ ] Rotate camera
+- [-] Rotate camera
+- [-] Translate camera
+	- [ ] Edge scroll
 
 ## Building
 - [x] Outer walls

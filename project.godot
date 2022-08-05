@@ -59,12 +59,12 @@ _global_script_classes=[{
 "language": &"GDScript",
 "path": "res://interface/components/checkbox_button.gd"
 }, {
-"base": "CSGMesh3D",
+"base": "RigidDynamicBody3D",
 "class": &"ChopSlice",
 "language": &"GDScript",
 "path": "res://apps/cooking/chopping/slice.gd"
 }, {
-"base": "CSGCombiner3D",
+"base": "Node3D",
 "class": &"Choppable",
 "language": &"GDScript",
 "path": "res://apps/cooking/chopping/choppable.gd"
@@ -113,6 +113,11 @@ _global_script_classes=[{
 "class": &"GuideMap",
 "language": &"GDScript",
 "path": "res://apps/map/nodes/guide/guide_map.gd"
+}, {
+"base": "Camera3D",
+"class": &"IsoCamera",
+"language": &"GDScript",
+"path": "res://utils/nodes/iso_camera.gd"
 }, {
 "base": "Node",
 "class": &"MapState",
@@ -301,6 +306,7 @@ _global_script_class_icons={
 "FontStyleSheet": "",
 "GradientNoiseRect": "res://utils/nodes/noise_rect.svg",
 "GuideMap": "",
+"IsoCamera": "",
 "MapState": "",
 "Math": "",
 "MeshDataToolPlus": "",
@@ -428,3 +434,4 @@ global_illumination/sdfgi/frames_to_converge=1
 global_illumination/sdfgi/frames_to_update_lights=3
 anti_aliasing/quality/screen_space_aa=1
 anti_aliasing/quality/use_debanding=true
+environment/defaults/default_environment="res://environment/assets/environment.tres"

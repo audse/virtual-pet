@@ -1,0 +1,80 @@
+[gd_scene load_steps=12 format=3 uid="uid://658iuoqddw7i"]
+
+[ext_resource type="Script" path="res://apps/cooking/mixing/nodes/utensil.gd" id="1_rqe38"]
+[ext_resource type="ArrayMesh" uid="uid://hn68ijd3mhm0" path="res://apps/cooking/assets/meshes/knife.obj" id="3_gcsfw"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_r31j0"]
+friction = 0.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hhhfh"]
+diffuse_mode = 2
+albedo_color = Color(0.243137, 0.243137, 0.243137, 1)
+
+[sub_resource type="Gradient" id="Gradient_kiify"]
+colors = PackedColorArray(0.545098, 0.545098, 0.545098, 1, 0.611765, 0.611765, 0.611765, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_hjtu7"]
+noise_type = 2
+frequency = 0.015
+fractal_octaves = 2
+cellular_jitter = 1.0
+cellular_return_type = 0
+
+[sub_resource type="NoiseTexture" id="NoiseTexture_thvlp"]
+color_ramp = SubResource("Gradient_kiify")
+noise = SubResource("FastNoiseLite_hjtu7")
+
+[sub_resource type="Gradient" id="Gradient_lq4bt"]
+colors = PackedColorArray(0.788235, 0.788235, 0.788235, 1, 1, 1, 1, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_acqjw"]
+noise_type = 2
+cellular_return_type = 0
+
+[sub_resource type="NoiseTexture" id="NoiseTexture_j52qj"]
+as_normal_map = true
+bump_strength = 16.0
+color_ramp = SubResource("Gradient_lq4bt")
+noise = SubResource("FastNoiseLite_acqjw")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_sclyu"]
+albedo_texture = SubResource("NoiseTexture_thvlp")
+metallic = 1.0
+roughness = 0.7
+normal_enabled = true
+normal_texture = SubResource("NoiseTexture_j52qj")
+
+[node name="Knife" type="Node3D"]
+transform = Transform3D(1.25, 0, 0, 0, 1.25, 0, 0, 0, 1.25, 0, 0, 0)
+script = ExtResource("1_rqe38")
+motion_rotation = Vector3i(10, 3, 0)
+start_rotation = Vector3(0, 0, 0)
+
+[node name="Collider" type="Area3D" parent="."]
+transform = Transform3D(-0.383022, -0.321394, 0.866025, 0.642787, -0.766044, 3.91029e-08, 0.663414, 0.55667, 0.5, 0.5, 1.67164, -1)
+input_ray_pickable = false
+
+[node name="Body" type="RigidDynamicBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+collision_layer = 8
+collision_mask = 8
+input_ray_pickable = false
+axis_lock_linear_y = true
+axis_lock_angular_x = true
+axis_lock_angular_y = true
+axis_lock_angular_z = true
+physics_material_override = SubResource("PhysicsMaterial_r31j0")
+lock_rotation = true
+
+[node name="Knife" type="MeshInstance3D" parent="Body"]
+transform = Transform3D(1.08253, 0, -0.625, 0, 1.25, 0, 0.625, 0, 1.08253, 0.5, 0.5, 0)
+mesh = ExtResource("3_gcsfw")
+surface_material_override/0 = SubResource("StandardMaterial3D_hhhfh")
+surface_material_override/1 = SubResource("StandardMaterial3D_sclyu")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(0.612836, -0.330541, 0.393923, 0, 0.612836, 0.51423, -0.51423, -0.393923, 0.469459, 4, 7, 6)
+projection = 1
+size = 8.0
+
+[connection signal="body_entered" from="Collider" to="." method="_on_collider_body_entered"]
