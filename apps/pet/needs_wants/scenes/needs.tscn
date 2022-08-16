@@ -1,0 +1,403 @@
+[gd_scene load_steps=5 format=3 uid="uid://nbk3dbbr34pd"]
+
+[ext_resource type="Script" path="res://apps/pet/needs_wants/scenes/needs.gd" id="1_n8sn1"]
+[ext_resource type="Script" path="res://interface/components/pill_range.gd" id="1_wu1tp"]
+[ext_resource type="Script" path="res://apps/pet/needs_wants/data/needs_data.gd" id="2_g6to0"]
+
+[sub_resource type="Resource" id="Resource_2trfm"]
+script = ExtResource("2_g6to0")
+activity = 0.5
+comfort = 0.2
+hunger = 0.75
+hygiene = 0.35
+sleep = 0.85
+
+[node name="Needs" type="HBoxContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource("1_n8sn1")
+needs_data = SubResource("Resource_2trfm")
+
+[node name="ActivityContainer" type="VBoxContainer" parent="."]
+offset_right = 146.0
+offset_bottom = 1792.0
+size_flags_horizontal = 3
+
+[node name="ActivityRange" type="Range" parent="ActivityContainer"]
+_import_path = NodePath("")
+unique_name_in_owner = true
+process_mode = 0
+process_priority = 0
+editor_description = ""
+visible = true
+modulate = Color(1, 1, 1, 1)
+self_modulate = Color(1, 1, 1, 1)
+show_behind_parent = false
+top_level = false
+clip_children = false
+light_mask = 1
+texture_filter = 0
+texture_repeat = 0
+material = null
+use_parent_material = false
+clip_contents = false
+custom_minimum_size = Vector2(0, 0)
+layout_direction = 0
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 146.0
+offset_bottom = 1711.0
+grow_horizontal = 1
+grow_vertical = 1
+rotation = 0.0
+scale = Vector2(1, 1)
+pivot_offset = Vector2(0, 0)
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 1.0
+auto_translate = true
+hint_tooltip = ""
+focus_neighbor_left = NodePath("")
+focus_neighbor_top = NodePath("")
+focus_neighbor_right = NodePath("")
+focus_neighbor_bottom = NodePath("")
+focus_next = NodePath("")
+focus_previous = NodePath("")
+focus_mode = 0
+mouse_filter = 0
+mouse_force_pass_scroll_events = true
+mouse_default_cursor_shape = 0
+theme = null
+theme_type_variation = &""
+min_value = 0.0
+max_value = 1.0
+step = 0.1
+page = 0.0
+value = 0.0
+exp_edit = false
+rounded = false
+allow_greater = false
+allow_lesser = false
+script = ExtResource("1_wu1tp")
+direction = 1
+inverted = true
+disabled = true
+
+[node name="Label" type="Label" parent="ActivityContainer"]
+offset_top = 1735.0
+offset_right = 146.0
+offset_bottom = 1792.0
+text = "Activity"
+horizontal_alignment = 1
+
+[node name="ComfortContainer" type="VBoxContainer" parent="."]
+offset_left = 170.0
+offset_right = 316.0
+offset_bottom = 1792.0
+size_flags_horizontal = 3
+
+[node name="ComfortRange" type="Range" parent="ComfortContainer"]
+_import_path = NodePath("")
+unique_name_in_owner = true
+process_mode = 0
+process_priority = 0
+editor_description = ""
+visible = true
+modulate = Color(1, 1, 1, 1)
+self_modulate = Color(1, 1, 1, 1)
+show_behind_parent = false
+top_level = false
+clip_children = false
+light_mask = 1
+texture_filter = 0
+texture_repeat = 0
+material = null
+use_parent_material = false
+clip_contents = false
+custom_minimum_size = Vector2(0, 0)
+layout_direction = 0
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 146.0
+offset_bottom = 1711.0
+grow_horizontal = 1
+grow_vertical = 1
+rotation = 0.0
+scale = Vector2(1, 1)
+pivot_offset = Vector2(0, 0)
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 1.0
+auto_translate = true
+hint_tooltip = ""
+focus_neighbor_left = NodePath("")
+focus_neighbor_top = NodePath("")
+focus_neighbor_right = NodePath("")
+focus_neighbor_bottom = NodePath("")
+focus_next = NodePath("")
+focus_previous = NodePath("")
+focus_mode = 0
+mouse_filter = 0
+mouse_force_pass_scroll_events = true
+mouse_default_cursor_shape = 0
+theme = null
+theme_type_variation = &""
+min_value = 0.0
+max_value = 1.0
+step = 0.1
+page = 0.0
+value = 0.0
+exp_edit = false
+rounded = false
+allow_greater = false
+allow_lesser = false
+script = ExtResource("1_wu1tp")
+direction = 1
+inverted = true
+disabled = true
+
+[node name="Label" type="Label" parent="ComfortContainer"]
+offset_top = 1735.0
+offset_right = 146.0
+offset_bottom = 1792.0
+text = "Comfort"
+horizontal_alignment = 1
+
+[node name="HungerContainer" type="VBoxContainer" parent="."]
+offset_left = 340.0
+offset_right = 487.0
+offset_bottom = 1792.0
+size_flags_horizontal = 3
+
+[node name="HungerRange" type="Range" parent="HungerContainer"]
+_import_path = NodePath("")
+unique_name_in_owner = true
+process_mode = 0
+process_priority = 0
+editor_description = ""
+visible = true
+modulate = Color(1, 1, 1, 1)
+self_modulate = Color(1, 1, 1, 1)
+show_behind_parent = false
+top_level = false
+clip_children = false
+light_mask = 1
+texture_filter = 0
+texture_repeat = 0
+material = null
+use_parent_material = false
+clip_contents = false
+custom_minimum_size = Vector2(0, 0)
+layout_direction = 0
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 147.0
+offset_bottom = 1711.0
+grow_horizontal = 1
+grow_vertical = 1
+rotation = 0.0
+scale = Vector2(1, 1)
+pivot_offset = Vector2(0, 0)
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 1.0
+auto_translate = true
+hint_tooltip = ""
+focus_neighbor_left = NodePath("")
+focus_neighbor_top = NodePath("")
+focus_neighbor_right = NodePath("")
+focus_neighbor_bottom = NodePath("")
+focus_next = NodePath("")
+focus_previous = NodePath("")
+focus_mode = 0
+mouse_filter = 0
+mouse_force_pass_scroll_events = true
+mouse_default_cursor_shape = 0
+theme = null
+theme_type_variation = &""
+min_value = 0.0
+max_value = 1.0
+step = 0.1
+page = 0.0
+value = 0.0
+exp_edit = false
+rounded = false
+allow_greater = false
+allow_lesser = false
+script = ExtResource("1_wu1tp")
+direction = 1
+inverted = true
+disabled = true
+
+[node name="Label" type="Label" parent="HungerContainer"]
+offset_top = 1735.0
+offset_right = 147.0
+offset_bottom = 1792.0
+text = "Hunger"
+horizontal_alignment = 1
+
+[node name="HygieneContainer" type="VBoxContainer" parent="."]
+offset_left = 511.0
+offset_right = 657.0
+offset_bottom = 1792.0
+size_flags_horizontal = 3
+
+[node name="HygieneRange" type="Range" parent="HygieneContainer"]
+_import_path = NodePath("")
+unique_name_in_owner = true
+process_mode = 0
+process_priority = 0
+editor_description = ""
+visible = true
+modulate = Color(1, 1, 1, 1)
+self_modulate = Color(1, 1, 1, 1)
+show_behind_parent = false
+top_level = false
+clip_children = false
+light_mask = 1
+texture_filter = 0
+texture_repeat = 0
+material = null
+use_parent_material = false
+clip_contents = false
+custom_minimum_size = Vector2(0, 0)
+layout_direction = 0
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 146.0
+offset_bottom = 1711.0
+grow_horizontal = 1
+grow_vertical = 1
+rotation = 0.0
+scale = Vector2(1, 1)
+pivot_offset = Vector2(0, 0)
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 1.0
+auto_translate = true
+hint_tooltip = ""
+focus_neighbor_left = NodePath("")
+focus_neighbor_top = NodePath("")
+focus_neighbor_right = NodePath("")
+focus_neighbor_bottom = NodePath("")
+focus_next = NodePath("")
+focus_previous = NodePath("")
+focus_mode = 0
+mouse_filter = 0
+mouse_force_pass_scroll_events = true
+mouse_default_cursor_shape = 0
+theme = null
+theme_type_variation = &""
+min_value = 0.0
+max_value = 1.0
+step = 0.1
+page = 0.0
+value = 0.0
+exp_edit = false
+rounded = false
+allow_greater = false
+allow_lesser = false
+script = ExtResource("1_wu1tp")
+direction = 1
+inverted = true
+disabled = true
+
+[node name="Label" type="Label" parent="HygieneContainer"]
+offset_top = 1735.0
+offset_right = 146.0
+offset_bottom = 1792.0
+text = "Hygiene"
+horizontal_alignment = 1
+
+[node name="SleepContainer" type="VBoxContainer" parent="."]
+offset_left = 681.0
+offset_right = 828.0
+offset_bottom = 1792.0
+size_flags_horizontal = 3
+
+[node name="SleepRange" type="Range" parent="SleepContainer"]
+_import_path = NodePath("")
+unique_name_in_owner = true
+process_mode = 0
+process_priority = 0
+editor_description = ""
+visible = true
+modulate = Color(1, 1, 1, 1)
+self_modulate = Color(1, 1, 1, 1)
+show_behind_parent = false
+top_level = false
+clip_children = false
+light_mask = 1
+texture_filter = 0
+texture_repeat = 0
+material = null
+use_parent_material = false
+clip_contents = false
+custom_minimum_size = Vector2(0, 0)
+layout_direction = 0
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 147.0
+offset_bottom = 1711.0
+grow_horizontal = 1
+grow_vertical = 1
+rotation = 0.0
+scale = Vector2(1, 1)
+pivot_offset = Vector2(0, 0)
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 1.0
+auto_translate = true
+hint_tooltip = ""
+focus_neighbor_left = NodePath("")
+focus_neighbor_top = NodePath("")
+focus_neighbor_right = NodePath("")
+focus_neighbor_bottom = NodePath("")
+focus_next = NodePath("")
+focus_previous = NodePath("")
+focus_mode = 0
+mouse_filter = 0
+mouse_force_pass_scroll_events = true
+mouse_default_cursor_shape = 0
+theme = null
+theme_type_variation = &""
+min_value = 0.0
+max_value = 1.0
+step = 0.1
+page = 0.0
+value = 0.0
+exp_edit = false
+rounded = false
+allow_greater = false
+allow_lesser = false
+script = ExtResource("1_wu1tp")
+direction = 1
+inverted = true
+disabled = true
+
+[node name="Label" type="Label" parent="SleepContainer"]
+offset_top = 1735.0
+offset_right = 147.0
+offset_bottom = 1792.0
+text = "Sleep"
+horizontal_alignment = 1

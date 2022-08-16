@@ -1,0 +1,48 @@
+[gd_scene load_steps=5 format=3 uid="uid://bfmrahxenkrxt"]
+
+[ext_resource type="Script" path="res://interface/components/title_label/title_label.gd" id="1_3lx4k"]
+[ext_resource type="FontFile" uid="uid://cgf6tr8wj2gby" path="res://static/fonts/Nunito/Nunito-Black.ttf" id="3_m5u8h"]
+[ext_resource type="FontFile" uid="uid://b2qpgty71rnkv" path="res://static/fonts/Nunito/Nunito-Regular.ttf" id="4_44dn1"]
+[ext_resource type="FontFile" uid="uid://b6r7yrlh6rrnh" path="res://static/fonts/Nunito/Nunito-ExtraBold.ttf" id="4_s6nnu"]
+
+[node name="Control" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="Control" type="Control" parent="."]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 468.0
+offset_top = 803.0
+offset_right = 34.0
+offset_bottom = -763.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_3lx4k")
+overline = "MY OVERLINE"
+title = "My title"
+subtitle = "This is a subtitle!!"
+overline_color = Color(1, 0.905882, 0.54902, 1)
+title_color = Color(0.87451, 0.905882, 0.937255, 1)
+subtitle_color = Color(0.687059, 0.812155, 0.937255, 0.65)
+overline_font = ExtResource("3_m5u8h")
+title_font = ExtResource("4_s6nnu")
+subtitle_font = ExtResource("4_44dn1")
+override_overline_size = false
+title_size = 50
+override_subtitle_size = false
+h_alignment = 1
+v_alignment = 1
+line_margin = 24.0
+overline_line_margin = 12.0
+overline_char_spacing = 15.0
+metadata/_edit_layout_mode = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme_override_constants/margin_left = 100
+theme_override_constants/margin_top = 100
+theme_override_constants/margin_right = 100
+theme_override_constants/margin_bottom = 100

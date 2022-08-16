@@ -1,4 +1,6 @@
+class_name Mixing
 extends Node3D
+@icon("mixing.svg")
 
 const SPEED := Vector3(15, 0.5, 15)
 

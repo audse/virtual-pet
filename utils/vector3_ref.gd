@@ -98,8 +98,24 @@ static func smooth_curve(path: Curve3D) -> Curve3D:
 	return line
 
 
-static func quadratic_bezier(p0: Vector3, p1: Vector3, p2: Vector3, t: float):
-	var q0 = p0.lerp(p1, t)
-	var q1 = p1.lerp(p2, t)
-	var r = q0.lerp(q1, t)
+static func quadratic_bezier(p0: Vector3, p1: Vector3, p2: Vector3, t: float) -> Vector3:
+	var q0 := p0.lerp(p1, t)
+	var q1 := p1.lerp(p2, t)
+	var r := q0.lerp(q1, t)
 	return r
+
+
+static func rad(degrees: Vector3) -> Vector3:
+	return Vector3(deg2rad(degrees.x), deg2rad(degrees.y), deg2rad(degrees.z))
+
+
+static func lerp_all(from: Vector3, to: Vector3, weight: Vector3) -> Vector3:
+	var new := Vector3.ZERO
+	new.x = lerp(from.x, to.x, weight.x)
+	new.y = lerp(from.y, to.y, weight.y)
+	new.z = lerp(from.z, to.z, weight.z)
+	return new
+
+
+static func deg(radians: Vector3) -> Vector3:
+	return Vector3(rad2deg(radians.x), rad2deg(radians.y), rad2deg(radians.z))

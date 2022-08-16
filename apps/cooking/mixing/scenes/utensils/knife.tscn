@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://658iuoqddw7i"]
+[gd_scene load_steps=13 format=3 uid="uid://658iuoqddw7i"]
 
 [ext_resource type="Script" path="res://apps/cooking/mixing/nodes/utensil.gd" id="1_rqe38"]
 [ext_resource type="ArrayMesh" uid="uid://hn68ijd3mhm0" path="res://apps/cooking/assets/meshes/knife.obj" id="3_gcsfw"]
@@ -33,29 +33,33 @@ cellular_return_type = 0
 
 [sub_resource type="NoiseTexture" id="NoiseTexture_j52qj"]
 as_normal_map = true
-bump_strength = 16.0
+bump_strength = 4.0
 color_ramp = SubResource("Gradient_lq4bt")
 noise = SubResource("FastNoiseLite_acqjw")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_sclyu"]
 albedo_texture = SubResource("NoiseTexture_thvlp")
 metallic = 1.0
-roughness = 0.7
+roughness = 0.4
 normal_enabled = true
 normal_texture = SubResource("NoiseTexture_j52qj")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_u0a5j"]
+size = Vector3(10, 0.5, 10)
 
 [node name="Knife" type="Node3D"]
 transform = Transform3D(1.25, 0, 0, 0, 1.25, 0, 0, 0, 1.25, 0, 0, 0)
 script = ExtResource("1_rqe38")
 motion_rotation = Vector3i(10, 3, 0)
 start_rotation = Vector3(0, 0, 0)
+input_area_layers = 128
+speed = Vector3(20, 0.5, 20)
 
 [node name="Collider" type="Area3D" parent="."]
 transform = Transform3D(-0.383022, -0.321394, 0.866025, 0.642787, -0.766044, 3.91029e-08, 0.663414, 0.55667, 0.5, 0.5, 1.67164, -1)
 input_ray_pickable = false
 
 [node name="Body" type="RigidDynamicBody3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 collision_layer = 8
 collision_mask = 8
 input_ray_pickable = false
@@ -76,5 +80,14 @@ surface_material_override/1 = SubResource("StandardMaterial3D_sclyu")
 transform = Transform3D(0.612836, -0.330541, 0.393923, 0, 0.612836, 0.51423, -0.51423, -0.393923, 0.469459, 4, 7, 6)
 projection = 1
 size = 8.0
+
+[node name="InputArea" type="Area3D" parent="."]
+collision_layer = 16
+collision_mask = 16
+priority = 1.0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="InputArea"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.165814, 0)
+shape = SubResource("BoxShape3D_u0a5j")
 
 [connection signal="body_entered" from="Collider" to="." method="_on_collider_body_entered"]

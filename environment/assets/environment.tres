@@ -1,4 +1,4 @@
-[gd_resource type="Environment" load_steps=3 format=3 uid="uid://bfisqc0k2mdv5"]
+[gd_resource type="Environment" load_steps=3 format=3 uid="uid://dcpushjde5bcn"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_xv0vu"]
 sky_top_color = Color(0.5544, 0.70672, 0.84, 1)
@@ -32,11 +32,9 @@ ssil_enabled = true
 ssil_sharpness = 0.75
 sdfgi_enabled = true
 sdfgi_cascades = 2
-sdfgi_max_distance = 51.2
 glow_enabled = true
 fog_light_color = Color(0.44, 0.44, 0.44, 1)
 fog_light_energy = 0.25
 fog_sun_scatter = 1.0
 volumetric_fog_density = 0.025
 volumetric_fog_albedo = Color(0.639216, 0.639216, 0.639216, 1)
-volumetric_fog_gi_inject = 1.0

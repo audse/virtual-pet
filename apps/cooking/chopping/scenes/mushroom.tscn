@@ -1,0 +1,403 @@
+[gd_scene load_steps=33 format=3]
+
+[ext_resource type="ArrayMesh" uid="uid://glon43fbqq5m" path="res://apps/cooking/assets/meshes/mushroom_01/slice_01.obj" id="1_kosfe"]
+[ext_resource type="Script" path="res://apps/cooking/chopping/nodes/choppable.gd" id="1_ssg3o"]
+[ext_resource type="ArrayMesh" uid="uid://b0vqmdfyi4dj2" path="res://apps/cooking/assets/meshes/mushroom_01/slice_02.obj" id="2_2qs3y"]
+[ext_resource type="Script" path="res://apps/cooking/chopping/nodes/slice.gd" id="2_brjs6"]
+[ext_resource type="ArrayMesh" uid="uid://bb3iv67tvhbnp" path="res://apps/cooking/assets/meshes/mushroom_01/slice_03.obj" id="3_ajyea"]
+[ext_resource type="ArrayMesh" uid="uid://c6vdok6x6uxi8" path="res://apps/cooking/assets/meshes/mushroom_01/slice_04.obj" id="4_rw7m5"]
+[ext_resource type="Material" uid="uid://cisbt4orqwr35" path="res://apps/cooking/assets/materials/mushroom.tres" id="4_w3ufu"]
+[ext_resource type="ArrayMesh" uid="uid://bsormrx1v5lex" path="res://apps/cooking/assets/meshes/mushroom_01/slice_05.obj" id="5_h4h0h"]
+[ext_resource type="ArrayMesh" uid="uid://cjeejcrpj0fux" path="res://apps/cooking/assets/meshes/mushroom_01/slice_06.obj" id="6_qm0en"]
+[ext_resource type="ArrayMesh" uid="uid://hodcslno2ppq" path="res://apps/cooking/assets/meshes/mushroom_01/slice_07.obj" id="7_p5unw"]
+[ext_resource type="ArrayMesh" uid="uid://bhpea8pfdrlwy" path="res://apps/cooking/assets/meshes/mushroom_01/slice_08.obj" id="8_ky27r"]
+[ext_resource type="ArrayMesh" uid="uid://b1bcab2gm5xq0" path="res://apps/cooking/assets/meshes/mushroom_01/slice_09.obj" id="9_2wnyy"]
+[ext_resource type="ArrayMesh" uid="uid://wsdstj30bqp" path="res://apps/cooking/assets/meshes/mushroom_01/slice_10.obj" id="10_mkqnf"]
+[ext_resource type="ArrayMesh" uid="uid://brguuv25hcvyr" path="res://apps/cooking/assets/meshes/mushroom_01/slice_11.obj" id="11_klmdy"]
+[ext_resource type="ArrayMesh" uid="uid://cxd5l2o67vk43" path="res://apps/cooking/assets/meshes/mushroom_01/slice_12.obj" id="12_ocpea"]
+[ext_resource type="ArrayMesh" uid="uid://8ujehoa83q0p" path="res://apps/cooking/assets/meshes/mushroom_01/slice_13.obj" id="13_ew3c8"]
+[ext_resource type="ArrayMesh" uid="uid://bxwyx3615uly5" path="res://apps/cooking/assets/meshes/mushroom_01/slice_14.obj" id="14_22sil"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_csge4"]
+rough = true
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_ywkcj"]
+height = 0.152
+radius = 0.395
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_2n8af"]
+height = 0.144651
+radius = 0.471669
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_jj28q"]
+height = 0.148235
+radius = 0.544193
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_t3am3"]
+height = 0.152404
+radius = 0.68005
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_2rpwi"]
+height = 0.171621
+radius = 0.828478
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_uc2wg"]
+height = 0.169491
+radius = 0.943746
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_a07lx"]
+height = 0.267435
+radius = 1.06043
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_huxax"]
+height = 0.201494
+radius = 0.647601
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_ielpf"]
+height = 0.152491
+radius = 0.328015
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_67byx"]
+height = 0.12857
+radius = 0.328015
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_xmjhg"]
+height = 0.14732
+radius = 0.362395
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_gjajw"]
+height = 0.140179
+radius = 0.328015
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_vekvl"]
+height = 0.103387
+radius = 0.379555
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_57e2c"]
+height = 0.103478
+radius = 0.328015
+
+[node name="Mushroom" type="Node3D"]
+script = ExtResource("1_ssg3o")
+
+[node name="RigidDynamicBody3D" type="RigidDynamicBody3D" parent="."]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 1.05293, 0, 0)
+collision_layer = 2
+collision_mask = 2
+mass = 0.05
+physics_material_override = SubResource("PhysicsMaterial_csge4")
+freeze = true
+linear_damp = 5.0
+script = ExtResource("2_brjs6")
+damp_range = Vector2(1, 5.5)
+auto_collision_shape = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="RigidDynamicBody3D"]
+material_override = ExtResource("4_w3ufu")
+mesh = ExtResource("1_kosfe")
+skeleton = NodePath("../..")
+surface_material_override/0 = ExtResource("4_w3ufu")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RigidDynamicBody3D"]
+transform = Transform3D(0.997431, -0.0716367, 0, 0.0716367, 0.997431, 0, 0, 0, 1, -0.0166574, 2.23323, 0)
+shape = SubResource("CylinderShape3D_ywkcj")
+
+[node name="RigidDynamicBody3D2" type="RigidDynamicBody3D" parent="."]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 1.05293, 0, 0)
+collision_layer = 2
+collision_mask = 2
+mass = 0.08
+inertia = Vector3(10, 10, 0)
+physics_material_override = SubResource("PhysicsMaterial_csge4")
+freeze = true
+linear_damp = 4.0
+angular_velocity = Vector3(0, 0, 0.00174533)
+script = ExtResource("2_brjs6")
+damp_range = Vector2(1, 5.5)
+auto_collision_shape = 0
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="RigidDynamicBody3D2"]
+material_override = ExtResource("4_w3ufu")
+mesh = ExtResource("2_2qs3y")
+skeleton = NodePath("../..")
+surface_material_override/0 = ExtResource("4_w3ufu")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="RigidDynamicBody3D2"]
+transform = Transform3D(0.998941, -0.0460081, 0, 0.0460081, 0.998941, 0, 0, 0, 1, -0.0203592, 2.10804, 0)
+shape = SubResource("CylinderShape3D_2n8af")
+
+[node name="RigidDynamicBody3D3" type="RigidDynamicBody3D" parent="."]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 1.05293, 0, 0)
+collision_layer = 2
+collision_mask = 2
+mass = 0.1
+inertia = Vector3(10, 10, 0)
+physics_material_override = SubResource("PhysicsMaterial_csge4")
+freeze = true
+linear_damp = 3.5
+angular_velocity = Vector3(0, 0, 0.00174533)
+script = ExtResource("2_brjs6")
+damp_range = Vector2(1, 5.5)
+auto_collision_shape = 0
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="RigidDynamicBody3D3"]
+material_override = ExtResource("4_w3ufu")
+mesh = ExtResource("3_ajyea")
+skeleton = NodePath("../..")
+
+[node name="CollisionShape3D3" type="CollisionShape3D" parent="RigidDynamicBody3D3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0166575, 1.93793, 0)
+shape = SubResource("CylinderShape3D_jj28q")
+
+[node name="RigidDynamicBody3D4" type="RigidDynamicBody3D" parent="."]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 1.05293, 0, 0)
+collision_layer = 2
+collision_mask = 2
+mass = 0.13
+inertia = Vector3(10, 10, 0)
+physics_material_override = SubResource("PhysicsMaterial_csge4")
+freeze = true
+linear_damp = 3.0
+angular_velocity = Vector3(0, 0, 0.00174533)
+script = ExtResource("2_brjs6")
+damp_range = Vector2(1, 5.5)
+auto_collision_shape = 0
+
+[node name="MeshInstance3D4" type="MeshInstance3D" parent="RigidDynamicBody3D4"]
+material_override = ExtResource("4_w3ufu")
+mesh = ExtResource("4_rw7m5")
+skeleton = NodePath("../..")
+
+[node name="CollisionShape3D4" type="CollisionShape3D" parent="RigidDynamicBody3D4"]
+transform = Transform3D(0.9985, 0.0547585, 0, -0.0547585, 0.9985, 0, 0, 0, 1, 7.698e-08, 1.7611, 0)
+shape = SubResource("CylinderShape3D_t3am3")
+
+[node name="RigidDynamicBody3D5" type="RigidDynamicBody3D" parent="."]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 1.05293, 0, 0)
+collision_layer = 2
+collision_mask = 2
+mass = 0.15
+inertia = Vector3(10, 10, 0)
+physics_material_override = SubResource("PhysicsMaterial_csge4")
+freeze = true
+linear_damp = 2.5
+angular_velocity = Vector3(0, 0, 0.00174533)
+script = ExtResource("2_brjs6")
+damp_range = Vector2(1, 5.5)
+auto_collision_shape = 0
+
+[node name="MeshInstance3D5" type="MeshInstance3D" parent="RigidDynamicBody3D5"]
+material_override = ExtResource("4_w3ufu")
+mesh = ExtResource("5_h4h0h")
+skeleton = NodePath("../..")
+
+[node name="CollisionShape3D5" type="CollisionShape3D" parent="RigidDynamicBody3D5"]
+transform = Transform3D(0.992656, 0.120968, 0, -0.120968, 0.992656, 0, 0, 0, 1, 6.92542e-08, 1.58435, 0)
+shape = SubResource("CylinderShape3D_2rpwi")
+
+[node name="RigidDynamicBody3D6" type="RigidDynamicBody3D" parent="."]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 1.05293, 0, 0)
+collision_layer = 2
+collision_mask = 2
+mass = 0.2
+inertia = Vector3(10, 10, 0)
+physics_material_override = SubResource("PhysicsMaterial_csge4")
+freeze = true
+linear_damp = 2.0
+angular_velocity = Vector3(0, 0, 0.00174533)
+script = ExtResource("2_brjs6")
+damp_range = Vector2(1, 5.5)
+auto_collision_shape = 0
+
+[node name="MeshInstance3D6" type="MeshInstance3D" parent="RigidDynamicBody3D6"]
+material_override = ExtResource("4_w3ufu")
+mesh = ExtResource("6_qm0en")
+skeleton = NodePath("../..")
+
+[node name="CollisionShape3D6" type="CollisionShape3D" parent="RigidDynamicBody3D6"]
+transform = Transform3D(0.990565, 0.137047, 0, -0.137047, 0.990565, 0, 0, 0, 1, 6.06554e-08, 1.38763, 0)
+shape = SubResource("CylinderShape3D_uc2wg")
+
+[node name="RigidDynamicBody3D7" type="RigidDynamicBody3D" parent="."]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 1.05293, 0, 0)
+collision_layer = 2
+collision_mask = 2
+mass = 0.25
+inertia = Vector3(10, 10, 0)
+physics_material_override = SubResource("PhysicsMaterial_csge4")
+freeze = true
+linear_damp = 2.0
+angular_velocity = Vector3(0, 0, 0.00174533)
+script = ExtResource("2_brjs6")
+damp_range = Vector2(1, 5.5)
+auto_collision_shape = 0
+
+[node name="MeshInstance3D7" type="MeshInstance3D" parent="RigidDynamicBody3D7"]
+material_override = ExtResource("4_w3ufu")
+mesh = ExtResource("7_p5unw")
+skeleton = NodePath("../..")
+
+[node name="CollisionShape3D7" type="CollisionShape3D" parent="RigidDynamicBody3D7"]
+transform = Transform3D(0.990538, 0.137237, 0, -0.137237, 0.990538, 0, 0, 0, 1, 4.9742e-08, 1.13796, 0)
+shape = SubResource("CylinderShape3D_a07lx")
+
+[node name="RigidDynamicBody3D8" type="RigidDynamicBody3D" parent="."]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 1.05293, 0, 0)
+collision_layer = 2
+collision_mask = 2
+mass = 0.13
+inertia = Vector3(10, 10, 0)
+physics_material_override = SubResource("PhysicsMaterial_csge4")
+freeze = true
+linear_damp = 3.0
+angular_velocity = Vector3(0, 0, 0.00174533)
+script = ExtResource("2_brjs6")
+damp_range = Vector2(1, 5.5)
+auto_collision_shape = 0
+
+[node name="MeshInstance3D8" type="MeshInstance3D" parent="RigidDynamicBody3D8"]
+material_override = ExtResource("4_w3ufu")
+mesh = ExtResource("8_ky27r")
+skeleton = NodePath("../..")
+
+[node name="CollisionShape3D8" type="CollisionShape3D" parent="RigidDynamicBody3D8"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.08243e-08, 0.933951, 0)
+shape = SubResource("CylinderShape3D_huxax")
+
+[node name="RigidDynamicBody3D9" type="RigidDynamicBody3D" parent="."]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 1.05293, 0, 0)
+collision_layer = 2
+collision_mask = 2
+mass = 0.08
+inertia = Vector3(10, 10, 0)
+physics_material_override = SubResource("PhysicsMaterial_csge4")
+freeze = true
+linear_damp = 5.0
+angular_velocity = Vector3(0, 0, 0.00174533)
+script = ExtResource("2_brjs6")
+damp_range = Vector2(1, 5.5)
+auto_collision_shape = 0
+
+[node name="MeshInstance3D9" type="MeshInstance3D" parent="RigidDynamicBody3D9"]
+material_override = ExtResource("4_w3ufu")
+mesh = ExtResource("9_2wnyy")
+skeleton = NodePath("../..")
+
+[node name="CollisionShape3D4" type="CollisionShape3D" parent="RigidDynamicBody3D9"]
+transform = Transform3D(0.995483, -0.0949423, 0, 0.0949423, 0.995483, 0, 0, 0, 1, 3.17192e-08, 0.725652, 0)
+shape = SubResource("CylinderShape3D_ielpf")
+
+[node name="RigidDynamicBody3D10" type="RigidDynamicBody3D" parent="."]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 1.05293, 0, 0)
+collision_layer = 2
+collision_mask = 2
+mass = 0.1
+inertia = Vector3(10, 10, 0)
+physics_material_override = SubResource("PhysicsMaterial_csge4")
+freeze = true
+linear_damp = 4.5
+angular_velocity = Vector3(0, 0, 0.00174533)
+script = ExtResource("2_brjs6")
+damp_range = Vector2(1, 5.5)
+auto_collision_shape = 0
+
+[node name="MeshInstance3D10" type="MeshInstance3D" parent="RigidDynamicBody3D10"]
+material_override = ExtResource("4_w3ufu")
+mesh = ExtResource("10_mkqnf")
+skeleton = NodePath("../..")
+
+[node name="CollisionShape3D5" type="CollisionShape3D" parent="RigidDynamicBody3D10"]
+transform = Transform3D(0.995171, -0.0981561, 0, 0.0981561, 0.995171, 0, 0, 0, 1, 2.59604e-08, 0.593905, 0)
+shape = SubResource("CylinderShape3D_67byx")
+
+[node name="RigidDynamicBody3D11" type="RigidDynamicBody3D" parent="."]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 1.05293, 0, 0)
+collision_layer = 2
+collision_mask = 2
+mass = 0.1
+inertia = Vector3(10, 10, 0)
+physics_material_override = SubResource("PhysicsMaterial_csge4")
+freeze = true
+linear_damp = 4.5
+angular_velocity = Vector3(0, 0, 0.00174533)
+script = ExtResource("2_brjs6")
+damp_range = Vector2(1, 5.5)
+auto_collision_shape = 0
+
+[node name="MeshInstance3D11" type="MeshInstance3D" parent="RigidDynamicBody3D11"]
+material_override = ExtResource("4_w3ufu")
+mesh = ExtResource("11_klmdy")
+skeleton = NodePath("../..")
+
+[node name="CollisionShape3D6" type="CollisionShape3D" parent="RigidDynamicBody3D11"]
+transform = Transform3D(0.994329, -0.106351, 0, 0.106351, 0.994329, 0, 0, 0, 1, 1.99274e-08, 0.455885, 0)
+shape = SubResource("CylinderShape3D_xmjhg")
+
+[node name="RigidDynamicBody3D12" type="RigidDynamicBody3D" parent="."]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 1.05293, 0, 0)
+collision_layer = 2
+collision_mask = 2
+mass = 0.08
+inertia = Vector3(10, 10, 0)
+physics_material_override = SubResource("PhysicsMaterial_csge4")
+freeze = true
+linear_damp = 5.0
+angular_velocity = Vector3(0, 0, 0.00174533)
+script = ExtResource("2_brjs6")
+damp_range = Vector2(1, 5.5)
+auto_collision_shape = 0
+
+[node name="MeshInstance3D12" type="MeshInstance3D" parent="RigidDynamicBody3D12"]
+material_override = ExtResource("4_w3ufu")
+mesh = ExtResource("12_ocpea")
+skeleton = NodePath("../..")
+
+[node name="CollisionShape3D7" type="CollisionShape3D" parent="RigidDynamicBody3D12"]
+transform = Transform3D(0.992349, -0.123463, 0, 0.123463, 0.992349, 0, 0, 0, 1, 1.37115e-08, 0.313682, 0)
+shape = SubResource("CylinderShape3D_gjajw")
+
+[node name="RigidDynamicBody3D13" type="RigidDynamicBody3D" parent="."]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 1.05293, 0, 0)
+collision_layer = 2
+collision_mask = 2
+mass = 0.08
+inertia = Vector3(10, 10, 0)
+physics_material_override = SubResource("PhysicsMaterial_csge4")
+freeze = true
+linear_damp = 5.0
+angular_velocity = Vector3(0, 0, 0.00174533)
+script = ExtResource("2_brjs6")
+damp_range = Vector2(1, 5.5)
+auto_collision_shape = 0
+
+[node name="MeshInstance3D13" type="MeshInstance3D" parent="RigidDynamicBody3D13"]
+material_override = ExtResource("4_w3ufu")
+mesh = ExtResource("13_ew3c8")
+skeleton = NodePath("../..")
+
+[node name="CollisionShape3D8" type="CollisionShape3D" parent="RigidDynamicBody3D13"]
+transform = Transform3D(0.997111, -0.0759533, 0, 0.0759533, 0.997111, 0, 0, 0, 1, 8.26892e-09, 0.189171, 0)
+shape = SubResource("CylinderShape3D_vekvl")
+
+[node name="RigidDynamicBody3D14" type="RigidDynamicBody3D" parent="."]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 1.05293, 0, 0)
+collision_layer = 2
+collision_mask = 2
+mass = 0.05
+inertia = Vector3(10, 10, 0)
+physics_material_override = SubResource("PhysicsMaterial_csge4")
+freeze = true
+linear_damp = 5.0
+angular_velocity = Vector3(0, 0, 0.00174533)
+script = ExtResource("2_brjs6")
+damp_range = Vector2(1, 5.5)
+auto_collision_shape = 0
+
+[node name="MeshInstance3D14" type="MeshInstance3D" parent="RigidDynamicBody3D14"]
+material_override = ExtResource("4_w3ufu")
+mesh = ExtResource("14_22sil")
+skeleton = NodePath("../..")
+
+[node name="CollisionShape3D9" type="CollisionShape3D" parent="RigidDynamicBody3D14"]
+transform = Transform3D(0.997883, -0.0650374, 0, 0.0650374, 0.997883, 0, 0, 0, 1, 3.6564e-09, 0.0836487, 0)
+shape = SubResource("CylinderShape3D_57e2c")

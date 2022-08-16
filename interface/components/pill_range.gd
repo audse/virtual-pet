@@ -10,12 +10,14 @@ signal emptied(index: int)
 enum Direction { HORIZONTAL, VERTICAL }
 
 @export var direction: Direction = Direction.HORIZONTAL
-@export var inverted: bool = false
+@export var inverted := false
+@export var disabled := false
 
 @export_group("Theme Overrides")
 @export_subgroup("Constants", "const_override_")
 @export var const_override_h_separation: int = -1
 @export var const_override_v_separation: int = -1
+
 @export_subgroup("Styleboxes", "stylebox_override_")
 @export var stylebox_override_empty: StyleBox
 @export var stylebox_override_empty_hover: StyleBox
@@ -23,6 +25,9 @@ enum Direction { HORIZONTAL, VERTICAL }
 @export var stylebox_override_filled: StyleBox
 @export var stylebox_override_filled_hover: StyleBox
 @export var stylebox_override_filled_pressed: StyleBox
+
+# TODO styleboxes / modulate based on num_filled
+# TODO array of styleboxes for each pill ?
 
 @onready var empty_stylebox: StyleBox = get_theme_stylebox("empty", "PillRange")
 @onready var empty_hover_stylebox: StyleBox = get_theme_stylebox("empty_hover", "PillRange")
@@ -37,12 +42,12 @@ enum Direction { HORIZONTAL, VERTICAL }
 
 @onready var pill_size: Vector2:
 	get: match direction:
-			Direction.HORIZONTAL: return Vector2(size.x / num_pills - margin.x, size.y)
+			Direction.HORIZONTAL : return Vector2(size.x / num_pills - margin.x, size.y)
 			Direction.VERTICAL, _: return Vector2(size.x, size.y / num_pills - margin.y)
 
 @onready var margin: 
 	get: match direction:
-			Direction.HORIZONTAL: return Vector2(h_separation, 0)
+			Direction.HORIZONTAL : return Vector2(h_separation, 0)
 			Direction.VERTICAL, _: return Vector2(0, v_separation)
 
 var num_pills: int:
@@ -74,7 +79,7 @@ func _draw() -> void:
 func get_stylebox(index: int) -> StyleBox:
 	var is_filled: bool = (
 		(index < num_filled and not inverted) 
-		or (index > num_filled - 1 and inverted)
+		or (index >= (num_pills - num_filled) and inverted)
 	)
 	var is_pressed: bool = _pressed_pill == index
 	var is_hovered: bool = _hovered_pill == index
@@ -122,11 +127,11 @@ func draw_pill(index: int) -> void:
 
 
 func _gui_input(event: InputEvent) -> void:
-	if event is InputEventMouseMotion:
+	if event is InputEventMouseMotion and not disabled:
 		_hovered_pill = _find_pill_at_pos(event.position)
 		update()
 	
-	if event is InputEventScreenTouch:
+	if event is InputEventScreenTouch and not disabled:
 		if event.is_pressed(): pressed.emit()
 		
 		if event.pressed:
