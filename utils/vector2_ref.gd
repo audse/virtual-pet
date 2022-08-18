@@ -42,3 +42,7 @@ static func get_rect_points_in_grid(start: Vector2, end: Vector2, grid_size: Vec
 
 static func is_moving_clockwise(center_pos: Vector2, prev_pos: Vector2, current_pos: Vector2) -> bool:
 	return (prev_pos.x - center_pos.x) * (current_pos.y - center_pos.y) - (prev_pos.y - center_pos.y) * (current_pos.x - center_pos.x) > 0
+
+
+static func randf_range(min_val := 0.0, max_val := 1.0) -> Vector2:
+	return Vector2(Auto.Random.randf_range(min_val, max_val), Auto.Random.randf_range(min_val, max_val))

@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://ne8guqpxprqf"]
+
+[ext_resource type="Script" path="res://temp/land.gd" id="1_sel76"]
+[ext_resource type="PackedScene" uid="uid://b6dya0dbxdg1f" path="res://environment/scenes/environment.tscn" id="2_ierke"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_ip3et"]
+
+[node name="Node3D" type="Node3D"]
+script = ExtResource("1_sel76")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_ip3et")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(0.642788, -0.586824, 0.492403, 0, 0.642787, 0.766045, -0.766044, -0.492404, 0.413176, 8, 12.5, 7)
+projection = 1
+current = true
+size = 10.0
+
+[node name="Environment" parent="." instance=ExtResource("2_ierke")]

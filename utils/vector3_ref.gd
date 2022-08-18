@@ -119,3 +119,12 @@ static func lerp_all(from: Vector3, to: Vector3, weight: Vector3) -> Vector3:
 
 static func deg(radians: Vector3) -> Vector3:
 	return Vector3(rad2deg(radians.x), rad2deg(radians.y), rad2deg(radians.z))
+
+
+static func from_vec2_array(array: Array[Vector2], y := 0.0) -> Array[Vector3]:
+	return (
+		Iter.new(array)
+			.map(func (p: Vector2) -> Vector3:
+				return Vector3(p.x, y, p.y))
+			.array()
+	)

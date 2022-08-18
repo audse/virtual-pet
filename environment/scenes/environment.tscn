@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://b6dya0dbxdg1f"]
 
-[ext_resource type="Environment" uid="uid://bfisqc0k2mdv5" path="res://environment/assets/environment.tres" id="1_wpukq"]
+[ext_resource type="Environment" uid="uid://dcpushjde5bcn" path="res://environment/assets/environment.tres" id="1_wpukq"]
 
 [node name="Environment" type="Node3D"]
 

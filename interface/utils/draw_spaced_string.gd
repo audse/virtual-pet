@@ -85,7 +85,7 @@ func _get_full_size() -> Vector2:
 	if len(lines) > 0: return (
 		Iter
 			.new(lines)
-			.map(func (line: String, _i: int) -> Vector2:
+			.map(func (line: String) -> Vector2:
 				return _get_size_of_string(line))
 			.array()
 			.reduce(func (prev: Vector2, curr: Vector2) -> Vector2:
