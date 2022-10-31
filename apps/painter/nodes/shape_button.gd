@@ -8,11 +8,11 @@ const TEXTURE_SIZE = Vector2(60, 60)
 func _notification(what: int) -> void:
 	match what:
 		NOTIFICATION_RESIZED, NOTIFICATION_VISIBILITY_CHANGED:
-			update()
+			queue_redraw()
 
 
 func _ready() -> void:
-	update()
+	queue_redraw()
 	pressed.connect(set_shape.bind(shape))
 	if not Engine.is_editor_hint():
 		States.Paint.shape_changed.connect(_on_shape_changed)
@@ -44,15 +44,15 @@ func _on_rotation_changed(value: int) -> void:
 	# Stops shape from flipping 
 	var texture_rect = get_child(0)
 	if texture_rect:
-		var curr = rad2deg(texture_rect.rotation)
+		var curr = rad_to_deg(texture_rect.rotation)
 		if curr >= 359 and value <= 91:
 			texture_rect.rotation = 0
 		elif curr <= 1 and value >= 269:
-			texture_rect.rotation = deg2rad(360)
+			texture_rect.rotation = deg_to_rad(360)
 		
 		var delay := 0.05 * shape
 		(get_tree()
 			.create_tween()
-			.tween_property(texture_rect, "rotation", deg2rad(value), 0.1 + delay)
+			.tween_property(texture_rect, "rotation", deg_to_rad(value), 0.1 + delay)
 			.set_ease(Tween.EASE_IN_OUT)
 			.set_trans(Tween.TRANS_CIRC))

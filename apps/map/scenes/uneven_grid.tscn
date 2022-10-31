@@ -41,7 +41,7 @@ domain_warp_amplitude = 15.0
 domain_warp_fractal_octaves = 1
 domain_warp_fractal_lacunarity = 4.0
 
-[sub_resource type="NoiseTexture" id="NoiseTexture_bg2y7"]
+[sub_resource type="NoiseTexture2D" id="NoiseTexture_bg2y7"]
 width = 2160
 height = 2160
 invert = true
@@ -94,7 +94,7 @@ noise_type = 2
 frequency = 0.02
 cellular_return_type = 0
 
-[sub_resource type="NoiseTexture" id="NoiseTexture_641n6"]
+[sub_resource type="NoiseTexture2D" id="NoiseTexture_641n6"]
 color_ramp = SubResource("Gradient_b78s2")
 noise = SubResource("FastNoiseLite_1vbyj")
 
@@ -146,6 +146,8 @@ shape = SubResource("BoxShape3D_on456")
 
 [node name="Interface" parent="CanvasLayer" instance=ExtResource("7_6t2cm")]
 unique_name_in_owner = true
+layout_mode = 3
+anchors_preset = 15
 
 [node name="Area3D" type="Area3D" parent="."]
 

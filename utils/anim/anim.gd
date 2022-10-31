@@ -82,9 +82,9 @@ static func pop_spin_enter(node: Node, direction: int = 1) -> void:
 	if node.visible: return
 	await (
 		pop_enter_base(node)
-			.setup_prop("rotation", deg2rad(node.rotation + 100 * direction))
+			.setup_prop("rotation", deg_to_rad(node.rotation + 100 * direction))
 			.prop("rotation", {
-				enter = deg2rad(node.rotation - 20 * direction),
+				enter = deg_to_rad(node.rotation - 20 * direction),
 				settle = node.rotation
 			})
 			.done()
@@ -97,8 +97,8 @@ static func pop_spin_exit(node: Node, direction: int = -1) -> void:
 	await (
 		pop_exit_base(node)
 			.prop("rotation", {
-				anticipation = deg2rad(node.rotation - 20 * direction),
-				exit = deg2rad(node.rotation + 100 * direction),
+				anticipation = deg_to_rad(node.rotation - 20 * direction),
+				exit = deg_to_rad(node.rotation + 100 * direction),
 			})
 			.done()
 			.animate()

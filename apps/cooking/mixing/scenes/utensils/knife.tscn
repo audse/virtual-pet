@@ -1,7 +1,10 @@
-[gd_scene load_steps=13 format=3 uid="uid://658iuoqddw7i"]
+[gd_scene load_steps=14 format=3 uid="uid://658iuoqddw7i"]
 
 [ext_resource type="Script" path="res://apps/cooking/mixing/nodes/utensil.gd" id="1_rqe38"]
 [ext_resource type="ArrayMesh" uid="uid://hn68ijd3mhm0" path="res://apps/cooking/assets/meshes/knife.obj" id="3_gcsfw"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_vhm2b"]
+size = Vector3(1, 2.60131, 0.213061)
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_r31j0"]
 friction = 0.0
@@ -20,7 +23,7 @@ fractal_octaves = 2
 cellular_jitter = 1.0
 cellular_return_type = 0
 
-[sub_resource type="NoiseTexture" id="NoiseTexture_thvlp"]
+[sub_resource type="NoiseTexture2D" id="NoiseTexture_thvlp"]
 color_ramp = SubResource("Gradient_kiify")
 noise = SubResource("FastNoiseLite_hjtu7")
 
@@ -31,7 +34,7 @@ colors = PackedColorArray(0.788235, 0.788235, 0.788235, 1, 1, 1, 1, 1)
 noise_type = 2
 cellular_return_type = 0
 
-[sub_resource type="NoiseTexture" id="NoiseTexture_j52qj"]
+[sub_resource type="NoiseTexture2D" id="NoiseTexture_j52qj"]
 as_normal_map = true
 bump_strength = 4.0
 color_ramp = SubResource("Gradient_lq4bt")
@@ -59,7 +62,11 @@ speed = Vector3(20, 0.5, 20)
 transform = Transform3D(-0.383022, -0.321394, 0.866025, 0.642787, -0.766044, 3.91029e-08, 0.663414, 0.55667, 0.5, 0.5, 1.67164, -1)
 input_ray_pickable = false
 
-[node name="Body" type="RigidDynamicBody3D" parent="."]
+[node name="ItemCollision" type="CollisionShape3D" parent="Collider"]
+transform = Transform3D(0.553271, 0.0259026, -0.832597, -0.832987, 0.022654, -0.552826, 0.00454234, 0.999407, 0.0341105, -0.119851, 1.51093, 0.30584)
+shape = SubResource("BoxShape3D_vhm2b")
+
+[node name="Body" type="RigidBody3D" parent="."]
 collision_layer = 8
 collision_mask = 8
 input_ray_pickable = false

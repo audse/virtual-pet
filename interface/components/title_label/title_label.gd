@@ -87,6 +87,7 @@ enum VerticalAlignment {
 @export_subgroup("Sizes")
 @export var override_overline_size: bool:
 	set(value):
+		override_overline_size = value
 		overline_size = value
 		_update_overline("font_size", overline_size)
 
@@ -133,7 +134,7 @@ var _overline_size: int:
 
 var _subtitle_size: int:
 	get:
-		if override_overline_size: return subtitle_size
+		if override_subtitle_size: return subtitle_size
 		else: return int(title_size * 0.85)
 
 @export_subgroup("Alignment")
@@ -143,12 +144,12 @@ var _subtitle_size: int:
 		if overline_string: overline_string.h_align = h_alignment
 		if title_string: title_string.h_align = h_alignment
 		if subtitle_string: subtitle_string.h_align = h_alignment
-		if is_inside_tree(): update()
+		if is_inside_tree(): queue_redraw()
 
 @export var v_alignment: VerticalAlignment = VERTICAL_ALIGNMENT_CENTER as VerticalAlignment:
 	set(value):
 		v_alignment = value
-		if is_inside_tree(): update()
+		if is_inside_tree(): queue_redraw()
 
 @export_subgroup("Line margin")
 ## If not set, defaults to 0.75 x font size. 
@@ -156,14 +157,14 @@ var _subtitle_size: int:
 @export var line_margin: float = -1.0:
 	set(value):
 		line_margin = value
-		if is_inside_tree(): update()
+		if is_inside_tree(): queue_redraw()
 
 ## Defines distance of overline from title
 ## If not set, defaults to 0.5 x line_margin
 @export var overline_line_margin: float = -1.0:
 	set(value):
 		overline_line_margin = value
-		if is_inside_tree(): update()
+		if is_inside_tree(): queue_redraw()
 
 @export_subgroup("Misc settings")
 @export var overline_char_spacing: float = 0.5:
@@ -253,9 +254,9 @@ func _notification(what: int) -> void:
 			if line_margin < 0: line_margin = default_size * 0.75
 			if overline_line_margin < 0: overline_line_margin = line_margin * 0.5
 
-			if not overline_string: overline_string = DrawSpacedString.new(overline_font, overline_size, overline_color, overline, overline_char_spacing, h_alignment, size.x)
+			if not overline_string: overline_string = DrawSpacedString.new(overline_font, _overline_size, overline_color, overline, overline_char_spacing, h_alignment, size.x)
 			if not title_string: title_string = DrawSpacedString.new(title_font, title_size, title_color, title, title_char_spacing, h_alignment, size.x)
-			if not subtitle_string: subtitle_string = DrawSpacedString.new(subtitle_font, subtitle_size, subtitle_color, subtitle, subtitle_char_spacing, h_alignment, size.x)
+			if not subtitle_string: subtitle_string = DrawSpacedString.new(subtitle_font, _subtitle_size, subtitle_color, subtitle, subtitle_char_spacing, h_alignment, size.x)
 
 
 func _draw() -> void:
@@ -266,14 +267,14 @@ func _draw() -> void:
 
 func _update_overline(prop: String, value) -> void:
 	if overline_string: overline_string.set(prop, value)
-	if is_inside_tree(): update()
+	if is_inside_tree(): queue_redraw()
 
 
 func _update_title(prop: String, value) -> void:
 	if title_string: title_string.set(prop, value)
-	if is_inside_tree(): update()
+	if is_inside_tree(): queue_redraw()
 
 
 func _update_subtitle(prop: String, value) -> void:
 	if subtitle_string: subtitle_string.set(prop, value)
-	if is_inside_tree(): update()
+	if is_inside_tree(): queue_redraw()

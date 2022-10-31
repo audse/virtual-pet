@@ -19,8 +19,8 @@ func _physics_process(delta: float) -> void:
 		var curr_pos: Vector3 = utensil.body.position.direction_to(_target_pos) * SPEED * delta
 		utensil.move_to(curr_pos, delta)
 
-		if container.is_clockwise: rice_ball.rotation.y -= deg2rad(0.25)
-		else: rice_ball.rotation.y += deg2rad(0.25)
+		if container.is_clockwise: rice_ball.rotation.y -= deg_to_rad(0.25)
+		else: rice_ball.rotation.y += deg_to_rad(0.25)
 		rice_ball.position += utensil._delta / SPEED / 2.0 * Vector3(1, 0, 1)
 
 

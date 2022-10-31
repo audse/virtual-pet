@@ -46,3 +46,21 @@ static func is_moving_clockwise(center_pos: Vector2, prev_pos: Vector2, current_
 
 static func randf_range(min_val := 0.0, max_val := 1.0) -> Vector2:
 	return Vector2(Auto.Random.randf_range(min_val, max_val), Auto.Random.randf_range(min_val, max_val))
+
+
+static func get_coords_around_position(position: Vector2, radius := 3) -> Array[Vector2]:
+	var coords: Array[Vector2] = []
+	var x_range := range(position.x - radius, position.x + radius + 1)
+	var y_range := range(position.y - radius, position.y + radius + 1)
+	for x in x_range: for y in y_range: coords.append(Vector2(x, y))
+	coords.erase(position)
+	return coords
+
+
+static func get_coordsi_around_position(position: Vector2i, radius := 3) -> Array[Vector2i]:
+	var coords: Array[Vector2i] = []
+	var x_range := range(position.x - radius, position.x + radius + 1)
+	var y_range := range(position.y - radius, position.y + radius + 1)
+	for x in x_range: for y in y_range: coords.append(Vector2i(x, y))
+	coords.erase(position)
+	return coords

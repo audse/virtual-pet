@@ -1,0 +1,321 @@
+[gd_scene load_steps=16 format=3 uid="uid://dey747mo4yaeu"]
+
+[ext_resource type="Resource" uid="uid://bhjhxphjix4f2" path="res://apps/pet/scenes/pet_data_test.tres" id="1_kg18k"]
+[ext_resource type="Script" path="res://apps/behavior/composites/selector.gd" id="1_vyuf1"]
+[ext_resource type="Script" path="res://apps/pet/behavior/ai/tasks/handle_need.gd" id="3_fr2ch"]
+[ext_resource type="Script" path="res://apps/behavior/decorators/always_fail.gd" id="4_tub3w"]
+
+[sub_resource type="GDScript" id="GDScript_0td0l"]
+script/source = "extends BehaviorTree
+
+signal leaf_task_finished(subtask: Task)
+
+@export var pet_data: PetData
+
+@export var interval: float = 5.0
+@export var autostart: bool = false
+
+@onready var timer := %Timer as Timer
+
+var command: Task
+
+
+func _setup() -> void:
+	if pet_data:
+		tree = self
+		
+		timer.wait_time = interval
+		timer.timeout.connect(run, CONNECT_ONE_SHOT)
+		
+		leaf_task_finished.connect(_on_leaf_task_finished)
+		
+		pet_data.command_data.receive_command.connect(_on_receive_command)
+		
+		timer.timeout.connect(
+			func() -> void: 
+				pet_data.needs_data.decrease_needs()
+		)
+		
+		if autostart: timer.start()
+	else:
+		logs(\"Pet data not provided, cannot set up behavior.\")
+
+
+func start() -> void:
+	_setup()
+	timer.start()
+	super.start()
+
+
+func _on_leaf_task_finished(_subtask: Task) -> void:
+	pet_data.wants_data.select_wants(pet_data)
+	timer.timeout.connect(run, CONNECT_ONE_SHOT)
+
+
+func _on_receive_command(value: CommandData.Command) -> void:
+	match value:
+		CommandData.Command.EAT: command = %Eat
+		CommandData.Command.SLEEP: command = %Sleep
+		CommandData.Command.PLAY: command = %Play
+		CommandData.Command.LOUNGE: command = %Lounge
+		CommandData.Command.WASH: command = %WashUp
+		CommandData.Command.IDLE: command = %Idle
+	
+	(%FollowCommand as Task).finished.connect(func(_task: Task): command = null)
+"
+
+[sub_resource type="GDScript" id="GDScript_0si1i"]
+script/source = "extends Decorator
+
+
+func run() -> void:
+	if tree.pet_data.needs_data.hunger < 0.05: child.run()
+	else: fail()
+"
+
+[sub_resource type="GDScript" id="GDScript_oy0hg"]
+script/source = "extends Decorator
+
+
+func run() -> void:
+	if tree.pet_data.needs_data.sleepy < 0.05: child.run()
+	else: fail()
+
+"
+
+[sub_resource type="GDScript" id="GDScript_1sb45"]
+script/source = "extends Decorator
+
+
+func run() -> void:
+	if tree.pet_data.needs_data.activity < 0.05: child.run()
+	else: fail()
+"
+
+[sub_resource type="GDScript" id="GDScript_16it6"]
+script/source = "extends Decorator
+
+const use_pet_data = preload(\"res://apps/pet/scripts/use_pet_data.gd\")
+
+func run() -> void:
+	if tree.command:
+		var pet_data = use_pet_data.new(tree.pet_data)
+		logs(
+			\"Received command! {0}% chance of obeying.\"
+				.format([(pet_data.obedience + 0.25) * 100])
+		)
+		if pet_data.will_obey_command():
+			logs(\"Command obeyed!\")
+			tree.command.run()
+			tree.pet_data.command_data.obeyed_command.emit(tree.command)
+			return succeed()
+		
+		logs(\"Command ignored!\")
+		tree.pet_data.command_data.ignored_command.emit()
+	fail()
+"
+
+[sub_resource type="GDScript" id="GDScript_3sc4b"]
+script/source = "extends Condition
+
+
+func check() -> bool:
+	return (is_hungry() or feels_like_eating()) and will_eat()
+
+
+func is_hungry() -> bool:
+	return not UseNeedsData.new(tree.pet_data).is_hunger_ok()
+
+
+func feels_like_eating() -> bool:
+	# occassionally seeks out food, even when not hungry
+	return randf_range(0, 100) < 10
+
+
+func will_eat() -> bool:
+	var percent_chance: float = 125.0 - (tree.pet_data.needs_data.hunger * 100.0)
+	return randf_range(0, 100) <= percent_chance
+"
+
+[sub_resource type="GDScript" id="GDScript_twaq7"]
+script/source = "extends Condition
+
+
+func check() -> bool:
+	return (is_sleepy() or feels_like_sleeping()) and will_sleep()
+
+
+func is_sleepy() -> bool:
+	return not UseNeedsData.new(tree.pet_data).is_sleepy_ok()
+
+
+func feels_like_sleeping() -> bool:
+	# occassionally sleeps, even when not sleepy
+	return randf_range(0, 100) < 10
+
+
+func will_sleep() -> bool:
+	var percent_chance: float = 125.0 - (tree.pet_data.needs_data.sleepy * 100.0)
+	return randf_range(0, 100) <= percent_chance
+"
+
+[sub_resource type="GDScript" id="GDScript_2ge0o"]
+script/source = "extends Condition
+
+
+func check() -> bool:
+	return is_restless() and will_play()
+
+
+func is_restless() -> bool:
+	return not UseNeedsData.new(tree.pet_data).is_activity_ok()
+
+
+func will_play() -> bool:
+	var percent_chance: float = 125.0 - (tree.pet_data.needs_data.activity * 100.0)
+	return randf_range(0, 100) <= percent_chance
+"
+
+[sub_resource type="GDScript" id="GDScript_05shx"]
+script/source = "extends Condition
+
+
+func check() -> bool:
+	return is_uncomfy() and will_lounge()
+
+
+func is_uncomfy() -> bool:
+	return not UseNeedsData.new(tree.pet_data).is_comfort_ok()
+
+
+func will_lounge() -> bool:
+	var percent_chance: float = 125.0 - (tree.pet_data.needs_data.comfort * 100.0)
+	return randf_range(0, 100) <= percent_chance
+"
+
+[sub_resource type="GDScript" id="GDScript_ms221"]
+script/source = "extends Condition
+
+
+func check() -> bool:
+	return is_dirty() and will_wash()
+
+
+func is_dirty() -> bool:
+	return not UseNeedsData.new(tree.pet_data).is_hygiene_ok()
+
+
+func will_wash() -> bool:
+	var percent_chance: float = 125.0 - (tree.pet_data.needs_data.hygiene * 100.0)
+	return randf_range(0, 100) <= percent_chance
+"
+
+[sub_resource type="GDScript" id="GDScript_xamje"]
+script/source = "extends AlwaysSucceed
+
+func run() -> void:
+	tree.pet_data.command_data.start_command.emit(CommandData.Command.IDLE, null)
+	await tree.pet_data.command_data.finish_command
+	
+	tree.leaf_task_finished.emit(self)
+	super.run()
+"
+
+[node name="PetBehaviorTree" type="Node"]
+script = SubResource("GDScript_0td0l")
+pet_data = ExtResource("1_kg18k")
+autostart = true
+log = true
+log_this_task = false
+
+[node name="Timer" type="Timer" parent="."]
+unique_name_in_owner = true
+wait_time = 2.0
+
+[node name="SelectTask" type="Node" parent="."]
+unique_name_in_owner = true
+script = ExtResource("1_vyuf1")
+
+[node name="AttendImmediateNeed" type="Node" parent="SelectTask"]
+script = ExtResource("1_vyuf1")
+
+[node name="EatNow" type="Node" parent="SelectTask/AttendImmediateNeed"]
+script = SubResource("GDScript_0si1i")
+
+[node name="Eat" type="Node" parent="SelectTask/AttendImmediateNeed/EatNow"]
+script = ExtResource("3_fr2ch")
+need = 2
+
+[node name="SleepNow" type="Node" parent="SelectTask/AttendImmediateNeed"]
+script = SubResource("GDScript_oy0hg")
+
+[node name="Sleep" type="Node" parent="SelectTask/AttendImmediateNeed/SleepNow"]
+script = ExtResource("3_fr2ch")
+need = 4
+
+[node name="PlayNow" type="Node" parent="SelectTask/AttendImmediateNeed"]
+script = SubResource("GDScript_1sb45")
+
+[node name="Play" type="Node" parent="SelectTask/AttendImmediateNeed/PlayNow"]
+script = ExtResource("3_fr2ch")
+need = 0
+
+[node name="FollowCommand" type="Node" parent="SelectTask"]
+unique_name_in_owner = true
+script = SubResource("GDScript_16it6")
+
+[node name="TODO_FindOpportunities" type="Node" parent="SelectTask"]
+script = ExtResource("4_tub3w")
+
+[node name="HandleNeeds" type="Node" parent="SelectTask"]
+script = ExtResource("1_vyuf1")
+
+[node name="IsHungry" type="Node" parent="SelectTask/HandleNeeds"]
+script = SubResource("GDScript_3sc4b")
+
+[node name="Eat" type="Node" parent="SelectTask/HandleNeeds/IsHungry"]
+unique_name_in_owner = true
+script = ExtResource("3_fr2ch")
+need = 2
+
+[node name="IsSleepy" type="Node" parent="SelectTask/HandleNeeds"]
+script = SubResource("GDScript_twaq7")
+
+[node name="Sleep" type="Node" parent="SelectTask/HandleNeeds/IsSleepy"]
+unique_name_in_owner = true
+script = ExtResource("3_fr2ch")
+need = 4
+
+[node name="IsRestless" type="Node" parent="SelectTask/HandleNeeds"]
+script = SubResource("GDScript_2ge0o")
+
+[node name="Play" type="Node" parent="SelectTask/HandleNeeds/IsRestless"]
+unique_name_in_owner = true
+script = ExtResource("3_fr2ch")
+need = 0
+
+[node name="IsUncomfy" type="Node" parent="SelectTask/HandleNeeds"]
+script = SubResource("GDScript_05shx")
+
+[node name="Lounge" type="Node" parent="SelectTask/HandleNeeds/IsUncomfy"]
+unique_name_in_owner = true
+script = ExtResource("3_fr2ch")
+need = 1
+
+[node name="IsDirty" type="Node" parent="SelectTask/HandleNeeds"]
+script = SubResource("GDScript_ms221")
+
+[node name="WashUp" type="Node" parent="SelectTask/HandleNeeds/IsDirty"]
+unique_name_in_owner = true
+script = ExtResource("3_fr2ch")
+need = 3
+
+[node name="HandleWants" type="Node" parent="SelectTask"]
+script = ExtResource("1_vyuf1")
+
+[node name="TODO" type="Node" parent="SelectTask/HandleWants"]
+script = ExtResource("4_tub3w")
+
+[node name="Idle" type="Node" parent="SelectTask"]
+unique_name_in_owner = true
+script = SubResource("GDScript_xamje")

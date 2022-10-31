@@ -15,7 +15,6 @@ const MIN_CHOP_LENGTH := 150 # pixels
 @onready var _utensil_start_pos := utensil.body.position
 @onready var _utensil_start_speed := utensil.speed
 
-var _target_pos: Vector3
 var _is_pressed := false
 
 var _press_start_pos: Vector2
@@ -27,7 +26,7 @@ func _physics_process(delta: float) -> void:
 	if _is_pressed: utensil.speed = _utensil_start_speed / 4.0
 	else: utensil.speed = _utensil_start_speed
 	
-	var y_pos: float = _utensil_start_pos.y - (1.0 if _is_pressed else 0)
+	var y_pos: float = _utensil_start_pos.y - (1.0 if _is_pressed else 0.0)
 	utensil.body.position.y = move_toward(utensil.body.position.y, y_pos, delta * 7.5)
 
 

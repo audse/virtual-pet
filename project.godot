@@ -9,6 +9,36 @@
 config_version=5
 
 _global_script_classes=[{
+"base": "Resource",
+"class": &"ActionData",
+"language": &"GDScript",
+"path": "res://apps/actions/action_data.gd"
+}, {
+"base": "Object",
+"class": &"ActionItem",
+"language": &"GDScript",
+"path": "res://apps/actions/action_item.gd"
+}, {
+"base": "Resource",
+"class": &"ActionItemParams",
+"language": &"GDScript",
+"path": "res://apps/actions/action_item_params.gd"
+}, {
+"base": "CircleMenuSimple",
+"class": &"ActionMenu",
+"language": &"GDScript",
+"path": "res://apps/actions/action_menu.gd"
+}, {
+"base": "Decorator",
+"class": &"AlwaysFail",
+"language": &"GDScript",
+"path": "res://apps/behavior/decorators/always_fail.gd"
+}, {
+"base": "Decorator",
+"class": &"AlwaysSucceed",
+"language": &"GDScript",
+"path": "res://apps/behavior/decorators/always_succeed.gd"
+}, {
 "base": "Object",
 "class": &"Anim",
 "language": &"GDScript",
@@ -33,6 +63,11 @@ _global_script_classes=[{
 "class": &"AnimalData",
 "language": &"GDScript",
 "path": "res://apps/pet/animal/data/animal_data.gd"
+}, {
+"base": "Task",
+"class": &"BehaviorTree",
+"language": &"GDScript",
+"path": "res://apps/behavior/tree.gd"
 }, {
 "base": "Object",
 "class": &"BitMask",
@@ -59,12 +94,17 @@ _global_script_classes=[{
 "language": &"GDScript",
 "path": "res://apps/map/nodes/cell_map/cell_map.gd"
 }, {
+"base": "Decorator",
+"class": &"Chance",
+"language": &"GDScript",
+"path": "res://apps/behavior/decorators/chance.gd"
+}, {
 "base": "Button",
 "class": &"CheckBoxButton",
 "language": &"GDScript",
 "path": "res://interface/components/checkbox_button.gd"
 }, {
-"base": "RigidDynamicBody3D",
+"base": "RigidBody3D",
 "class": &"ChopSlice",
 "language": &"GDScript",
 "path": "res://apps/cooking/chopping/nodes/slice.gd"
@@ -89,10 +129,35 @@ _global_script_classes=[{
 "language": &"GDScript",
 "path": "res://interface/components/circle_menu/circle_menu.gd"
 }, {
+"base": "CircleContainer",
+"class": &"CircleMenuSimple",
+"language": &"GDScript",
+"path": "res://interface/components/circle_menu/circle_menu_simple.gd"
+}, {
 "base": "Object",
 "class": &"ColorRef",
 "language": &"GDScript",
 "path": "res://utils/color_ref.gd"
+}, {
+"base": "Resource",
+"class": &"CommandData",
+"language": &"GDScript",
+"path": "res://apps/pet/data/command_data.gd"
+}, {
+"base": "Task",
+"class": &"Composite",
+"language": &"GDScript",
+"path": "res://apps/behavior/composite.gd"
+}, {
+"base": "Decorator",
+"class": &"Condition",
+"language": &"GDScript",
+"path": "res://apps/behavior/decorators/condition.gd"
+}, {
+"base": "RigidBody3D",
+"class": &"ConsumableObject",
+"language": &"GDScript",
+"path": "res://apps/world/objects/consumable.gd"
 }, {
 "base": "Object",
 "class": &"ControlRef",
@@ -103,6 +168,16 @@ _global_script_classes=[{
 "class": &"CustomSizeTexture2D",
 "language": &"GDScript",
 "path": "res://utils/sized_texture.gd"
+}, {
+"base": "Task",
+"class": &"Decorator",
+"language": &"GDScript",
+"path": "res://apps/behavior/decorator.gd"
+}, {
+"base": "Object",
+"class": &"DictRef",
+"language": &"GDScript",
+"path": "res://utils/dict_ref.gd"
 }, {
 "base": "Node",
 "class": &"Draggable",
@@ -119,10 +194,25 @@ _global_script_classes=[{
 "language": &"GDScript",
 "path": "res://interface/components/drop_menu/drop_menu.gd"
 }, {
+"base": "Resource",
+"class": &"FavoritesData",
+"language": &"GDScript",
+"path": "res://apps/pet/personality/data/favorites_data.gd"
+}, {
+"base": "WorldObjectData",
+"class": &"FoliageData",
+"language": &"GDScript",
+"path": "res://apps/world_object/data/foliage_object_data.gd"
+}, {
 "base": "StyleSheet",
 "class": &"FontStyleSheet",
 "language": &"GDScript",
 "path": "res://utils/stylesheet/resources/font_style_sheet.gd"
+}, {
+"base": "State",
+"class": &"GameModeState",
+"language": &"GDScript",
+"path": "res://apps/game/game_mode.gd"
 }, {
 "base": "ColorRect",
 "class": &"GradientNoiseRect",
@@ -130,9 +220,19 @@ _global_script_classes=[{
 "path": "res://utils/nodes/noise_rect.gd"
 }, {
 "base": "Node",
+"class": &"Guard",
+"language": &"GDScript",
+"path": "res://apps/behavior/guard.gd"
+}, {
+"base": "Node",
 "class": &"GuideMap",
 "language": &"GDScript",
 "path": "res://apps/map/nodes/guide/guide_map.gd"
+}, {
+"base": "Task",
+"class": &"HandleNeedTask",
+"language": &"GDScript",
+"path": "res://apps/pet/behavior/ai/tasks/handle_need.gd"
 }, {
 "base": "Camera3D",
 "class": &"IsoCamera",
@@ -143,6 +243,11 @@ _global_script_classes=[{
 "class": &"Iter",
 "language": &"GDScript",
 "path": "res://utils/iter.gd"
+}, {
+"base": "Task",
+"class": &"Leaf",
+"language": &"GDScript",
+"path": "res://apps/behavior/leaf.gd"
 }, {
 "base": "Node",
 "class": &"MapState",
@@ -179,6 +284,11 @@ _global_script_classes=[{
 "language": &"GDScript",
 "path": "res://utils/anim/node_anim.gd"
 }, {
+"base": "Resource",
+"class": &"OppportunityData",
+"language": &"GDScript",
+"path": "res://apps/world/data/opportunity_data.gd"
+}, {
 "base": "Node",
 "class": &"PaintState",
 "language": &"GDScript",
@@ -199,10 +309,25 @@ _global_script_classes=[{
 "language": &"GDScript",
 "path": "res://apps/pet/personality/data/personality_data.gd"
 }, {
+"base": "Node",
+"class": &"Pet",
+"language": &"GDScript",
+"path": "res://apps/pet/scenes/pet.gd"
+}, {
+"base": "CharacterBody3D",
+"class": &"PetActor",
+"language": &"GDScript",
+"path": "res://apps/pet/scenes/actor.gd"
+}, {
 "base": "Resource",
 "class": &"PetData",
 "language": &"GDScript",
 "path": "res://apps/pet/data/pet_data.gd"
+}, {
+"base": "Resource",
+"class": &"PetInterfaceData",
+"language": &"GDScript",
+"path": "res://apps/pet/interface/interface_data.gd"
 }, {
 "base": "Range",
 "class": &"PillRange",
@@ -219,6 +344,16 @@ _global_script_classes=[{
 "language": &"GDScript",
 "path": "res://utils/nodes/quick_spatial_grid.gd"
 }, {
+"base": "Decorator",
+"class": &"RepeatUntilFail",
+"language": &"GDScript",
+"path": "res://apps/behavior/decorators/repeat_until_fail.gd"
+}, {
+"base": "Decorator",
+"class": &"RepeatUntilSucceed",
+"language": &"GDScript",
+"path": "res://apps/behavior/decorators/repeat_until_succeed.gd"
+}, {
 "base": "Container",
 "class": &"RightDrawerComponent",
 "language": &"GDScript",
@@ -233,6 +368,16 @@ _global_script_classes=[{
 "class": &"ScriptRef",
 "language": &"GDScript",
 "path": "res://utils/script_ref.gd"
+}, {
+"base": "Composite",
+"class": &"Selector",
+"language": &"GDScript",
+"path": "res://apps/behavior/composites/selector.gd"
+}, {
+"base": "Composite",
+"class": &"Sequence",
+"language": &"GDScript",
+"path": "res://apps/behavior/composites/sequence.gd"
 }, {
 "base": "MeshInstance3D",
 "class": &"SpacialTile",
@@ -294,10 +439,20 @@ _global_script_classes=[{
 "language": &"GDScript",
 "path": "res://utils/stylesheet/resources/style_sheet_utils.gd"
 }, {
+"base": "Node",
+"class": &"Task",
+"language": &"GDScript",
+"path": "res://apps/behavior/task.gd"
+}, {
 "base": "Object",
 "class": &"Themes",
 "language": &"GDScript",
 "path": "res://utils/themes.gd"
+}, {
+"base": "PanelContainer",
+"class": &"ThoughtBubble",
+"language": &"GDScript",
+"path": "res://interface/components/thought_bubble/thought_bubble.gd"
 }, {
 "base": "Control",
 "class": &"TitleLabel",
@@ -310,6 +465,11 @@ _global_script_classes=[{
 "path": "res://interface/components/toggle_switch.gd"
 }, {
 "base": "Resource",
+"class": &"TraitsData",
+"language": &"GDScript",
+"path": "res://apps/pet/personality/data/traits_data.gd"
+}, {
+"base": "Resource",
 "class": &"UnevenGrid",
 "language": &"GDScript",
 "path": "res://apps/map/nodes/grid/uneven_grid.gd"
@@ -318,6 +478,21 @@ _global_script_classes=[{
 "class": &"UnevenPoint",
 "language": &"GDScript",
 "path": "res://apps/map/nodes/grid/uneven_grid_point.gd"
+}, {
+"base": "Object",
+"class": &"UseNeedsData",
+"language": &"GDScript",
+"path": "res://apps/pet/needs_wants/data/use_needs_data.gd"
+}, {
+"base": "Object",
+"class": &"UsePersonalityData",
+"language": &"GDScript",
+"path": "res://apps/pet/personality/data/use_personality_data.gd"
+}, {
+"base": "Object",
+"class": &"UsePetData",
+"language": &"GDScript",
+"path": "res://apps/pet/scripts/use_pet_data.gd"
 }, {
 "base": "Node3D",
 "class": &"Utensil",
@@ -343,35 +518,81 @@ _global_script_classes=[{
 "class": &"VertexGroup",
 "language": &"GDScript",
 "path": "res://utils/mesh/vertex_group.gd"
+}, {
+"base": "Resource",
+"class": &"WantsData",
+"language": &"GDScript",
+"path": "res://apps/pet/needs_wants/data/wants_data.gd"
+}, {
+"base": "Resource",
+"class": &"WorldBlockData",
+"language": &"GDScript",
+"path": "res://apps/world/data/world_block_data.gd"
+}, {
+"base": "Resource",
+"class": &"WorldObjectData",
+"language": &"GDScript",
+"path": "res://apps/world_object/data/world_object_data.gd"
+}, {
+"base": "Node3D",
+"class": &"WorldObjectRenderer",
+"language": &"GDScript",
+"path": "res://apps/world_object/world_object_renderer.gd"
+}, {
+"base": "Node3D",
+"class": &"WorldRenderer",
+"language": &"GDScript",
+"path": "res://apps/world/world_renderer.gd"
 }]
 _global_script_class_icons={
+"ActionData": "",
+"ActionItem": "",
+"ActionItemParams": "",
+"ActionMenu": "",
+"AlwaysFail": "res://apps/behavior/assets/always_fail.svg",
+"AlwaysSucceed": "res://apps/behavior/assets/always_succeed.svg",
 "Anim": "",
 "AnimBuilder": "",
 "AnimBuilderResource": "",
 "AnimProperty": "",
 "AnimalData": "",
+"BehaviorTree": "res://apps/behavior/assets/behavior_tree.svg",
 "BitMask": "",
 "Bits": "",
 "Bowl": "res://apps/cooking/mixing/nodes/bowl.svg",
 "Cell": "",
 "CellMap": "res://apps/map/nodes/cell_map/cell_map_icon.svg",
+"Chance": "res://apps/behavior/assets/chance.svg",
 "CheckBoxButton": "",
 "ChopSlice": "res://apps/cooking/chopping/nodes/slice.svg",
 "Choppable": "res://apps/cooking/chopping/nodes/choppable.svg",
 "Chopping": "res://apps/cooking/chopping/chopping.svg",
 "CircleContainer": "res://interface/components/circle_container/circle_container.svg",
 "CircleMenu": "",
+"CircleMenuSimple": "",
 "ColorRef": "",
+"CommandData": "",
+"Composite": "",
+"Condition": "res://apps/behavior/assets/condition.svg",
+"ConsumableObject": "",
 "ControlRef": "",
 "CustomSizeTexture2D": "",
+"Decorator": "",
+"DictRef": "",
 "Draggable": "res://utils/nodes/draggable.svg",
 "DrawSpacedString": "",
 "DropMenu": "res://interface/components/drop_menu/drop_menu.svg",
+"FavoritesData": "",
+"FoliageData": "",
 "FontStyleSheet": "",
+"GameModeState": "",
 "GradientNoiseRect": "res://utils/nodes/noise_rect.svg",
+"Guard": "",
 "GuideMap": "",
+"HandleNeedTask": "",
 "IsoCamera": "",
 "Iter": "",
+"Leaf": "",
 "MapState": "",
 "Math": "",
 "MeshDataToolPlus": "",
@@ -379,17 +600,25 @@ _global_script_class_icons={
 "NeedsData": "",
 "NeighborGroup": "",
 "NodeAnim": "",
+"OppportunityData": "",
 "PaintState": "",
 "PanelButton": "res://interface/components/panel_button/panel_button.svg",
 "PanelButtonGroup": "res://interface/components/panel_button/panel_button_group.svg",
 "PersonalityData": "",
+"Pet": "",
+"PetActor": "",
 "PetData": "",
+"PetInterfaceData": "",
 "PillRange": "res://interface/components/pill_range.svg",
 "PlacementRect": "",
 "QuickSpatialGrid": "res://utils/nodes/quick_spatial_grid.svg",
+"RepeatUntilFail": "res://apps/behavior/assets/repeat_until_fail.svg",
+"RepeatUntilSucceed": "res://apps/behavior/assets/repeat_until_succeed.svg",
 "RightDrawerComponent": "res://interface/components/right_drawer/right_drawer.svg",
 "Scenes": "",
 "ScriptRef": "",
+"Selector": "res://apps/behavior/assets/selector.svg",
+"Sequence": "res://apps/behavior/assets/sequence.svg",
 "SpacialTile": "res://apps/map/nodes/tile_set/spacial_tile_icon.svg",
 "SpacialTileFactory": "res://apps/map/nodes/tile_set/spacial_tile_factory_icon.svg",
 "SpacialTileSet": "",
@@ -402,23 +631,34 @@ _global_script_class_icons={
 "StyleSheetMixin": "",
 "StyleSheetSetter": "res://utils/stylesheet/icons/wand-magic-sparkles-solid.svg",
 "StyleSheetUtils": "",
+"Task": "res://apps/behavior/assets/task.svg",
 "Themes": "",
+"ThoughtBubble": "res://interface/components/thought_bubble/thought_bubble.svg",
 "TitleLabel": "res://interface/components/title_label/title_label.svg",
 "ToggleSwitch": "",
+"TraitsData": "",
 "UnevenGrid": "",
 "UnevenPoint": "",
+"UseNeedsData": "",
+"UsePersonalityData": "",
+"UsePetData": "",
 "Utensil": "res://apps/cooking/mixing/nodes/utensil.svg",
 "Utils": "",
 "Vector2Ref": "",
 "Vector3Ref": "",
-"VertexGroup": ""
+"VertexGroup": "",
+"WantsData": "",
+"WorldBlockData": "",
+"WorldObjectData": "",
+"WorldObjectRenderer": "",
+"WorldRenderer": "res://apps/world/assets/icons/world_renderer.svg"
 }
 
 [application]
 
 config/name="pet-sim"
 run/main_scene="res://main_menu.tscn"
-config/features=PackedStringArray("4.0", "Vulkan Mobile")
+config/features=PackedStringArray("4.0", "C#")
 
 [autoload]
 
@@ -426,6 +666,12 @@ Module="*res://utils/module.gd"
 Assets="*res://utils/assets.gd"
 States="*res://utils/states.gd"
 Auto="*res://utils/auto.gd"
+WorldData="*res://apps/world/data/world_data.tscn"
+Game="*res://apps/game/game.gd"
+
+[debug]
+
+settings/stdout/print_fps=true
 
 [display]
 
@@ -437,6 +683,10 @@ window/handheld/orientation=1
 window/stretch/mode="canvas_items"
 window/stretch/aspect="expand"
 
+[dotnet]
+
+project/assembly_name="pet-sim"
+
 [filesystem]
 
 import/blender/enabled=false
@@ -444,50 +694,50 @@ import/blender/enabled=false
 [gui]
 
 common/default_scroll_deadzone=100
-theme/custom="res://static/main.theme"
+theme/custom="res://static/main_v2.tres"
 common/snap_controls_to_pixels=false
 
 [input]
 
 number_key={
 "deadzone": 0.5,
-"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"window_id":0,"store_command":true,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"command_pressed":false,"pressed":false,"keycode":49,"physical_keycode":0,"unicode":0,"echo":false,"script":null)
-, Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"window_id":0,"store_command":true,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"command_pressed":false,"pressed":false,"keycode":50,"physical_keycode":0,"unicode":0,"echo":false,"script":null)
-, Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"window_id":0,"store_command":true,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"command_pressed":false,"pressed":false,"keycode":51,"physical_keycode":0,"unicode":0,"echo":false,"script":null)
-, Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"window_id":0,"store_command":true,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"command_pressed":false,"pressed":false,"keycode":52,"physical_keycode":0,"unicode":0,"echo":false,"script":null)
-, Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"window_id":0,"store_command":true,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"command_pressed":false,"pressed":false,"keycode":53,"physical_keycode":0,"unicode":0,"echo":false,"script":null)
-, Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"window_id":0,"store_command":true,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"command_pressed":false,"pressed":false,"keycode":54,"physical_keycode":0,"unicode":0,"echo":false,"script":null)
-, Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"window_id":0,"store_command":true,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"command_pressed":false,"pressed":false,"keycode":55,"physical_keycode":0,"unicode":0,"echo":false,"script":null)
-, Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"window_id":0,"store_command":true,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"command_pressed":false,"pressed":false,"keycode":56,"physical_keycode":0,"unicode":0,"echo":false,"script":null)
-, Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"window_id":0,"store_command":true,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"command_pressed":false,"pressed":false,"keycode":57,"physical_keycode":0,"unicode":0,"echo":false,"script":null)
-, Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"window_id":0,"store_command":true,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"command_pressed":false,"pressed":false,"keycode":48,"physical_keycode":0,"unicode":0,"echo":false,"script":null)
+"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":49,"physical_keycode":0,"unicode":0,"echo":false,"script":null)
+, Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":50,"physical_keycode":0,"unicode":0,"echo":false,"script":null)
+, Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":51,"physical_keycode":0,"unicode":0,"echo":false,"script":null)
+, Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":52,"physical_keycode":0,"unicode":0,"echo":false,"script":null)
+, Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":53,"physical_keycode":0,"unicode":0,"echo":false,"script":null)
+, Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":54,"physical_keycode":0,"unicode":0,"echo":false,"script":null)
+, Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":55,"physical_keycode":0,"unicode":0,"echo":false,"script":null)
+, Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":56,"physical_keycode":0,"unicode":0,"echo":false,"script":null)
+, Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":57,"physical_keycode":0,"unicode":0,"echo":false,"script":null)
+, Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":48,"physical_keycode":0,"unicode":0,"echo":false,"script":null)
 ]
 }
 redo={
 "deadzone": 0.5,
-"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"window_id":0,"store_command":true,"alt_pressed":false,"shift_pressed":true,"ctrl_pressed":false,"command_pressed":true,"pressed":false,"keycode":0,"physical_keycode":90,"unicode":0,"echo":false,"script":null)
-, Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"window_id":0,"store_command":true,"alt_pressed":false,"shift_pressed":true,"ctrl_pressed":true,"command_pressed":false,"pressed":false,"keycode":0,"physical_keycode":90,"unicode":0,"echo":false,"script":null)
+"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"window_id":0,"alt_pressed":false,"shift_pressed":true,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":90,"unicode":0,"echo":false,"script":null)
+, Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"window_id":0,"alt_pressed":false,"shift_pressed":true,"ctrl_pressed":true,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":90,"unicode":0,"echo":false,"script":null)
 ]
 }
 undo={
 "deadzone": 0.5,
-"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"window_id":0,"store_command":true,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"command_pressed":true,"pressed":false,"keycode":0,"physical_keycode":90,"unicode":0,"echo":false,"script":null)
-, Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"window_id":0,"store_command":true,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":true,"command_pressed":false,"pressed":false,"keycode":0,"physical_keycode":90,"unicode":0,"echo":false,"script":null)
+"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":90,"unicode":0,"echo":false,"script":null)
+, Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":true,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":90,"unicode":0,"echo":false,"script":null)
 ]
 }
 backward={
 "deadzone": 0.5,
-"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"window_id":0,"store_command":true,"alt_pressed":false,"shift_pressed":true,"ctrl_pressed":false,"command_pressed":false,"pressed":false,"keycode":0,"physical_keycode":16777218,"unicode":0,"echo":false,"script":null)
+"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"window_id":0,"alt_pressed":false,"shift_pressed":true,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":16777218,"unicode":0,"echo":false,"script":null)
 ]
 }
 forward={
 "deadzone": 0.5,
-"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"window_id":0,"store_command":true,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"command_pressed":false,"pressed":false,"keycode":0,"physical_keycode":16777218,"unicode":0,"echo":false,"script":null)
+"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":16777218,"unicode":0,"echo":false,"script":null)
 ]
 }
 tap={
 "deadzone": 0.5,
-"events": [Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"store_command":true,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"command_pressed":false,"button_mask":0,"position":Vector2(0, 0),"global_position":Vector2(0, 0),"factor":1.0,"button_index":1,"pressed":false,"double_click":false,"script":null)
+"events": [Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"button_mask":0,"position":Vector2(0, 0),"global_position":Vector2(0, 0),"factor":1.0,"button_index":1,"pressed":false,"double_click":false,"script":null)
 ]
 }
 

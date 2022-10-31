@@ -3,6 +3,7 @@
 [ext_resource type="Script" path="res://apps/cooking/mixing/nodes/bowl.gd" id="1_6unpo"]
 [ext_resource type="ArrayMesh" uid="uid://fogi0qld2m5f" path="res://apps/cooking/assets/meshes/pot.obj" id="1_tv4hm"]
 [ext_resource type="Shader" path="res://temp/underwater.gdshader" id="3_cqenq"]
+[ext_resource type="Shader" path="res://apps/cooking/assets/shaders/boiling_water.gdshader" id="4_c7d13"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_0xvmc"]
 friction = 0.1
@@ -25,7 +26,7 @@ cellular_return_type = 5
 domain_warp_type = 2
 domain_warp_amplitude = 2.0
 
-[sub_resource type="NoiseTexture" id="NoiseTexture_a6rsp"]
+[sub_resource type="NoiseTexture2D" id="NoiseTexture_a6rsp"]
 width = 1024
 height = 1024
 in_3d_space = true
@@ -36,12 +37,12 @@ noise = SubResource("FastNoiseLite_meo7c")
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_iob5o"]
 render_priority = 0
 shader = ExtResource("3_cqenq")
-noise = SubResource("NoiseTexture_a6rsp")
-noise_force = 0.008
-tint = Color(0.32549, 0.32549, 0.32549, 0.298039)
-wave_speed = 0.15
+shader_parameter/tint = Color(0.32549, 0.32549, 0.32549, 0.298039)
+shader_parameter/wave_speed = 0.15
+shader_parameter/noise_force = 0.008
+shader_parameter/noise = SubResource("NoiseTexture_a6rsp")
 
-[sub_resource type="NoiseTexture" id="NoiseTexture_v67ld"]
+[sub_resource type="NoiseTexture2D" id="NoiseTexture_v67ld"]
 width = 1024
 height = 1024
 in_3d_space = true
@@ -49,68 +50,21 @@ seamless = true
 seamless_blend_skirt = 1.0
 noise = SubResource("FastNoiseLite_meo7c")
 
-[sub_resource type="Shader" id="Shader_pduiy"]
-code = "// NOTE: Shader automatically converted from Godot Engine 4.0.alpha13's StandardMaterial3D.
-
-shader_type spatial;
-render_mode blend_add,depth_draw_opaque,cull_back,diffuse_burley,specular_schlick_ggx;
-uniform vec4 albedo : source_color;
-uniform sampler2D texture_albedo : source_color,filter_linear_mipmap,repeat_enable;
-uniform float point_size : hint_range(0,128);
-uniform float roughness : hint_range(0,1);
-uniform sampler2D texture_metallic : hint_default_white,filter_linear_mipmap,repeat_enable;
-uniform vec4 metallic_texture_channel;
-uniform sampler2D texture_roughness : hint_roughness_r,filter_linear_mipmap,repeat_enable;
-uniform float specular;
-uniform float metallic;
-uniform vec3 uv1_scale;
-uniform vec3 uv1_offset;
-uniform vec3 uv2_scale;
-uniform vec3 uv2_offset;
-
-uniform sampler2D noise;
-
-void vertex() {
-	UV=UV*uv1_scale.xy+uv1_offset.xy;
-	
-	vec4 col = textureLod(noise, UV, 9.0);
-	VERTEX.y += sin((col.r + col.g + col.b) * TIME) / 8.0;
-}
-
-
-
-
-
-
-void fragment() {
-	vec2 base_uv = UV;
-	vec4 albedo_tex = texture(texture_albedo,base_uv);
-	ALBEDO = albedo.rgb * albedo_tex.rgb;
-	float metallic_tex = dot(texture(texture_metallic,base_uv),metallic_texture_channel);
-	METALLIC = metallic_tex * metallic;
-	vec4 roughness_texture_channel = vec4(1.0,0.0,0.0,0.0);
-	float roughness_tex = dot(texture(texture_roughness,base_uv),roughness_texture_channel);
-	ROUGHNESS = roughness_tex * roughness;
-	SPECULAR = specular;
-	ALPHA *= albedo.a * albedo_tex.a;
-}
-"
-
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_mognn"]
 render_priority = 1
 next_pass = SubResource("ShaderMaterial_iob5o")
-shader = SubResource("Shader_pduiy")
-albedo = Color(0.356863, 0.356863, 0.356863, 0.85098)
-metallic = 0.0
-metallic_texture_channel = Plane(1, 0, 0, 0)
-noise = SubResource("NoiseTexture_v67ld")
-point_size = 1.0
-roughness = 1.0
-specular = 0.5
-uv1_offset = Vector3(0, 0, 0)
-uv1_scale = Vector3(1, 1, 1)
-uv2_offset = Vector3(0, 0, 0)
-uv2_scale = Vector3(1, 1, 1)
+shader = ExtResource("4_c7d13")
+shader_parameter/albedo = Color(0.356863, 0.356863, 0.356863, 0.85098)
+shader_parameter/point_size = 1.0
+shader_parameter/roughness = 1.0
+shader_parameter/metallic_texture_channel = Plane(1, 0, 0, 0)
+shader_parameter/specular = 0.5
+shader_parameter/metallic = 0.0
+shader_parameter/uv1_scale = Vector3(1, 1, 1)
+shader_parameter/uv1_offset = Vector3(0, 0, 0)
+shader_parameter/uv2_scale = Vector3(1, 1, 1)
+shader_parameter/uv2_offset = Vector3(0, 0, 0)
+shader_parameter/noise = SubResource("NoiseTexture_v67ld")
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_m4rdy"]
 material = SubResource("ShaderMaterial_mognn")

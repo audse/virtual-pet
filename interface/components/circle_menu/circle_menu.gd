@@ -97,7 +97,7 @@ func _offset_at_origin() -> float:
 @export var use_blur: bool = true:
 	set(value):
 		use_blur = value
-		menu_backdrop_blur.material.set_shader_param("blur_amount", 3.0 if use_blur else 0.0)
+		menu_backdrop_blur.material.set_shader_parameter("blur_amount", 3.0 if use_blur else 0.0)
 		_reset()
 
 @export var test_open: bool = false:
@@ -143,7 +143,7 @@ func _remake_menu_button() -> Button:
 	node.expand_icon = true
 	node.custom_minimum_size = menu_button_min_size
 	node.size = menu_button_min_size
-	node.raise()
+	node.move_to_front()
 	return node
 
 
@@ -166,7 +166,7 @@ func _remake_close_button() -> Button:
 	node.expand_icon = true
 	node.custom_minimum_size = close_button_min_size
 	node.size = close_button_min_size
-	node.raise()
+	node.move_to_front()
 	return node
 
 
@@ -205,8 +205,8 @@ func _remake_backdrop_blur() -> ColorRect:
 	menu_backdrop.add_child(node)
 	node.material = ShaderMaterial.new()
 	node.material.shader = load("res://apps/painter/assets/shaders/rounded_blur.gdshader")
-	node.material.set_shader_param("blur_amount", 3.0 if use_blur else 0.0)
-	node.material.set_shader_param("radius", 1.0)
+	node.material.set_shader_parameter("blur_amount", 3.0 if use_blur else 0.0)
+	node.material.set_shader_parameter("radius", 1.0)
 	node.show_behind_parent = true
 	return node
 
@@ -287,7 +287,7 @@ func _reset_menu_button() -> void:
 	match _state:
 		BEFORE_OPEN: menu_button.visible = true
 		AFTER_OPEN: menu_button.visible = false
-	menu_button.raise()
+	menu_button.move_to_front()
 
 
 func _reset_close_button() -> void:
@@ -295,7 +295,7 @@ func _reset_close_button() -> void:
 	match _state:
 		BEFORE_OPEN: close_button.visible = false
 		AFTER_OPEN: close_button.visible = true
-	close_button.raise()
+	close_button.move_to_front()
 
 
 func _get_backdrop_pivot() -> Vector2:
@@ -351,13 +351,13 @@ var _is_animating: bool = false
 
 func queue_open() -> void:
 	if _state == BEFORE_OPEN and _is_animating:
-		close_complete.connect(open, CONNECT_ONESHOT)
+		close_complete.connect(open, CONNECT_ONE_SHOT)
 	elif not _is_animating: open()
 
 
 func queue_close() -> void:
 	if _state == AFTER_OPEN and _is_animating:
-		open_complete.connect(close, CONNECT_ONESHOT)
+		open_complete.connect(close, CONNECT_ONE_SHOT)
 	elif not _is_animating: close()
 
 

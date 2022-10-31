@@ -1,0 +1,18 @@
+[gd_resource type="Resource" load_steps=3 format=3 uid="uid://c1v5q77smk3vl"]
+
+[ext_resource type="Script" path="res://apps/world_object/data/world_object_data.gd" id="1_0l2d5"]
+[ext_resource type="PackedScene" uid="uid://t8aunf03pigt" path="res://apps/world/resources/objects/toy_test.tscn" id="1_qd17t"]
+
+[resource]
+script = ExtResource("1_0l2d5")
+id = "toy-01"
+scene = ExtResource("1_qd17t")
+coord = Vector2i(-2, 2)
+dimensions = Vector2i(1, 1)
+rotation = 0
+layer = 2
+flags = []
+fulfills_needs = [0]
+actions = ["play with me!"]
+rarity = 0
+uses_left = -1

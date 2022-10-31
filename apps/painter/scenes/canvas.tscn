@@ -8,13 +8,13 @@
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_tmijp"]
 shader = ExtResource("2_ir7hh")
-shader_param/background = Color(1, 1, 1, 0)
-shader_param/dot_size = null
-shader_param/dots = Color(0.64, 0.886, 1, 1)
-shader_param/grid_x = 50.0
-shader_param/grid_y = 50.0
-shader_param/minigrid_x = -1.0
-shader_param/minigrid_y = -1.0
+background = Color(1, 1, 1, 1)
+dot_size = 2.0
+dots = Color(0.803922, 0.94902, 0.988235, 1)
+grid_x = 50.0
+grid_y = 50.0
+minigrid_x = -1.0
+minigrid_y = -1.0
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_efslj"]
 viewport_path = NodePath("Canvas/SubViewport")
@@ -41,6 +41,8 @@ border_color = Color(0.376471, 0.647059, 0.980392, 0.196078)
 border_blend = true
 
 [node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 script = ExtResource("1_m4qb3")
@@ -48,6 +50,7 @@ script = ExtResource("1_m4qb3")
 [node name="Canvas" type="SubViewportContainer" parent="."]
 clip_contents = true
 custom_minimum_size = Vector2(800, 800)
+anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -134,6 +137,7 @@ modulate = Color(1, 1, 1, 0.490196)
 [node name="Grid" type="ColorRect" parent="Canvas/SubViewport"]
 unique_name_in_owner = true
 material = SubResource("ShaderMaterial_tmijp")
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
@@ -142,6 +146,7 @@ color = Color(1, 1, 1, 0)
 metadata/_edit_layout_mode = 1
 
 [node name="Backdrop" type="ColorRect" parent="."]
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 mouse_filter = 1
@@ -150,6 +155,7 @@ color = Color(0.117647, 0.160784, 0.231373, 1)
 [node name="CanvasCopy" type="TextureRect" parent="."]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(828, 828)
+anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -180,6 +186,7 @@ ignore_texture_size = true
 stretch_mode = 6
 
 [node name="ReferenceRect" type="ReferenceRect" parent="CanvasCopy/TileTopLeft"]
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 mouse_filter = 2
@@ -192,6 +199,7 @@ unique_name_in_owner = true
 visible = false
 modulate = Color(1, 1, 1, 0.960784)
 custom_minimum_size = Vector2(828, 828)
+anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
 offset_left = -414.0
@@ -206,6 +214,7 @@ ignore_texture_size = true
 stretch_mode = 6
 
 [node name="ReferenceRect2" type="ReferenceRect" parent="CanvasCopy/TileTop"]
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 mouse_filter = 2
@@ -218,6 +227,7 @@ unique_name_in_owner = true
 visible = false
 modulate = Color(1, 1, 1, 0.960784)
 custom_minimum_size = Vector2(828, 828)
+anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
 offset_top = -828.0
@@ -231,6 +241,7 @@ ignore_texture_size = true
 stretch_mode = 6
 
 [node name="ReferenceRect3" type="ReferenceRect" parent="CanvasCopy/TileTopRight"]
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 mouse_filter = 2
@@ -243,6 +254,7 @@ unique_name_in_owner = true
 visible = false
 modulate = Color(1, 1, 1, 0.960784)
 custom_minimum_size = Vector2(828, 828)
+anchors_preset = 4
 anchor_top = 0.5
 anchor_bottom = 0.5
 offset_left = -828.0
@@ -257,6 +269,7 @@ ignore_texture_size = true
 stretch_mode = 6
 
 [node name="ReferenceRect4" type="ReferenceRect" parent="CanvasCopy/TileLeft"]
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 mouse_filter = 2
@@ -269,6 +282,7 @@ unique_name_in_owner = true
 visible = false
 modulate = Color(1, 1, 1, 0.960784)
 custom_minimum_size = Vector2(828, 828)
+anchors_preset = 6
 anchor_left = 1.0
 anchor_top = 0.5
 anchor_right = 1.0
@@ -286,6 +300,7 @@ ignore_texture_size = true
 stretch_mode = 6
 
 [node name="ReferenceRect5" type="ReferenceRect" parent="CanvasCopy/TileRight"]
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 mouse_filter = 2
@@ -298,6 +313,7 @@ unique_name_in_owner = true
 visible = false
 modulate = Color(1, 1, 1, 0.960784)
 custom_minimum_size = Vector2(828, 828)
+anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
 offset_left = -828.0
@@ -311,6 +327,7 @@ ignore_texture_size = true
 stretch_mode = 6
 
 [node name="ReferenceRect6" type="ReferenceRect" parent="CanvasCopy/TileBottomLeft"]
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 mouse_filter = 2
@@ -323,6 +340,7 @@ unique_name_in_owner = true
 visible = false
 modulate = Color(1, 1, 1, 0.960784)
 custom_minimum_size = Vector2(828, 828)
+anchors_preset = 7
 anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
@@ -340,6 +358,7 @@ ignore_texture_size = true
 stretch_mode = 6
 
 [node name="ReferenceRect7" type="ReferenceRect" parent="CanvasCopy/TileBottom"]
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 mouse_filter = 2
@@ -352,6 +371,7 @@ unique_name_in_owner = true
 visible = false
 modulate = Color(1, 1, 1, 0.960784)
 custom_minimum_size = Vector2(828, 828)
+anchors_preset = 3
 anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
@@ -368,6 +388,7 @@ ignore_texture_size = true
 stretch_mode = 6
 
 [node name="ReferenceRect8" type="ReferenceRect" parent="CanvasCopy/TileBottomRight"]
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 mouse_filter = 2
@@ -377,6 +398,7 @@ editor_only = false
 
 [node name="MinimapMarginContainer" type="MarginContainer" parent="."]
 unique_name_in_owner = true
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 mouse_filter = 2
@@ -384,9 +406,10 @@ theme_override_constants/margin_top = 224
 theme_override_constants/margin_bottom = 350
 
 [node name="Control" type="Control" parent="MinimapMarginContainer"]
-offset_left = 24.0
+layout_mode = 3
+anchors_preset = 0
 offset_top = 224.0
-offset_right = 804.0
+offset_right = 828.0
 offset_bottom = 1442.0
 mouse_filter = 2
 
@@ -394,6 +417,7 @@ mouse_filter = 2
 unique_name_in_owner = true
 visible = false
 custom_minimum_size = Vector2(50, 50)
+anchors_preset = 3
 anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
@@ -419,6 +443,8 @@ offset = Vector2(-200, -200)
 
 [node name="Control" type="Control" parent="MinimapMarginContainer/Control/Minimap"]
 clip_contents = true
+layout_mode = 3
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 

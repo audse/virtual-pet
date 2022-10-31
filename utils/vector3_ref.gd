@@ -106,7 +106,7 @@ static func quadratic_bezier(p0: Vector3, p1: Vector3, p2: Vector3, t: float) ->
 
 
 static func rad(degrees: Vector3) -> Vector3:
-	return Vector3(deg2rad(degrees.x), deg2rad(degrees.y), deg2rad(degrees.z))
+	return Vector3(deg_to_rad(degrees.x), deg_to_rad(degrees.y), deg_to_rad(degrees.z))
 
 
 static func lerp_all(from: Vector3, to: Vector3, weight: Vector3) -> Vector3:
@@ -118,7 +118,7 @@ static func lerp_all(from: Vector3, to: Vector3, weight: Vector3) -> Vector3:
 
 
 static func deg(radians: Vector3) -> Vector3:
-	return Vector3(rad2deg(radians.x), rad2deg(radians.y), rad2deg(radians.z))
+	return Vector3(rad_to_deg(radians.x), rad_to_deg(radians.y), rad_to_deg(radians.z))
 
 
 static func from_vec2_array(array: Array[Vector2], y := 0.0) -> Array[Vector3]:

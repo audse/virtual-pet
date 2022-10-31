@@ -1,5 +1,5 @@
 class_name ChopSlice
-extends RigidDynamicBody3D
+extends RigidBody3D
 @icon("slice.svg")
 
 const COLLISION_OVERLAP := 0.005

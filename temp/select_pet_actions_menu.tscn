@@ -1,0 +1,17 @@
+[gd_scene load_steps=2 format=3 uid="uid://b516fe7n86r56"]
+
+[ext_resource type="Script" path="res://apps/interface/select_pet_actions_menu.gd" id="1_0xegq"]
+
+[node name="ActionsMenu" type="Container"]
+custom_minimum_size = Vector2i(500, 500)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_0xegq")
+close_button_path = NodePath("")
+tap_outside_to_close = true
+start_open = true

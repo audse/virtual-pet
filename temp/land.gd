@@ -6,7 +6,7 @@ var mesh := ImmediateMesh.new()
 
 var radius: float = 3.0
 var num_points := 30
-var angle := deg2rad(360) / num_points
+var angle := deg_to_rad(360) / num_points
 
 
 func _ready() -> void:

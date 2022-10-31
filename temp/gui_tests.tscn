@@ -6,13 +6,20 @@
 [ext_resource type="Script" path="res://interface/components/pill_range.gd" id="4_p4eot"]
 
 [node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 script = ExtResource("1_7avwo")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 theme_override_constants/margin_left = 100
 theme_override_constants/margin_top = 100
 theme_override_constants/margin_right = 100
@@ -26,26 +33,26 @@ offset_bottom = 1692.0
 
 [node name="CheckboxButton" type="Button" parent="MarginContainer/HBoxContainer"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(40, 40)
-offset_right = 40.0
-offset_bottom = 40.0
+custom_minimum_size = Vector2i(40, 40)
+offset_right = 48.0
+offset_bottom = 48.0
 size_flags_horizontal = 0
 size_flags_vertical = 0
 theme_type_variation = &"CheckBoxButton"
 toggle_mode = true
 keep_pressed_outside = true
 script = ExtResource("2_fjpgn")
-corner_radius = 7
+corner_radius = 7.0
 
 [node name="ToggleSwitch" type="Button" parent="MarginContainer/HBoxContainer"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(80, 40)
-offset_left = 64.0
-offset_right = 144.0
-offset_bottom = 40.0
+custom_minimum_size = Vector2i(80, 40)
+offset_left = 60.0
+offset_right = 140.0
+offset_bottom = 60.0
 size_flags_horizontal = 0
 size_flags_vertical = 0
-theme_type_variation = &"CheckBoxButton"
+theme_type_variation = &"ToggleSwitch"
 toggle_mode = true
 keep_pressed_outside = true
 script = ExtResource("3_00tct")
@@ -68,15 +75,17 @@ texture_repeat = 0
 material = null
 use_parent_material = false
 clip_contents = false
-custom_minimum_size = Vector2(40, 200)
+custom_minimum_size = Vector2i(40, 200)
 layout_direction = 0
+layout_mode = 3
+anchors_preset = 0
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-offset_left = 168.0
+offset_left = 152.0
 offset_top = 0.0
-offset_right = 208.0
+offset_right = 192.0
 offset_bottom = 200.0
 grow_horizontal = 1
 grow_vertical = 1
@@ -87,7 +96,7 @@ size_flags_horizontal = 1
 size_flags_vertical = 0
 size_flags_stretch_ratio = 1.0
 auto_translate = true
-hint_tooltip = ""
+tooltip_text = ""
 focus_neighbor_left = NodePath("")
 focus_neighbor_top = NodePath("")
 focus_neighbor_right = NodePath("")

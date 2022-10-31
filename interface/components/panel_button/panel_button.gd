@@ -75,7 +75,7 @@ func _continue_open() -> void:
 	if container:
 		(
 			AnimBuilder.new(container)
-				.setup({ "scale": container_start_scale, "visible": true, "rotation": deg2rad(2.0) })
+				.setup({ "scale": container_start_scale, "visible": true, "rotation": deg_to_rad(2.0) })
 				.keyframes(keyframes)
 				.fade_in()
 				.props({
@@ -84,7 +84,7 @@ func _continue_open() -> void:
 						settle = container_scale
 					},
 					"rotation": { 
-						open = deg2rad(-0.5),
+						open = deg_to_rad(-0.5),
 						settle = 0.0,
 					}
 				})
@@ -95,7 +95,7 @@ func _continue_open() -> void:
 		add_theme_stylebox_override("pressed", _empty_stylebox(styleboxes.pressed))
 		await (
 			AnimBuilder.new(panel)
-				.setup({ "visible": true, "rotation": deg2rad(2.0) })
+				.setup({ "visible": true, "rotation": deg_to_rad(2.0) })
 				.keyframes(keyframes)
 				.props({
 					"size": {
@@ -103,7 +103,7 @@ func _continue_open() -> void:
 						settle = container.size
 					},
 					"rotation": { 
-						open = deg2rad(-0.5),
+						open = deg_to_rad(-0.5),
 						settle = 0.0,
 					},
 				})

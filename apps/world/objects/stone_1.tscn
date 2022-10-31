@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=3 uid="uid://s45thr64lj1a"]
+
+[ext_resource type="ArrayMesh" uid="uid://cki8dtkvhemi1" path="res://temp/shrubs_asset_pack/obj/stone_3.obj" id="1_8vtxl"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5w4ow"]
+albedo_color = Color(0.0705882, 0.0705882, 0.0705882, 1)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_xwwls"]
+points = PackedVector3Array(0.514534, 0.0817525, 0.536405, -0.322344, -0.00941348, 0.745845, -0.265395, 0.259296, 0.114437, 0.247952, -0.00941348, -0.359345, -0.0680772, 0.252365, -0.300571, 0.31919, 0.18665, 0.69235, 0.443979, 0.18665, 0.407118, 0.337073, -0.00941348, 0.69235, -0.393778, 0.222301, 0.19325, -0.340129, -0.00941348, -0.30585, -0.465113, -0.00941348, 0.228876, -0.340129, 0.0619433, 0.727976, -0.126853, 0.261983, 0.305918, 0.220391, 0.133188, -0.31533, -0.271864, 0.252189, -0.231775, 0.533198, -0.00941348, 0.389137, 0.533198, 0.115405, 0.389137, -0.426604, 0.0991193, -0.0455512, -0.072864, -0.00941348, -0.377213, -0.233321, 0.0441041, 0.763713, 0.159414, 0.227236, -0.026142, -0.369267, 0.250803, -0.0252102, 0.515315, -0.00941348, 0.58536, -0.447231, -0.00941348, -0.0741129, 0.426096, 0.18665, 0.549734, 0.265737, 0.18665, 0.69235, -0.43824, 0.116362, 0.176554, 0.192329, 0.16484, -0.266094, -0.0263371, 0.254219, -0.0336695, 0.265737, -0.00941348, 0.710219, 0.140948, -0.00941348, -0.377213, -0.358012, -0.00941348, 0.710219)
+
+[node name="StaticBody3D" type="StaticBody3D"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = ExtResource("1_8vtxl")
+surface_material_override/0 = SubResource("StandardMaterial3D_5w4ow")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("ConvexPolygonShape3D_xwwls")

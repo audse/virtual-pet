@@ -14,14 +14,14 @@ cellular_distance_function = 3
 cellular_jitter = 1.0
 cellular_return_type = 0
 
-[sub_resource type="NoiseTexture" id="NoiseTexture_yx4lr"]
+[sub_resource type="NoiseTexture2D" id="NoiseTexture_yx4lr"]
 color_ramp = SubResource("Gradient_h2utp")
 noise = SubResource("FastNoiseLite_2aqwq")
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_nk41o"]
 frequency = 0.05
 
-[sub_resource type="NoiseTexture" id="NoiseTexture_varqh"]
+[sub_resource type="NoiseTexture2D" id="NoiseTexture_varqh"]
 noise = SubResource("FastNoiseLite_nk41o")
 
 [resource]

@@ -1,0 +1,20 @@
+[gd_resource type="Resource" load_steps=3 format=3 uid="uid://bw22wltnefn5d"]
+
+[ext_resource type="PackedScene" uid="uid://bja8oqw3mh5l7" path="res://apps/world/resources/objects/grass_test_2.tscn" id="1_6j24e"]
+[ext_resource type="Script" path="res://apps/world_object/data/foliage_object_data.gd" id="1_pg754"]
+
+[resource]
+script = ExtResource("1_pg754")
+type = 2
+stage = 3
+id = "grass-01"
+scene = ExtResource("1_6j24e")
+coord = Vector2i(-2, -2)
+dimensions = Vector2i(1, 1)
+rotation = 0
+layer = 0
+flags = null
+fulfills_needs = [2]
+actions = null
+rarity = 0
+uses_left = 3

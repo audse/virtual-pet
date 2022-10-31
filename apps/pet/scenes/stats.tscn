@@ -1,0 +1,79 @@
+[gd_scene load_steps=6 format=3 uid="uid://cwc30imtkd085"]
+
+[ext_resource type="Script" path="res://apps/pet/scenes/stats.gd" id="1_2hctc"]
+[ext_resource type="PackedScene" uid="uid://nbk3dbbr34pd" path="res://apps/pet/needs_wants/scenes/needs.tscn" id="1_46gyt"]
+[ext_resource type="PackedScene" uid="uid://bv6gh4mb2l2pc" path="res://apps/pet/personality/scenes/personality.tscn" id="2_y6itb"]
+[ext_resource type="Texture2D" uid="uid://bpf6lqthamc1f" path="res://apps/pet/assets/icons/needs.svg" id="3_cwxi0"]
+[ext_resource type="Texture2D" uid="uid://dh31l065jsvyn" path="res://apps/pet/assets/icons/personality.svg" id="4_i3txw"]
+
+[node name="PetStats" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_2hctc")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Tabs" type="HBoxContainer" parent="VBoxContainer"]
+offset_right = 828.0
+offset_bottom = 100.0
+
+[node name="NeedsButton" type="Button" parent="VBoxContainer/Tabs"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2i(100, 100)
+offset_right = 100.0
+offset_bottom = 100.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+icon = ExtResource("3_cwxi0")
+expand_icon = true
+
+[node name="PersonalityButton" type="Button" parent="VBoxContainer/Tabs"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2i(100, 100)
+offset_left = 124.0
+offset_right = 224.0
+offset_bottom = 100.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+icon = ExtResource("4_i3txw")
+expand_icon = true
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer"]
+offset_top = 124.0
+offset_right = 828.0
+offset_bottom = 1792.0
+size_flags_vertical = 3
+
+[node name="Needs" parent="VBoxContainer/MarginContainer" instance=ExtResource("1_46gyt")]
+unique_name_in_owner = true
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 24.0
+offset_top = 24.0
+offset_right = 804.0
+offset_bottom = 1644.0
+grow_horizontal = 1
+grow_vertical = 1
+size_flags_vertical = 3
+
+[node name="Personality" parent="VBoxContainer/MarginContainer" instance=ExtResource("2_y6itb")]
+unique_name_in_owner = true
+visible = false
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 24.0
+offset_top = 24.0
+offset_right = 804.0
+offset_bottom = 1644.0
+grow_horizontal = 2
+grow_vertical = 2

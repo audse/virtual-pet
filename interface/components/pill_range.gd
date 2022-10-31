@@ -14,6 +14,12 @@ enum Direction { HORIZONTAL, VERTICAL }
 @export var disabled := false
 
 @export_group("Theme Overrides")
+
+@export_subgroup("Progress modulate", "const_override_")
+@export var high_modulate := Color.WHITE
+@export var medium_modulate := Color.WHITE
+@export var low_modulate := Color.WHITE
+
 @export_subgroup("Constants", "const_override_")
 @export var const_override_h_separation: int = -1
 @export var const_override_v_separation: int = -1
@@ -74,6 +80,13 @@ var _pressed_pill: int = -1
 func _draw() -> void:
 	for pill in range(num_pills):
 		draw_pill(pill)
+	
+	var percent = (value - min_value) / (max_value - min_value)
+	
+	if percent < 0.5:
+		modulate = low_modulate.lerp(medium_modulate, percent * 2.0)
+	else:
+		modulate = medium_modulate.lerp(high_modulate, (percent - 0.5) * 2.0)
 
 
 func get_stylebox(index: int) -> StyleBox:
@@ -129,7 +142,8 @@ func draw_pill(index: int) -> void:
 func _gui_input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion and not disabled:
 		_hovered_pill = _find_pill_at_pos(event.position)
-		update()
+		
+		queue_redraw()
 	
 	if event is InputEventScreenTouch and not disabled:
 		if event.is_pressed(): pressed.emit()
@@ -151,7 +165,7 @@ func _gui_input(event: InputEvent) -> void:
 			elif prev_amt < num_filled:
 				filled.emit(num_filled)
 			
-			update()
+			queue_redraw()
 		else:
 			_pressed_pill = -1
 

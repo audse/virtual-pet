@@ -12,7 +12,7 @@ cellular_return_type = 5
 domain_warp_type = 2
 domain_warp_amplitude = 2.0
 
-[sub_resource type="NoiseTexture" id="NoiseTexture_a6rsp"]
+[sub_resource type="NoiseTexture2D" id="NoiseTexture_a6rsp"]
 width = 1024
 height = 1024
 in_3d_space = true
@@ -23,10 +23,10 @@ noise = SubResource("FastNoiseLite_meo7c")
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_iob5o"]
 render_priority = 0
 shader = ExtResource("1_y8x4n")
-noise = SubResource("NoiseTexture_a6rsp")
-noise_force = 0.008
-tint = Color(0.384314, 0.384314, 0.384314, 0.298039)
-wave_speed = 0.2
+shader_parameter/tint = Color(0.384314, 0.384314, 0.384314, 0.298039)
+shader_parameter/wave_speed = 0.2
+shader_parameter/noise_force = 0.008
+shader_parameter/noise = SubResource("NoiseTexture_a6rsp")
 
 [resource]
 render_priority = 1

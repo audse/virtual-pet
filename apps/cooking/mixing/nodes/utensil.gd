@@ -8,7 +8,7 @@ extends Node3D
 @export_flags_3d_physics var input_area_layers = 1
 @export var speed := Vector3(15, 0.5, 15)
 
-@onready var body := $Body as RigidDynamicBody3D
+@onready var body := $Body as RigidBody3D
 @onready var collider := $Collider as Area3D
 @onready var collider_shape := $Collider/ItemCollision as CollisionShape3D
 @onready var input_area := $InputArea as Area3D
@@ -34,15 +34,15 @@ func _physics_process(delta: float) -> void:
 
 
 func _process(_d: float) -> void:
-	body.rotation.z = deg2rad(start_rotation.z) + deg2rad(motion_rotation.z) * body.position.x
-	body.rotation.y = deg2rad(start_rotation.y) - deg2rad(motion_rotation.y) * body.position.z
-	body.rotation.x = deg2rad(start_rotation.x) + lerp(0, deg2rad(-motion_rotation.x), body.position.z)
+	body.rotation.z = deg_to_rad(start_rotation.z) + deg_to_rad(motion_rotation.z) * body.position.x
+	body.rotation.y = deg_to_rad(start_rotation.y) - deg_to_rad(motion_rotation.y) * body.position.z
+	body.rotation.x = deg_to_rad(start_rotation.x) + lerpf(0, deg_to_rad(-motion_rotation.x), body.position.z)
 	
 	collider.position = body.position
 
 
 func _on_collider_body_entered(node: Node):
-	if node is RigidDynamicBody3D or node is SoftDynamicBody3D:
+	if node is RigidBody3D or node is SoftBody3D:
 		var added_velocity := Vector3Ref.sign_no_zeros(_delta) as Vector3 * Vector3(0.025, 0.05, 0.025)
 		node.apply_impulse(_delta * 1.5 + added_velocity)
 

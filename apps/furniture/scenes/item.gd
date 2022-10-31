@@ -29,7 +29,7 @@ var world_size: Vector3:
 
 var rect_size: Vector2:
 	get:
-		var deg: int = rad2deg(rotation.y) as int
+		var deg: int = rad_to_deg(rotation.y) as int
 		var rsize = (
 			Vector2(size.x, size.z) if deg == 0 or deg % 180 == 0
 			else Vector2(size.z, size.x)
@@ -85,7 +85,7 @@ func _on_drag_ended() -> void:
 func _on_tapped() -> void:
 	if abs(_start_pos.distance_to(map_pos)) < 0.25:
 		var tween := _tween()
-		tween.tween_property(self, "rotation:y", rotation.y + deg2rad(90), 0.15)
+		tween.tween_property(self, "rotation:y", rotation.y + deg_to_rad(90), 0.15)
 		tween.tween_property(self, "rect:rect:size", Vector2(rect.rect.size.y, rect.rect.size.x), 0.15)
 		tween.chain().tween_property(self, "position", Vector3(map_pos.x, 0, map_pos.z), 0.15)
 

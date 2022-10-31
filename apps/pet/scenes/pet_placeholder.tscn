@@ -1,0 +1,22 @@
+[gd_scene load_steps=5 format=3 uid="uid://cnv4sea5lgrxq"]
+
+[sub_resource type="Gradient" id="Gradient_5in0f"]
+interpolation_mode = 1
+offsets = PackedFloat32Array(0, 0.267261)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_km6ig"]
+gradient = SubResource("Gradient_5in0f")
+width = 512
+height = 512
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(1, 0.5)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yc8b3"]
+albedo_texture = SubResource("GradientTexture2D_km6ig")
+
+[sub_resource type="SphereMesh" id="SphereMesh_27j4l"]
+material = SubResource("StandardMaterial3D_yc8b3")
+
+[node name="MeshInstance3D" type="MeshInstance3D"]
+mesh = SubResource("SphereMesh_27j4l")

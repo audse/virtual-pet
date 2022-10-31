@@ -1,0 +1,35 @@
+[gd_resource type="Resource" load_steps=11 format=3 uid="uid://52ex0f52jqll"]
+
+[ext_resource type="Script" path="res://apps/world/data/world_data.gd" id="1_5cba2"]
+[ext_resource type="Resource" uid="uid://bgwtob5h6iwpw" path="res://apps/world/resources/objects/bed_object_test.tres" id="1_pgtv3"]
+[ext_resource type="Script" path="res://apps/world/data/world_block_data.gd" id="2_krmfl"]
+[ext_resource type="Resource" uid="uid://bs2bsmnpd60kp" path="res://apps/world/resources/objects/grass_object_test.tres" id="3_f0qkc"]
+[ext_resource type="Resource" uid="uid://ovpuque8qler" path="res://apps/world/resources/objects/pond_object_test.tres" id="4_v5q7q"]
+[ext_resource type="Resource" uid="uid://cc3nvowtcf4y3" path="res://apps/world/resources/objects/toy_object_test.tres" id="5_uggvc"]
+
+[sub_resource type="Resource" id="Resource_jftgq"]
+script = ExtResource("2_krmfl")
+coord = null
+floor_object_layer = ExtResource("1_pgtv3")
+
+[sub_resource type="Resource" id="Resource_0kp86"]
+script = ExtResource("2_krmfl")
+coord = null
+foliage_layer = ExtResource("3_f0qkc")
+
+[sub_resource type="Resource" id="Resource_72da7"]
+script = ExtResource("2_krmfl")
+coord = null
+floor_object_layer = ExtResource("4_v5q7q")
+
+[sub_resource type="Resource" id="Resource_7p3yd"]
+script = ExtResource("2_krmfl")
+coord = null
+floor_object_layer = ExtResource("5_uggvc")
+
+[resource]
+script = ExtResource("1_5cba2")
+grid_size = 1
+size = Vector2(100, 100)
+blocks = [SubResource("Resource_jftgq"), SubResource("Resource_0kp86"), SubResource("Resource_72da7"), SubResource("Resource_7p3yd")]
+objects = null

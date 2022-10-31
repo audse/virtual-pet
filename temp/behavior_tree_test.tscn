@@ -1,0 +1,72 @@
+[gd_scene load_steps=9 format=3 uid="uid://b3sfgysyujtc6"]
+
+[ext_resource type="Script" path="res://apps/behavior/composites/selector.gd" id="1_0d0xp"]
+[ext_resource type="Script" path="res://apps/behavior/tree.gd" id="1_jbrt7"]
+[ext_resource type="Script" path="res://apps/behavior/decorators/chance.gd" id="2_evg2g"]
+[ext_resource type="Script" path="res://apps/behavior/decorators/repeat_until_succeed.gd" id="3_okn67"]
+[ext_resource type="Script" path="res://apps/behavior/decorators/repeat_until_fail.gd" id="3_t54oc"]
+[ext_resource type="Script" path="res://apps/behavior/composites/sequence.gd" id="5_oy5dy"]
+
+[sub_resource type="GDScript" id="GDScript_sa705"]
+script/source = "extends Node
+
+
+@onready var tree := %Tree as BehaviorTree
+
+
+func _ready() -> void:
+	tree.start()
+	tree.run()
+"
+
+[sub_resource type="GDScript" id="GDScript_rsocv"]
+script/source = "extends Task
+
+
+func run():
+	prints(self, \"- I'm running!\")
+	super.run()
+	succeed()
+"
+
+[node name="BehaviorTreeTest" type="Node"]
+script = SubResource("GDScript_sa705")
+
+[node name="Tree" type="Node" parent="."]
+unique_name_in_owner = true
+script = ExtResource("1_jbrt7")
+
+[node name="Selector" type="Node" parent="Tree"]
+script = ExtResource("1_0d0xp")
+
+[node name="Sequence" type="Node" parent="Tree/Selector"]
+script = ExtResource("5_oy5dy")
+
+[node name="Leaf" type="Node" parent="Tree/Selector/Sequence"]
+script = SubResource("GDScript_rsocv")
+
+[node name="Leaf2" type="Node" parent="Tree/Selector/Sequence"]
+script = SubResource("GDScript_rsocv")
+
+[node name="Leaf3" type="Node" parent="Tree/Selector/Sequence"]
+script = SubResource("GDScript_rsocv")
+
+[node name="RepeatUntilFail" type="Node" parent="Tree/Selector"]
+script = ExtResource("3_t54oc")
+
+[node name="Chance" type="Node" parent="Tree/Selector/RepeatUntilFail"]
+script = ExtResource("2_evg2g")
+percent_chance = 96.0
+
+[node name="Leaf" type="Node" parent="Tree/Selector/RepeatUntilFail/Chance"]
+script = SubResource("GDScript_rsocv")
+
+[node name="RepeatUntilSucceed" type="Node" parent="Tree/Selector"]
+script = ExtResource("3_okn67")
+
+[node name="Chance" type="Node" parent="Tree/Selector/RepeatUntilSucceed"]
+script = ExtResource("2_evg2g")
+percent_chance = 2.0
+
+[node name="Leaf" type="Node" parent="Tree/Selector/RepeatUntilSucceed/Chance"]
+script = SubResource("GDScript_rsocv")

@@ -1,0 +1,101 @@
+[gd_scene load_steps=5 format=3 uid="uid://brgwynk5h5uno"]
+
+[ext_resource type="Script" path="res://apps/world_object/interface/action_menus/interact_with_object.gd" id="1_hamiv"]
+[ext_resource type="Resource" uid="uid://bw22wltnefn5d" path="res://apps/world/resources/objects/grass_object_test.tres" id="2_4nvgo"]
+[ext_resource type="Script" path="res://apps/actions/action_menu.gd" id="3_pkrrk"]
+[ext_resource type="Texture2D" uid="uid://bn61fbcpokvek" path="res://apps/painter/assets/icons/back.svg" id="4_e6lce"]
+
+[node name="InteractWithObjectActionsMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_hamiv")
+object_data = ExtResource("2_4nvgo")
+
+[node name="ActionMenu" type="Container" parent="."]
+unique_name_in_owner = true
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("3_pkrrk")
+open_button_path = NodePath("../OpenButton")
+close_button_path = NodePath("../CloseButton")
+tap_outside_to_close = true
+background_color = Color(0.243, 0.243, 0.27, 0.196078)
+degree_offset = 20.0
+
+[node name="SelectPetMenu" type="Container" parent="."]
+unique_name_in_owner = true
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("3_pkrrk")
+tap_outside_to_close = true
+background_color = Color(0.243, 0.243, 0.27, 0.196078)
+degree_offset = -40.0
+
+[node name="OpenButton" type="Button" parent="."]
+unique_name_in_owner = true
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -265.5
+offset_top = -213.5
+offset_right = -74.5
+offset_bottom = -126.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "Open me"
+
+[node name="CloseButton" type="Button" parent="."]
+unique_name_in_owner = true
+visible = false
+custom_minimum_size = Vector2i(100, 100)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -96.5
+offset_top = -43.5
+offset_right = 96.5
+offset_bottom = 43.5
+grow_horizontal = 2
+grow_vertical = 2
+rotation = 0.785398
+scale = Vector2(1e-05, 1e-05)
+theme_type_variation = &"SubtleButton"
+icon = ExtResource("4_e6lce")
+icon_alignment = 1
+expand_icon = true

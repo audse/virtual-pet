@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://13nuc3lnxhd7"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_87com"]
+albedo_color = Color(0, 0.360784, 0.988235, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_dt0y7"]
+material = SubResource("StandardMaterial3D_87com")
+top_radius = 1.5
+bottom_radius = 1.5
+height = 0.05
+
+[node name="PondTest" type="StaticBody3D"]
+
+[node name="Model" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.05, 0)
+mesh = SubResource("CylinderMesh_dt0y7")

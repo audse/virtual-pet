@@ -134,8 +134,9 @@ func then_hide() -> AnimBuilder:
 
 
 func done() -> NodeAnim:
-	for prop_name in anim.props:
-		print("[", base_node.name, "]: antimating ", prop_name)
+	if logging_enabled:
+		for prop_name in anim.props:
+			print("[", base_node.name, "]: antimating ", prop_name)
 	return NodeAnim.make(base_node, anim, logging_enabled)
 
 

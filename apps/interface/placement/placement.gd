@@ -97,7 +97,7 @@ func _ready():
 	path_joined = true
 	path_interval_type = CSGPolygon3D.PATH_INTERVAL_DISTANCE
 	path_interval = 0.01
-	path_simplify_angle = deg2rad(1)
+	path_simplify_angle = deg_to_rad(1)
 	draw_curve()
 
 
@@ -117,7 +117,7 @@ func draw_curve() -> void:
 					handle_points["in"],
 					handle_points["out"]
 				)
-				path.curve.set_point_tilt(i, deg2rad(i * 10))
+				path.curve.set_point_tilt(i, deg_to_rad(i * 10))
 	
 	path.curve = Vector3Ref.smooth_curve(path.curve)
 
@@ -158,7 +158,7 @@ func queue_move_to(target: Vector2, skip_inbetweens: bool = true) -> void:
 					await move_to(_move_to_stack.pop_back())
 					if len(_move_to_stack) > 0 and not skip_inbetweens: 
 						move_to(_move_to_stack.pop_back()),
-			CONNECT_ONESHOT
+			CONNECT_ONE_SHOT
 		)
 	else: move_to(target)
 

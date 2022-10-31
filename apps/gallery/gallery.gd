@@ -56,7 +56,7 @@ func load_gallery() -> void:
 	current_canvases = []
 	clear_gallery()
 	
-	var finder := Directory.new()
+	var finder := DirAccess.open("user://")
 	if not finder.dir_exists(GALLERY_PATH):
 		finder.make_dir(GALLERY_PATH)
 	
@@ -104,12 +104,12 @@ func _on_canvas_pressed(canvas: SubViewport) -> void:
 
 
 func load_canvas(path: String) -> int:	
-	var file := File.new()	
+	var file := FileAccess.new()	
 
 	var viewport := create_canvas_viewport()
 	
-	var err = file.open(GALLERY_PATH + "/" + path, File.READ)
-	if not err == OK or not viewport: return err
+	var err = file.open(GALLERY_PATH + "/" + path, FileAccess.READ)
+#	if not viewport: return err
 	
 	viewport.set_meta("path", path)
 	

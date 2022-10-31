@@ -10,7 +10,7 @@ colors = PackedColorArray(0.89709, 0.89709, 0.89709, 1, 1, 1, 1, 1)
 frequency = 0.006
 fractal_octaves = 2
 
-[sub_resource type="NoiseTexture" id="NoiseTexture_70mv3"]
+[sub_resource type="NoiseTexture2D" id="NoiseTexture_70mv3"]
 width = 1024
 height = 1024
 seamless = true
@@ -22,7 +22,7 @@ noise = SubResource("FastNoiseLite_65x3g")
 frequency = 0.003
 fractal_octaves = 2
 
-[sub_resource type="NoiseTexture" id="NoiseTexture_cbv3m"]
+[sub_resource type="NoiseTexture2D" id="NoiseTexture_cbv3m"]
 width = 1024
 height = 1024
 seamless = true
@@ -78,80 +78,75 @@ size = 12.0
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="MarginContainer" type="MarginContainer" parent="CanvasLayer"]
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/MarginContainer"]
-offset_left = 24.0
-offset_top = 24.0
-offset_right = 804.0
-offset_bottom = 1768.0
+offset_right = 828.0
+offset_bottom = 1792.0
 
 [node name="VSeparator" type="VSeparator" parent="CanvasLayer/MarginContainer/HBoxContainer"]
 modulate = Color(1, 1, 1, 0)
-offset_right = 156.0
-offset_bottom = 1744.0
+offset_right = 224.0
+offset_bottom = 1792.0
 size_flags_horizontal = 3
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/MarginContainer/HBoxContainer"]
 custom_minimum_size = Vector2(600, 0)
-offset_left = 180.0
-offset_right = 780.0
-offset_bottom = 1744.0
+offset_left = 228.0
+offset_right = 828.0
+offset_bottom = 1792.0
 size_flags_horizontal = 8
 
 [node name="PanelContainer2" type="PanelContainer" parent="CanvasLayer/MarginContainer/HBoxContainer/VBoxContainer"]
 offset_right = 600.0
-offset_bottom = 136.0
+offset_bottom = 26.0
 
 [node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/MarginContainer/HBoxContainer/VBoxContainer/PanelContainer2"]
-offset_left = 24.0
-offset_top = 36.0
-offset_right = 576.0
-offset_bottom = 100.0
+offset_right = 600.0
+offset_bottom = 26.0
 
 [node name="Label2" type="Label" parent="CanvasLayer/MarginContainer/HBoxContainer/VBoxContainer/PanelContainer2/HBoxContainer"]
 custom_minimum_size = Vector2(260, 0)
-offset_top = 7.0
 offset_right = 260.0
-offset_bottom = 56.0
+offset_bottom = 26.0
 theme_type_variation = &"Overline"
 text = "W A L L   H E I G H T"
 vertical_alignment = 1
 
 [node name="WallHeightSlider" type="HSlider" parent="CanvasLayer/MarginContainer/HBoxContainer/VBoxContainer/PanelContainer2/HBoxContainer"]
 unique_name_in_owner = true
-offset_left = 284.0
-offset_right = 552.0
-offset_bottom = 64.0
+offset_left = 264.0
+offset_right = 600.0
+offset_bottom = 26.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 max_value = 10.0
 
 [node name="PanelContainer3" type="PanelContainer" parent="CanvasLayer/MarginContainer/HBoxContainer/VBoxContainer"]
-offset_top = 160.0
+offset_top = 30.0
 offset_right = 600.0
-offset_bottom = 296.0
+offset_bottom = 56.0
 
 [node name="HBoxContainer4" type="HBoxContainer" parent="CanvasLayer/MarginContainer/HBoxContainer/VBoxContainer/PanelContainer3"]
-offset_left = 24.0
-offset_top = 36.0
-offset_right = 576.0
-offset_bottom = 100.0
+offset_right = 600.0
+offset_bottom = 26.0
 
 [node name="Label2" type="Label" parent="CanvasLayer/MarginContainer/HBoxContainer/VBoxContainer/PanelContainer3/HBoxContainer4"]
 custom_minimum_size = Vector2(260, 0)
-offset_top = 7.0
 offset_right = 260.0
-offset_bottom = 56.0
+offset_bottom = 26.0
 theme_type_variation = &"Overline"
 text = "R O U N D N E S S"
 vertical_alignment = 1
 
 [node name="RoundnessSlider" type="HSlider" parent="CanvasLayer/MarginContainer/HBoxContainer/VBoxContainer/PanelContainer3/HBoxContainer4"]
-offset_left = 284.0
-offset_right = 552.0
-offset_bottom = 64.0
+offset_left = 264.0
+offset_right = 600.0
+offset_bottom = 26.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 min_value = -10.0

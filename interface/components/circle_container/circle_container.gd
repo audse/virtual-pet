@@ -76,17 +76,23 @@ var _temp_degree_offset: float = degree_offset:
 
 func _notification(what:int) -> void:
 	match what:
-		NOTIFICATION_SORT_CHILDREN, NOTIFICATION_VISIBILITY_CHANGED, NOTIFICATION_RESIZED:
+		NOTIFICATION_SORT_CHILDREN, NOTIFICATION_VISIBILITY_CHANGED, NOTIFICATION_RESIZED, NOTIFICATION_DRAW:
 			_sort_children()
 
 
+func get_controlled_children() -> Array[Control]:
+	return (get_children()
+		.filter(func(child: Node): return child is Control and not child in unsorted_nodes)
+		.map(func(child: Node): return child as Control))
+
+
 func _sort_children() -> void:
-	var children: Array[Node] = get_children()
+	var children: Array[Node] = get_controlled_children()
 	
 	var index: int = 0
 	for child in children:
-		if child is Control and not child in unsorted_nodes:
-			child.position = _find_pos_for(child, index)
+#		if child is Control and not child in unsorted_nodes:
+		child.position = _find_pos_for(child, index)
 		index += 1
 
 

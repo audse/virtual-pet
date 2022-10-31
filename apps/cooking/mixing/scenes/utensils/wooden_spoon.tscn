@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://dy8kuqmc4gsn1"]
+[gd_scene load_steps=11 format=3 uid="uid://dy8kuqmc4gsn1"]
 
 [ext_resource type="Script" path="res://apps/cooking/mixing/nodes/utensil.gd" id="1_gamlo"]
 [ext_resource type="ArrayMesh" uid="uid://dgvfd4h8hl1ho" path="res://apps/cooking/assets/meshes/wooden_spoon.obj" id="2_q2m25"]
@@ -19,7 +19,7 @@ frequency = 1.0
 fractal_lacunarity = 1.0
 fractal_gain = 1.5
 
-[sub_resource type="NoiseTexture" id="NoiseTexture_15nrn"]
+[sub_resource type="NoiseTexture2D" id="NoiseTexture_15nrn"]
 width = 1024
 height = 1024
 color_ramp = SubResource("Gradient_bmgqi")
@@ -31,6 +31,9 @@ albedo_texture = SubResource("NoiseTexture_15nrn")
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_1vlbe"]
 radius = 0.879265
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_y406q"]
+height = 3.0
 
 [node name="WoodenSpoon" type="Node3D"]
 transform = Transform3D(1.25, 0, 0, 0, 1.25, 0, 0, 0, 1.25, 0, 0, 0)
@@ -46,7 +49,7 @@ input_ray_pickable = false
 transform = Transform3D(0.748738, -0.210718, -0.628482, 0.252116, 0.967398, -0.0239918, 0.613051, -0.140489, 0.777453, -0.290581, -0.1183, 0.308869)
 shape = SubResource("CapsuleShape3D_pfkav")
 
-[node name="Body" type="RigidDynamicBody3D" parent="."]
+[node name="Body" type="RigidBody3D" parent="."]
 transform = Transform3D(-0.383022, -0.321394, 0.866025, 0.642787, -0.766044, 0, 0.663414, 0.55667, 0.5, 0.5, 1.672, -1)
 collision_layer = 8
 collision_mask = 8
@@ -67,5 +70,14 @@ surface_material_override/0 = SubResource("StandardMaterial3D_aam85")
 [node name="BowlCollision" type="CollisionShape3D" parent="Body"]
 transform = Transform3D(1, 4.17233e-07, 8.64267e-07, -3.09944e-06, 1, -6.85453e-07, 1.19209e-06, -6.85453e-07, 1, 0.071, 0, 0.371)
 shape = SubResource("SphereShape3D_1vlbe")
+
+[node name="InputArea" type="Area3D" parent="."]
+collision_layer = 16
+collision_mask = 16
+priority = 1.0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="InputArea"]
+transform = Transform3D(0.910149, 0.41428, 0, -0.361596, 0.794404, 0.488027, 0.20218, -0.444178, 0.872828, 1.68911, 3.75519, -2.1735)
+shape = SubResource("CapsuleShape3D_y406q")
 
 [connection signal="body_entered" from="Collider" to="." method="_on_collider_body_entered"]

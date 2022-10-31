@@ -5,44 +5,56 @@ extends Button
 @export var checked_bg_color := Color("#10b981"):
 	set(value):
 		checked_bg_color = value
-		update()
+		queue_redraw()
 
 @export var check_color := Color("#86efac"):
 	set(value):
 		check_color = value
-		update()
+		queue_redraw()
 
-@export_range(0, 10) var corner_radius := 6:
+@export_range(0.0, 10.0, 1.0) var corner_radius: float = 6.0:
 	set(value):
 		corner_radius = value
-		update()
+		queue_redraw()
 
-@onready var check_points: PackedVector2Array = [
-	delta(Vector2(1, 0)),
-	delta(Vector2(1.25, 0.25)),
-	delta(Vector2(0.5, 1.0)),
-	delta(Vector2(0, 0.5)),
-	delta(Vector2(0.25, 0.25)),
-	delta(Vector2(0.5, 0.6)),
-]
+var check_points: Array[Vector2]:
+	get: return [
+		delta(Vector2(1, 0)),
+		delta(Vector2(1.25, 0.25)),
+		delta(Vector2(0.5, 1.0)),
+		delta(Vector2(0, 0.5)),
+		delta(Vector2(0.25, 0.25)),
+		delta(Vector2(0.5, 0.6)),
+	]
 
-@onready var corner_size := 10 - corner_radius
+var radius: float:
+	get: return size.x / (10.0 - corner_radius)
 
-@onready var radius := size.x / corner_size
-@onready var h_rect := Rect2(0, size.x / corner_size, size.x, (size.y / corner_size) * (corner_size - 2))
-@onready var y_rect := Rect2(size.y / corner_size, 0, (size.x / corner_size) * (corner_size - 2), size.y)
+var h_rect: Rect2:
+	get: return Rect2(
+		Vector2(0, radius),
+		Vector2(size.x, size.y - radius * 2)
+	)
 
-@onready var circle_positions: Array[Vector2] = [
-	size / corner_size,
-	size / corner_size * (corner_size - 1),
-	Vector2(size.x / corner_size, size.y / corner_size * (corner_size - 1)),
-	Vector2(size.x / corner_size * (corner_size - 1), size.y / corner_size),
-]
+var y_rect: Rect2:
+	get: return Rect2(
+		Vector2(radius, 0),
+		Vector2(size.x - radius * 2, size.y)
+	)
+
+var circle_positions: Array[Vector2]:
+	get: return [
+		Vector2(radius, radius),
+		Vector2(radius, size.y - radius),
+		Vector2(size.x - radius, radius),
+		size - Vector2(radius, radius)
+	]
 
 
 func _enter_tree() -> void:
-	pressed.connect(update)
+	pressed.connect(queue_redraw)
 	toggle_mode = true
+	theme_type_variation = "CheckBoxButton"
 
 
 func _draw() -> void:

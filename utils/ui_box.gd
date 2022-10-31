@@ -19,7 +19,7 @@ func v(x, y = null) -> Vector2:
 
 
 func r(degrees: float) -> float:
-	return deg2rad(degrees)
+	return deg_to_rad(degrees)
 
 
 func setup(rect_val: Rect2) -> void:

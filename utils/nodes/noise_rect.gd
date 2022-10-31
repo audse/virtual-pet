@@ -23,21 +23,21 @@ const SHADER = preload("res://static/shaders/gradient_noise.gdshader")
 	set(value):
 		origin = value
 		if material: 
-			material.set_shader_param("origin", origin_point)
-			material.set_shader_param("flip_x", flip_x)
-			material.set_shader_param("flip_y", flip_y)
+			material.set_shader_parameter("origin", origin_point)
+			material.set_shader_parameter("flip_x", flip_x)
+			material.set_shader_parameter("flip_y", flip_y)
 		else: make()
 
 @export var weight := 0.0:
 	set(value):
 		weight = value
-		if material: material.set_shader_param("weight", weight)
+		if material: material.set_shader_parameter("weight", weight)
 		else: make()
 
 @export var alpha := 1.0:
 	set(value):
 		alpha = value
-		if material: material.set_shader_param("alpha", alpha)
+		if material: material.set_shader_parameter("alpha", alpha)
 		else: make()
 
 @export var reload: bool = false:
@@ -61,7 +61,7 @@ var flip_y: bool:
 
 
 var mat := ShaderMaterial.new()
-var noise_tex := NoiseTexture.new()
+var noise_tex := NoiseTexture2D.new()
 
 
 func _ready() -> void:
@@ -72,13 +72,13 @@ func _ready() -> void:
 func make() -> void:
 	make_noise()
 	mat.shader = SHADER
-	mat.set_shader_param("noise", noise_tex)
-	material.set_shader_param("noise_size", size)
-	material.set_shader_param("origin", origin_point)
-	material.set_shader_param("flip_x", flip_x)
-	material.set_shader_param("flip_y", flip_y)
-	material.set_shader_param("weight", weight)
-	material.set_shader_param("alpha", alpha)
+	mat.set_shader_parameter("noise", noise_tex)
+	material.set_shader_parameter("noise_size", size)
+	material.set_shader_parameter("origin", origin_point)
+	material.set_shader_parameter("flip_x", flip_x)
+	material.set_shader_parameter("flip_y", flip_y)
+	material.set_shader_parameter("weight", weight)
+	material.set_shader_parameter("alpha", alpha)
 
 
 func make_noise() -> void:

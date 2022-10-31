@@ -20,18 +20,28 @@ fill_from = Vector2(0.5, 0.5)
 fill_to = Vector2(1, 0.5)
 
 [node name="MainMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 script = ExtResource("1_8arsa")
 
 [node name="Backdrop" type="ColorRect" parent="."]
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 color = Color(0.117647, 0.160784, 0.231373, 1)
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 theme_override_constants/margin_left = 48
 theme_override_constants/margin_top = 110
 theme_override_constants/margin_right = 48
@@ -49,7 +59,7 @@ offset_bottom = 544.0
 theme_override_constants/margin_bottom = 70
 
 [node name="TextureRect" type="TextureRect" parent="MarginContainer/VBoxContainer/MarginContainer"]
-custom_minimum_size = Vector2(450, 450)
+custom_minimum_size = Vector2i(450, 450)
 offset_left = 141.0
 offset_top = 24.0
 offset_right = 591.0
@@ -61,8 +71,11 @@ stretch_mode = 5
 
 [node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer/MarginContainer/TextureRect"]
 show_behind_parent = true
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 theme_override_constants/margin_left = -100
 theme_override_constants/margin_top = -100
 theme_override_constants/margin_right = -100
@@ -76,7 +89,7 @@ offset_bottom = 550.0
 texture = SubResource("GradientTexture2D_8s2yq")
 
 [node name="Label" type="Label" parent="MarginContainer/VBoxContainer"]
-custom_minimum_size = Vector2(0, 110)
+custom_minimum_size = Vector2i(0, 110)
 offset_left = 153.0
 offset_top = 568.0
 offset_right = 578.0
@@ -88,7 +101,7 @@ text = "Pet simulator v0.1"
 
 [node name="PaintingButton" type="Button" parent="MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(450, 0)
+custom_minimum_size = Vector2i(450, 0)
 offset_left = 141.0
 offset_top = 702.0
 offset_right = 591.0
@@ -100,7 +113,7 @@ expand_icon = true
 
 [node name="NormalMapButton" type="Button" parent="MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(450, 0)
+custom_minimum_size = Vector2i(450, 0)
 offset_left = 141.0
 offset_top = 803.0
 offset_right = 591.0
@@ -113,7 +126,7 @@ expand_icon = true
 
 [node name="BuildingButton" type="Button" parent="MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(450, 0)
+custom_minimum_size = Vector2i(450, 0)
 offset_left = 141.0
 offset_top = 904.0
 offset_right = 591.0

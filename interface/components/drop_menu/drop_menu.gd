@@ -207,7 +207,7 @@ var container_node: Container = null:
 func _reset_triangle() -> void:
 	if triangle_node:
 		triangle_node.polygon = triangle_points
-		triangle_node.rotation = deg2rad(triangle_rotation)
+		triangle_node.rotation = deg_to_rad(triangle_rotation)
 		triangle_node.color = triangle_color
 		triangle_node.position = triangle_position
 		triangle_node.offset = triangle_offset
@@ -395,14 +395,14 @@ var _is_animating := false
 
 func queue_open() -> void:
 	if _is_animating and not is_open:
-		closed.connect(open, CONNECT_ONESHOT)
+		closed.connect(open, CONNECT_ONE_SHOT)
 	elif not _is_animating:
 		open()
 
 
 func queue_close() -> void:
 	if _is_animating and is_open:
-		opened.connect(close, CONNECT_ONESHOT)
+		opened.connect(close, CONNECT_ONE_SHOT)
 	elif not _is_animating:
 		close()
 
@@ -490,8 +490,8 @@ func close() -> void:
 					close = v(0.75, 0.25),
 				},
 				"rotation": { 
-					anticipation = deg2rad(-1) * origin_point_centered.y,
-					close = deg2rad(2) * origin_point_centered.y,
+					anticipation = deg_to_rad(-1) * origin_point_centered.y,
+					close = deg_to_rad(2) * origin_point_centered.y,
 				}
 			})
 			.tear_down({

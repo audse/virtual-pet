@@ -1,0 +1,119 @@
+[gd_scene load_steps=7 format=3 uid="uid://y50j04tda2fy"]
+
+[ext_resource type="Script" path="res://interface/components/thought_bubble/thought_bubble.gd" id="1_oqcor"]
+
+[sub_resource type="Shader" id="Shader_8qhwh"]
+code = "shader_type canvas_item;
+
+uniform vec2 center_offset = vec2(0.0);
+uniform vec4 blob_color: source_color;
+uniform vec2 blob_1_position = vec2(0.9, 0.55);
+uniform vec2 blob_2_position = vec2(0.2, 0.45);
+uniform sampler2D noise;
+uniform float speed: hint_range(1.0, 10.0, 1.0);
+
+uniform bool show_dots = false;
+uniform vec2 dots_position = vec2(0.5, 0.5);
+
+varying float noise_distortion;
+
+float get_noise_distortion(vec2 uv) {
+	float speed_value = 10.0 - speed;
+	vec2 uv_offset = vec2(0.0, (sin(TIME / speed_value) * cos(TIME / speed_value)));
+	return cos(texture(noise, uv + uv_offset / 1.5).r);
+}
+
+
+void fragment() {
+	noise_distortion = get_noise_distortion(UV);
+	
+	vec2 dot_1_pos = mix(dots_position, vec2(0.5, 0.5), 0.4);
+	vec2 dot_2_pos = mix(dots_position, vec2(0.5, 0.5), 0.15);
+	
+	vec2 iResolution = vec2(1.0);
+	
+    float max_size = max(iResolution.x, iResolution.y);
+    
+    vec2 center = iResolution / max_size * mix(vec2(0.5), vec2(1.0) - dots_position, 0.175) + center_offset;
+	
+    float distance_from_center = pow(distance(center, UV) * 9.0, 2);
+    float distance_from_blob_1 = distance(blob_1_position / max_size, UV);
+	float distance_from_blob_2 = distance(blob_2_position / max_size, UV);
+	float color = distance_from_center * distance_from_blob_1 * distance_from_blob_2;
+	
+	color *= noise_distortion;
+	
+	COLOR = color < 1.25 ? blob_color / 2.0 : vec4(0.0);
+	COLOR = color < 1.0 ? blob_color : COLOR;
+	
+	if (show_dots) {
+		float distance_from_dot_1 = pow(distance(dot_1_pos, UV) * noise_distortion, 2);
+		float distance_from_dot_2 = pow(distance(dot_2_pos, UV) * noise_distortion, 2);
+
+		COLOR = distance_from_dot_1 < 0.0015 ? blob_color : (distance_from_dot_1 < 0.002 ? max(COLOR, blob_color / 2.0) : COLOR);
+		COLOR = distance_from_dot_2 < 0.00025 ? blob_color : (distance_from_dot_2 < 0.0004 ? max(COLOR, blob_color / 2.0) : COLOR);
+	}
+}
+"
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_44cg5"]
+seed = -248159976
+frequency = 0.005
+fractal_octaves = 1
+fractal_lacunarity = 1.0
+fractal_gain = 0.0
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_bf13o"]
+noise = SubResource("FastNoiseLite_44cg5")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_riui1"]
+shader = SubResource("Shader_8qhwh")
+shader_parameter/blob_1_position = Vector2(0.9, 0.55)
+shader_parameter/blob_2_position = Vector2(0.2, 0.45)
+shader_parameter/blob_color = Color(0.0941176, 0.0941176, 0.105882, 1)
+shader_parameter/center_offset = null
+shader_parameter/dots_position = Vector2(0.8, 0.8)
+shader_parameter/noise = SubResource("NoiseTexture2D_bf13o")
+shader_parameter/show_dots = true
+shader_parameter/speed = 2.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0gp3x"]
+content_margin_left = 120.0
+content_margin_top = 200.0
+content_margin_right = 120.0
+content_margin_bottom = 200.0
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="ThoughtBubble" type="PanelContainer" parent="."]
+modulate = Color(1, 1, 1, 0)
+material = SubResource("ShaderMaterial_riui1")
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -539.0
+offset_top = -502.0
+grow_horizontal = 0
+grow_vertical = 0
+rotation = -0.261799
+scale = Vector2(0.25, 0.25)
+pivot_offset = Vector2(431.2, 401.6)
+theme_override_styles/panel = SubResource("StyleBoxFlat_0gp3x")
+script = ExtResource("1_oqcor")
+test_open = true
+reload_material = null
+reload_panel = null
+
+[node name="Label" type="Label" parent="ThoughtBubble"]
+offset_left = 120.0
+offset_top = 200.0
+offset_right = 419.0
+offset_bottom = 302.0
+text = "This is some really 
+          important text ..."

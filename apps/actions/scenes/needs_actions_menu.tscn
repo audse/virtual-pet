@@ -1,0 +1,99 @@
+[gd_scene load_steps=4 format=3 uid="uid://douv26rr83sqn"]
+
+[ext_resource type="Texture2D" uid="uid://dh31l065jsvyn" path="res://apps/pet/assets/icons/personality.svg" id="1_d8x2m"]
+[ext_resource type="Texture2D" uid="uid://bn61fbcpokvek" path="res://apps/painter/assets/icons/back.svg" id="2_og7wv"]
+
+[sub_resource type="GDScript" id="GDScript_rthcb"]
+script/source = "@tool
+class_name NeedsActionsMenu
+extends ActionsMenu
+
+@export var pet_data: Resource
+
+func _ready() -> void:
+	actions = [\"go eat!\", \"go sleep!\", \"go play!\", \"go lay down!\", \"go wash up!\", \"stop doing that!\"]
+	self.action_pressed.connect(_on_action_pressed)
+	super._ready()
+
+
+func _on_action_pressed(action: String) -> void:
+	var command: CommandData.Command = {
+		\"go eat!\": CommandData.Command.EAT,
+		\"go sleep!\": CommandData.Command.SLEEP,
+		\"go play!\": CommandData.Command.PLAY,
+		\"go lay down!\": CommandData.Command.LOUNGE,
+		\"go wash up!\": CommandData.Command.WASH,
+		\"stop doing that!\": CommandData.Command.IDLE,
+	}[action]
+	
+	pet_data.command_data.receive_command.emit(command)
+"
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="NeedsActionsMenu" type="Container" parent="."]
+custom_minimum_size = Vector2i(550, 550)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = SubResource("GDScript_rthcb")
+actions = ["go eat!", "go sleep!", "go play!", "go lay down!", "go wash up!", "stop doing that!"]
+open_button_path = NodePath("../OpenButton")
+close_button_path = NodePath("../CloseButton")
+tap_outside_to_close = true
+background_color = Color(0.243, 0.243, 0.27, 0.196078)
+unsorted = []
+degree_offset = 40.0
+
+[node name="CloseButton" type="Button" parent="."]
+custom_minimum_size = Vector2i(90, 90)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -45.0
+offset_top = -45.0
+offset_right = 45.0
+offset_bottom = 45.0
+grow_horizontal = 2
+grow_vertical = 2
+rotation = 0.785398
+scale = Vector2(1e-05, 1e-05)
+pivot_offset = Vector2(45, 45)
+theme_type_variation = &"CircleButton_PaddingSm"
+icon = ExtResource("2_og7wv")
+icon_alignment = 1
+expand_icon = true
+
+[node name="OpenButton" type="Button" parent="."]
+visible = false
+custom_minimum_size = Vector2i(90, 90)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -24.0
+offset_top = -24.0
+offset_right = 24.0
+offset_bottom = 24.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(45, 45)
+theme_type_variation = &"CircleButton_PaddingSm"
+icon = ExtResource("1_d8x2m")
+icon_alignment = 1
+expand_icon = true

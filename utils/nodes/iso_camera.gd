@@ -1,8 +1,8 @@
 class_name IsoCamera
 extends Camera3D
 
-const ROT_AMT := deg2rad(40)
-const ROT_DELTA := deg2rad(90)
+const ROT_AMT := deg_to_rad(40)
+const ROT_DELTA := deg_to_rad(90)
 
 @export var disable_rotation: bool = false
 

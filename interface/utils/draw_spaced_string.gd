@@ -49,7 +49,7 @@ func _get_char_pos_of(line: String, index: int) -> Vector2:
 
 
 func _update_member_vars() -> void:
-	words = string.split(" ", false)
+	words = string.split(" ")
 	
 	lines = []
 	var curr_line_length := 0.0

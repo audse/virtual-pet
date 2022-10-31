@@ -3,7 +3,6 @@
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_xv0vu"]
 sky_top_color = Color(0.5544, 0.70672, 0.84, 1)
 sky_horizon_color = Color(0.882353, 0.913725, 0.933333, 1)
-sky_energy = 1.25
 ground_bottom_color = Color(0.784314, 0.823529, 0.858824, 1)
 ground_horizon_color = Color(0.882353, 0.913725, 0.933333, 1)
 ground_curve = 0.367583
@@ -32,7 +31,6 @@ ssil_enabled = true
 ssil_sharpness = 0.75
 sdfgi_enabled = true
 sdfgi_cascades = 2
-glow_enabled = true
 fog_light_color = Color(0.44, 0.44, 0.44, 1)
 fog_light_energy = 0.25
 fog_sun_scatter = 1.0

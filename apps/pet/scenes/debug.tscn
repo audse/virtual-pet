@@ -1,0 +1,146 @@
+[gd_scene load_steps=7 format=3 uid="uid://bj4qva3nn827k"]
+
+[ext_resource type="FontFile" uid="uid://cgf6tr8wj2gby" path="res://static/fonts/Nunito/Nunito-Black.ttf" id="1_46cjx"]
+
+[sub_resource type="GDScript" id="GDScript_g71ok"]
+script/source = "extends MarginContainer
+
+const use_personality_data = preload(\"res://apps/pet/personality/data/use_personality_data.gd\")
+const use_needs_data = preload(\"res://apps/pet/needs_wants/data/use_needs_data.gd\")
+
+@export var pet_data: PetData
+
+func _ready() -> void:
+	if pet_data:
+		pet_data.needs_data.need_changed.connect(
+			func(_need: NeedsData.Need, _value: float) -> void: update_data_debug_label()
+		)
+		pet_data.personality_data.attribute_changed.connect(
+			func(_attribute: String, _value: float) -> void: update_data_debug_label()
+		)
+		pet_data.wants_data.wants_changed.connect(update_wants_debug_label)
+		update_wants_debug_label(pet_data.wants_data.wants)
+		update_data_debug_label()
+
+
+func update_wants_debug_label(wants: Array[WantsData.Want]) -> void:
+	if len(wants) >= 3:
+		%WantLabel1.text = pet_data.wants_data.get_want_string(wants[0])
+		%WantLabel2.text = pet_data.wants_data.get_want_string(wants[1])
+		%WantLabel3.text = pet_data.wants_data.get_want_string(wants[2])
+
+
+func update_task_debug_label(task: String) -> void:
+	%TaskDebugLabel.text = task
+
+
+func update_data_debug_label() -> void:
+	%DataDebugLabel.text = (
+		\"\"\"
+		Personality_data: {0}
+		
+		Needs_data: {1}
+		\"\"\"
+		.format([
+			use_personality_data.new(pet_data).debug_string(),
+			use_needs_data.new(pet_data).debug_string(),
+		])
+	)
+"
+
+[sub_resource type="SystemFont" id="SystemFont_t5ysi"]
+font_names = PackedStringArray("DejaVu Sans Mono")
+subpixel_positioning = 0
+
+[sub_resource type="LabelSettings" id="LabelSettings_hepv8"]
+font = SubResource("SystemFont_t5ysi")
+font_size = 32
+
+[sub_resource type="LabelSettings" id="LabelSettings_wn028"]
+font = ExtResource("1_46cjx")
+font_size = 36
+
+[sub_resource type="LabelSettings" id="LabelSettings_dp2fm"]
+font = ExtResource("1_46cjx")
+font_size = 36
+
+[node name="Debug" type="MarginContainer"]
+unique_name_in_owner = true
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = SubResource("GDScript_g71ok")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+offset_left = 24.0
+offset_top = 24.0
+offset_right = 804.0
+offset_bottom = 1768.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="DataDebugLabel" type="Label" parent="VBoxContainer"]
+unique_name_in_owner = true
+offset_right = 780.0
+offset_bottom = 41.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Data"
+label_settings = SubResource("LabelSettings_hepv8")
+
+[node name="TaskContainer" type="HBoxContainer" parent="VBoxContainer"]
+offset_top = 53.0
+offset_right = 780.0
+offset_bottom = 106.0
+mouse_filter = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/TaskContainer"]
+offset_right = 173.0
+offset_bottom = 53.0
+text = "Last Task:"
+label_settings = SubResource("LabelSettings_wn028")
+
+[node name="TaskDebugLabel" type="Label" parent="VBoxContainer/TaskContainer"]
+unique_name_in_owner = true
+offset_left = 185.0
+offset_top = 1.0
+offset_right = 253.0
+offset_bottom = 52.0
+text = "None"
+vertical_alignment = 1
+
+[node name="WantsLabel" type="Label" parent="VBoxContainer"]
+offset_top = 118.0
+offset_right = 780.0
+offset_bottom = 171.0
+text = "Wants:"
+label_settings = SubResource("LabelSettings_dp2fm")
+
+[node name="WantsContainer" type="VBoxContainer" parent="VBoxContainer"]
+offset_top = 183.0
+offset_right = 780.0
+offset_bottom = 324.0
+
+[node name="WantLabel1" type="Label" parent="VBoxContainer/WantsContainer"]
+unique_name_in_owner = true
+offset_right = 780.0
+offset_bottom = 39.0
+size_flags_horizontal = 3
+
+[node name="WantLabel2" type="Label" parent="VBoxContainer/WantsContainer"]
+unique_name_in_owner = true
+offset_top = 51.0
+offset_right = 780.0
+offset_bottom = 90.0
+size_flags_horizontal = 3
+
+[node name="WantLabel3" type="Label" parent="VBoxContainer/WantsContainer"]
+unique_name_in_owner = true
+offset_top = 102.0
+offset_right = 780.0
+offset_bottom = 141.0
+size_flags_horizontal = 3

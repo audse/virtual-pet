@@ -1,0 +1,18 @@
+[gd_resource type="Resource" load_steps=3 format=3 uid="uid://bqligs6ktl6cc"]
+
+[ext_resource type="Script" path="res://apps/world_object/data/world_object_data.gd" id="1_5enie"]
+[ext_resource type="PackedScene" uid="uid://d314vpxn802ry" path="res://apps/world/resources/objects/bed_test.tscn" id="1_fwy3n"]
+
+[resource]
+script = ExtResource("1_5enie")
+id = "bed-01"
+scene = ExtResource("1_fwy3n")
+coord = Vector2i(2, 2)
+dimensions = Vector2i(2, 2)
+rotation = 45
+layer = 2
+flags = [1]
+fulfills_needs = [1, 4]
+actions = ["sleep here!"]
+rarity = 0
+uses_left = -1

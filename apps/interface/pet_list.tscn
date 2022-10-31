@@ -1,0 +1,45 @@
+[gd_scene load_steps=3 format=3 uid="uid://c6cdoj6gub2oi"]
+
+[ext_resource type="Script" path="res://apps/interface/pet_list.gd" id="1_72x22"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kkk06"]
+content_margin_left = 48.0
+content_margin_top = 48.0
+content_margin_right = 28.0
+content_margin_bottom = 48.0
+bg_color = Color(0.247059, 0.247059, 0.27451, 1)
+draw_center = false
+corner_radius_top_right = 36
+corner_radius_bottom_right = 36
+
+[node name="PanelContainer" type="PanelContainer"]
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -24.0
+offset_right = 60.0
+offset_bottom = 24.0
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_kkk06")
+
+[node name="TempButton" type="Button" parent="."]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+offset_left = 36.0
+offset_top = 24.0
+offset_right = 124.0
+offset_bottom = 111.0
+theme_type_variation = &"CircleButton_PaddingSm"
+text = "Tm"
+
+[node name="PetList" type="VBoxContainer" parent="."]
+layout_mode = 2
+offset_left = 48.0
+offset_top = 48.0
+offset_right = 48.0
+offset_bottom = 48.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 48
+script = ExtResource("1_72x22")

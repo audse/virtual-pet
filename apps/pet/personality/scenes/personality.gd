@@ -1,6 +1,6 @@
 extends Control
 
-@export var personality_data: Resource
+@export var personality_data: PersonalityData
 
 @onready var active := %ActiveRange as PillRange
 @onready var clean := %CleanRange as PillRange

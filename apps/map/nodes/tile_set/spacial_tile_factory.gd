@@ -14,7 +14,7 @@ static func get_rotation_deg(id: String) -> int:
 
 static func turn(tile: SpacialTile, id: String) -> SpacialTile:
 	var deg := get_rotation_deg(id)
-	tile.rotate_object_local(Vector3(0, 1.0, 0), deg2rad(deg))
+	tile.rotate_object_local(Vector3(0, 1.0, 0), deg_to_rad(deg))
 	return tile
 
 
@@ -62,7 +62,7 @@ static func make(id := "CENTER", distort_amount := Vector3.ZERO) -> SpacialTile:
 	# Rotate UV on floor surfaces
 	var degree := get_rotation_deg(id)
 	if tile_type != States.Map.Tile.CENTER and degree != 0:
-		args["Floor"]["uv_rotation"] = deg2rad(degree * -sign(degree))
+		args["Floor"]["uv_rotation"] = deg_to_rad(degree * -sign(degree))
 	
 	for surface in surfaces:
 		if surfaces[surface] != -1:
@@ -78,12 +78,12 @@ static func make_shader(tile_type: int, distortion_amount: Vector3, args: Dictio
 	
 	var distort_edge: bool = Auto.Random.randi_range(0, 2) == 2
 	if !(tile_type == States.Map.Tile.EDGE and not distort_edge):
-		material.set_shader_param("distort_amount", distortion_amount)
+		material.set_shader_parameter("distort_amount", distortion_amount)
 	
 	if tile_type == States.Map.Tile.CORNER:
-		material.set_shader_param("is_corner", true)
+		material.set_shader_parameter("is_corner", true)
 	
 	for arg in args:
-		if args[arg] != null: material.set_shader_param(arg, args[arg])
+		if args[arg] != null: material.set_shader_parameter(arg, args[arg])
 
 	return material

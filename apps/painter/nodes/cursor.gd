@@ -54,7 +54,7 @@ func _on_color_changed(new_color: Color) -> void:
 func _on_rotation_changed(value: int) -> void:
 	(get_tree()
 		.create_tween()
-		.tween_property(self, "rotation", deg2rad(value), 0.15)
+		.tween_property(self, "rotation", deg_to_rad(value), 0.15)
 		.set_ease(Tween.EASE_IN_OUT)
 		.set_trans(Tween.TRANS_CIRC))
 

@@ -1,11 +1,16 @@
-[gd_scene load_steps=2 format=3 uid="uid://b6dya0dbxdg1f"]
+[gd_scene load_steps=3 format=3 uid="uid://b6dya0dbxdg1f"]
 
 [ext_resource type="Environment" uid="uid://dcpushjde5bcn" path="res://environment/assets/environment.tres" id="1_wpukq"]
+
+[sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_je1r0"]
+dof_blur_far_distance = 25.0
+dof_blur_far_transition = 15.0
 
 [node name="Environment" type="Node3D"]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = ExtResource("1_wpukq")
+camera_attributes = SubResource("CameraAttributesPractical_je1r0")
 
 [node name="MainLight" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-1, 8.70901e-08, 7.61939e-09, 0, -0.0871557, 0.996195, 8.74228e-08, 0.996195, 0.0871557, 0, 0, 0)
