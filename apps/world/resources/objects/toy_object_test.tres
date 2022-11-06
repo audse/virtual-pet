@@ -7,7 +7,7 @@
 script = ExtResource("1_0l2d5")
 id = "toy-01"
 scene = ExtResource("1_qd17t")
-coord = Vector2i(-2, 2)
+coord = Vector2i(-5, 3)
 dimensions = Vector2i(1, 1)
 rotation = 0
 layer = 2
@@ -15,4 +15,5 @@ flags = []
 fulfills_needs = [0]
 actions = ["play with me!"]
 rarity = 0
-uses_left = -1
+total_uses = 3
+uses_left = 3

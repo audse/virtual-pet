@@ -12,20 +12,20 @@ friction = 0.0
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ofgvc"]
 render_priority = 0
 shader = ExtResource("4_2so7p")
-steps = 2.0
-seed = 6
-max_distort = Vector3(0.025, 0.025, 0.025)
-_albedo_color = Color(0.54902, 0.54902, 0.54902, 1)
-_specular = 0.5
-_roughness = 1.0
-_metallic = 0.0
-_ao_light_effect = 1.0
-_ao = 1.0
-_normal_strength = 0.0
-_uv1_offset = null
-_uv1_scale = null
-_uv2_offset = null
-_uv2_scale = null
+shader_parameter/max_distort = Vector3(0.025, 0.025, 0.025)
+shader_parameter/seed = 6
+shader_parameter/steps = 2.0
+shader_parameter/_albedo_color = Color(0.54902, 0.54902, 0.54902, 1)
+shader_parameter/_ao = 1.0
+shader_parameter/_ao_light_effect = 1.0
+shader_parameter/_metallic = 0.0
+shader_parameter/_roughness = 1.0
+shader_parameter/_specular = 0.5
+shader_parameter/_normal_strength = 0.0
+shader_parameter/_uv1_offset = null
+shader_parameter/_uv1_scale = null
+shader_parameter/_uv2_offset = null
+shader_parameter/_uv2_scale = null
 
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_ye6fi"]
 points = PackedVector3Array(-0.252331, 0, -0.192287, 0.252331, 0, -0.192287, -0.252331, 0, 0.192247, -0.200017, 0.394988, -0.195027, -0.195028, 0.394988, -0.2, -0.195028, 0.354973, -0.2, 0.252331, 0, 0.192247, 0.194979, 0.354973, -0.2, 0.244328, 0.794988, -0.2, 0.249367, 0.794988, -0.195027, -0.195028, 0.354973, 0.2, -0.195028, 0.394988, 0.2, -0.200017, 0.394988, 0.194988, -0.195028, 0.4, -0.195027, 0.214392, 0.794988, -0.2, 0.249367, 0.794988, 0.194988, 0.244328, 0.794988, 0.2, 0.194979, 0.354973, 0.2, 0.244971, 0.8, -0.195027, 0.214392, 0.794988, 0.2, -0.195028, 0.4, 0.194988, 0.209354, 0.794988, -0.195027, 0.214985, 0.8, -0.195027, 0.244971, 0.8, 0.194988, 0.214985, 0.8, 0.194988, 0.209354, 0.794988, 0.194988)
@@ -40,7 +40,7 @@ script = ExtResource("1_twalm")
 [node name="Draggable" type="Node" parent="."]
 script = ExtResource("1_w8t0v")
 node_path = NodePath("..")
-lock_y = true
+offset_in_world = Vector3(0, 1, 0)
 
 [node name="ItemMesh" type="MeshInstance3D" parent="."]
 mesh = ExtResource("3_y3mw5")

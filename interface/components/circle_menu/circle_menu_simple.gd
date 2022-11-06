@@ -68,7 +68,7 @@ func _ready() -> void:
 	if _close_button: _close_button.pressed.connect(_on_close)
 
 
-func _unhandled_input(event: InputEvent) -> void:
+func _input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.is_pressed() and tap_outside_to_close and open:
 		_on_close()
 
@@ -128,20 +128,27 @@ func _reset_closed() -> void:
 func _on_open() -> void:
 	_reset_closed()
 	if is_inside_tree():
+		var duration := (
+			animation_duration if not Settings.data.limit_animations
+			else 0.0
+		)
 		var menu_tween := create_tween().set_parallel().set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
-		menu_tween.tween_property(self, "_temp_background_radius", _background_radius, animation_duration)
-		menu_tween.tween_property(self, "_temp_degree_range", degree_range, animation_duration)
-		menu_tween.tween_property(self, "_temp_degree_offset", degree_offset, animation_duration)
-		menu_tween.tween_property(self, "_temp_extra_margin", extra_margin, animation_duration)
+		menu_tween.tween_property(self, "_temp_background_radius", _background_radius, duration)
+		menu_tween.tween_property(self, "_temp_degree_range", degree_range, duration)
+		menu_tween.tween_property(self, "_temp_degree_offset", degree_offset, duration)
+		menu_tween.tween_property(self, "_temp_extra_margin", extra_margin, duration)
 		
 		var i := 0
 		var children := get_controlled_children()
 		for child in children:
-			var delay: float = (len(children) - i) * 0.05
+			var delay: float = (
+				clamp((len(children) - i) * 0.05, 0.0, 0.2) if not Settings.data.limit_animations
+				else 0.0
+			)
 			var tween := child.create_tween().set_parallel().set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
-			tween.tween_property(child, "scale", Vector2.ONE, animation_duration * 0.75).set_delay(delay)
-			tween.tween_property(child, "rotation", 0, animation_duration * 0.75).set_delay(delay)
-			tween.tween_property(child, "modulate:a", 1.0, animation_duration * 0.5).set_delay(delay)
+			tween.tween_property(child, "scale", Vector2.ONE, duration * 0.75).set_delay(delay)
+			tween.tween_property(child, "rotation", 0, duration * 0.75).set_delay(delay)
+			tween.tween_property(child, "modulate:a", 1.0, duration * 0.5).set_delay(delay)
 			i += 1
 		
 		if _open_button: _hide_button(_open_button)
@@ -166,7 +173,10 @@ func _close_nested_menus(from: Node) -> void:
 func _on_close() -> void:
 	_reset_opened()
 	if is_inside_tree():
-		var close_duration := animation_duration * 0.85
+		var close_duration := (
+			(animation_duration * 0.85) if not Settings.data.limit_animations
+			else 0.1
+		)
 		var menu_tween := create_tween().set_parallel().set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_IN)
 		menu_tween.tween_property(self, "_temp_background_radius", 0, close_duration)
 		menu_tween.tween_property(self, "_temp_degree_range", 0, close_duration)
@@ -179,7 +189,10 @@ func _on_close() -> void:
 		var i := 0
 		var children := get_controlled_children()
 		for child in children:			
-			var delay: float = i * 0.075
+			var delay: float = (
+				clamp(i * 0.05, 0.0, 0.25) if not Settings.data.limit_animations
+				else 0.1
+			)
 			var tween := child.create_tween().set_parallel().set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_IN)
 			tween.tween_property(child, "scale", Vector2.ZERO, close_duration * 0.7).set_delay(delay)
 			tween.tween_property(child, "rotation", deg_to_rad(135), close_duration * 0.7).set_delay(delay)

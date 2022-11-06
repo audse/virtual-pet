@@ -1,0 +1,126 @@
+{
+    "id": "change_favorite_color",
+    "text": "change fave color...",
+    "submenu": [
+        {
+            "id": "red",
+            "text": "red",
+            "on_pressed": {
+                "run_script": "mod_example/on_pressed.gd",
+                "arguments": {
+                    "color": "red"
+                }
+            }
+        },
+        {
+            "id": "orange",
+            "text": "orange",
+            "on_pressed": {
+                "run_script": "mod_example/on_pressed.gd",
+                "arguments": {
+                    "color": "orange"
+                }
+            }
+        },
+        {
+            "id": "yellow",
+            "text": "yellow",
+            "on_pressed": {
+                "run_script": "mod_example/on_pressed.gd",
+                "arguments": {
+                    "color": "yellow"
+                }
+            }
+        },
+        {
+            "id": "green",
+            "text": "green",
+            "on_pressed": {
+                "run_script": "mod_example/on_pressed.gd",
+                "arguments": {
+                    "color": "green"
+                }
+            }
+        },
+        {
+            "id": "aqua",
+            "text": "aqua",
+            "on_pressed": {
+                "run_script": "mod_example/on_pressed.gd",
+                "arguments": {
+                    "color": "aqua"
+                }
+            }
+        },
+        {
+            "id": "blue",
+            "text": "blue",
+            "on_pressed": {
+                "run_script": "mod_example/on_pressed.gd",
+                "arguments": {
+                    "color": "blue"
+                }
+            }
+        },
+        {
+            "id": "purple",
+            "text": "purple",
+            "on_pressed": {
+                "run_script": "mod_example/on_pressed.gd",
+                "arguments": {
+                    "color": "purple"
+                }
+            }
+        },
+        {
+            "id": "pink",
+            "text": "pink",
+            "on_pressed": {
+                "run_script": "mod_example/on_pressed.gd",
+                "arguments": {
+                    "color": "pink"
+                }
+            }
+        },
+        {
+            "id": "black",
+            "text": "black",
+            "on_pressed": {
+                "run_script": "mod_example/on_pressed.gd",
+                "arguments": {
+                    "color": "black"
+                }
+            }
+        },
+        {
+            "id": "white",
+            "text": "white",
+            "on_pressed": {
+                "run_script": "mod_example/on_pressed.gd",
+                "arguments": {
+                    "color": "white"
+                }
+            }
+        },
+        {
+            "id": "grey",
+            "text": "grey",
+            "on_pressed": {
+                "run_script": "mod_example/on_pressed.gd",
+                "arguments": {
+                    "color": "grey"
+                }
+            }
+        },
+        {
+            "id": "brown",
+            "text": "brown",
+            "on_pressed": {
+                "run_script": "mod_example/on_pressed.gd",
+                "arguments": {
+                    "color": "brown"
+                }
+            }
+        }
+    ]
+}

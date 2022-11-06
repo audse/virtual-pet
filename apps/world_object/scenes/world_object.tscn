@@ -1,0 +1,34 @@
+[gd_scene load_steps=4 format=3 uid="uid://rindg1cw5kt7"]
+
+[ext_resource type="Script" path="res://apps/world_object/scenes/world_object.gd" id="1_73iwd"]
+[ext_resource type="Script" path="res://utils/nodes/draggable_3d.gd" id="2_k7mtm"]
+[ext_resource type="PackedScene" uid="uid://brgwynk5h5uno" path="res://apps/world_object/interface/action_menus/interact_with_object.tscn" id="3_3yewo"]
+
+[node name="WorldObject" type="StaticBody3D"]
+input_capture_on_drag = true
+script = ExtResource("1_73iwd")
+
+[node name="Draggable3D" type="Node" parent="." node_paths=PackedStringArray("object")]
+unique_name_in_owner = true
+script = ExtResource("2_k7mtm")
+object = NodePath("..")
+distance_from_ground_while_dragging = 2.0
+
+[node name="Interface" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="InteractWithObjectActionMenu" parent="Interface" instance=ExtResource("3_3yewo")]
+unique_name_in_owner = true
+layout_mode = 1

@@ -24,10 +24,35 @@ _global_script_classes=[{
 "language": &"GDScript",
 "path": "res://apps/actions/action_item_params.gd"
 }, {
+"base": "Object",
+"class": &"ActionItemParser",
+"language": &"GDScript",
+"path": "res://apps/mod/parsers/action_item_parser.gd"
+}, {
+"base": "Object",
+"class": &"ActionItemScript",
+"language": &"GDScript",
+"path": "res://apps/mod/scripts/action_item_script.gd"
+}, {
 "base": "CircleMenuSimple",
 "class": &"ActionMenu",
 "language": &"GDScript",
 "path": "res://apps/actions/action_menu.gd"
+}, {
+"base": "Module",
+"class": &"AddActionItemModule",
+"language": &"GDScript",
+"path": "res://apps/mod/templates/add_action_item.gd"
+}, {
+"base": "Module",
+"class": &"AddBuyCategoriesModule",
+"language": &"GDScript",
+"path": "res://apps/mod/templates/add_buy_categories.gd"
+}, {
+"base": "Module",
+"class": &"AddBuyableObjectsModule",
+"language": &"GDScript",
+"path": "res://apps/mod/templates/add_buyable_objects.gd"
 }, {
 "base": "Decorator",
 "class": &"AlwaysFail",
@@ -83,6 +108,36 @@ _global_script_classes=[{
 "class": &"Bowl",
 "language": &"GDScript",
 "path": "res://apps/cooking/mixing/nodes/bowl.gd"
+}, {
+"base": "Resource",
+"class": &"BuyCategoryData",
+"language": &"GDScript",
+"path": "res://apps/buy/data/buy_category_data.gd"
+}, {
+"base": "Object",
+"class": &"BuyCategoryParser",
+"language": &"GDScript",
+"path": "res://apps/mod/parsers/buy_category_parser.gd"
+}, {
+"base": "Resource",
+"class": &"BuyableObjectData",
+"language": &"GDScript",
+"path": "res://apps/buy/data/buyable_object_data.gd"
+}, {
+"base": "Object",
+"class": &"BuyableObjectParser",
+"language": &"GDScript",
+"path": "res://apps/mod/parsers/buy_object_parser.gd"
+}, {
+"base": "Object",
+"class": &"BuyableObjectScript",
+"language": &"GDScript",
+"path": "res://apps/mod/scripts/buyable_object_script.gd"
+}, {
+"base": "SubViewportContainer",
+"class": &"BuyableObjectThumbnailViewport",
+"language": &"GDScript",
+"path": "res://apps/buy/interface/object_thumbnail_viewport.gd"
 }, {
 "base": "Object",
 "class": &"Cell",
@@ -154,10 +209,10 @@ _global_script_classes=[{
 "language": &"GDScript",
 "path": "res://apps/behavior/decorators/condition.gd"
 }, {
-"base": "RigidBody3D",
+"base": "Node3D",
 "class": &"ConsumableObject",
 "language": &"GDScript",
-"path": "res://apps/world/objects/consumable.gd"
+"path": "res://apps/world_object/scenes/consumable.gd"
 }, {
 "base": "Object",
 "class": &"ControlRef",
@@ -168,6 +223,11 @@ _global_script_classes=[{
 "class": &"CustomSizeTexture2D",
 "language": &"GDScript",
 "path": "res://utils/sized_texture.gd"
+}, {
+"base": "Resource",
+"class": &"DatetimeData",
+"language": &"GDScript",
+"path": "res://apps/datetime/datetime_data.gd"
 }, {
 "base": "Task",
 "class": &"Decorator",
@@ -184,6 +244,11 @@ _global_script_classes=[{
 "language": &"GDScript",
 "path": "res://utils/nodes/draggable.gd"
 }, {
+"base": "Node",
+"class": &"Draggable3D",
+"language": &"GDScript",
+"path": "res://utils/nodes/draggable_3d.gd"
+}, {
 "base": "Object",
 "class": &"DrawSpacedString",
 "language": &"GDScript",
@@ -193,6 +258,11 @@ _global_script_classes=[{
 "class": &"DropMenu",
 "language": &"GDScript",
 "path": "res://interface/components/drop_menu/drop_menu.gd"
+}, {
+"base": "Resource",
+"class": &"FateData",
+"language": &"GDScript",
+"path": "res://apps/fate/data/fate_data.gd"
 }, {
 "base": "Resource",
 "class": &"FavoritesData",
@@ -268,6 +338,16 @@ _global_script_classes=[{
 "class": &"Mixing",
 "language": &"GDScript",
 "path": "res://apps/cooking/mixing/mixing.gd"
+}, {
+"base": "Object",
+"class": &"ModParser",
+"language": &"GDScript",
+"path": "res://apps/mod/parsers/parser.gd"
+}, {
+"base": "Object",
+"class": &"Module",
+"language": &"GDScript",
+"path": "res://apps/mod/module.gd"
 }, {
 "base": "Resource",
 "class": &"NeedsData",
@@ -378,6 +458,11 @@ _global_script_classes=[{
 "class": &"Sequence",
 "language": &"GDScript",
 "path": "res://apps/behavior/composites/sequence.gd"
+}, {
+"base": "Resource",
+"class": &"SettingsData",
+"language": &"GDScript",
+"path": "res://apps/settings/data/settings_data.gd"
 }, {
 "base": "MeshInstance3D",
 "class": &"SpacialTile",
@@ -529,15 +614,15 @@ _global_script_classes=[{
 "language": &"GDScript",
 "path": "res://apps/world/data/world_block_data.gd"
 }, {
+"base": "StaticBody3D",
+"class": &"WorldObject",
+"language": &"GDScript",
+"path": "res://apps/world_object/scenes/world_object.gd"
+}, {
 "base": "Resource",
 "class": &"WorldObjectData",
 "language": &"GDScript",
 "path": "res://apps/world_object/data/world_object_data.gd"
-}, {
-"base": "Node3D",
-"class": &"WorldObjectRenderer",
-"language": &"GDScript",
-"path": "res://apps/world_object/world_object_renderer.gd"
 }, {
 "base": "Node3D",
 "class": &"WorldRenderer",
@@ -548,7 +633,12 @@ _global_script_class_icons={
 "ActionData": "",
 "ActionItem": "",
 "ActionItemParams": "",
+"ActionItemParser": "",
+"ActionItemScript": "",
 "ActionMenu": "",
+"AddActionItemModule": "",
+"AddBuyCategoriesModule": "",
+"AddBuyableObjectsModule": "",
 "AlwaysFail": "res://apps/behavior/assets/always_fail.svg",
 "AlwaysSucceed": "res://apps/behavior/assets/always_succeed.svg",
 "Anim": "",
@@ -560,6 +650,12 @@ _global_script_class_icons={
 "BitMask": "",
 "Bits": "",
 "Bowl": "res://apps/cooking/mixing/nodes/bowl.svg",
+"BuyCategoryData": "",
+"BuyCategoryParser": "",
+"BuyableObjectData": "",
+"BuyableObjectParser": "",
+"BuyableObjectScript": "",
+"BuyableObjectThumbnailViewport": "",
 "Cell": "",
 "CellMap": "res://apps/map/nodes/cell_map/cell_map_icon.svg",
 "Chance": "res://apps/behavior/assets/chance.svg",
@@ -577,11 +673,14 @@ _global_script_class_icons={
 "ConsumableObject": "",
 "ControlRef": "",
 "CustomSizeTexture2D": "",
+"DatetimeData": "",
 "Decorator": "",
 "DictRef": "",
 "Draggable": "res://utils/nodes/draggable.svg",
+"Draggable3D": "res://utils/nodes/draggable.gd",
 "DrawSpacedString": "",
 "DropMenu": "res://interface/components/drop_menu/drop_menu.svg",
+"FateData": "",
 "FavoritesData": "",
 "FoliageData": "",
 "FontStyleSheet": "",
@@ -597,6 +696,8 @@ _global_script_class_icons={
 "Math": "",
 "MeshDataToolPlus": "",
 "Mixing": "res://apps/cooking/mixing/mixing.svg",
+"ModParser": "",
+"Module": "",
 "NeedsData": "",
 "NeighborGroup": "",
 "NodeAnim": "",
@@ -619,6 +720,7 @@ _global_script_class_icons={
 "ScriptRef": "",
 "Selector": "res://apps/behavior/assets/selector.svg",
 "Sequence": "res://apps/behavior/assets/sequence.svg",
+"SettingsData": "",
 "SpacialTile": "res://apps/map/nodes/tile_set/spacial_tile_icon.svg",
 "SpacialTileFactory": "res://apps/map/nodes/tile_set/spacial_tile_factory_icon.svg",
 "SpacialTileSet": "",
@@ -649,8 +751,8 @@ _global_script_class_icons={
 "VertexGroup": "",
 "WantsData": "",
 "WorldBlockData": "",
+"WorldObject": "",
 "WorldObjectData": "",
-"WorldObjectRenderer": "",
 "WorldRenderer": "res://apps/world/assets/icons/world_renderer.svg"
 }
 
@@ -662,16 +764,22 @@ config/features=PackedStringArray("4.0", "C#")
 
 [autoload]
 
-Module="*res://utils/module.gd"
+Modules="*res://apps/mod/modules.gd"
 Assets="*res://utils/assets.gd"
 States="*res://utils/states.gd"
 Auto="*res://utils/auto.gd"
 WorldData="*res://apps/world/data/world_data.tscn"
 Game="*res://apps/game/game.gd"
+ModError="*res://apps/mod/error.gd"
+Fate="*res://apps/fate/fate.tscn"
+Settings="*res://apps/settings/settings.gd"
+Datetime="*res://apps/datetime/datetime.gd"
+BuyData="*res://apps/buy/data/buy_data.gd"
 
 [debug]
 
 settings/stdout/print_fps=true
+gdscript/warnings/return_value_discarded=0
 
 [display]
 
@@ -680,6 +788,7 @@ window/size/viewport_height=1792
 window/size/window_width_override=2880
 window/size/window_height_override=1620
 window/handheld/orientation=1
+window/vsync/vsync_mode=0
 window/stretch/mode="canvas_items"
 window/stretch/aspect="expand"
 
@@ -690,6 +799,10 @@ project/assembly_name="pet-sim"
 [filesystem]
 
 import/blender/enabled=false
+
+[global]
+
+disabled_mods=PackedStringArray("mod_example")
 
 [gui]
 

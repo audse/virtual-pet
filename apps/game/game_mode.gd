@@ -7,7 +7,13 @@ enum GameMode {
 	BUY,
 }
 
-var mode := GameMode.LIVE
+var is_live: bool:
+	get: return state == GameMode.LIVE
 
 var is_paused: bool:
-	get: return mode != GameMode.LIVE
+	get: return state != GameMode.LIVE
+
+
+func set_to(next_state: int) -> void:
+	Datetime.data.paused = next_state != GameMode.LIVE
+	super.set_to(next_state)

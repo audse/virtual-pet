@@ -26,7 +26,22 @@ func make_button() -> Button:
 		button.text = args.text
 		parent.add_child(button)
 		button.pressed.connect(_on_pressed)
+		
+		if args.is_cheat:
+			button.modulate = Color("#f0abfc")
+			button.text = "* " + button.text
+	
 	return button
+
+
+func make_submenu() -> ActionMenu:
+	if "submenu_params" in args and len(args.submenu_params) > 0:
+		args.submenu = ActionMenu.new()
+		args.submenu.overwrite_style = parent.overwrite_style
+		container.add_child(args.submenu)
+		args.submenu.append_actions(args.submenu_params)
+		args.submenu.reset()
+	return args.submenu
 
 
 func _on_pressed() -> void:

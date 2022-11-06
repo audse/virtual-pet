@@ -1,10 +1,10 @@
-extends Object
+extends Module
 
 var cell_parent: Node3D
 var grid: UnevenGrid
 var get_neighbors_func: Callable
 
-func _ready_inject(context: Node3D) -> void:
+func _on_ready(context: Node) -> void:
 	cell_parent = context
 	grid = context.grid
 	get_neighbors_func = context.get_neighbors_of

@@ -10,6 +10,10 @@ signal objects_changed
 @export var objects: Array[WorldObjectData] = []
 
 
+var grid_size_vector: Vector3:
+	get: return Vector3(grid_size, grid_size, grid_size)
+
+
 func get_block(coord: Vector2i) -> WorldBlockData:
 	return WorldBlockData.new(coord, find_objects_at_coord(coord))
 
@@ -40,18 +44,19 @@ func find_pets_at_coord(coord: Vector2i) -> Array[PetData]:
 	)
 
 
-func find_nearby_need_source(pet: PetData, need: NeedsData.Need, coord: Vector2i, radius := 5) -> WorldObjectData:	
+func find_nearby_need_source(_pet: PetData, need: NeedsData.Need, coord: Vector2i, radius := 15) -> WorldObjectData:	
 	var nearby_objects: Array[WorldObjectData] = find_nearby_objects(coord, radius).filter(
 		func(object: WorldObjectData) -> bool: return (
-			need in object.fulfills_needs
+			need in object.buyable_object_data.fulfills_needs
 			and not WorldObjectData.Flag.CLAIMED in object.flags
 		)
 	)
 	# sort owned objects first
-	nearby_objects.sort_custom(
-		func(a: WorldObjectData, b: WorldObjectData) -> bool: 
-			return false if a.owner == pet else true
-	)
+	# TODO: this is throwing an error, why?
+#	nearby_objects.sort_custom(
+#		func(a: WorldObjectData, b: WorldObjectData) -> bool:
+#			return false if a.owner and a.owner.get_rid() == pet.get_rid() else true
+#	)
 	if len(nearby_objects): return nearby_objects[0]
 	else: return null
 
@@ -80,3 +85,11 @@ func find_nearby_pets(coord: Vector2i, radius := 5) -> Array[PetData]:
 				checked_coords.append(coord)
 		checked_radius += 1
 	return nearby_pets
+
+
+func to_grid(position) -> Vector3:
+	if position is Vector2:
+		return Vector3(position.x / grid_size, 0, position.y / grid_size).snapped(grid_size_vector)
+	elif position is Vector3:
+		return (position / grid_size).snapped(grid_size_vector)
+	else: return Vector3.ZERO

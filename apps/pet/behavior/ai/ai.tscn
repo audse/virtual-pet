@@ -35,6 +35,7 @@ func _setup() -> void:
 			func() -> void: 
 				pet_data.needs_data.decrease_needs()
 		)
+		Datetime.connect_timer_to_pause(timer)
 		
 		if autostart: timer.start()
 	else:

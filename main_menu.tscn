@@ -55,15 +55,14 @@ offset_bottom = 1682.0
 
 [node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer"]
 offset_right = 732.0
-offset_bottom = 544.0
+offset_bottom = 520.0
 theme_override_constants/margin_bottom = 70
 
 [node name="TextureRect" type="TextureRect" parent="MarginContainer/VBoxContainer/MarginContainer"]
-custom_minimum_size = Vector2i(450, 450)
+custom_minimum_size = Vector2(450, 450)
 offset_left = 141.0
-offset_top = 24.0
 offset_right = 591.0
-offset_bottom = 474.0
+offset_bottom = 450.0
 size_flags_horizontal = 4
 texture = ExtResource("1_4c12n")
 ignore_texture_size = true
@@ -89,11 +88,11 @@ offset_bottom = 550.0
 texture = SubResource("GradientTexture2D_8s2yq")
 
 [node name="Label" type="Label" parent="MarginContainer/VBoxContainer"]
-custom_minimum_size = Vector2i(0, 110)
+custom_minimum_size = Vector2(0, 110)
 offset_left = 153.0
-offset_top = 568.0
+offset_top = 524.0
 offset_right = 578.0
-offset_bottom = 678.0
+offset_bottom = 634.0
 size_flags_horizontal = 4
 theme_override_fonts/font = ExtResource("2_sg20j")
 theme_override_font_sizes/font_size = 48
@@ -101,11 +100,11 @@ text = "Pet simulator v0.1"
 
 [node name="PaintingButton" type="Button" parent="MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2i(450, 0)
+custom_minimum_size = Vector2(450, 0)
 offset_left = 141.0
-offset_top = 702.0
+offset_top = 638.0
 offset_right = 591.0
-offset_bottom = 779.0
+offset_bottom = 669.0
 size_flags_horizontal = 4
 text = "Do some painting"
 icon = ExtResource("3_slndd")
@@ -113,11 +112,11 @@ expand_icon = true
 
 [node name="NormalMapButton" type="Button" parent="MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2i(450, 0)
+custom_minimum_size = Vector2(450, 0)
 offset_left = 141.0
-offset_top = 803.0
+offset_top = 673.0
 offset_right = 591.0
-offset_bottom = 880.0
+offset_bottom = 704.0
 size_flags_horizontal = 4
 theme_override_constants/h_separation = 20
 text = "Make a normal map"
@@ -126,11 +125,11 @@ expand_icon = true
 
 [node name="BuildingButton" type="Button" parent="MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2i(450, 0)
+custom_minimum_size = Vector2(450, 0)
 offset_left = 141.0
-offset_top = 904.0
+offset_top = 708.0
 offset_right = 591.0
-offset_bottom = 981.0
+offset_bottom = 739.0
 size_flags_horizontal = 4
 text = "Build something"
 icon = ExtResource("5_0u5xu")

@@ -1,0 +1,7 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://83t70o4ektnp"]
+
+[resource]
+cull_mode = 2
+albedo_color = Color(0, 0, 0, 1)
+ao_enabled = true
+ao_light_affect = 1.0

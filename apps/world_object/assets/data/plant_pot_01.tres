@@ -1,0 +1,19 @@
+[gd_resource type="Resource" load_steps=3 format=3 uid="uid://dv7ih5q7e70b"]
+
+[ext_resource type="PackedScene" uid="uid://bd104n8kaggno" path="res://apps/custom_furniture/assets/meshes/plant_pot_01.gltf" id="1_g5fyk"]
+[ext_resource type="Script" path="res://apps/world_object/data/world_object_data.gd" id="2_ffvsu"]
+
+[resource]
+script = ExtResource("2_ffvsu")
+id = "plant-pot-1"
+scene = ExtResource("1_g5fyk")
+coord = Vector2i(-2, -2)
+dimensions = Vector2i(1, 1)
+rotation = 0
+layer = 2
+flags = [1]
+fulfills_needs = []
+actions = []
+rarity = 0
+total_uses = -1
+uses_left = -1

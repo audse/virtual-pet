@@ -1,0 +1,31 @@
+[gd_scene load_steps=2 format=3 uid="uid://cjsixno0sfvpl"]
+
+[ext_resource type="PackedScene" uid="uid://gkkkc113b3nv" path="res://apps/pet/assets/meshes/dog_v2/dog_v2.glb" id="1_nmqn2"]
+
+[node name="dog_v2" instance=ExtResource("1_nmqn2")]
+
+[node name="Skeleton3D" parent="Armature" index="0"]
+bones/1/rotation = Quaternion(0.715483, 0.00590655, -0.00561235, 0.698583)
+bones/3/rotation = Quaternion(0.00405648, -0.000730127, -0.0160177, 0.999863)
+bones/4/position = Vector3(-1.56278, 4.46663, -0.793763)
+bones/4/rotation = Quaternion(0.0209068, 0.017693, -0.0702401, 0.997154)
+bones/5/position = Vector3(1.56278, 4.47292, -0.796708)
+bones/5/rotation = Quaternion(0.0209116, -0.0176531, 0.070365, 0.997146)
+bones/6/position = Vector3(2.04766e-05, 3.40443, 2.6332)
+bones/6/rotation = Quaternion(0.722455, 6.93389e-06, -4.04091e-06, 0.691418)
+bones/7/rotation = Quaternion(0.992604, 0.0146883, 0.00657715, 0.120329)
+bones/8/position = Vector3(-1.25149, 2.76953, 0.777813)
+bones/8/rotation = Quaternion(0.0353028, 0.842382, 0.53393, -0.0637579)
+bones/8/scale = Vector3(1.00001, 1.00021, 1.00002)
+bones/10/position = Vector3(1.19391, 2.76569, 0.797188)
+bones/10/rotation = Quaternion(-0.0787963, 0.843453, 0.531326, 0.00837165)
+bones/10/scale = Vector3(1, 1.00021, 1.00002)
+bones/12/position = Vector3(0.244893, 3.86805, -2.20554)
+bones/12/rotation = Quaternion(0.706393, -0.0459301, 0.04614, 0.704819)
+bones/13/rotation = Quaternion(0.783084, -0.286681, -0.0102722, 0.551805)
+bones/13/scale = Vector3(1.00025, 1.03113, 1.01723)
+bones/15/rotation = Quaternion(0.837009, 0.0602685, -0.0956737, 0.535378)
+bones/15/scale = Vector3(0.997373, 1.01219, 1.00948)
+bones/16/rotation = Quaternion(-0.00454259, 0.0288998, -0.00208289, 0.99957)
+bones/17/rotation = Quaternion(-0.780997, -0.0288941, -0.0303287, 0.623128)
+bones/18/rotation = Quaternion(0.00514784, 0.0235472, -0.0955559, 0.995132)

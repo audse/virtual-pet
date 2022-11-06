@@ -1,0 +1,8 @@
+{
+    "id": "reset_uses",
+    "text": "reset",
+    "is_cheat": true,
+    "on_pressed": {
+        "run_script": "cheat_reset_consumable/reset_consumable.gd"
+    }
+}

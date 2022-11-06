@@ -1,0 +1,21 @@
+[gd_resource type="Resource" load_steps=3 format=3 uid="uid://dgcgsph4pu4ix"]
+
+[ext_resource type="PackedScene" uid="uid://b2qvt4cqdog03" path="res://apps/world_object/assets/meshes/tree_01.tscn" id="1_100yw"]
+[ext_resource type="Script" path="res://apps/world_object/data/foliage_object_data.gd" id="1_vjhg4"]
+
+[resource]
+script = ExtResource("1_vjhg4")
+type = 0
+stage = 3
+id = "tree-01"
+scene = ExtResource("1_100yw")
+coord = Vector2i(3, -7)
+dimensions = Vector2i(1, 1)
+rotation = -30
+layer = 0
+flags = null
+fulfills_needs = null
+actions = null
+rarity = 0
+total_uses = -1
+uses_left = -1

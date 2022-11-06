@@ -15,6 +15,8 @@ var need_action_text := {
 
 
 func _ready() -> void:
+	Modules.accept_modules(self)
+	
 	select_pet_menu.append_actions(WorldData.pets.map(
 		func(pet: PetData) -> ActionItemParams: return ActionItemParams.new({
 			id = pet,
@@ -24,7 +26,7 @@ func _ready() -> void:
 	))
 	
 	for need in NeedsData.need_list:
-		if object_data and need in object_data.fulfills_needs:
+		if object_data and need in object_data.buyable_object_data.fulfills_needs:
 			action_menu.append_action(ActionItemParams.new({
 				id = need,
 				text = need_action_text[need],
@@ -32,7 +34,7 @@ func _ready() -> void:
 				submenu = select_pet_menu
 			}))
 	
-	if object_data and WorldObjectData.Flag.OWNABLE in object_data.flags:
+	if object_data and BuyableObjectData.Flag.OWNABLE in object_data.buyable_object_data.flags:
 		action_menu.append_action(ActionItemParams.new({
 			id = "own",
 			text = "set owner...",
@@ -43,7 +45,7 @@ func _ready() -> void:
 
 func _on_action_pressed(action: ActionItem) -> void:
 	if action.id is Resource and action.parent.parent_action:
-		if action.parent.parent_action.id == "own":
+		if action.parent.parent_action.id is String and action.parent.parent_action.id == "own":
 			object_data.owner = action.id as PetData
 		else:
 			var need: NeedsData.Need = action.parent.parent_action.id

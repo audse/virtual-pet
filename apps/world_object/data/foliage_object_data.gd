@@ -18,9 +18,9 @@ enum LifeStage {
 @export var stage: LifeStage
 
 
-func _init() -> void:
-	layer = WorldObjectData.Layer.FOLIAGE_LAYER
+#func _init() -> void:
+#	buyable_object_data.layer = WorldObjectData.Layer.FOLIAGE_LAYER
 	
 	# grass is an automatic food source
-	if type == FoliageType.GRASS:
-		flags.append(WorldObjectData.Flag.HUNGER_SOURCE)
+#	if type == FoliageType.GRASS:
+#		flags.append(WorldObjectData.Flag.HUNGER_SOURCE)

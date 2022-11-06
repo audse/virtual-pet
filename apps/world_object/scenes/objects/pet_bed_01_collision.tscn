@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://c8jyt5r35w85r"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_jdn6w"]
+size = Vector3(3.75, 0.5, 2.75)
+
+[node name="PetBedCollision" type="CollisionShape3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 0)
+shape = SubResource("BoxShape3D_jdn6w")

@@ -7,9 +7,9 @@ static func format(dict: Dictionary, depth := 1) -> String:
 	
 	for key in dict.keys():
 		var value = dict[key]
-		if value is Dictionary:
+		if typeof(value) == TYPE_DICTIONARY:
 			value = DictRef.format(value, depth + 1)
-		lines.append("{0}: {1},".format([key, value]))
+		lines.append("{key}: {value},".format({ key = key, value = value}))
 	
 	lines.append("}")
 	

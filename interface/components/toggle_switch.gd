@@ -2,8 +2,8 @@
 class_name ToggleSwitch
 extends Button
 
-@export var on_color := Color("#3b82f6")
-@export var off_color := Color("#475569")
+@export var on_color := Color("#34d399")
+@export var off_color := Color("#71717a")
 @export var edge_gap := 4.0
 
 @export var on_icon: Texture2D

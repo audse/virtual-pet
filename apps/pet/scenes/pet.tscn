@@ -3,11 +3,11 @@
 [ext_resource type="Script" path="res://apps/pet/scenes/pet.gd" id="1_fhmyx"]
 [ext_resource type="Resource" uid="uid://bhjhxphjix4f2" path="res://apps/pet/scenes/pet_data_test.tres" id="2_35p37"]
 [ext_resource type="PackedScene" uid="uid://dey747mo4yaeu" path="res://apps/pet/behavior/ai/ai.tscn" id="2_ien2f"]
-[ext_resource type="PackedScene" uid="uid://cn34ber1kbx86" path="res://apps/pet/scenes/actor.tscn" id="4_od111"]
 [ext_resource type="Script" path="res://interface/components/thought_bubble/thought_bubble.gd" id="5_0fslc"]
 [ext_resource type="PackedScene" uid="uid://clt4as8q23ia8" path="res://apps/pet/interface/action_menu.tscn" id="5_8tu3e"]
+[ext_resource type="PackedScene" uid="uid://cyc4d4e7dien" path="res://apps/pet/assets/characters/dog.tscn" id="6_usf24"]
 
-[sub_resource type="Shader" id="Shader_eu13u"]
+[sub_resource type="Shader" id="Shader_ab0kr"]
 code = "shader_type canvas_item;
 
 uniform vec2 center_offset = vec2(0.0);
@@ -61,28 +61,28 @@ void fragment() {
 }
 "
 
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_6l658"]
-seed = 1724692745
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_disjo"]
+seed = 387688582
 frequency = 0.005
 fractal_octaves = 1
 fractal_lacunarity = 1.0
 fractal_gain = 0.0
 
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_5v3u8"]
-noise = SubResource("FastNoiseLite_6l658")
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_sntgl"]
+noise = SubResource("FastNoiseLite_disjo")
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_ma6ah"]
-shader = SubResource("Shader_eu13u")
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_gufcp"]
+shader = SubResource("Shader_ab0kr")
 shader_parameter/blob_1_position = Vector2(0.9, 0.55)
 shader_parameter/blob_2_position = Vector2(0.2, 0.45)
 shader_parameter/blob_color = Color(0.0941176, 0.0941176, 0.105882, 1)
 shader_parameter/center_offset = null
 shader_parameter/dots_position = Vector2(0.8, 0.8)
-shader_parameter/noise = SubResource("NoiseTexture2D_5v3u8")
+shader_parameter/noise = SubResource("NoiseTexture2D_sntgl")
 shader_parameter/show_dots = true
 shader_parameter/speed = 2.0
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8dprn"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tchc2"]
 content_margin_left = 120.0
 content_margin_top = 200.0
 content_margin_right = 120.0
@@ -95,11 +95,12 @@ pet_data = ExtResource("2_35p37")
 [node name="Behavior" parent="." instance=ExtResource("2_ien2f")]
 unique_name_in_owner = true
 pet_data = null
-interval = 2.0
+interval = 4.0
 autostart = false
 log = false
 
-[node name="Actor" parent="." instance=ExtResource("4_od111")]
+[node name="Actor" parent="." instance=ExtResource("6_usf24")]
+unique_name_in_owner = true
 
 [node name="ActionMenu" parent="." instance=ExtResource("5_8tu3e")]
 unique_name_in_owner = true
@@ -107,7 +108,7 @@ unique_name_in_owner = true
 [node name="ThoughtBubble" type="PanelContainer" parent="."]
 unique_name_in_owner = true
 modulate = Color(1, 1, 1, 0)
-material = SubResource("ShaderMaterial_ma6ah")
+material = SubResource("ShaderMaterial_gufcp")
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -123,8 +124,9 @@ rotation = -0.261799
 scale = Vector2(0.25, 0.25)
 pivot_offset = Vector2(351.2, 351.2)
 mouse_filter = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_8dprn")
+theme_override_styles/panel = SubResource("StyleBoxFlat_tchc2")
 script = ExtResource("5_0fslc")
+animation_duration = 1.0
 test_open = true
 
 [node name="ThoughtBubbleLabel" type="Label" parent="ThoughtBubble"]

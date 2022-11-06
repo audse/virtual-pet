@@ -1,7 +1,8 @@
-[gd_resource type="Resource" load_steps=16 format=3 uid="uid://bhjhxphjix4f2"]
+[gd_resource type="Resource" load_steps=18 format=3 uid="uid://bhjhxphjix4f2"]
 
 [ext_resource type="Script" path="res://apps/pet/animal/data/animal_data.gd" id="1_kqiol"]
 [ext_resource type="Script" path="res://apps/pet/data/command_data.gd" id="2_s5kmw"]
+[ext_resource type="Script" path="res://apps/pet/interface/interface_data.gd" id="3_6sh03"]
 [ext_resource type="Script" path="res://apps/pet/needs_wants/data/needs_data.gd" id="4_vgscb"]
 [ext_resource type="Script" path="res://apps/pet/personality/data/personality_data.gd" id="5_by04w"]
 [ext_resource type="Script" path="res://apps/pet/personality/data/favorites_data.gd" id="5_g8f74"]
@@ -14,6 +15,10 @@ script = ExtResource("1_kqiol")
 
 [sub_resource type="Resource" id="Resource_c5d7p"]
 script = ExtResource("2_s5kmw")
+
+[sub_resource type="Resource" id="Resource_jcweo"]
+script = ExtResource("3_6sh03")
+is_recently_cuddled = false
 
 [sub_resource type="Resource" id="Resource_jpnsg"]
 script = ExtResource("4_vgscb")
@@ -59,4 +64,5 @@ needs_data = SubResource("Resource_jpnsg")
 wants_data = SubResource("Resource_fmpau")
 personality_data = SubResource("Resource_swg84")
 command_data = SubResource("Resource_c5d7p")
+interface_data = SubResource("Resource_jcweo")
 world_coord = Vector2i(-1, -1)

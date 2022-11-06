@@ -3,6 +3,18 @@ extends Object
 
 var base: Color
 
+const EMERALD_200 := Color("#a7f3d0")
+const EMERALD_300 := Color("#6ee7b7")
+const EMERALD_400 := Color("#34d399")
+
+const SKY_200 := Color("#bae6fd")
+const SKY_300 := Color("#7dd3fc")
+const SKY_400 := Color("#38bdf8")
+
+const FUCHSIA_200 := Color("#f5d0fe")
+const FUCHSIA_300 := Color("#f0abfc")
+const FUCHSIA_400 := Color("#e879f9")
+
 func _init(value: Color) -> void:
 	base = value
 
@@ -174,12 +186,12 @@ func done() -> Color:
 
 
 func and_multiply(b: Color, weight := 1.0) -> ColorRef:
-	base = multiply(base, b, weight)
+	base = ColorRef.multiply(base, b, weight)
 	return self
 
 
 func and_screen(b: Color, weight := 1.0) -> ColorRef:
-	base = screen(base, b, weight)
+	base = ColorRef.screen(base, b, weight)
 	return self
 
 # TODO other methods

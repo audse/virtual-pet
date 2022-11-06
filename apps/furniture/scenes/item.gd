@@ -1,18 +1,14 @@
 extends StaticBody3D
 
-enum Surface { GROUND, TABLE, WALL, CEILING }
-
 @export var map_path: NodePath
 @export var placement_rect_path: NodePath
 
-@export var size := Vector3i(1, 1, 1)
-@export var place_on: Surface = Surface.GROUND
+@export var object_data: WorldObjectData
 
 @export var disabled: bool = false:
 	set(value):
 		disabled = value
-		if is_inside_tree() and drag:
-			drag.disabled = disabled
+		if drag: drag.disabled = disabled
 
 @onready var map: CellMap = get_node_or_null(map_path)
 @onready var rect: PlacementRect = get_node_or_null(placement_rect_path)
@@ -24,23 +20,10 @@ var drag: Draggable
 var map_pos: Vector3:
 	get: return map.world_to_map_to_world(position) if map else position
 
-var world_size: Vector3:
-	get: return Vector3(size) * map.grid.cell_size if map else size
-
-var rect_size: Vector2:
-	get:
-		var deg: int = rad_to_deg(rotation.y) as int
-		var rsize = (
-			Vector2(size.x, size.z) if deg == 0 or deg % 180 == 0
-			else Vector2(size.z, size.x)
-		)
-		if map: rsize *= Vector2(map.grid.cell_size.x, map.grid.cell_size.z)
-		return rsize
-
 var rect_pos: Vector2:
-	get:
-		var m := map_pos
-		return Vector2(m.x, m.z) - rect.rect.size / 2
+	get: return Vector2(map_pos.x, map_pos.z) - rect.rect.size / 2.0
+
+var _start_pos: Vector3
 
 
 func _ready() -> void:
@@ -58,12 +41,10 @@ func _ready() -> void:
 	add_to_group("FurnitureItems")
 
 
-var _start_pos: Vector3
-
 func _on_drag_started() -> void:
 	_start_pos = map_pos
 	if rect:
-		rect.rect.size = rect_size
+		rect.rect.size = object_data.get_rect().size
 		rect.thickness_to(0.02)
 	for item in get_tree().get_nodes_in_group("FurnitureItems"):
 		if not item == self: item.disabled = true
@@ -77,7 +58,7 @@ func _on_drag_ended() -> void:
 	for item in get_tree().get_nodes_in_group("FurnitureItems"):
 		item.disabled = false
 	var tween := _tween()
-	tween.tween_property(self, "position", Vector3(map_pos.x, 0, map_pos.z), 0.25)
+	tween.tween_property(self, "position", map_pos, 0.25)
 	if rect:
 		await rect.thickness_to(0.0)
 
@@ -87,7 +68,7 @@ func _on_tapped() -> void:
 		var tween := _tween()
 		tween.tween_property(self, "rotation:y", rotation.y + deg_to_rad(90), 0.15)
 		tween.tween_property(self, "rect:rect:size", Vector2(rect.rect.size.y, rect.rect.size.x), 0.15)
-		tween.chain().tween_property(self, "position", Vector3(map_pos.x, 0, map_pos.z), 0.15)
+		tween.chain().tween_property(self, "position", map_pos, 0.15)
 
 
 func _tween(easing: int = Tween.EASE_IN_OUT) -> Tween:

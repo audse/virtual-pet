@@ -1,6 +1,6 @@
-[gd_resource type="Resource" load_steps=3 format=3]
+[gd_resource type="Resource" load_steps=3 format=3 uid="uid://6qicrocmoseo"]
 
-[ext_resource type="PackedScene" uid="uid://ccgis4421qtg6" path="res://apps/world/resources/objects/grass_test_1.tscn" id="1_d8idv"]
+[ext_resource type="PackedScene" uid="uid://bja8oqw3mh5l7" path="res://apps/world/resources/objects/grass_test_2.tscn" id="1_85bch"]
 [ext_resource type="Script" path="res://apps/world_object/data/foliage_object_data.gd" id="1_pg754"]
 
 [resource]
@@ -8,7 +8,7 @@ script = ExtResource("1_pg754")
 type = 2
 stage = 3
 id = "grass-01"
-scene = ExtResource("1_d8idv")
+scene = ExtResource("1_85bch")
 coord = Vector2i(0, 4)
 dimensions = Vector2i(1, 1)
 rotation = 0
@@ -17,4 +17,5 @@ flags = null
 fulfills_needs = [2]
 actions = ["eat me"]
 rarity = 0
+total_uses = -1
 uses_left = 3

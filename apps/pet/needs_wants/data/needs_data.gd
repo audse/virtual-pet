@@ -27,35 +27,35 @@ signal sleepy_changed(val: float)
 ## 0 = very bored, 1 = fully played with
 @export_range(0.0, 1.0, 0.05) var activity := 0.0:
 	set(value):
-		activity = clamp_need(value)
+		activity = NeedsData.clamp_need(value)
 		activity_changed.emit(activity)
 		need_changed.emit(Need.ACTIVITY, activity)
 
 ## 0 = very uncomfy, 1 = fully comfy
 @export_range(0.0, 1.0, 0.05) var comfort := 0.0:
 	set(value):
-		comfort = clamp_need(value)
+		comfort = NeedsData.clamp_need(value)
 		comfort_changed.emit(comfort)
 		need_changed.emit(Need.COMFORT, comfort)
 
 ## 0 = very hungry, 1 = full
 @export_range(0.0, 1.0, 0.05) var hunger := 0.0:
 	set(value):
-		hunger = clamp_need(value)
+		hunger = NeedsData.clamp_need(value)
 		hunger_changed.emit(hunger)
 		need_changed.emit(Need.HUNGER, hunger)
 
 ## 0 = very dirty, 1 = fully clean
 @export_range(0.0, 1.0, 0.05) var hygiene := 0.0:
 	set(value):
-		hygiene = clamp_need(value)
+		hygiene = NeedsData.clamp_need(value)
 		hygiene_changed.emit(hygiene)
 		need_changed.emit(Need.HYGIENE, hygiene)
 
 ## 0 = very sleepy, 1 = fully rested
 @export_range(0.0, 1.0, 0.05) var sleepy := 0.0:
 	set(value):
-		sleepy = clamp_need(value)
+		sleepy = NeedsData.clamp_need(value)
 		sleepy_changed.emit(sleepy)
 		need_changed.emit(Need.SLEEPY, sleepy)
 
@@ -81,29 +81,29 @@ func generate_random() -> void:
 	sleepy = Auto.Random.randf_range(0.4, 0.8)
 
 
-func play() -> void:
-	activity += randf_range(0.2, 0.4)
+func play(is_boosted := false) -> void:
+	activity += randf_range(0.2, 0.4) * (1.25 if is_boosted else 1.0)
 	sleepy -= randf_range(0.05, 0.1)
 
 
-func lounge() -> void:
-	comfort += randf_range(0.2, 0.4)
+func lounge(is_boosted := false) -> void:
+	comfort += randf_range(0.2, 0.4) * (1.25 if is_boosted else 1.0)
 	activity -= randf_range(0.05, 0.1)
-	sleepy += randf_range(0.01, 0.05)
+	sleepy += randf_range(0.01, 0.05) * (1.25 if is_boosted else 1.0)
 
 
-func eat() -> void:
-	hunger += randf_range(0.3, 0.6)
+func eat(is_boosted := false) -> void:
+	hunger += randf_range(0.3, 0.6) * (1.25 if is_boosted else 1.0)
 	sleepy -= randf_range(0.05, 0.1)
 
 
-func sleep() -> void:
-	sleepy += randf_range(0.2, 0.4)
-	comfort += randf_range(0.05, 0.1)
+func sleep(is_boosted := false) -> void:
+	sleepy += randf_range(0.2, 0.4) * (1.25 if is_boosted else 1.0)
+	comfort += randf_range(0.05, 0.1) * (1.25 if is_boosted else 1.0)
 
 
-func wash() -> void:
-	hygiene += randf_range(0.4, 0.6)
+func wash(is_boosted := false) -> void:
+	hygiene += randf_range(0.4, 0.6) * (1.25 if is_boosted else 1.0)
 	comfort -= randf_range(0.01, 0.05)
 
 

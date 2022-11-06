@@ -18,6 +18,11 @@ func consume() -> void:
 	scale.y = height
 
 
+func reset() -> void:
+	height = 1.0
+	scale.y = height
+
+
 func _on_body_entered(_body: Node3D) -> void:
 	var tween := create_tween()
 	tween.tween_property(self, "scale:y", height * 0.5, 0.15)

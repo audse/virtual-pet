@@ -9,7 +9,7 @@ var tile: MeshInstance3D = null
 var bitmask := BitMask.new():
 	set (value):
 		bitmask = value
-		emit_signal("bitmask_updated")
+		bitmask_updated.emit()
 
 
 func draw_tile(parent: Node3D, cell_size: Vector3, new_tile: MeshInstance3D = null) -> void:
@@ -23,7 +23,7 @@ func draw_tile(parent: Node3D, cell_size: Vector3, new_tile: MeshInstance3D = nu
 
 
 func get_relation_of(neighbor_coord: Vector3i) -> int:
-	return get_relation_between(coord, neighbor_coord)
+	return Cell.get_relation_between(coord, neighbor_coord)
 
 
 static func get_relation_between(ref_coord: Vector3i, neighbor_coord: Vector3i) -> int:
@@ -46,7 +46,7 @@ static func get_relation_between(ref_coord: Vector3i, neighbor_coord: Vector3i) 
 
 
 func get_neighbor_coords() -> Array[Vector3i]:
-	return get_neighbor_coords_of(coord)
+	return Cell.get_neighbor_coords_of(coord)
 
 
 static func get_neighbor_coords_of(ref_coord: Vector3i) -> Array[Vector3i]:

@@ -52,7 +52,7 @@ static func make(id := "CENTER", distort_amount := Vector3.ZERO) -> SpacialTile:
 	var tile := SpacialTile.new()
 	tile.id = id
 	
-	var tile_type: int = States.Map.id_to_tile_type(tile.id)
+	var tile_type: int = MapState.id_to_tile_type(tile.id)
 	
 	tile.mesh = States.Map.tile_meshes[tile_type]
 	

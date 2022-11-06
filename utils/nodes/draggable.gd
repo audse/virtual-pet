@@ -22,6 +22,10 @@ signal dragging
 
 
 @onready var node: Node = get_node(node_path)
+@onready var _node_collision_3ds: Array[Node] = node.find_children("", "CollisionShape3D", true)
+@onready var _node_collision_3d: CollisionShape3D:
+	get: return _node_collision_3ds[0] as CollisionShape3D if len(_node_collision_3ds) > 0 else null
+
 
 @onready var viewport: Viewport = node.get_viewport() if node else null
 @onready var camera_2d: Camera2D = viewport.get_camera_2d() if viewport else null
@@ -45,6 +49,8 @@ var is_dragging := false:
 var _drag_elapsed_frames := 0
 var _start_pos: Vector2
 
+var _offset_in_world: Vector3 = offset_in_world
+
 var _last_pos: Vector2:
 	set(value):
 		_last_pos = value
@@ -67,12 +73,16 @@ func _unhandled_input(event: InputEvent) -> void:
 	if is_dragging and event.is_action_released("tap"):
 		is_dragging = false
 
-func _area_input(event: InputEvent, pos_3d: Vector3 = Vector3.ZERO):
+
+func _area_input(event: InputEvent, pos: Vector3 = Vector3.ZERO):
 	if disabled: return
 	if event is InputEventScreenTouch or event is InputEventScreenDrag:
 		if event.is_pressed() or event is InputEventScreenDrag:
 			is_dragging = true
 			_drag_elapsed_frames += 1
+			
+			_offset_in_world = offset_in_world + (node.global_position - pos)
+			
 		else:
 			is_dragging = false
 
@@ -84,24 +94,23 @@ func _physics_process(_delta: float) -> void:
 		if node is Node3D and camera_3d:
 			var target_position: Vector3
 			if not lock_y:
-				target_position = offset_in_world + camera_3d.project_position(
+				target_position = camera_3d.project_position(
 					_last_pos + offset_from_mouse, 
 					camera_distance
 				)
 			else:
-				var position := Vector3Ref.project_position_to_floor(
+				target_position = Vector3Ref.project_position_to_floor(
 					camera_3d, 
 					_last_pos + offset_from_mouse,
-					[node]
+					[_node_collision_3d]
 				)
-				if lock_x: position.x = _start_node_position_3d.x
-				if lock_y: position.y = _start_node_position_3d.y
-				if lock_z: position.z = _start_node_position_3d.z
-				target_position = offset_in_world + position
+				if lock_x: target_position.x = _start_node_position_3d.x
+				if lock_y: target_position.y = _start_node_position_3d.y
+				if lock_z: target_position.z = _start_node_position_3d.z
 			
 			if node is PhysicsBody3D and collide:
+				node.move_and_collide(target_position - node.global_position + _offset_in_world)
 				
-				node.move_and_collide(target_position - node.global_position)
 			else: node.position = target_position
 		
 		elif node is Control or node is Node2D:

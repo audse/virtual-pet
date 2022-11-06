@@ -25,6 +25,8 @@ enum {
 
 
 func _ready() -> void:
+	Modules.accept_modules(self)
+	
 	add_child(needs_menu)
 	
 	needs_menu.append_actions(command_text.keys().map(
@@ -75,8 +77,22 @@ func _on_give_object_pressed(_action: ActionItem) -> void:
 	if pet_data: pet_data.interface_data.open_menu_pressed.emit(PetInterfaceData.Menu.GIVE_OBJECT)
 
 
-func _on_cuddle_pressed(_action: ActionItem) -> void:
-	if pet_data: pet_data.interface_data.open_menu_pressed.emit(PetInterfaceData.Menu.CUDDLE)
+func _on_cuddle_pressed(action: ActionItem) -> void:
+	if pet_data and not pet_data.interface_data.is_recently_cuddled:
+		pet_data.interface_data.open_menu_pressed.emit(PetInterfaceData.Menu.CUDDLE)
+		
+		# mark pet as already cuddled
+		pet_data.interface_data.is_recently_cuddled = true
+		action.button.disabled = true
+		action.button.tooltip_text = "You've already cuddled {0} recently.".format([pet_data.name])
+		
+		# wait until pet is cuddlable again
+		await get_tree().create_timer(PetInterfaceData.cuddle_cooldown_time).timeout
+		
+		# enable cuddling
+		pet_data.interface_data.is_recently_cuddled = false
+		action.button.disabled = false
+		action.button.tooltip_text = ""
 
 
 func _on_about_pressed(_action: ActionItem) -> void:

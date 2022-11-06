@@ -27,7 +27,7 @@ static func sign_no_zeros(a: Vector3i, replacement: int = 1) -> Vector3i:
 static func to_rect3(rect: Rect2, ignore_axis = "y") -> Dictionary:
 	var to_vec3 = func (p: Vector2) -> Vector3:
 		match ignore_axis.to_lower():
-			"x": return Vector3(0, p.x, p.x)
+			"x": return Vector3(0, p.x, p.y)
 			"y": return Vector3(p.x, 0, p.y)
 			"z": return Vector3(p.x, p.y, 0)
 	
@@ -52,7 +52,8 @@ static func project_position_to_floor(camera: Camera3D, pos: Vector2, exclude: A
 	query.exclude = exclude
 	var intersection := space_state.intersect_ray(query)
 	
-	return intersection.position
+	if "position" in intersection: return intersection.position
+	else: return Vector3.ZERO
 
 
 static func project_position_to_floor_simple(camera: Camera3D, pos: Vector2) -> Vector3:

@@ -5,7 +5,7 @@ extends Node3D
 @export var grid: Resource
 @export var use_autotile: bool = true
 
-var UseSpacialTiles = Module.import(Module.UseSpacialTiles, self) if use_autotile else null
+var UseSpacialTiles = Modules.import(Modules.UseSpacialTiles, self) if use_autotile else null
 
 var cells: Array[Cell]
 var _cached_coords: Dictionary = {}

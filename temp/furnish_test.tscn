@@ -1,0 +1,76 @@
+[gd_scene load_steps=10 format=3 uid="uid://wna771da8oq6"]
+
+[ext_resource type="PackedScene" uid="uid://b6dya0dbxdg1f" path="res://environment/scenes/environment.tscn" id="1_37hmk"]
+[ext_resource type="Script" path="res://utils/nodes/draggable_3d.gd" id="1_m28s4"]
+[ext_resource type="PackedScene" uid="uid://bd104n8kaggno" path="res://apps/custom_furniture/assets/meshes/plant_pot_01.gltf" id="2_y33lp"]
+[ext_resource type="PackedScene" uid="uid://delm8gdxykn15" path="res://temp/pet_bed_01.tscn" id="5_4c20s"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_p5n4i"]
+size = Vector3(2, 2, 2)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_24q2f"]
+size = Vector3(4, 1, 3)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8ovmk"]
+albedo_color = Color(0.301961, 0.301961, 0.301961, 1)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_kfuqk"]
+material = SubResource("StandardMaterial3D_8ovmk")
+size = Vector2(50, 50)
+subdivide_width = 10
+subdivide_depth = 10
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_ihqvs"]
+points = PackedVector3Array(25.3919, 0.396748, 25.3919, -25.3919, -0.396748, -25.3919, -25.3919, 0.396748, -25.3919, 25.3919, -0.396748, -25.3919, -25.3919, -0.396748, 25.3919, -25.3919, 0.396748, 25.3919, 25.3919, 0.396748, -25.3919, 25.3919, -0.396748, 25.3919)
+
+[node name="Node3D" type="Node3D"]
+
+[node name="PlantPot" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, -2)
+input_capture_on_drag = true
+
+[node name="Draggable3D" type="Node" parent="PlantPot" node_paths=PackedStringArray("object")]
+script = ExtResource("1_m28s4")
+object = NodePath("..")
+distance_from_ground_while_dragging = 3.0
+
+[node name="Model" parent="PlantPot" instance=ExtResource("2_y33lp")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PlantPot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("BoxShape3D_p5n4i")
+
+[node name="PetBed" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 4)
+input_capture_on_drag = true
+
+[node name="Draggable3D" type="Node" parent="PetBed" node_paths=PackedStringArray("object")]
+script = ExtResource("1_m28s4")
+object = NodePath("..")
+distance_from_ground_while_dragging = 3.0
+
+[node name="Model" parent="PetBed" instance=ExtResource("5_4c20s")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PetBed"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4, 0)
+shape = SubResource("BoxShape3D_24q2f")
+
+[node name="Environment" parent="." instance=ExtResource("1_37hmk")]
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(0.766045, -0.413176, 0.492403, 0, 0.766044, 0.642788, -0.642787, -0.492404, 0.586824, 5, 7, 5)
+projection = 1
+current = true
+size = 15.0
+
+[node name="Floor" type="StaticBody3D" parent="."]
+input_ray_pickable = false
+
+[node name="Plane" type="MeshInstance3D" parent="Floor"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0181896, 0)
+mesh = SubResource("PlaneMesh_kfuqk")
+skeleton = NodePath("")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0181896, 0)
+shape = SubResource("ConvexPolygonShape3D_ihqvs")

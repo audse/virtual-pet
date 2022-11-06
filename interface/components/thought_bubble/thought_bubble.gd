@@ -20,6 +20,12 @@ enum DotPosition {
 @export var start_open: bool = false
 @export var animation_duration: float = 0.35
 
+var _animation_duration := (
+	animation_duration if Engine.is_editor_hint()
+	else animation_duration if not Settings.data.limit_animations 
+	else 0.0
+)
+
 @export var test_open: bool = false:
 	set(value):
 		test_open = value
@@ -95,44 +101,46 @@ func _enter_tree() -> void:
 
 
 func _process(_delta: float) -> void:
-	if is_inside_tree() or Engine.is_editor_hint():
+	if Engine.is_editor_hint() or is_inside_tree():
 		size.x = max(size.x, size.y)
 		size.y = max(size.x, size.y)
 
 
 func open() -> void:
-	if is_inside_tree() or Engine.is_editor_hint():
+	if Engine.is_editor_hint() or is_inside_tree():
 		rotation = deg_to_rad(-25)
 		pivot_offset = size * dots_pos
 		var tween := create_tween().set_parallel().set_ease(Tween.EASE_OUT)
-		tween.tween_property(self, "modulate:a", 1.0, animation_duration)
+		tween.tween_property(self, "modulate:a", 1.0, _animation_duration)
 		tween.set_trans(Tween.TRANS_CUBIC).tween_method(
 			func(offset: float) -> void: 
 				material.set_shader_parameter("center_offset", Vector2(0, offset)),
 			0.2,
 			0.0,
-			0.25
+			_animation_duration
 		)
 		tween.set_trans(Tween.TRANS_BACK)
-		tween.tween_property(self, "scale", Vector2(1.0, 1.0), animation_duration)
-		tween.tween_property(self, "rotation", 0.0, animation_duration)
+		tween.tween_property(self, "scale", Vector2(1.0, 1.0), _animation_duration)
+		tween.tween_property(self, "rotation", 0.0, _animation_duration)
+		await tween.finished
 
 
 func close() -> void:
-	if is_inside_tree() or Engine.is_editor_hint():
+	if Engine.is_editor_hint() or is_inside_tree():
 		pivot_offset = size * dots_pos
 		var tween := create_tween().set_parallel().set_ease(Tween.EASE_IN)
-		tween.tween_property(self, "modulate:a", 0.0, animation_duration)
+		tween.tween_property(self, "modulate:a", 0.0, _animation_duration)
 		tween.set_trans(Tween.TRANS_CUBIC).tween_method(
 			func(offset: float) -> void: 
 				material.set_shader_parameter("center_offset", Vector2(0, offset)),
 			0.0,
 			0.2,
-			0.25
+			_animation_duration
 		)
 		tween.set_trans(Tween.TRANS_BACK)
-		tween.tween_property(self, "scale", Vector2(0.25, 0.25), animation_duration)
-		tween.tween_property(self, "rotation", deg_to_rad(-15), animation_duration)
+		tween.tween_property(self, "scale", Vector2(0.25, 0.25), _animation_duration)
+		tween.tween_property(self, "rotation", deg_to_rad(-15), _animation_duration)
+		await tween.finished
 
 
 func _reset_opened() -> void:

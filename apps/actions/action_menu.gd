@@ -24,7 +24,9 @@ func _ready() -> void:
 func append_actions(actions_value: Array) -> void:
 	for args in actions_value:
 		actions[args.id] = ActionItem.new(container, self, args)
-		if is_inside_tree(): actions[args.id].make_button()
+		if is_inside_tree(): 
+			actions[args.id].make_button()
+			actions[args.id].make_submenu()
 	reset()
 
 
@@ -32,6 +34,7 @@ func append_action(args: ActionItemParams) -> void:
 	actions[args.id] = ActionItem.new(container, self, args)
 	if is_inside_tree(): 
 		actions[args.id].make_button()
+		actions[args.id].make_submenu()
 		reset()
 
 
@@ -52,7 +55,7 @@ func reset() -> void:
 func update_size() -> void:
 	var total_size: float = actions.values().reduce(
 		func(total: float, item: ActionItem) -> float:
-			return max(total, item.button.size.x),
+			return max(total, item.button.size.x) if item.button else total,
 		0.0
 	)
 	if overwrite_style:

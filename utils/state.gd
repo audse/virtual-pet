@@ -26,11 +26,11 @@ func reset() -> void:
 
 func enter(next_state: int) -> void:
 	state = next_state
-	emit_signal("enter_state", next_state)
+	enter_state.emit(next_state)
 
 
 func exit() -> void:
-	emit_signal("exit_state", state)
+	exit_state.emit(state)
 
 
 func set_to(next_state: int) -> void:

@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://t8aunf03pigt"]
+[gd_scene load_steps=6 format=3 uid="uid://t8aunf03pigt"]
 
 [sub_resource type="Gradient" id="Gradient_nsgll"]
 interpolation_mode = 1
@@ -16,6 +16,12 @@ material = SubResource("StandardMaterial3D_40o2d")
 radius = 0.25
 height = 0.5
 
+[sub_resource type="SphereShape3D" id="SphereShape3D_sgo5k"]
+radius = 0.25
+
 [node name="Toy" type="MeshInstance3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 0)
 mesh = SubResource("SphereMesh_683af")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_sgo5k")

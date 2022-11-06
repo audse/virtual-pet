@@ -8,13 +8,16 @@ extends Node
 @onready var behavior := %Behavior
 @onready var actor := %Actor as PetActor
 @onready var thoughts := %ThoughtBubble as ThoughtBubble
+@onready var thoughts_label := %ThoughtBubbleLabel as Label
+@onready var action_menu := %ActionMenu as Control
+
 
 func _process(_delta: float) -> void:
 	if is_inside_tree() and not Engine.is_editor_hint() and thoughts and camera:
 		var actor_position: Vector2 = camera.unproject_position(actor.position)
 		var ui_position: Vector2 = lerp(
 			thoughts.position, 
-			actor_position - (thoughts.size * thoughts.dots_pos * 1.25),
+			actor_position - (thoughts.size * thoughts.dots_pos * 1.5),
 			0.05
 		)
 		thoughts.position = ui_position
@@ -24,69 +27,56 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.is_pressed():
 		var event_position := Vector3Ref.project_position_to_floor_simple(camera, event.position)
 		if actor.rect.has_point(Vector2(event_position.x, event_position.z)):
-			%ActionMenu.open_at(event.position)
+			action_menu.open_at(event.position)
 			get_viewport().set_input_as_handled()
 
 
 func _ready() -> void:
 	# Set up pet data
-	%ActionMenu.pet_data = pet_data
+	action_menu.pet_data = pet_data
 	behavior.pet_data = pet_data
 	actor.pet_data = pet_data
 	
 	# Start AI ticking
 	behavior.start()
 	
-	
 	pet_data.command_data.start_command.connect(
 		func(cmd: CommandData.Command, target: WorldObjectData) -> void:
-			if thoughts: thoughts.open()
+			# pause action if the game is paused
+			if Datetime.data.paused: await Datetime.data.time_unpaused
 			
-			match cmd:
-				CommandData.Command.EAT:
-					thoughts.open()
-					%ThoughtBubbleLabel.text = "food..."
-				CommandData.Command.SLEEP: 
-					thoughts.open()
-					%ThoughtBubbleLabel.text = "sleeep..."
-				CommandData.Command.PLAY:
-					thoughts.open()
-					%ThoughtBubbleLabel.text = "fun!!"
-				CommandData.Command.LOUNGE: 
-					thoughts.open()
-					%ThoughtBubbleLabel.text = "blehh..."
-				CommandData.Command.WASH:
-					thoughts.open()
-					%ThoughtBubbleLabel.text = "stinkyy..."
+			# populate thought bubble
+			if thoughts and cmd != CommandData.Command.IDLE:
+				thoughts_label.text = {
+					CommandData.Command.PLAY: "fun!!",
+					CommandData.Command.LOUNGE: "blehh...",
+					CommandData.Command.EAT: "food...",
+					CommandData.Command.WASH: "stinkyy...",
+					CommandData.Command.SLEEP: "sleeep...",
+				}[cmd]
+				await thoughts.open()
 			
-			if target:
-				await move_to_location(target.coord)
-				await get_tree().create_timer(1.0).timeout
+			# go to target object
+			if target: await move_to_location(target.coord)
 			
 			if thoughts: thoughts.close()
 			
+			# wait for commands to finish (some commands take extra time)
+			await get_tree().create_timer(1.0).timeout
 			match cmd:
 				CommandData.Command.EAT:
-					%ThoughtBubbleLabel.text = "food..."
-					pet_data.needs_data.eat()
-					target.consume()
-						
-				CommandData.Command.SLEEP: 
-					%ThoughtBubbleLabel.text = "sleeep..."
-					# sleeping takes a long time
+					actor.change_animation("Eat", true)
+					await get_tree().create_timer(0.5).timeout
+				CommandData.Command.SLEEP:
 					await get_tree().create_timer(3.0).timeout
-					pet_data.needs_data.sleep()
-				CommandData.Command.PLAY:
-					%ThoughtBubbleLabel.text = "fun!!"
-					pet_data.needs_data.play()
-				CommandData.Command.LOUNGE: 
-					%ThoughtBubbleLabel.text = "blehh..."
-					# lounging takes more time
+				CommandData.Command.LOUNGE:
 					await get_tree().create_timer(1.0).timeout
-					pet_data.needs_data.lounge()
-				CommandData.Command.WASH:
-					%ThoughtBubbleLabel.text = "stinkyy..."
-					pet_data.needs_data.wash()
+			
+			# pause action if the game is paused
+			if Datetime.data.paused: await Datetime.data.time_unpaused
+			
+			# use object (updates needs and marks object as consumed)
+			if target: UsePetData.new(pet_data).use_object(target, cmd)
 			
 			pet_data.command_data.finish_command.emit(cmd)
 	)
