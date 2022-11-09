@@ -8,6 +8,9 @@
 *.png
 *.ai
 *.svg
+*.obj
+*.ttf
+*.otf
 static/app
 builds/ios
 builds/macos
