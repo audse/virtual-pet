@@ -1,0 +1,44 @@
+{
+    "id": "change_traits",
+    "text": "traits...",
+    "submenu": [
+        {
+            "id": "add_trait",
+            "text": "add...",
+            "on_pressed": {
+                "run_script": "cheat_change_traits/create_trait_action_items.gd"
+            },
+            "submenu": [
+                {
+                    "id": "add_all",
+                    "text": "add all traits",
+                    "on_pressed": {
+                        "run_script": "cheat_change_traits/add_traits.gd",
+                        "arguments": {
+                            "all_traits": true
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "id": "remove_trait",
+            "text": "remove...",
+            "on_pressed": {
+                "run_script": "cheat_change_traits/create_trait_action_items.gd"
+            },
+            "submenu": [
+                {
+                    "id": "remove_all",
+                    "text": "remove all traits",
+                    "on_pressed": {
+                        "run_script": "cheat_change_traits/remove_traits.gd",
+                        "arguments": {
+                            "all_traits": true
+                        }
+                    }
+                }
+            ]
+        }
+    ]
+}

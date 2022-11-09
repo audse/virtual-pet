@@ -12,6 +12,7 @@ signal rotation_changed(Vector3)
 @onready var camera: Camera3D = viewport.get_camera_3d()
 
 @onready var start_distance_from_ground := object.position.y
+@export var enable_fallback_position: bool = false
 
 var is_dragging: bool = false:
 	set(value):
@@ -26,7 +27,9 @@ var elapsed_frames: int = 0:
 var mouse_offset := Vector3.ZERO
 
 var enabled: bool:
-	get: return Game.Mode.state == GameModeState.GameMode.BUY
+	get: return Game.Mode.state == GameModeState.Mode.BUY
+
+var fallback_position: Vector3
 
 
 func _ready() -> void:
@@ -70,7 +73,11 @@ func _on_input_event(
 func _physics_process(_delta: float) -> void:
 	if enabled:
 		# move towards the nearest grid square
-		var target: Vector3 = object.position.lerp(object.position.snapped(WorldData.grid_size_vector), 0.1)
+		var target: Vector3 = (
+			object.position.lerp(object.position.snapped(WorldData.grid_size_vector), 0.1)
+			if not enable_fallback_position
+			else fallback_position
+		)
 		
 		if is_dragging and elapsed_frames > 5:
 			target = Vector3Ref.project_position_to_floor_simple(
@@ -100,3 +107,5 @@ func _on_tapped() -> void:
 		await tween.finished
 		
 		rotation_changed.emit(object.rotation)
+
+

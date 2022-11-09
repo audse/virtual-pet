@@ -9,6 +9,7 @@ enum Flag {
 @export_group("Object identity")
 @export var id: String
 @export var display_name: String
+@export var price: int
 
 @export_subgroup("Optional identity data")
 @export var category_id: String = "uncategorized"

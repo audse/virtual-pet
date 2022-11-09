@@ -1,6 +1,6 @@
-[gd_scene load_steps=2 format=3 uid="uid://b8wcyrpcdhfyu"]
+[gd_scene load_steps=2 format=3]
 
-[ext_resource type="PackedScene" uid="uid://dui0t6vapx0xy" path="res://apps/map/scenes/uneven_grid.tscn" id="1_4ep0f"]
+[ext_resource type="PackedScene" uid="uid://dui0t6vapx0xy" path="res://apps/map/scenes/build.tscn" id="1_4ep0f"]
 
 [node name="Main" type="Node"]
 

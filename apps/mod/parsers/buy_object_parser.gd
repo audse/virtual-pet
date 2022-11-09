@@ -6,6 +6,7 @@ const required_fields := {
 	display_name = TYPE_STRING,
 	mesh = TYPE_STRING,
 	world_layer = TYPE_STRING,
+	price = TYPE_FLOAT,
 }
 
 const optional_fields := {
@@ -40,7 +41,7 @@ static func parse(context: Node, json_file: FileAccess) -> BuyableObjectData:
 	return BuyableObjectData.new(data)
 
 
-static func parse_required_data(_context: Node, json_file: FileAccess, data: Dictionary) -> Dictionary:
+static func parse_required_data(_context: Node, _json_file: FileAccess, data: Dictionary) -> Dictionary:
 	# Convert `world_layer` param from string to enum
 	# TODO: maybe this shouldn't be an enum, for more extensibility
 	data.world_layer = WorldObjectData.Layer[data.world_layer.to_upper() + "_LAYER"]
@@ -49,10 +50,12 @@ static func parse_required_data(_context: Node, json_file: FileAccess, data: Dic
 	if data.mesh.contains("res://"): data.mesh = load(data.mesh)
 	else: data.mesh = load("res://mods/" + data.mesh)
 	
+	data.price = int(data.price)
+	
 	return data
 
 
-static func parse_optional_data(_context: Node, json_file: FileAccess, data: Dictionary) -> Dictionary:
+static func parse_optional_data(_context: Node, _json_file: FileAccess, data: Dictionary) -> Dictionary:
 	# Convert dimension width & height to `Vector2i`
 	var dimensions := Vector3i(1, 1, 1)
 	if "width" in data.dimensions: dimensions.x = data.dimensions.width as int

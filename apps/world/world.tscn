@@ -1,9 +1,11 @@
-[gd_scene load_steps=9 format=3 uid="uid://c7xjorqjkaula"]
+[gd_scene load_steps=11 format=3 uid="uid://c7xjorqjkaula"]
 
 [ext_resource type="Script" path="res://apps/world/world.gd" id="1_xch6f"]
 [ext_resource type="Script" path="res://apps/world/world_renderer.gd" id="3_3p2vm"]
 [ext_resource type="PackedScene" uid="uid://b6dya0dbxdg1f" path="res://environment/scenes/environment.tscn" id="3_nx4s3"]
+[ext_resource type="Script" path="res://utils/nodes/iso_camera.gd" id="4_8887t"]
 [ext_resource type="PackedScene" uid="uid://cagfmccv3vm8w" path="res://interface/interface.tscn" id="4_ffd0p"]
+[ext_resource type="PackedScene" uid="uid://d2mxrw16b4scs" path="res://apps/building/scenes/build.tscn" id="5_q7nso"]
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_8ad7w"]
 vertices = PackedVector3Array(-18.5, 0.48181, -24.5, -24.5, 0.48181, -24.5, -24.5, 0.48181, -18.5, -24.5, 0.48181, 18.25, -24.5, 0.48181, 24.5, -18.5, 0.48181, 24.5, 24.5, 0.48181, -18.5, 24.5, 0.48181, -24.5, 18.25, 0.48181, -24.5, 18.25, 0.48181, 24.5, 24.5, 0.48181, 24.5, 24.5, 0.48181, 18.25, -24.5, 0.48181, 12.25, -24.5, 0.48181, 18.25, -18.5, 0.48181, 24.5, -12.25, 0.48181, 24.5, 24.5, 0.48181, -18.5, 18.25, 0.48181, -24.5, 12.25, 0.48181, -24.5, 24.5, 0.48181, -12.25, -12.25, 0.48181, -24.5, -18.5, 0.48181, -24.5, -24.5, 0.48181, -18.5, -24.5, 0.48181, -12.25, 12.25, 0.48181, 24.5, 18.25, 0.48181, 24.5, 24.5, 0.48181, 18.25, 6, 0.48181, 24.5, 24.5, 0.48181, 12.25, 24.5, 0.48181, 6, 0, 0.48181, 24.5, 12.25, 0.48181, 24.5, 24.5, 0.48181, 18.25, 24.5, 0.48181, 12.25, 6, 0.48181, 24.5, 0, 0.48181, -24.5, -6.25, 0.48181, -24.5, -24.5, 0.48181, -6.25, -24.5, 0.48181, 0, 24.5, 0.48181, 0, 0, 0.48181, -24.5, -24.5, 0.48181, 0, -6.25, 0.48181, 24.5, 0, 0.48181, 24.5, 24.5, 0.48181, 6, -24.5, 0.48181, 12.25, -12.25, 0.48181, 24.5, -6.25, 0.48181, 24.5, -24.5, 0.48181, 6, 24.5, 0.48181, -6.25, 24.5, 0.48181, -12.25, 12.25, 0.48181, -24.5, 6, 0.48181, -24.5, -6.25, 0.48181, -24.5, -12.25, 0.48181, -24.5, -24.5, 0.48181, -12.25, -24.5, 0.48181, -6.25, -24.5, 0.48181, 0, -24.5, 0.48181, 6, -6.25, 0.48181, 24.5, 24.5, 0.48181, -6.25, 6, 0.48181, -24.5, 0, 0.48181, -24.5, 24.5, 0.48181, 0)
@@ -32,10 +34,11 @@ script = ExtResource("3_3p2vm")
 [node name="Environment" parent="Renderer" instance=ExtResource("3_nx4s3")]
 
 [node name="Camera3D" type="Camera3D" parent="Renderer"]
-transform = Transform3D(0.766045, -0.413176, 0.492403, 0, 0.766044, 0.642788, -0.642787, -0.492404, 0.586824, 5, 7, 5)
+transform = Transform3D(0.766045, -0.413176, 0.492403, 0, 0.766044, 0.642788, -0.642787, -0.492404, 0.586824, 0, 16, 0)
 projection = 1
 current = true
-size = 15.0
+size = 22.0
+script = ExtResource("4_8887t")
 
 [node name="NavigationRegion3D" type="NavigationRegion3D" parent="Renderer"]
 navmesh = SubResource("NavigationMesh_8ad7w")
@@ -51,5 +54,7 @@ skeleton = NodePath("")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Renderer/NavigationRegion3D/StaticBody3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0181896, 0)
 shape = SubResource("ConvexPolygonShape3D_2nrkn")
+
+[node name="Build" parent="Renderer" instance=ExtResource("5_q7nso")]
 
 [node name="Interface" parent="." instance=ExtResource("4_ffd0p")]

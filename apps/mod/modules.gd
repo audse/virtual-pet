@@ -16,33 +16,48 @@ func _init() -> void:
 	var mods_folder = DirAccess.open("res://mods")
 	
 	for mod_name in mods_folder.get_directories():
+		print("[Mod: " + mod_name + "] Loading...")
+		
 		var mod_path := "res://mods/" + mod_name
 		var mod_zip := FileAccess.open(mod_path + "/mod.zip", FileAccess.READ)
-	
 		
 		if mod_zip: ProjectSettings.load_resource_pack(mod_zip.get_path_absolute(), false)
 		if FileAccess.file_exists(mod_path + "/mod.gd"):
+			print("[Mod: " + mod_name + "] Script found!")
+			
 			var mod_script := load(mod_path + "/mod.gd")
+			var constants := (mod_script as Script).get_script_constant_map()
 			registered_modules[mod_name] = {
-			name = mod_name,
-			scripts = [mod_script],
-			parent_classes = [mod_script.get_script_constant_map().parent_class],
-		}
+				name = mod_name,
+				scripts = [mod_script],
+				parent_classes = [
+					ModHooks.get_class_path(constants.ParentClass)
+				],
+				is_cheat = [
+					constants.IsCheat if "IsCheat" in constants else false
+				]
+			}
 		else:
 			if DirAccess.dir_exists_absolute(mod_path + "/mod"):
+				print("[Mod: " + mod_name + "] Multiple scripts found!")
 				var mod_script_folder := DirAccess.open(mod_path + "/mod")
 				var mod_scripts = (
 					(mod_script_folder.get_files() as Array[String])
 						.filter(func(mod_script_path: String) -> bool: return mod_script_path.contains(".gd"))
 						.map(func(mod_script_path: String) -> Script: return load(mod_path + "/mod/" + mod_script_path))
 				)
-				var parent_classes = mod_scripts.map(
-					func(mod: Script) -> String: return mod.get_script_constant_map().parent_class
+				var constants = mod_scripts.map(func(mod: Script) -> Dictionary: return mod.get_script_constant_map())
+				var parent_classes = constants.map(
+					func(mod: Dictionary) -> String: return ModHooks.get_class_path(mod.ParentClass)
+				)
+				var is_cheat = constants.map(
+					func(mod: Dictionary) -> String: return mod.IsCheat if "IsCheat" in mod else false
 				)
 				registered_modules[mod_name] = {
 					name = mod_name,
 					scripts = mod_scripts,
-					parent_classes = parent_classes
+					parent_classes = parent_classes,
+					is_cheat = is_cheat,
 				}
 
 
@@ -50,11 +65,18 @@ func accept_modules(context: Node) -> void:
 	var context_script_path: String = context.get_script().resource_path
 	for mod in registered_modules.values():
 		# Skip accepting disabled mods
-		if mod.name in Settings.data.disabled_mods: continue
+		if mod.name in Settings.data.disabled_mods: 
+			print("[Mod: " + mod.name + "] Disabled, skipping...")
+			continue
 		
 		var i := 0
 		for script in mod.scripts:
+			# Skip cheat mods if they're disabled
+			if Settings.data.disable_cheat_mods and mod.is_cheat[i]:
+				i += 1
+				continue
 			if mod.parent_classes[i] == context_script_path:
+				print("[Mod: " + mod.name + "] Accepted script `"+ script.resource_path +"`!")
 				import(script as Script, context)
 			i += 1
 

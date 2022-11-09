@@ -109,6 +109,16 @@ _global_script_classes=[{
 "language": &"GDScript",
 "path": "res://apps/cooking/mixing/nodes/bowl.gd"
 }, {
+"base": "State",
+"class": &"BuildModeState",
+"language": &"GDScript",
+"path": "res://apps/building/build_state.gd"
+}, {
+"base": "Resource",
+"class": &"BuildingData",
+"language": &"GDScript",
+"path": "res://apps/building/data/building_data.gd"
+}, {
 "base": "Resource",
 "class": &"BuyCategoryData",
 "language": &"GDScript",
@@ -134,8 +144,8 @@ _global_script_classes=[{
 "language": &"GDScript",
 "path": "res://apps/mod/scripts/buyable_object_script.gd"
 }, {
-"base": "SubViewportContainer",
-"class": &"BuyableObjectThumbnailViewport",
+"base": "Button",
+"class": &"BuyableObjectThumbnail",
 "language": &"GDScript",
 "path": "res://apps/buy/interface/object_thumbnail_viewport.gd"
 }, {
@@ -233,6 +243,11 @@ _global_script_classes=[{
 "class": &"Decorator",
 "language": &"GDScript",
 "path": "res://apps/behavior/decorator.gd"
+}, {
+"base": "Resource",
+"class": &"DesignData",
+"language": &"GDScript",
+"path": "res://apps/building/data/design_data.gd"
 }, {
 "base": "Object",
 "class": &"DictRef",
@@ -340,9 +355,19 @@ _global_script_classes=[{
 "path": "res://apps/cooking/mixing/mixing.gd"
 }, {
 "base": "Object",
+"class": &"ModHooks",
+"language": &"GDScript",
+"path": "res://apps/mod/hooks.gd"
+}, {
+"base": "Object",
 "class": &"ModParser",
 "language": &"GDScript",
 "path": "res://apps/mod/parsers/parser.gd"
+}, {
+"base": "Control",
+"class": &"ModalController",
+"language": &"GDScript",
+"path": "res://interface/components/modal/modal.gd"
 }, {
 "base": "Object",
 "class": &"Module",
@@ -554,6 +579,11 @@ _global_script_classes=[{
 "language": &"GDScript",
 "path": "res://apps/pet/personality/data/traits_data.gd"
 }, {
+"base": "Node",
+"class": &"Ui",
+"language": &"GDScript",
+"path": "res://utils/ui.gd"
+}, {
 "base": "Resource",
 "class": &"UnevenGrid",
 "language": &"GDScript",
@@ -650,12 +680,14 @@ _global_script_class_icons={
 "BitMask": "",
 "Bits": "",
 "Bowl": "res://apps/cooking/mixing/nodes/bowl.svg",
+"BuildModeState": "",
+"BuildingData": "",
 "BuyCategoryData": "",
 "BuyCategoryParser": "",
 "BuyableObjectData": "",
 "BuyableObjectParser": "",
 "BuyableObjectScript": "",
-"BuyableObjectThumbnailViewport": "",
+"BuyableObjectThumbnail": "",
 "Cell": "",
 "CellMap": "res://apps/map/nodes/cell_map/cell_map_icon.svg",
 "Chance": "res://apps/behavior/assets/chance.svg",
@@ -675,6 +707,7 @@ _global_script_class_icons={
 "CustomSizeTexture2D": "",
 "DatetimeData": "",
 "Decorator": "",
+"DesignData": "",
 "DictRef": "",
 "Draggable": "res://utils/nodes/draggable.svg",
 "Draggable3D": "res://utils/nodes/draggable.gd",
@@ -696,7 +729,9 @@ _global_script_class_icons={
 "Math": "",
 "MeshDataToolPlus": "",
 "Mixing": "res://apps/cooking/mixing/mixing.svg",
+"ModHooks": "",
 "ModParser": "",
+"ModalController": "res://interface/components/modal/modal.svg",
 "Module": "",
 "NeedsData": "",
 "NeighborGroup": "",
@@ -739,6 +774,7 @@ _global_script_class_icons={
 "TitleLabel": "res://interface/components/title_label/title_label.svg",
 "ToggleSwitch": "",
 "TraitsData": "",
+"Ui": "",
 "UnevenGrid": "",
 "UnevenPoint": "",
 "UseNeedsData": "",
@@ -775,6 +811,7 @@ Fate="*res://apps/fate/fate.tscn"
 Settings="*res://apps/settings/settings.gd"
 Datetime="*res://apps/datetime/datetime.gd"
 BuyData="*res://apps/buy/data/buy_data.gd"
+BuildData="*res://apps/building/data/build_data.gd"
 
 [debug]
 

@@ -12,9 +12,6 @@ interface ActionItem {
     // the display text for the button
     text: string,
 
-    // if the action item is a cheat or not (cheats have a special appearance in-game)
-    is_cheat?: boolean,
-
     // if provided, a list of actions that will appear after clicking this action button
     submenu?: Array<ActionItem>,
 

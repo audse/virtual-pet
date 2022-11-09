@@ -15,10 +15,9 @@ func _ready() -> void:
 		func(canvas: SubViewport, canvas_name: String) -> void:
 			pass
 	)
-
-
-func _on_button_pressed(which: String) -> void:
-	button_pressed.emit(which)
+#	%BuildButton.pressed.connect(func(): BuildData.built.emit())
+#	%DestroyButton.pressed.connect(func(): BuildData.destroyed.emit())
+#	%CancelButton.pressed.connect(func(): BuildData.cancelled.emit())
 
 
 func _on_mouse_entered() -> void:

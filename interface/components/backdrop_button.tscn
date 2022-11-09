@@ -1,0 +1,69 @@
+[gd_scene load_steps=4 format=3 uid="uid://c314co5wd3hpx"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2fww5"]
+bg_color = Color(0.0979, 0.0979, 0.11, 0.784314)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_s8f13"]
+
+[sub_resource type="GDScript" id="GDScript_mbse4"]
+script/source = "extends Button
+
+@export var start_open: bool = false
+
+@onready var duration := Settings.anim_duration(0.2)
+
+@onready var is_open: bool = start_open
+
+
+func _ready() -> void:
+	visible = start_open
+	modulate.a = 0.0 if not start_open else 1.0
+
+
+func connect_to(node: Node) -> void:
+	if node.has_signal(\"opening\"):
+		node.opening.connect(
+			func() -> void:
+				open()
+				if node.has_method(\"close\"):
+					pressed.connect(node.close, CONNECT_ONE_SHOT)
+		)
+	if node.has_signal(\"closing\"):
+		node.closing.connect(close)
+	
+	if start_open and node.has_method(\"close\"):
+		pressed.connect(node.close, CONNECT_ONE_SHOT)
+
+
+func open() -> void:
+	if not is_open:
+		visible = true
+		modulate.a = 0.0
+		var tween := create_tween()
+		tween.tween_property(self, \"modulate:a\", 1.0, duration)
+		await tween.finished
+		is_open = true
+
+
+func close() -> void:
+	if is_open:
+		var tween := create_tween()
+		tween.tween_property(self, \"modulate:a\", 0.0, duration)
+		await tween.finished
+		visible = false
+		is_open = false
+"
+
+[node name="BackdropButton" type="Button"]
+unique_name_in_owner = true
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_2fww5")
+theme_override_styles/hover = SubResource("StyleBoxFlat_2fww5")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_2fww5")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_2fww5")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_s8f13")
+script = SubResource("GDScript_mbse4")

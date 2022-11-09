@@ -30,9 +30,24 @@ enum FavoriteFood {
 	DESSERT
 }
 
-@export var color: FavoriteColor
-@export var place: FavoritePlace
-@export var food: FavoriteFood
+signal color_changed(color: FavoriteColor)
+signal place_changed(place: FavoritePlace)
+signal food_changed(food: FavoriteFood)
+
+@export var color: FavoriteColor:
+	set(value):
+		color = value
+		color_changed.emit(color)
+
+@export var place: FavoritePlace:
+	set(value):
+		place = value
+		place_changed.emit(place)
+
+@export var food: FavoriteFood:
+	set(value):
+		food = value
+		food_changed.emit(food)
 
 
 # TODO

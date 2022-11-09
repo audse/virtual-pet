@@ -1,7 +1,6 @@
 extends AddBuyableObjectsModule
 
-
-const parent_class := "res://apps/buy/data/buy_data.gd"
+const ParentClass := "Buy.Data"
 
 
 func get_data_paths() -> Array[String]:

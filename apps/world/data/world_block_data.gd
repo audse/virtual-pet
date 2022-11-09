@@ -1,44 +1,89 @@
 class_name WorldBlockData
 extends Resource
 
-@export var coord: Vector2
+@export var coord: Vector3i
 
-@export_category("Object layers")
-@export var foliage_layer: FoliageData
-@export var building_layer: WorldObjectData
-@export var floor_object_layer: WorldObjectData
-@export var wall_object_layer: WorldObjectData
 
-var can_be_occupied: bool:
+var is_buildable: bool:
 	get: return (
-		not floor_object_layer == null
-		and (not foliage_layer or foliage_layer.type == FoliageData.FoliageType.GRASS)
+		len(get_objects()) == 0 
+		and len(get_buildings()) == 0
 	)
 
-var layers: Array[WorldObjectData]:
-	get: return [foliage_layer, building_layer, floor_object_layer, wall_object_layer].filter(
-		func(layer: WorldObjectData): return layer != null
-	)
+var is_occupiable: bool:
+	get: 
+		for object in get_objects():
+			if object.buyable_object_data.world_layer != WorldObjectData.Layer.WALL_OBJECT_LAYER:
+				return false
+		return true
+
+var _object_cache_is_valid: bool = false
+var _cached_objects: Array[WorldObjectData] = []
+
+var _building_cache_is_valid: bool = false
+var _cached_buildings: Array[BuildingData] = []
+
+var _pet_cache_is_valid: bool = false
+var _cached_pets: Array[PetData] = []
 
 
-func _init(coord_value: Vector2, objects: Array[WorldObjectData]) -> void:
+func _init(coord_value: Vector3i) -> void:
 	coord = coord_value
-	for object in objects:
-		match object.layer:
-			WorldObjectData.Layer.FOLIAGE_LAYER:
-				foliage_layer = object as FoliageData
-			WorldObjectData.Layer.BUILDING_LAYER:
-				building_layer = object
-			WorldObjectData.Layer.FLOOR_OBJECT_LAYER:
-				floor_object_layer = object
-			WorldObjectData.Layer.WALL_OBJECT_LAYER:
-				wall_object_layer = object
-
-
-func has_layer_with_object_flag(flag: WorldObjectData.Flag) -> bool:
-	return (
-		(foliage_layer and flag in foliage_layer.flags)
-		or (building_layer and flag in building_layer.flags)
-		or (floor_object_layer and flag in floor_object_layer.flags)
-		or (wall_object_layer and flag in wall_object_layer.flags)
+	WorldData.objects_changed.connect(
+		func() -> void: _object_cache_is_valid = false
 	)
+	WorldData.buildings_changed.connect(
+		func() -> void: _building_cache_is_valid = false
+	)
+	WorldData.pets_changed.connect(
+		func() -> void: _pet_cache_is_valid = false
+	)
+
+
+func is_occupiable_by_object(start_object: WorldObjectData) -> bool:
+	for object in get_objects():
+		if (
+			object.buyable_object_data.world_layer != WorldObjectData.Layer.WALL_OBJECT_LAYER
+			and object != start_object
+		):
+			return false
+	return true
+
+func get_objects() -> Array[WorldObjectData]:
+	if _object_cache_is_valid: return _cached_objects
+	
+	var objects: Array[WorldObjectData] = WorldData.objects.filter(
+		func(obj: WorldObjectData) -> bool: 
+			return Vector3i(obj.coord.x, 0, obj.coord.y) == coord
+	)
+	_object_cache_is_valid = true
+	_cached_objects = objects
+	
+	return objects
+
+
+func get_buildings() -> Array[BuildingData]:
+	if _building_cache_is_valid: return _cached_buildings
+	
+	var buildings: Array[BuildingData] = WorldData.buildings.filter(
+		func(building: BuildingData) -> bool:
+			return coord in building.coords
+	)
+	_building_cache_is_valid = true
+	_cached_buildings = buildings
+	
+	return buildings
+
+
+func get_pets() -> Array[PetData]:
+	if _pet_cache_is_valid: return _cached_pets
+	
+	var pets: Array[PetData] = WorldData.pets.filter(
+		func(pet: PetData) -> bool:
+			return Vector3i(pet.coord.x, 0, pet.coord.y) == coord
+	)
+	_pet_cache_is_valid = true
+	_cached_pets = pets
+	
+	return pets
+	

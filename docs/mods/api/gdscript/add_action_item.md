@@ -8,9 +8,12 @@
 extends AddActionItemModule
 
 # specify the menu that will contain this item
-const parent_class = "res://apps/pet/interface/action_menu.gd"
+const ParentClass: String = "ActionMenu.Pet"
 
-# specify the path to the JSON definition of this action item (relative to `mod.gd`)
+# specify whether this mod is meant for cheating (optional, if not provided `false` is assumed)
+const IsCheat: bool = false
+
+# specify the path to the JSON definition of this action item (relative to `mod.gd` or `mod/` folder)
 func get_data_path() -> String:
     return "my_action_item_data.json"
 

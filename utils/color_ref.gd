@@ -11,6 +11,10 @@ const SKY_200 := Color("#bae6fd")
 const SKY_300 := Color("#7dd3fc")
 const SKY_400 := Color("#38bdf8")
 
+const INDIGO_200 := Color("#c7d2fe")
+const INDIGO_300 := Color("#a5b4fc")
+const INDIGO_400 := Color("#818cf8")
+
 const FUCHSIA_200 := Color("#f5d0fe")
 const FUCHSIA_300 := Color("#f0abfc")
 const FUCHSIA_400 := Color("#e879f9")

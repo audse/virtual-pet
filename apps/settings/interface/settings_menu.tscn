@@ -5,6 +5,7 @@
 
 [node name="SettingsMenu" type="Control"]
 layout_mode = 3
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
@@ -12,6 +13,7 @@ grow_vertical = 2
 script = ExtResource("1_h3mfl")
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
+layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -25,28 +27,34 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer"]
+layout_mode = 2
 offset_left = 24.0
 offset_top = 36.0
 offset_right = 622.0
-offset_bottom = 920.0
+offset_bottom = 1496.0
+theme_override_constants/separation = 24
 
 [node name="SettingsLabel" type="Label" parent="PanelContainer/VBoxContainer"]
+layout_mode = 2
 offset_right = 598.0
 offset_bottom = 86.0
 theme_type_variation = &"H1"
 text = "Settings"
 
 [node name="HSeparator3" type="HSeparator" parent="PanelContainer/VBoxContainer"]
-offset_top = 98.0
+layout_mode = 2
+offset_top = 110.0
 offset_right = 598.0
-offset_bottom = 162.0
+offset_bottom = 174.0
 
 [node name="Use24HourClockContainer" type="HBoxContainer" parent="PanelContainer/VBoxContainer"]
-offset_top = 174.0
+layout_mode = 2
+offset_top = 198.0
 offset_right = 598.0
-offset_bottom = 234.0
+offset_bottom = 258.0
 
 [node name="Use24HourClockLabel" type="Label" parent="PanelContainer/VBoxContainer/Use24HourClockContainer"]
+layout_mode = 2
 offset_top = 4.0
 offset_right = 466.0
 offset_bottom = 55.0
@@ -55,7 +63,8 @@ text = "Use 24-hour clock"
 
 [node name="Use24HourClockToggle" type="Button" parent="PanelContainer/VBoxContainer/Use24HourClockContainer"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2i(120, 0)
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 2
 offset_left = 478.0
 offset_right = 598.0
 offset_bottom = 60.0
@@ -64,33 +73,38 @@ toggle_mode = true
 script = ExtResource("1_qbuhn")
 
 [node name="HSeparator" type="HSeparator" parent="PanelContainer/VBoxContainer"]
-offset_top = 246.0
+layout_mode = 2
+offset_top = 282.0
 offset_right = 598.0
-offset_bottom = 310.0
+offset_bottom = 346.0
 
 [node name="AccessibilityLabel" type="Label" parent="PanelContainer/VBoxContainer"]
-offset_top = 322.0
+layout_mode = 2
+offset_top = 370.0
 offset_right = 598.0
-offset_bottom = 391.0
+offset_bottom = 439.0
 theme_type_variation = &"H3"
 text = "Accessibility"
 
 [node name="LimitAnimationsContainer" type="HBoxContainer" parent="PanelContainer/VBoxContainer"]
-offset_top = 403.0
+layout_mode = 2
+offset_top = 463.0
 offset_right = 598.0
-offset_bottom = 463.0
+offset_bottom = 523.0
 
 [node name="LimitAnimationsLabel" type="Label" parent="PanelContainer/VBoxContainer/LimitAnimationsContainer"]
+layout_mode = 2
 offset_top = 4.0
 offset_right = 466.0
 offset_bottom = 55.0
 size_flags_horizontal = 3
-text = "Limit animations"
+text = "Reduce motion"
 vertical_alignment = 1
 
 [node name="LimitAnimationsToggle" type="Button" parent="PanelContainer/VBoxContainer/LimitAnimationsContainer"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2i(120, 0)
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 2
 offset_left = 478.0
 offset_right = 598.0
 offset_bottom = 60.0
@@ -99,11 +113,13 @@ toggle_mode = true
 script = ExtResource("1_qbuhn")
 
 [node name="FontSizeContainer" type="HBoxContainer" parent="PanelContainer/VBoxContainer"]
-offset_top = 475.0
+layout_mode = 2
+offset_top = 547.0
 offset_right = 598.0
-offset_bottom = 615.0
+offset_bottom = 687.0
 
 [node name="FontSizeLabel" type="Label" parent="PanelContainer/VBoxContainer/FontSizeContainer"]
+layout_mode = 2
 offset_right = 286.0
 offset_bottom = 51.0
 size_flags_horizontal = 3
@@ -113,7 +129,38 @@ vertical_alignment = 2
 
 [node name="FontSizeItemList" type="ItemList" parent="PanelContainer/VBoxContainer/FontSizeContainer"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2i(300, 140)
+custom_minimum_size = Vector2(300, 140)
+layout_mode = 2
+offset_left = 298.0
+offset_right = 598.0
+offset_bottom = 140.0
+item_count = 6
+item_0/text = "Smallest"
+item_1/text = "Small"
+item_2/text = "Medium"
+item_3/text = "Big"
+item_4/text = "Bigger"
+item_5/text = "Biggest"
+
+[node name="ThumbnailSizeContainer" type="HBoxContainer" parent="PanelContainer/VBoxContainer"]
+layout_mode = 2
+offset_top = 711.0
+offset_right = 598.0
+offset_bottom = 851.0
+
+[node name="ThumbnailSizeLabel" type="Label" parent="PanelContainer/VBoxContainer/ThumbnailSizeContainer"]
+layout_mode = 2
+offset_top = 44.0
+offset_right = 286.0
+offset_bottom = 95.0
+size_flags_horizontal = 3
+text = "Thumbnail size"
+vertical_alignment = 1
+
+[node name="ThumbnailSizeItemList" type="ItemList" parent="PanelContainer/VBoxContainer/ThumbnailSizeContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(300, 140)
+layout_mode = 2
 offset_left = 298.0
 offset_right = 598.0
 offset_bottom = 140.0
@@ -126,23 +173,27 @@ item_4/text = "Bigger"
 item_5/text = "Biggest"
 
 [node name="HSeparator2" type="HSeparator" parent="PanelContainer/VBoxContainer"]
-offset_top = 627.0
+layout_mode = 2
+offset_top = 875.0
 offset_right = 598.0
-offset_bottom = 691.0
+offset_bottom = 939.0
 
 [node name="ModsLabel" type="Label" parent="PanelContainer/VBoxContainer"]
-offset_top = 703.0
+layout_mode = 2
+offset_top = 963.0
 offset_right = 598.0
-offset_bottom = 772.0
+offset_bottom = 1032.0
 theme_type_variation = &"H3"
 text = "Mods"
 
 [node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/VBoxContainer"]
-offset_top = 784.0
+layout_mode = 2
+offset_top = 1056.0
 offset_right = 598.0
-offset_bottom = 884.0
+offset_bottom = 1156.0
 
 [node name="EnabledModsLabel" type="Label" parent="PanelContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
 offset_right = 186.0
 offset_bottom = 51.0
 size_flags_horizontal = 3
@@ -152,8 +203,59 @@ vertical_alignment = 2
 
 [node name="EnabledModsItemList" type="ItemList" parent="PanelContainer/VBoxContainer/HBoxContainer"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2i(400, 100)
+custom_minimum_size = Vector2(400, 100)
+layout_mode = 2
 offset_left = 198.0
 offset_right = 598.0
 offset_bottom = 100.0
+select_mode = 1
 auto_height = true
+
+[node name="DisableCheatModsContainer" type="HBoxContainer" parent="PanelContainer/VBoxContainer"]
+layout_mode = 2
+offset_top = 1180.0
+offset_right = 598.0
+offset_bottom = 1372.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/VBoxContainer/DisableCheatModsContainer"]
+layout_mode = 2
+offset_right = 466.0
+offset_bottom = 192.0
+size_flags_horizontal = 3
+
+[node name="DisableCheatModsLabel" type="Label" parent="PanelContainer/VBoxContainer/DisableCheatModsContainer/VBoxContainer"]
+layout_mode = 2
+offset_right = 466.0
+offset_bottom = 51.0
+size_flags_horizontal = 3
+text = "Disable cheat mods"
+vertical_alignment = 1
+
+[node name="Label" type="Label" parent="PanelContainer/VBoxContainer/DisableCheatModsContainer/VBoxContainer"]
+layout_mode = 2
+offset_top = 63.0
+offset_right = 466.0
+offset_bottom = 192.0
+theme_override_colors/font_color = Color(0.631373, 0.631373, 0.666667, 1)
+theme_override_constants/line_spacing = 4
+text = "If disabled, cheat mods will not 
+appear in-game, even if they 
+are in your enabled mods list."
+
+[node name="DisableCheatModsToggle" type="Button" parent="PanelContainer/VBoxContainer/DisableCheatModsContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 2
+offset_left = 478.0
+offset_right = 598.0
+offset_bottom = 60.0
+size_flags_vertical = 0
+theme_type_variation = &"ToggleSwitch"
+toggle_mode = true
+script = ExtResource("1_qbuhn")
+
+[node name="HSeparator4" type="HSeparator" parent="PanelContainer/VBoxContainer"]
+layout_mode = 2
+offset_top = 1396.0
+offset_right = 598.0
+offset_bottom = 1460.0

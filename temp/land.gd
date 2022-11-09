@@ -21,7 +21,7 @@ func gen() -> void:
 	for p in range(num_points):
 		var x = cos(angle * p) * radiuses[p]
 		var y = sin(angle * p) * radiuses[p]
-		var point := Vector2(x, y) + Vector2Ref.randf_range(0, 1.0)
+		var point := Vector2(x, y) + Vector2Ref.vrandf_range(0, 1.0)
 		if len(prev_points) > 0:
 			point = point.lerp(prev_points[0], 0.3)
 		prev_points = [point]

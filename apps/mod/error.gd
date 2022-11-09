@@ -14,7 +14,7 @@ func report_string(mod: FileAccess, code: int, context: String = "") -> String:
 		- Context: {context}
 		""".format({
 			mod = mod.get_path_absolute(),
-			error = Error.find_key(code),
+			error_code = Error.find_key(code),
 			context = context,
 		})
 

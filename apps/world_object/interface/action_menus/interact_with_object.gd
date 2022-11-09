@@ -1,6 +1,11 @@
 extends Control
 
-@export var object_data: WorldObjectData
+signal sell_pressed
+
+@export var object_data: WorldObjectData:
+	set(value):
+		object_data = value
+		if is_inside_tree(): update_actions()
 
 @onready var action_menu := %ActionMenu as ActionMenu
 @onready var select_pet_menu := %SelectPetMenu as ActionMenu
@@ -25,6 +30,12 @@ func _ready() -> void:
 		})
 	))
 	
+	update_actions()
+
+
+func update_actions() -> void:
+	for child in action_menu.get_children(): child.queue_free()
+	
 	for need in NeedsData.need_list:
 		if object_data and need in object_data.buyable_object_data.fulfills_needs:
 			action_menu.append_action(ActionItemParams.new({
@@ -41,6 +52,13 @@ func _ready() -> void:
 			on_pressed = _on_action_pressed,
 			submenu = select_pet_menu
 		}))
+	
+	if object_data:
+		action_menu.append_action(ActionItemParams.new({
+			id = "sell",
+			text = "sell for {0}".format([object_data.sell_price]),
+			on_pressed = _on_sell_pressed
+		}))
 
 
 func _on_action_pressed(action: ActionItem) -> void:
@@ -53,9 +71,14 @@ func _on_action_pressed(action: ActionItem) -> void:
 			(action.id as PetData).command_data.receive_command.emit(command)
 
 
+func _on_sell_pressed(_action: ActionItem) -> void:
+	BuyData.sell_object(object_data)
+	sell_pressed.emit()
+
+
 func open_at(pos: Vector2) -> void:
-	position = pos
-	if not action_menu.open: action_menu._on_open()
+	position = pos - size / 2.0
+	if not action_menu.open: await action_menu._on_open()
 
 
 func close() -> void:

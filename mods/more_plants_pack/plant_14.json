@@ -4,6 +4,7 @@
     "category_id": "grass",
     "world_layer": "foliage",
     "mesh": "more_plants_pack/plant_14.obj",
+    "price": 5,
     "dimensions": {
         "width": 1,
         "height": 1,

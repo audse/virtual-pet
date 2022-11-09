@@ -1,0 +1,58 @@
+[gd_scene load_steps=3 format=3 uid="uid://m532b115o8nf"]
+
+[ext_resource type="Script" path="res://interface/components/modal/modal.gd" id="1_8diry"]
+
+[sub_resource type="GDScript" id="GDScript_duxmi"]
+script/source = "extends Control
+
+func _ready() -> void:
+	$Button.pressed.connect($ModalController.open)
+"
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = SubResource("GDScript_duxmi")
+
+[node name="ModalController" type="Control" parent="." node_paths=PackedStringArray("target")]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_8diry")
+target = NodePath("../MarginContainer")
+enter_from = 1
+exit_to = 1
+start_open = true
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 100
+theme_override_constants/margin_top = 100
+theme_override_constants/margin_right = 100
+theme_override_constants/margin_bottom = 100
+
+[node name="Panel" type="Panel" parent="MarginContainer"]
+layout_mode = 2
+offset_left = 100.0
+offset_top = 100.0
+offset_right = 728.0
+offset_bottom = 1692.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 0
+offset_right = 191.0
+offset_bottom = 87.0
+text = "Open me"

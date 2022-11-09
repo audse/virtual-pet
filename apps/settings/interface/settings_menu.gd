@@ -16,10 +16,11 @@ var is_open: bool = false:
 # Accessibility
 @onready var limit_animations_toggle := %LimitAnimationsToggle as ToggleSwitch
 @onready var font_size_item_list := %FontSizeItemList as ItemList
+@onready var thumbnail_size_item_list := %ThumbnailSizeItemList as ItemList
 
 # Mods
 @onready var enabled_mods_item_list := %EnabledModsItemList as ItemList
-
+@onready var disable_cheat_mods_toggle := %DisableCheatModsToggle as ToggleSwitch
 
 var duration: float:
 	get: return (
@@ -43,20 +44,35 @@ func _ready():
 		func(size_index: int) -> void: Settings.data.font_size = size_index as SettingsData.SizeSetting
 	)
 	
+	thumbnail_size_item_list.item_selected.connect(
+		func(size_index: int) -> void: Settings.data.thumbnail_size = size_index as SettingsData.SizeSetting
+	)
+	
 	enabled_mods_item_list.item_clicked.connect(_on_mod_clicked)
+	disable_cheat_mods_toggle.pressed.connect(
+		func() -> void: Settings.data.disable_cheat_mods = disable_cheat_mods_toggle.button_pressed
+	)
 
 
 func reset() -> void:
 	use_24_hour_clock_toggle.button_pressed = Settings.data.use_24_hour_clock
+	
 	limit_animations_toggle.button_pressed = Settings.data.limit_animations
+	
 	font_size_item_list.select(Settings.data.font_size)
 	font_size_item_list.ensure_current_is_visible()
+	
+	thumbnail_size_item_list.select(Settings.data.thumbnail_size)
+	thumbnail_size_item_list.ensure_current_is_visible()
+	
 	enabled_mods_item_list.clear()
 	
 	for mod in Modules.registered_modules.keys():
 		var mod_index := enabled_mods_item_list.add_item(mod)
 		if not mod in Settings.data.disabled_mods:
 			enabled_mods_item_list.select(mod_index)
+	
+	disable_cheat_mods_toggle.button_pressed = Settings.data.disable_cheat_mods
 	
 	anchor_top = 1.5
 	anchor_bottom = 1.5	

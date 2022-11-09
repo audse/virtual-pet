@@ -1,0 +1,13 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://cn7mh1ioioefg"]
+
+[ext_resource type="Script" path="res://apps/building/data/design_data.gd" id="1_6sb6i"]
+
+[resource]
+script = ExtResource("1_6sb6i")
+id = "default"
+display_name = "Default"
+category_id = 1
+price = null
+description = ""
+tags = null
+rarity = 0

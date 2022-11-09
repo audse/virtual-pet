@@ -31,6 +31,16 @@ func set_cellv(coord: Vector3i, tile: MeshInstance3D = null, set_many: bool = fa
 	return null
 
 
+func set_cells(coords: Array[Vector3i], tile: MeshInstance3D = null) -> void:
+	var empty_coords := coords.filter(
+		func(coord: Vector3i) -> bool: return find_cell_by_coordv(coord) == null
+	)
+	var new_cells: Array[Cell] = []
+	for coord in empty_coords:
+		new_cells.append(set_cellv(coord, tile, true))
+	if use_autotile: UseSpacialTiles.connect_many(new_cells, tile)
+
+
 func set_cells_between(start_x: int, start_y: int, start_z: int, end_x: int, end_y: int, end_z: int, tile: MeshInstance3D = null) -> void:
 	set_cells_betweenv(
 		Vector3i(start_x, start_y, start_z),
@@ -79,6 +89,10 @@ func erase_cells_betweenv(start_coord: Vector3i, end_coord: Vector3i) -> void:
 		erase_cell(cell)
 
 
+func erase_cells(cell_list: Array[Cell]) -> void:
+	for cell in cell_list: erase_cell(cell)
+
+
 func clear() -> void:
 	for cell in cells:
 		kill_cell(cell)
@@ -86,7 +100,11 @@ func clear() -> void:
 
 
 func kill_cell(cell: Cell) -> void:
-	if cell.tile: cell.tile.free()
+	if cell.tile: 
+		# materials need to be deleted first
+		for surface in cell.tile.get_surface_override_material_count():
+			cell.tile.set_surface_override_material(surface, null)
+		cell.tile.queue_free()
 	if cell: cell.free()
 
 
@@ -132,6 +150,12 @@ func get_empty_coords_betweenv(start_coord: Vector3i, end_coord: Vector3i) -> Ar
 	return coords_between
 
 
+func get_filled_coords_betweenv(start_coord: Vector3i, end_coord: Vector3i) -> Array[Vector3i]:
+	return get_cells_betweenv(start_coord, end_coord).map(
+		func(cell: Cell) -> Vector3i: return cell.coord
+	)
+
+
 func find_cell_by_coord(x: int, y: int, z: int) -> Cell:
 	return find_cell_by_coordv(Vector3i(x, y, z))
 
@@ -168,3 +192,16 @@ func map_to_world(coords: Vector3i, center: bool = false) -> Vector3:
 func world_to_map_to_world(world_pos: Vector3, center: bool = false) -> Vector3:
 	var coords := world_to_map(world_pos)
 	return map_to_world(coords, center)
+
+
+static func from_2x2_to_1x1_coords(coords_2x2: Array[Vector3i]) -> Array[Vector3i]:
+	var coords: Array[Vector3i] = []
+	for coord in coords_2x2:
+		var c := coord * 2
+		coords.append_array([
+			c,
+			c - Vector3i(1, 0, 0),
+			c - Vector3i(1, 0, 1),
+			c - Vector3i(0, 0, 1),
+		])
+	return coords

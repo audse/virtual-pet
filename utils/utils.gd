@@ -41,3 +41,7 @@ static func adjust_margins_for_landscape(container: MarginContainer) -> void:
 			container.add_theme_constant_override("margin_" + margin, margins.x as int)
 		for margin in ["top", "bottom"]:
 			container.add_theme_constant_override("margin_" + margin, margins.y as int)
+
+
+#static func get_coord_string(v: Vector3i) -> String:
+#	return "{x},{y},{z}".format({ x = v.x, y = v.y, z = v.z })

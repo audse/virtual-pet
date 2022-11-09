@@ -13,22 +13,11 @@ unique_name_in_owner = true
 script = ExtResource("2_k7mtm")
 object = NodePath("..")
 distance_from_ground_while_dragging = 2.0
+enable_fallback_position = true
 
-[node name="Interface" type="Control" parent="."]
-layout_mode = 3
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -20.0
-offset_top = -20.0
-offset_right = 20.0
-offset_bottom = 20.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-
-[node name="InteractWithObjectActionMenu" parent="Interface" instance=ExtResource("3_3yewo")]
+[node name="InteractWithObjectActionMenu" parent="." instance=ExtResource("3_3yewo")]
 unique_name_in_owner = true
-layout_mode = 1
+offset_left = -100.0
+offset_top = -100.0
+offset_right = 100.0
+offset_bottom = 100.0

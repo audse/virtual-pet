@@ -1,6 +1,7 @@
 extends AddActionItemModule
 
-const parent_class := "res://apps/world_object/interface/action_menus/interact_with_object.gd"
+const ParentClass := "ActionMenu.Object"
+const IsCheat := true
 
 
 func get_data_path() -> String:

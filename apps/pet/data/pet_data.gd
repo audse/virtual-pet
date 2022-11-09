@@ -18,14 +18,34 @@ signal life_happiness_decreased
 		else: life_happiness_decreased.emit()
 		
 		life_happiness_changed.emit(life_happiness)
+		save_data()
 
 @export_category("Data")
 @export var animal_data: AnimalData
-@export var needs_data: NeedsData
-@export var wants_data: WantsData
-@export var personality_data: PersonalityData
+@export var needs_data: NeedsData:
+	set(value):
+		needs_data = value
+		needs_data.need_changed.connect(func(_need, _val): save_data())
+
+@export var wants_data: WantsData:
+	set(value):
+		wants_data = value
+		wants_data.wants_changed.connect(func(_val): save_data())
+
+@export var personality_data: PersonalityData:
+	set(value):
+		personality_data = value
+		personality_data.attribute_changed.connect(func(_attr, _val): save_data())
+		personality_data.traits_data.traits_changed.connect(save_data)
+		personality_data.favorites_data.color_changed.connect(func(_val): save_data())
+		personality_data.favorites_data.place_changed.connect(func(_val): save_data())
+		personality_data.favorites_data.food_changed.connect(func(_val): save_data())
+
 @export var command_data: CommandData
-@export var interface_data: PetInterfaceData
+@export var interface_data: PetInterfaceData:
+	set(value):
+		interface_data = value
+		interface_data.recently_cuddled_changed.connect(func(_val): save_data())
 
 @export_category("World info")
 @export var world_coord := Vector2i.ZERO
@@ -48,6 +68,9 @@ var defaults = {
 	command_data = CommandData.new(),
 	interface_data = PetInterfaceData.new()
 }
+
+var data_path: String:
+	get: return "user://pets/" + name + ".tres"
 
 
 func _init(args: Dictionary = {}) -> void:
@@ -77,3 +100,8 @@ func increase_happiness() -> void:
 
 func decrease_happiness() -> void:
 	life_happiness -= randf_range(0.005, 0.025)
+
+
+func save_data() -> void:
+	print("[Pet: " + name + "] Saving...")
+	ResourceSaver.save(self, data_path)

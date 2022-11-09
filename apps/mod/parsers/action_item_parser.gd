@@ -25,9 +25,6 @@ static func parse_data(context: Node, json_file: FileAccess, data: Dictionary) -
 		text = data.text,
 	}
 	
-	if "is_cheat" in data:
-		params.is_cheat = data.is_cheat
-	
 	# If there is a submenu, create those params
 	if "submenu" in data:
 		params.submenu_params = parse_submenu_params(context, json_file, data)

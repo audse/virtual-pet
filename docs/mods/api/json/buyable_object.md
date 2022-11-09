@@ -5,9 +5,38 @@
 ## Schema
 
 ```ts
+interface BuyableObject {
+    /*
+     * Required properties
+     */
+    id: string,
+    display_name: string,
+    mesh: string, // path to 3D model, e.g. `.obj` file
+    world_layer: WorldLayer, // as string
+    price: number,
+
+    /*
+     * Optional properties
+     */
+    category_id?: string,
+    description?: string,
+    colorway_id?: string,
+    dimensions?: BuyableObjectDimensions,
+    mesh_scale?: BuyableObjectDimensions,
+    colors?: BuyableObjectColor[], // a list of other color options for this item
+    rarity?: number,
+    collision_shape?: string, // path to `.tres` `Shape3D` file - only applies if you are making your mod in Godot
+    flags?: Flag[], // array of strings
+    actions?: string,
+    total_uses?: number, // only applies for consumable objects
+    fulfills_needs?: string[],
+    consumed_meshes?: string[], // path to 3D models of the mesh's appearance after being consumed. the order is important; the first path should be the item with 1 use left (almost all the way gone), the next with 2 uses left, and so on. consumable objects without this set will use the default mesh for all states.
+    script?: string, // a script that is run whenever this object enters the scene. should include the function `_on_placed_in_world`
+}
+
 enum WorldLayer {
-    FloorObject,
-    WallObject,
+    Floor_Object,
+    Wall_Object,
     Foliage,
     Building,
 }
@@ -17,39 +46,15 @@ enum Flag {
     Ownable,
 }
 
-interface BuyableObject {
-    /*
-     * Required properties
-     */
-    id: string,
-    display_name: string,
-    mesh: string, // path to 3D model, e.g. `.obj` file
-    world_layer: WorldLayer, // as string
+interface BuyableObjectDimensions {
+    width?: number, // default = 1
+    height?: number, // default = 1
+    depth?: number, // default = 1
+}
 
-    /*
-     * Optional properties
-     */
-    category_id?: string,
-    description?: string,
-    colorway_id?: string,
-    dimensions?: {
-        width?: int,  // defaults to 1
-        height?: int,  // defaults to 1
-        depth?: int, // defaults to 1
-    },
-    mesh_scale?: {
-        width?: number, // defaults to 1
-        height?: number, // defaults to 1
-        depth?: number, // defaults to 1
-    },
-    rarity?: number,
-    collision_shape?: string, // path to `.tres` `Shape3D` file- only applies if you are making your mod in Godot
-    flags?: Flag[], // array of strings
-    actions?: string,
-    total_uses?: number, // only applies for consumable objects
-    fulfills_needs?: string[],
-    consumed_meshes?: string[], // path to 3D models of the mesh's appearance after being consumed. the order is important; the first path should be the item with 1 use left (almost all the way gone), the next with 2 uses left, and so on. consumable objects without this set will use the default mesh for all states.
-    script?: string, // a script that is run whenever this object enters the scene. should include the function `_on_placed_in_world`
+interface BuyableObjectColor {
+    name: string, // set this to `default` for one of the colors
+    materials: string[] // paths to all `.mtl` files needed for the recolor (in order of surface)
 }
 ```
 
@@ -59,7 +64,7 @@ interface BuyableObject {
 {
     "id": "lava_lamp",
     "display_name": "Lava Lamp",
-    "mesh": "cool_home_stuff/lava_lamp/lava_lamp_blue.obj",
+    "mesh": "cool_home_stuff/lava_lamp/lava_lamp.obj",
     "dimensions": {
         "width": 1,
         "height": 1,
@@ -68,7 +73,22 @@ interface BuyableObject {
     "category_id": "lighting",
     "description": "The coolest way to light your room!",
     "flags": ["Ownable"],
-    "colorway_id": "blue",
+    "colors": [
+        {
+            "name": "default",
+            "materials": [
+                "cool_home_stuff/lava_lamp/lava_lamp_base.mtl",
+                "cool_home_stuff/lava_lamp/lava_lamp_blue.mtl",
+            ]
+        },
+        {
+            "name": "green",
+            "materials": [
+                "cool_home_stuff/lava_lamp/lava_lamp_base.mtl",
+                "cool_home_stuff/lava_lamp/lava_lamp_green.mtl",
+            ]
+        }
+    ]
 }
 ```
 
@@ -77,6 +97,12 @@ interface BuyableObject {
     "id": "dandelion",
     "display_name": "Dandelion",
     "mesh": "cute_garden_stuff/dandelion/dandelion.obj",
+    "colors": [
+        {
+            "name": "default",
+            "materials": ["cute_garden_stuff/dandelion/dandelion.mtl"],
+        }
+    ],
     "dimensions": {
         "width": 1,
         "height": 1,

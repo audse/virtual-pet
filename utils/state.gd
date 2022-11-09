@@ -6,6 +6,7 @@ signal exit_state(prev_state)
 signal enter_state(next_state)
 
 var reset_state: int = -1
+var prev_state: int = reset_state
 var state: int = reset_state
 
 var target_node: Node = null
@@ -25,6 +26,7 @@ func reset() -> void:
 
 
 func enter(next_state: int) -> void:
+	prev_state = state
 	state = next_state
 	enter_state.emit(next_state)
 

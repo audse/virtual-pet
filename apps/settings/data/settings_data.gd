@@ -10,11 +10,12 @@ enum SizeSetting {
 	BIGGEST = 5
 }
 
-signal use_24_hour_clock_changed(bool)
+signal use_24_hour_clock_changed(value: bool)
 signal font_size_changed
-signal thumbnail_size_changed(SizeSetting)
+signal thumbnail_size_changed(value: SizeSetting)
 signal limit_animations_changed
 signal disabled_mods_changed
+signal disable_cheat_mods_changed(value: bool)
 
 @export var use_24_hour_clock: bool = false:
 	set(value):
@@ -40,6 +41,10 @@ signal disabled_mods_changed
 
 @export_group("Mods")
 @export var disabled_mods: Array[String] = ["mod_example"]
+@export var disable_cheat_mods: bool = false:
+	set(value):
+		disable_cheat_mods = value
+		disable_cheat_mods_changed.emit(value)
 
 
 func disable_mod(mod: String) -> void:

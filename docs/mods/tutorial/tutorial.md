@@ -6,7 +6,7 @@
 3. In `mod.gd`, enter the following code:
 ```
 extends Module
-var parent_class = "res://main.gd"
+var ParentClass = "res://main.gd"
 
 func _on_ready(context: Node) -> void:
     print("Hello, world!")

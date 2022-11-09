@@ -27,7 +27,7 @@ func enter() -> void:
 	scale.x = 1.5
 	scale.z = 1.5
 	position.y = -0.2
-	var tween := get_tree().create_tween().set_trans(Tween.TRANS_CUBIC).set_parallel(true)
+	var tween := create_tween().set_trans(Tween.TRANS_CUBIC).set_parallel(true)
 	tween.tween_property(self, "position:y", 0.0, 0.5)
 	tween.tween_property(self, "scale:y", 1.0, 0.75)
 	tween.tween_property(self, "scale:x", 1.0, 0.75)
@@ -36,7 +36,7 @@ func enter() -> void:
 
 func exit() -> void:
 	await get_tree().create_timer(0.25).timeout
-	var tween := get_tree().create_tween().set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_IN)
+	var tween := create_tween().set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_IN)
 	tween.tween_property(self, "scale:x", 0.75, 0.2)
 	tween.tween_property(self, "scale:z", 0.75, 0.2)
 	tween.tween_property(self, "scale:y", 0.25, 0.5)

@@ -2,6 +2,7 @@ extends Control
 
 @onready var live_mode_button := %LiveModeButton as Button
 @onready var buy_mode_button := %BuyModeButton as Button
+@onready var build_mode_button := %BuildModeButton as Button
 
 @onready var backdrop_button := %BackdropButton as Button
 @onready var settings_button := %SettingsButton as Button
@@ -13,22 +14,29 @@ extends Control
 
 
 @onready var mode_buttons := {
-	GameModeState.GameMode.LIVE: live_mode_button,
-	GameModeState.GameMode.BUY: buy_mode_button,
+	GameModeState.Mode.LIVE: live_mode_button,
+	GameModeState.Mode.BUY: buy_mode_button,
+	GameModeState.Mode.BUILD: build_mode_button,
 }
 
 var mode_button_colors := {
-	GameModeState.GameMode.LIVE: {
+	GameModeState.Mode.LIVE: {
 		normal = ColorRef.FUCHSIA_300,
 		focus = ColorRef.FUCHSIA_300,
 		pressed = ColorRef.FUCHSIA_300,
 		hover = ColorRef.FUCHSIA_300,
 	},
-	GameModeState.GameMode.BUY: {
+	GameModeState.Mode.BUY: {
 		normal = ColorRef.FUCHSIA_300,
 		focus = ColorRef.FUCHSIA_300,
 		pressed = ColorRef.FUCHSIA_400,
 		hover = ColorRef.FUCHSIA_200,
+	},
+	GameModeState.Mode.BUILD: {
+		normal = ColorRef.INDIGO_300,
+		focus = ColorRef.INDIGO_300,
+		pressed = ColorRef.INDIGO_400,
+		hover = ColorRef.INDIGO_200,
 	},
 }
 
@@ -77,11 +85,15 @@ func _ready() -> void:
 	)
 	
 	live_mode_button.pressed.connect(
-		func() -> void: Game.Mode.set_to(GameModeState.GameMode.LIVE)
+		func() -> void: Game.Mode.set_to(GameModeState.Mode.LIVE)
 	)
 	
 	buy_mode_button.pressed.connect(
-		func() -> void: Game.Mode.set_to(GameModeState.GameMode.BUY)
+		func() -> void: Game.Mode.set_to(GameModeState.Mode.BUY)
+	)
+	
+	build_mode_button.pressed.connect(
+		func() -> void: Game.Mode.set_to(GameModeState.Mode.BUILD)
 	)
 	
 	Game.Mode.exit_state.connect(exit_mode)
@@ -101,6 +113,14 @@ func enter_mode(mode: int) -> void:
 			"icon_" + state + "_color",
 			mode_button_colors[Game.Mode.state][state]
 		)
+	
+	# Close the main menu when the Buy menu is open and the game window is small
+	var area := Utils.get_display_area(self).size
+	if (
+		(mode == GameModeState.Mode.BUY and area.x < 2048)
+		or mode ==  GameModeState.Mode.BUILD
+	):
+		%CloseButton.pressed.emit()
 
 
 func exit_mode(mode: int) -> void:
@@ -111,6 +131,9 @@ func exit_mode(mode: int) -> void:
 	tween.tween_property(button, "size", Vector2(140.0, 140.0), duration)
 	for state in ["normal", "hover", "pressed"]:
 		button.remove_theme_color_override("icon_" + state + "_color")
+	
+	if mode ==  GameModeState.Mode.BUILD:
+		%OpenButton.pressed.emit()
 
 
 func update_fate_button(value: int) -> void:

@@ -14,7 +14,7 @@ var bitmask := BitMask.new():
 
 func draw_tile(parent: Node3D, cell_size: Vector3, new_tile: MeshInstance3D = null) -> void:
 	if new_tile: tile = new_tile
-	tile.position = Vector3(
+	tile.position += Vector3(
 		cell_size.x * coord.x,
 		0.0,
 		cell_size.y * coord.z

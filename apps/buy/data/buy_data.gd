@@ -3,6 +3,10 @@ extends Node
 signal category_added(BuyCategoryData)
 signal object_added(BuyableObjectData)
 
+signal object_bought(BuyableObjectData)
+signal object_sold(WorldObjectData)
+
+
 var categories: Array[BuyCategoryData]
 var objects: Array[BuyableObjectData]
 
@@ -26,3 +30,15 @@ func add_category(category: BuyCategoryData) -> void:
 func add_object(object: BuyableObjectData) -> void:
 	objects.append(object)
 	object_added.emit(object)
+
+
+func buy_object(object: BuyableObjectData) -> void:
+	if Fate.data.fate >= object.price:
+		Fate.data.fate -= object.price
+		object_bought.emit(object)
+
+
+func sell_object(object: WorldObjectData) -> void:
+	Fate.data.fate += object.sell_price
+	WorldData.remove_object(object)
+	object_sold.emit(object)

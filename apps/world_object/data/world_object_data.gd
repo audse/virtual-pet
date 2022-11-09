@@ -19,18 +19,41 @@ enum Layer {
 ## The base data for this object- where `WorldObjectData` is an instance, `BuyObjectData` is its prototype
 @export var buyable_object_data: BuyableObjectData
 
-@export var scene: PackedScene
-@export var collision_scene: PackedScene
+@export var coord: Vector2i:
+	set(value):
+		coord = value
 
-@export var coord: Vector2i
 @export var rotation: int = 0:
-	set(value): rotation = wrapi(int(snapped(value, 45)), 0, 360)
+	set(value): 
+		rotation = wrapi(int(snapped(value, 45)), 0, 360)
 
-@export var flags: Array[Flag]
+@export var flags: Array[Flag]:
+	set(value):
+		flags = value
+		save_data()
 
-@export var owner: PetData
+@export var owner: PetData:
+	set(value):
+		owner = value
+		save_data()
 
-@export var uses_left: int = -1 # infinite
+@export var uses_left: int = -1: # infinite
+	set(value):
+		uses_left = value
+		save_data()
+
+@export var data_path: String
+
+var _data_path: String:
+	get: return "user://world/" + data_path + ".tres"
+
+var sell_price: int:
+	get: 
+		var p: float = float(buyable_object_data.price) * 0.75
+		# partially-used items sell for a lot less
+		if buyable_object_data.total_uses > 0:
+			p *= (uses_left as float / buyable_object_data.total_uses as float)
+		return int(round(p))
 
 var instance: Node3D
 var collision_instance: Node3D
@@ -39,6 +62,8 @@ var collision_instance: Node3D
 func _init(args: Dictionary = {}) -> void:
 	for key in args.keys():
 		if key in self: self[key] = args[key]
+	if buyable_object_data:
+		uses_left = buyable_object_data.total_uses
 
 
 func get_used_coords() -> Array[Vector2i]:
@@ -96,11 +121,6 @@ func get_screen_rect(camera: Camera3D) -> Rect2:
 	)
 
 
-func set_coord_from_world_position(world_position: Vector3) -> void:
-	var world_coord: Vector3 = WorldData.to_grid(world_position)
-	coord = Vector2i(int(world_coord.x), int(world_coord.z))
-
-
 func set_rotation_from_world_rotation(world_rotation: Vector3) -> void:
 	rotation = int(rad_to_deg(world_rotation.y))
 
@@ -125,3 +145,7 @@ func reset_uses() -> void:
 	uses_left = buyable_object_data.total_uses
 	if instance and "consume" in instance:
 		instance.reset()
+
+
+func save_data() -> void:
+	ResourceSaver.save(self, _data_path)

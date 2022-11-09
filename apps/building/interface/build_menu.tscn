@@ -1,0 +1,371 @@
+[gd_scene load_steps=13 format=3 uid="uid://dwpbivgvduijm"]
+
+[ext_resource type="Script" path="res://interface/components/modal/modal.gd" id="1_kslah"]
+[ext_resource type="Texture2D" uid="uid://bn61fbcpokvek" path="res://apps/painter/assets/icons/back.svg" id="1_yduqs"]
+[ext_resource type="Texture2D" uid="uid://b2lpdvuywdedv" path="res://apps/painter/assets/icons/check.svg" id="3_kg33k"]
+[ext_resource type="Texture2D" uid="uid://dmpnepoaiaboa" path="res://static/icons/bulldozer.svg" id="3_xvocg"]
+[ext_resource type="Texture2D" uid="uid://e4gv483kggl0" path="res://static/icons/build_bricks.svg" id="4_vyoeo"]
+[ext_resource type="Texture2D" uid="uid://ca2s63cykosd7" path="res://static/icons/door.svg" id="5_03fra"]
+[ext_resource type="Texture2D" uid="uid://84i0bvx2yufq" path="res://static/icons/add_house.svg" id="5_j7fr7"]
+[ext_resource type="Texture2D" uid="uid://dnx0yr17qeqwn" path="res://static/icons/tree.svg" id="6_4ed8m"]
+[ext_resource type="Texture2D" uid="uid://bgqmbqpl6rgk1" path="res://static/icons/wallpaper.svg" id="7_wy4j0"]
+[ext_resource type="Texture2D" uid="uid://b1e8oy1xfc2hg" path="res://static/icons/floor.svg" id="8_2uog6"]
+
+[sub_resource type="GDScript" id="GDScript_m70jq"]
+script/source = "extends MarginContainer
+
+@onready var ok_button := %OkButton as Button
+@onready var back_button := %BackButton as Button
+
+@onready var add_house_button := %AddHouseButton as Button
+@onready var walls_button := %WallsButton as Button
+@onready var destroy_button := %DestroyButton as Button
+
+@onready var controller := %ModalController as ModalController
+@onready var options_container := %OptionsContainer as MarginContainer
+@onready var options_container_spacer := %OptionsContainerSpacer as Control
+
+@onready var step_1_container := %Step1Container as HBoxContainer
+@onready var step_2_container := %Step2Container as HBoxContainer
+
+
+func _ready() -> void:
+	
+	BuildData.state.enter_state.connect(
+		func(state: BuildModeState.BuildState) -> void:
+			match state:
+				BuildModeState.BuildState.BUILDING_WALLS, BuildModeState.BuildState.DESTROYING_WALLS:
+					show_await_confirm()
+				BuildModeState.BuildState.CREATING, BuildModeState.BuildState.EDITING:
+					show_step_2()
+					show_home()
+				_: 
+					show_step_1()
+					show_home()
+	)
+	
+	add_house_button.pressed.connect(BuildData.state.set_to.bind(BuildModeState.BuildState.CREATING))
+	walls_button.pressed.connect(BuildData.state.set_to.bind(BuildModeState.BuildState.BUILDING_WALLS))
+	destroy_button.pressed.connect(BuildData.state.set_to.bind(BuildModeState.BuildState.DESTROYING_WALLS))
+	
+	ok_button.pressed.connect(
+		func() -> void:
+			match BuildData.state.state:
+				BuildModeState.BuildState.BUILDING_WALLS: BuildData.confirm_build.emit()
+				BuildModeState.BuildState.DESTROYING_WALLS: BuildData.confirm_destroy.emit()
+	)
+	
+	back_button.pressed.connect(
+		func() -> void:
+			match BuildData.state.state:
+				BuildModeState.BuildState.BUILDING_WALLS, BuildModeState.BuildState.DESTROYING_WALLS:
+					BuildData.state.cancel()
+				BuildModeState.BuildState.READY: 
+					Game.Mode.set_to(Game.Mode.prev_state)
+	)
+	
+	Game.Mode.exit_state.connect(
+		func(state: GameModeState.Mode) -> void:
+			if state == GameModeState.Mode.BUILD: close()
+	)
+	
+	Game.Mode.enter_state.connect(
+		func(state: GameModeState.Mode) -> void:
+			if state == GameModeState.Mode.BUILD: open()
+	)
+	
+	await RenderingServer.frame_post_draw
+	ok_button.scale = Vector2.ZERO
+
+
+func open() -> void:
+	visible = true
+	await get_tree().create_timer(0.15).timeout
+	controller.open()
+
+
+func close() -> void:
+	await controller.close()
+	visible = false
+
+
+func show_await_confirm() -> void:
+	await Ui.scale_in(ok_button)
+	hide_options()
+
+
+func show_home() -> void:
+	await Ui.scale_out(ok_button)
+	await show_options()
+
+
+func show_step_1() -> void:
+	step_1_container.visible = true
+	step_2_container.visible = false
+
+
+func show_step_2() -> void:
+	step_1_container.visible = false
+	step_2_container.visible = true
+
+
+func show_options() -> void:
+	var tween := Ui.bouncer(options_container_spacer)
+	tween.tween_property(options_container_spacer, \"custom_minimum_size:y\", options_container.size.y, Settings.anim_duration(0.25))
+	await tween.finished
+	options_container.visible = true
+	options_container_spacer.visible = false
+	tween = options_container.create_tween()
+	tween.tween_property(options_container, \"modulate:a\", 1.0, Settings.anim_duration(0.1))
+	await tween.finished
+
+
+func hide_options() -> void:
+	var tween := options_container.create_tween()
+	tween.tween_property(options_container, \"modulate:a\", 0.0, Settings.anim_duration(0.1))
+	await tween.finished
+	options_container_spacer.visible = true
+	options_container.visible = false
+	options_container_spacer.custom_minimum_size.y = options_container.size.y
+	tween = Ui.bouncer(options_container_spacer)
+	tween.tween_property(options_container_spacer, \"custom_minimum_size:y\", 0.0, Settings.anim_duration(0.25))
+	await tween.finished
+"
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_u1is1"]
+draw_center = false
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.321569, 0.321569, 0.356863, 1)
+corner_radius_top_left = 32
+corner_radius_top_right = 32
+corner_radius_bottom_right = 32
+corner_radius_bottom_left = 32
+
+[node name="BuildMenu" type="MarginContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = SubResource("GDScript_m70jq")
+
+[node name="ModalController" type="Control" parent="." node_paths=PackedStringArray("target")]
+unique_name_in_owner = true
+layout_mode = 3
+anchors_preset = 0
+offset_left = 24.0
+offset_top = 24.0
+offset_right = 804.0
+offset_bottom = 1768.0
+script = ExtResource("1_kslah")
+target = NodePath("..")
+enter_from = 3
+exit_to = 3
+use_backdrop = false
+
+[node name="Panel" type="PanelContainer" parent="."]
+self_modulate = Color(0.894118, 0.894118, 0.905882, 1)
+offset_left = 24.0
+offset_top = 1271.0
+offset_right = 804.0
+offset_bottom = 1768.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 8
+
+[node name="MarginContainer" type="MarginContainer" parent="Panel"]
+offset_left = 24.0
+offset_top = 36.0
+offset_right = 756.0
+offset_bottom = 461.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = -64
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 72
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/MarginContainer"]
+offset_left = 12.0
+offset_top = -64.0
+offset_right = 720.0
+offset_bottom = 353.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 115)
+offset_right = 708.0
+offset_bottom = 115.0
+
+[node name="BackButton" type="Button" parent="Panel/MarginContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+modulate = Color(0.894118, 0.894118, 0.905882, 1)
+custom_minimum_size = Vector2(100, 100)
+offset_right = 100.0
+offset_bottom = 115.0
+theme_type_variation = &"CircleButton"
+icon = ExtResource("1_yduqs")
+expand_icon = true
+
+[node name="Spacer" type="Control" parent="Panel/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 112.0
+offset_right = 546.0
+offset_bottom = 115.0
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.25
+
+[node name="OkButton" type="Button" parent="Panel/MarginContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(150, 100)
+offset_left = 558.0
+offset_top = 2.0
+offset_right = 708.0
+offset_bottom = 113.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_type_variation = &"CircleButton"
+text = "Ok"
+icon = ExtResource("3_kg33k")
+expand_icon = true
+
+[node name="OptionsContainerSpacer" type="Control" parent="Panel/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 3
+anchors_preset = 0
+offset_top = 127.0
+offset_right = 708.0
+offset_bottom = 127.0
+
+[node name="OptionsContainer" type="MarginContainer" parent="Panel/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+offset_top = 139.0
+offset_right = 708.0
+offset_bottom = 417.0
+size_flags_horizontal = 3
+theme_override_constants/margin_left = 0
+theme_override_constants/margin_right = 0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel/MarginContainer/VBoxContainer/OptionsContainer"]
+offset_top = 24.0
+offset_right = 708.0
+offset_bottom = 254.0
+theme_override_constants/separation = -24
+
+[node name="DestroyButton" type="Button" parent="Panel/MarginContainer/VBoxContainer/OptionsContainer/HBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(150, 150)
+offset_top = 40.0
+offset_right = 150.0
+offset_bottom = 190.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+icon = ExtResource("3_xvocg")
+expand_icon = true
+
+[node name="Panel" type="PanelContainer" parent="Panel/MarginContainer/VBoxContainer/OptionsContainer/HBoxContainer"]
+offset_left = 126.0
+offset_right = 708.0
+offset_bottom = 230.0
+size_flags_horizontal = 3
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Panel/MarginContainer/VBoxContainer/OptionsContainer/HBoxContainer/Panel"]
+offset_left = 24.0
+offset_top = 36.0
+offset_right = 558.0
+offset_bottom = 194.0
+vertical_scroll_mode = 0
+
+[node name="Step1Container" type="HBoxContainer" parent="Panel/MarginContainer/VBoxContainer/OptionsContainer/HBoxContainer/Panel/ScrollContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 150)
+offset_right = 502.0
+offset_bottom = 150.0
+
+[node name="AddHouseButton" type="Button" parent="Panel/MarginContainer/VBoxContainer/OptionsContainer/HBoxContainer/Panel/ScrollContainer/Step1Container"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(340, 0)
+offset_right = 340.0
+offset_bottom = 150.0
+text = "New building"
+icon = ExtResource("5_j7fr7")
+expand_icon = true
+
+[node name="ComingSoonButton" type="Button" parent="Panel/MarginContainer/VBoxContainer/OptionsContainer/HBoxContainer/Panel/ScrollContainer/Step1Container"]
+custom_minimum_size = Vector2(150, 0)
+offset_left = 352.0
+offset_right = 502.0
+offset_bottom = 150.0
+theme_override_styles/disabled = SubResource("StyleBoxFlat_u1is1")
+disabled = true
+text = "?"
+expand_icon = true
+
+[node name="Step2Container" type="HBoxContainer" parent="Panel/MarginContainer/VBoxContainer/OptionsContainer/HBoxContainer/Panel/ScrollContainer"]
+unique_name_in_owner = true
+visible = false
+custom_minimum_size = Vector2(0, 150)
+offset_right = 1020.0
+offset_bottom = 150.0
+theme_override_constants/separation = 24
+
+[node name="WallsButton" type="Button" parent="Panel/MarginContainer/VBoxContainer/OptionsContainer/HBoxContainer/Panel/ScrollContainer/Step2Container"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(150, 0)
+offset_right = 150.0
+offset_bottom = 150.0
+icon = ExtResource("4_vyoeo")
+expand_icon = true
+
+[node name="DoorsButton" type="Button" parent="Panel/MarginContainer/VBoxContainer/OptionsContainer/HBoxContainer/Panel/ScrollContainer/Step2Container"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(150, 0)
+offset_left = 174.0
+offset_right = 324.0
+offset_bottom = 150.0
+disabled = true
+icon = ExtResource("5_03fra")
+expand_icon = true
+
+[node name="FoliageButton" type="Button" parent="Panel/MarginContainer/VBoxContainer/OptionsContainer/HBoxContainer/Panel/ScrollContainer/Step2Container"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(150, 0)
+offset_left = 348.0
+offset_right = 498.0
+offset_bottom = 150.0
+disabled = true
+icon = ExtResource("6_4ed8m")
+expand_icon = true
+
+[node name="WallpaperButton" type="Button" parent="Panel/MarginContainer/VBoxContainer/OptionsContainer/HBoxContainer/Panel/ScrollContainer/Step2Container"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(150, 0)
+offset_left = 522.0
+offset_right = 672.0
+offset_bottom = 150.0
+disabled = true
+icon = ExtResource("7_wy4j0")
+expand_icon = true
+
+[node name="FloorButton" type="Button" parent="Panel/MarginContainer/VBoxContainer/OptionsContainer/HBoxContainer/Panel/ScrollContainer/Step2Container"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(150, 0)
+offset_left = 696.0
+offset_right = 846.0
+offset_bottom = 150.0
+disabled = true
+icon = ExtResource("8_2uog6")
+expand_icon = true
+
+[node name="ComingSoonButton" type="Button" parent="Panel/MarginContainer/VBoxContainer/OptionsContainer/HBoxContainer/Panel/ScrollContainer/Step2Container"]
+custom_minimum_size = Vector2(150, 0)
+offset_left = 870.0
+offset_right = 1020.0
+offset_bottom = 150.0
+theme_override_styles/disabled = SubResource("StyleBoxFlat_u1is1")
+disabled = true
+text = "?"
+expand_icon = true

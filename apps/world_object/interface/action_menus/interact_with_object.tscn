@@ -1,7 +1,6 @@
-[gd_scene load_steps=5 format=3 uid="uid://brgwynk5h5uno"]
+[gd_scene load_steps=4 format=3 uid="uid://brgwynk5h5uno"]
 
 [ext_resource type="Script" path="res://apps/world_object/interface/action_menus/interact_with_object.gd" id="1_hamiv"]
-[ext_resource type="Resource" uid="uid://bw22wltnefn5d" path="res://apps/world/resources/objects/grass_object_test.tres" id="2_4nvgo"]
 [ext_resource type="Script" path="res://apps/actions/action_menu.gd" id="3_pkrrk"]
 [ext_resource type="Texture2D" uid="uid://bn61fbcpokvek" path="res://apps/painter/assets/icons/back.svg" id="4_e6lce"]
 
@@ -12,15 +11,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -20.0
-offset_top = -20.0
-offset_right = 20.0
-offset_bottom = 20.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("1_hamiv")
-object_data = ExtResource("2_4nvgo")
 
 [node name="ActionMenu" type="Container" parent="."]
 unique_name_in_owner = true
@@ -29,10 +23,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -20.0
-offset_top = -20.0
-offset_right = 20.0
-offset_bottom = 20.0
+offset_left = -50.0
+offset_top = -50.0
+offset_right = 50.0
+offset_bottom = 50.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
@@ -50,10 +44,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -20.0
-offset_top = -20.0
-offset_right = 20.0
-offset_bottom = 20.0
+offset_left = -50.0
+offset_top = -50.0
+offset_right = 50.0
+offset_bottom = 50.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
@@ -81,7 +75,7 @@ text = "Open me"
 [node name="CloseButton" type="Button" parent="."]
 unique_name_in_owner = true
 visible = false
-custom_minimum_size = Vector2i(100, 100)
+custom_minimum_size = Vector2(100, 100)
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5

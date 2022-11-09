@@ -1,19 +1,19 @@
 class_name GameModeState
 extends State
 
-enum GameMode {
+enum Mode {
 	LIVE,
 	BUILD,
 	BUY,
 }
 
 var is_live: bool:
-	get: return state == GameMode.LIVE
+	get: return state == Mode.LIVE
 
 var is_paused: bool:
-	get: return state != GameMode.LIVE
+	get: return state != Mode.LIVE
 
 
 func set_to(next_state: int) -> void:
-	Datetime.data.paused = next_state != GameMode.LIVE
+	Datetime.data.paused = next_state != Mode.LIVE
 	super.set_to(next_state)

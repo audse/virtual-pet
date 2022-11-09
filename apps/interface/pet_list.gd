@@ -45,8 +45,8 @@ func _draw() -> void:
 			else upset_color
 		)
 		var arc_radius: float = max(button.size.x, button.size.y) / 2 + 4.0
-		draw_arc(arc_position, arc_radius, deg_to_rad(180 - arc_length), deg_to_rad(-180), arc_length as int, bg_color, 8.0, true)
-		draw_arc(arc_position, arc_radius + 4.0, deg_to_rad(180), deg_to_rad(180 - arc_length), arc_length as int, color, 12.0, true)
+		draw_arc(arc_position, arc_radius, deg_to_rad(180 - arc_length), deg_to_rad(-180), max(arc_length as int, 2), bg_color, 8.0, true)
+		draw_arc(arc_position, arc_radius + 4.0, deg_to_rad(180), deg_to_rad(180 - arc_length), max(arc_length as int, 2), color, 12.0, true)
 
 
 func _make_pet_button(pet_data: PetData) -> Button:

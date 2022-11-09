@@ -3,9 +3,9 @@ extends Node
 
 signal drag_complete(start_coord, to_coord)
 
-const GuideTile = preload("guide_tile.gd")
+const GuideTile := preload("guide_tile.gd")
 
-@onready var cell_map = $GuideCellMap
+@onready var cell_map := $GuideCellMap as CellMap
 
 var disabled := false
 var debounce := 0
@@ -32,10 +32,14 @@ func handle_drag(event: InputEvent, event_pos: Vector3) -> void:
 
 func disable() -> void:
 	disabled = true
+	is_dragging = false
+	start_coord = Vector3i.ZERO
 
 
 func enable() -> void:
 	disabled = false
+	is_dragging = false
+	start_coord = Vector3i.ZERO
 
 
 func redraw(event_pos: Vector3) -> void:
@@ -50,7 +54,7 @@ func clear() -> void:
 
 
 func set_cellv(coord: Vector3i, set_many: bool = false) -> Cell:
-	return cell_map.set_cellv(coord, GuideTile.new(), set_many)
+	return cell_map.set_cellv(coord, GuideTile.new(coord), set_many)
 
 
 func set_cells_betweenv(start: Vector3i, end: Vector3i) -> void:

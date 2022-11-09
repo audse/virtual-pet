@@ -10,7 +10,7 @@ extends AddActionItemModule
 ## `on_pressed.gd` contains a function `run` that is run when the action item is pressed
 
 
-const parent_class := "res://apps/pet/interface/action_menu.gd"
+const ParentClass := "ActionMenu.Pet"
 
 
 func get_data_path() -> String:
