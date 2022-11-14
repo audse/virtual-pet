@@ -129,3 +129,34 @@ static func from_vec2_array(array: Array[Vector2], y := 0.0) -> Array[Vector3]:
 				return Vector3(p.x, y, p.y))
 			.array()
 	)
+
+
+static func rect_to_triangles(pos: Vector3, size: Vector3) -> PackedVector3Array:
+	var verts := PackedVector3Array()
+	
+	var end := pos + size
+	
+	var center_1: Vector3
+	var center_2: Vector3
+	
+	if is_equal_approx(size.x, 0):
+		center_1 = Vector3(pos.x, end.y, pos.z)
+		center_2 = Vector3(pos.x, pos.y, end.z)
+	
+	elif is_equal_approx(size.y, 0):
+		center_1 = Vector3(end.x, pos.y, pos.z)
+		center_2 = Vector3(pos.x, pos.y, end.z)
+	
+	elif is_equal_approx(size.z, 0):
+		center_1 = Vector3(pos.x, end.y, pos.z)
+		center_2 = Vector3(end.x, pos.y, pos.z)
+	
+	verts.push_back(pos)
+	verts.push_back(center_1)
+	verts.push_back(end)
+	
+	verts.push_back(pos)
+	verts.push_back(center_2)
+	verts.push_back(end)
+	
+	return verts

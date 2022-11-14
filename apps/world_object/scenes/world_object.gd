@@ -8,6 +8,17 @@ extends StaticBody3D
 @onready var action_menu := %InteractWithObjectActionMenu as Control
 @onready var draggable := %Draggable3D as Draggable3D
 
+var mesh: MeshInstance3D:
+	set(value):
+		mesh = value
+		if mesh and "context" in mesh:
+			mesh.context = self
+
+var collision: CollisionShape3D
+
+var is_consumable: bool:
+	get: return mesh and "consume" in mesh
+
 
 func _ready() -> void:
 	if object_data: update_object_data(object_data)
@@ -36,7 +47,9 @@ func update_object_data(object_data_value: WorldObjectData) -> void:
 		action_menu.object_data = object_data
 		
 		# render object scene
-		object_data.buyable_object_data.render(self)
+		var nodes = object_data.buyable_object_data.render(self)
+		mesh = nodes.mesh_instance
+		collision = nodes.collision_instance
 		
 		# unbind drag signals
 		for sig in [draggable.position_changed, draggable.rotation_changed]:
@@ -67,3 +80,12 @@ func _on_position_changed(new_position: Vector3) -> void:
 		# Update the fallback position so that if the object can't be dragged any further, 
 		# it will return to the most recent spot
 		draggable.fallback_position = Vector3(world_coord)
+
+
+func consume() -> void:
+	if is_consumable: mesh.consume()
+
+
+func reset() -> void:
+	print("resetting...")
+	if is_consumable: mesh.reset()

@@ -1,0 +1,10 @@
+{
+    "id": "ground_circular_lightpost",
+    "display_name": "Ground circular lightpost",
+    "mesh": "content_outdoor_lighting/meshes/ground_circular_lightpost.tres",
+    "world_layer": "floor_object",
+    "price": 150,
+    "category_id": "outdoor_lighting",
+    "description": "A small lightpost that gives off a little soft light.",
+    "mesh_script": "content_outdoor_lighting/outdoor_light.gd"
+}

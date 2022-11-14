@@ -3,8 +3,7 @@ extends State
 
 enum BuildState {
 	READY,
-	CREATING,
-	EDITING,
+	EDIT,
 	BUILDING_WALLS,
 	DESTROYING_WALLS,
 }
@@ -18,16 +17,24 @@ func _init() -> void:
 
 func enter(next_state: int) -> void:
 	match next_state:
-		BuildState.CREATING: current_building = BuildingData.new()
-		BuildState.BUILDING_WALLS: BuildData.start_building.emit()
-		BuildState.DESTROYING_WALLS: BuildData.start_destroying.emit()
-		_: current_building = null
+		BuildState.READY: current_building = null
 	super.enter(next_state)
 
 
 func cancel() -> void:
 	match state:
 		BuildState.BUILDING_WALLS, BuildState.DESTROYING_WALLS:
-			set_to(prev_state)
+			edit(current_building)
 		_:  set_to(BuildState.READY)
 	BuildData.cancel.emit()
+
+
+func start_new() -> void:
+	edit(BuildingData.new().setup())
+
+
+func edit(data: BuildingData) -> void:
+	print("[", data.data_path if data else "null", "]: Editing...")
+	current_building = data
+	WorldData.add_building(current_building)
+	set_to(BuildState.EDIT)

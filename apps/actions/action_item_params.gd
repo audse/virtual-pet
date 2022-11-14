@@ -6,7 +6,6 @@ var text: String
 var on_pressed: Callable
 var submenu: ActionMenu
 var submenu_params: Array[ActionItemParams]
-var is_cheat: bool = false
 
 
 func _init(args: Dictionary) -> void:
@@ -25,7 +24,4 @@ func _init(args: Dictionary) -> void:
 			continue
 		{ "submenu_params", .. }:
 			submenu_params = args.submenu_params
-			continue
-		{ "is_cheat", .. }:
-			is_cheat = args.is_cheat
 			continue

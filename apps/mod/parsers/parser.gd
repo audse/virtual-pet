@@ -37,3 +37,20 @@ func are_optional_fields_ok(optional_fields: Dictionary) -> bool:
 			var expected_type: int = optional_fields[field]
 			assert(typeof(data[field]) == expected_type, ModError.report_string_incorrect_field_type(json_file, field, expected_type, data))
 	return true
+
+
+func get_as_script(path: String) -> Script:
+	var script = load("res://mods/" + path)
+	is_script(script)
+	return script as Script
+
+
+func is_script(script) -> void:
+	assert(script is Script, ModError.report_string(
+		json_file,
+		ModError.Error.INCORRECT_FILE_TYPE,
+		DictRef.format({
+			expected_file_type = "Script",
+			found_file_type = typeof(script),
+		})
+	))

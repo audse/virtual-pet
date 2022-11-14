@@ -2,8 +2,9 @@ class_name CellMap
 extends Node3D
 @icon("cell_map_icon.svg")
 
-@export var grid: Resource
+@export var grid: UnevenGrid
 @export var use_autotile: bool = true
+@export var overlay_material: Material
 
 var UseSpacialTiles = Modules.import(Modules.UseSpacialTiles, self) if use_autotile else null
 
@@ -18,8 +19,7 @@ func set_cell(x: int, y: int, tile: MeshInstance3D = null, set_many: bool = true
 func set_cellv(coord: Vector3i, tile: MeshInstance3D = null, set_many: bool = false) -> Cell:
 	var cell_exists: Cell = find_cell_by_coordv(coord)
 	if not cell_exists:
-		var cell := Cell.new()
-		cell.coord = coord
+		var cell := Cell.new(coord, { overlay_material = overlay_material })
 		cells.append(cell)
 		_cached_coords[coord] = cell
 		
@@ -35,9 +35,7 @@ func set_cells(coords: Array[Vector3i], tile: MeshInstance3D = null) -> void:
 	var empty_coords := coords.filter(
 		func(coord: Vector3i) -> bool: return find_cell_by_coordv(coord) == null
 	)
-	var new_cells: Array[Cell] = []
-	for coord in empty_coords:
-		new_cells.append(set_cellv(coord, tile, true))
+	var new_cells: Array[Cell] = empty_coords.map(set_cellv.bind(tile, true))
 	if use_autotile: UseSpacialTiles.connect_many(new_cells, tile)
 
 
@@ -91,6 +89,10 @@ func erase_cells_betweenv(start_coord: Vector3i, end_coord: Vector3i) -> void:
 
 func erase_cells(cell_list: Array[Cell]) -> void:
 	for cell in cell_list: erase_cell(cell)
+
+
+func erase_coords(coords: Array[Vector3i]) -> void:
+	for coord in coords: erase_cell_at_coordv(coord)
 
 
 func clear() -> void:
@@ -194,6 +196,8 @@ func world_to_map_to_world(world_pos: Vector3, center: bool = false) -> Vector3:
 	return map_to_world(coords, center)
 
 
+## [    ] --> [ ][ ]
+## [    ]     [ ][ ]
 static func from_2x2_to_1x1_coords(coords_2x2: Array[Vector3i]) -> Array[Vector3i]:
 	var coords: Array[Vector3i] = []
 	for coord in coords_2x2:
@@ -205,3 +209,16 @@ static func from_2x2_to_1x1_coords(coords_2x2: Array[Vector3i]) -> Array[Vector3
 			c - Vector3i(0, 0, 1),
 		])
 	return coords
+
+
+## [ ][ ] --> [    ]
+## [ ][ ]     [    ]
+static func from_1x1_to_2x2_coords(coords_1x1: Array[Vector3i]) -> Array[Vector3i]:
+	var coords: Array[Vector3i] = []
+	for c in coords_1x1:
+		if c % 2 == Vector3i.ZERO:
+			coords.append(c / 2)
+	if len(coords) == 0:
+		coords.append(coords_1x1[0] / 2)
+	return coords
+		

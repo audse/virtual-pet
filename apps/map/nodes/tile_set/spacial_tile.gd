@@ -49,3 +49,10 @@ func exit() -> void:
 		set_surface_override_material(surface, null)
 	
 	queue_free()
+
+
+func intersect(intersection_position: Vector3, intersection_size: Vector3) -> void:
+	for surface in get_surface_override_material_count():
+		var mat := get_surface_override_material(surface) as ShaderMaterial
+		mat.set_shader_parameter("cut_pos", intersection_position)
+		mat.set_shader_parameter("cut_size", intersection_size)

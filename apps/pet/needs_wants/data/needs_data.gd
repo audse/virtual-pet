@@ -30,6 +30,7 @@ signal sleepy_changed(val: float)
 		activity = NeedsData.clamp_need(value)
 		activity_changed.emit(activity)
 		need_changed.emit(Need.ACTIVITY, activity)
+		emit_changed()
 
 ## 0 = very uncomfy, 1 = fully comfy
 @export_range(0.0, 1.0, 0.05) var comfort := 0.0:
@@ -37,6 +38,7 @@ signal sleepy_changed(val: float)
 		comfort = NeedsData.clamp_need(value)
 		comfort_changed.emit(comfort)
 		need_changed.emit(Need.COMFORT, comfort)
+		emit_changed()
 
 ## 0 = very hungry, 1 = full
 @export_range(0.0, 1.0, 0.05) var hunger := 0.0:
@@ -44,6 +46,7 @@ signal sleepy_changed(val: float)
 		hunger = NeedsData.clamp_need(value)
 		hunger_changed.emit(hunger)
 		need_changed.emit(Need.HUNGER, hunger)
+		emit_changed()
 
 ## 0 = very dirty, 1 = fully clean
 @export_range(0.0, 1.0, 0.05) var hygiene := 0.0:
@@ -51,6 +54,7 @@ signal sleepy_changed(val: float)
 		hygiene = NeedsData.clamp_need(value)
 		hygiene_changed.emit(hygiene)
 		need_changed.emit(Need.HYGIENE, hygiene)
+		emit_changed()
 
 ## 0 = very sleepy, 1 = fully rested
 @export_range(0.0, 1.0, 0.05) var sleepy := 0.0:
@@ -58,6 +62,7 @@ signal sleepy_changed(val: float)
 		sleepy = NeedsData.clamp_need(value)
 		sleepy_changed.emit(sleepy)
 		need_changed.emit(Need.SLEEPY, sleepy)
+		emit_changed()
 
 func _init(
 	activity_value := activity,

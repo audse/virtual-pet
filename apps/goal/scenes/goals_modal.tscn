@@ -1,0 +1,91 @@
+[gd_scene load_steps=4 format=3 uid="uid://dmk3lmled3jcn"]
+
+[ext_resource type="Script" path="res://apps/goal/scenes/goals_modal.gd" id="1_1wf82"]
+[ext_resource type="Script" path="res://interface/components/modal/modal.gd" id="1_vctt1"]
+[ext_resource type="PackedScene" uid="uid://cw6jro65238i" path="res://apps/goal/scenes/goal.tscn" id="2_4gfro"]
+
+[node name="GoalsModal" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_1wf82")
+
+[node name="ModalController" type="Control" parent="." node_paths=PackedStringArray("target")]
+unique_name_in_owner = true
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_vctt1")
+target = NodePath("../GoalsModalPanel")
+enter_from = 1
+exit_to = 1
+
+[node name="GoalsModalPanel" type="PanelContainer" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -73.5
+offset_top = -123.0
+offset_right = 73.5
+offset_bottom = 123.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="GoalsModalPanel"]
+offset_left = 24.0
+offset_top = 36.0
+offset_right = 524.0
+offset_bottom = 1010.0
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="GoalsModalPanel/VBoxContainer"]
+offset_right = 500.0
+offset_bottom = 86.0
+theme_type_variation = &"H1"
+text = "Goals"
+
+[node name="HSeparator" type="HSeparator" parent="GoalsModalPanel/VBoxContainer"]
+offset_top = 98.0
+offset_right = 500.0
+offset_bottom = 162.0
+
+[node name="ScrollContainer" type="ScrollContainer" parent="GoalsModalPanel/VBoxContainer"]
+custom_minimum_size = Vector2(0, 800)
+offset_top = 174.0
+offset_right = 500.0
+offset_bottom = 974.0
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="GoalsContainer" type="VBoxContainer" parent="GoalsModalPanel/VBoxContainer/ScrollContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(500, 0)
+offset_right = 500.0
+offset_bottom = 800.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="PanelContainer" parent="GoalsModalPanel/VBoxContainer/ScrollContainer/GoalsContainer" instance=ExtResource("2_4gfro")]
+visible = false
+modulate = Color(0.894118, 0.894118, 0.905882, 1)
+anchors_preset = 0
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 704.0
+offset_bottom = 382.0
+grow_horizontal = 1
+grow_vertical = 1

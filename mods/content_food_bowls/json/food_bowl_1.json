@@ -1,0 +1,17 @@
+{
+    "id": "food_bowl_1",
+    "display_name": "Basic food bowl",
+    "mesh": "content_food_bowls/meshes/food_bowl_1.tres",
+    "world_layer": "floor_object",
+    "price": 50,
+    "category_id": "food_bowl",
+    "description": "The most basic kind of pet food bowl",
+    "flags": [
+        "ownable"
+    ],
+    "total_uses": 2,
+    "fulfills_needs": [
+        "hunger"
+    ],
+    "mesh_script": "content_food_bowls/food_bowl.gd"
+}

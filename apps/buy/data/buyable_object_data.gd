@@ -1,5 +1,5 @@
 class_name BuyableObjectData
-extends Resource
+extends SaveableResource
 
 enum Flag {
 	OWNABLE,
@@ -12,25 +12,25 @@ enum Flag {
 @export var price: int
 
 @export_subgroup("Optional identity data")
-@export var category_id: String = "uncategorized"
+@export var category_id: String = ""
 @export var description: String = ""
 @export var colorway_id: String = ""
+@export var menu: BuyCategoryData.Menu = BuyCategoryData.Menu.BUY
 
 @export_group("World data")
 @export var mesh: Mesh
 @export var dimensions: Vector3i
-@export var world_layer: WorldObjectData.Layer
+@export var world_layer: int
 
 @export_subgroup("Optional world data")
 @export var mesh_scale := Vector3.ONE
 @export var rarity := 0
 @export var collision_shape: Shape3D = null
-@export var consumed_meshes: Array[Mesh] = []
+@export var mesh_script: Script
 
 @export_group("Use data")
 @export var flags: Array[Flag] = []
 @export var fulfills_needs: Array[NeedsData.Need] = []
-@export var actions: Array[String] = []
 @export var total_uses: int = -1 # infinite
 
 
@@ -41,11 +41,10 @@ func _init(args := {}) -> void:
 
 func render_mesh(parent: Node) -> MeshInstance3D:
 	var mesh_instance := MeshInstance3D.new()
+	if mesh_script: mesh_instance.set_script(mesh_script)
 	parent.add_child(mesh_instance)
 	mesh_instance.mesh = mesh
 	mesh_instance.scale = mesh_scale
-	mesh_instance.material_override = mesh_instance.mesh.surface_get_material(0).duplicate()
-	(mesh_instance.material_override as BaseMaterial3D).cull_mode = BaseMaterial3D.CULL_DISABLED
 	return mesh_instance
 
 
@@ -58,6 +57,8 @@ func render_collision(parent: Node) -> CollisionShape3D:
 	return collision_instance
 
 
-func render(parent: Node) -> void:
-	render_mesh(parent)
-	render_collision(parent)
+func render(parent: Node) -> Dictionary:
+	return {
+		mesh_instance = render_mesh(parent),
+		collision_instance = render_collision(parent)
+	}

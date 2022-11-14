@@ -19,3 +19,4 @@ const cuddle_cooldown_time := 60.0
 	set(value):
 		is_recently_cuddled = value
 		recently_cuddled_changed.emit(value)
+		emit_changed()

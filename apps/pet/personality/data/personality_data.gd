@@ -15,30 +15,35 @@ signal attribute_changed(attribute: String, value: int)
 		active = value
 		active_changed.emit(active)
 		attribute_changed.emit("active", value)
+		emit_changed()
 
 @export_range(0, 5, 1) var clean := 0:
 	set(value):
 		clean = value
 		clean_changed.emit(clean)
 		attribute_changed.emit("clean", value)
+		emit_changed()
 
 @export_range(0, 5, 1) var playful := 0:
 	set(value):
 		playful = value
 		playful_changed.emit(playful)
 		attribute_changed.emit("playful", value)
+		emit_changed()
 
 @export_range(0, 5, 1) var smart := 0:
 	set(value):
 		smart = value
 		smart_changed.emit(smart)
 		attribute_changed.emit("smart", value)
+		emit_changed()
 
 @export_range(0, 5, 1) var social := 0:
 	set(value):
 		social = value
 		social_changed.emit(social)
 		attribute_changed.emit("social", value)
+		emit_changed()
 
 @export var favorites_data := FavoritesData.new()
 @export var traits_data := TraitsData.new()

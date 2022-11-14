@@ -38,16 +38,19 @@ signal food_changed(food: FavoriteFood)
 	set(value):
 		color = value
 		color_changed.emit(color)
+		emit_changed()
 
 @export var place: FavoritePlace:
 	set(value):
 		place = value
 		place_changed.emit(place)
+		emit_changed()
 
 @export var food: FavoriteFood:
 	set(value):
 		food = value
 		food_changed.emit(food)
+		emit_changed()
 
 
 # TODO

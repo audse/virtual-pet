@@ -4,7 +4,9 @@ extends Object
 signal bitmask_updated
 
 var coord := Vector3i.ZERO
+
 var tile: MeshInstance3D = null
+var overlay_material: Material = null
 
 var bitmask := BitMask.new():
 	set (value):
@@ -12,13 +14,21 @@ var bitmask := BitMask.new():
 		bitmask_updated.emit()
 
 
+func _init(coord_value := Vector3i.ZERO, extra_args := {}) -> void:
+	coord = coord_value
+	for arg in extra_args.keys():
+		if arg in self: self[arg] = extra_args[arg]
+
+
 func draw_tile(parent: Node3D, cell_size: Vector3, new_tile: MeshInstance3D = null) -> void:
 	if new_tile: tile = new_tile
-	tile.position += Vector3(
+	tile.position = Vector3(
 		cell_size.x * coord.x,
-		0.0,
+		tile.position.y,
 		cell_size.y * coord.z
 	)
+	if tile.is_inside_tree(): tile = tile.duplicate()
+#	if overlay_material: tile.material_overlay = overlay_material
 	parent.add_child(tile)
 
 

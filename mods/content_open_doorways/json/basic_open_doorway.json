@@ -1,0 +1,23 @@
+{
+    "id": "basic_open_doorway",
+    "display_name": "Basic open doorway",
+    "mesh": "content_open_doorways/meshes/basic_open_doorway.tres",
+    "world_layer": "BUILDING",
+    "price": 100,
+    "category_id": "open_doorway",
+    "menu": "BUILD",
+    "description": "A simple doorway for your pets to walk through.",
+    "intersection_type": "OPEN_DOORWAY",
+    "intersection_rect": {
+        "position": {
+            "x": -1,
+            "y": 0,
+            "z": -1
+        },
+        "size": {
+            "width": 0.75,
+            "height": 3,
+            "depth": 0.5
+        }
+    }
+}

@@ -1,0 +1,67 @@
+[gd_scene load_steps=9 format=3 uid="uid://pekl1f2liem1"]
+
+[ext_resource type="Script" path="res://apps/building/data/building_object_data.gd" id="1_1fyse"]
+[ext_resource type="Shader" path="res://apps/map/assets/shaders/distort.gdshader" id="1_a1p3l"]
+[ext_resource type="ArrayMesh" uid="uid://d2n73kmxajjpo" path="res://apps/building/assets/tile_sets/building_01/meshes/building_02_corner_tile.obj" id="2_o3x3l"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_xecym"]
+render_priority = 0
+shader = ExtResource("1_a1p3l")
+shader_parameter/cut_pos = Vector3(-0.5, 2, -0.5)
+shader_parameter/cut_size = Vector3(1, 1, 2)
+shader_parameter/distort_amount = null
+shader_parameter/is_corner = null
+shader_parameter/albedo_color = null
+shader_parameter/normal_depth = null
+shader_parameter/normal_scale = null
+shader_parameter/uv_rotation = null
+
+[sub_resource type="GDScript" id="GDScript_nkciv"]
+script/source = "extends MeshInstance3D
+
+@export var building_object_data: BuildingObjectData
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	pass # Replace with function body.
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta):
+	pass
+"
+
+[sub_resource type="Resource" id="Resource_ky8j1"]
+script = ExtResource("1_1fyse")
+intersection_type = 2
+intersection_rect_position = null
+intersection_rect_size = null
+coord = null
+rotation = 0
+flags = null
+uses_left = -1
+is_on = false
+data_path = null
+
+[sub_resource type="BoxMesh" id="BoxMesh_c6q5c"]
+size = Vector3(1, 1, 0.5)
+
+[sub_resource type="BoxMesh" id="BoxMesh_a4yxd"]
+size = Vector3(0.75, 0.75, 1)
+
+[node name="WallMesh" type="MeshInstance3D"]
+material_override = SubResource("ShaderMaterial_xecym")
+mesh = ExtResource("2_o3x3l")
+script = SubResource("GDScript_nkciv")
+building_object_data = SubResource("Resource_ky8j1")
+
+[node name="CSGCombiner3D" type="CSGCombiner3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, 0.9)
+operation = 2
+
+[node name="CSGMesh3D" type="CSGMesh3D" parent="CSGCombiner3D"]
+mesh = SubResource("BoxMesh_c6q5c")
+
+[node name="CSGMesh3D2" type="CSGMesh3D" parent="CSGCombiner3D"]
+operation = 2
+mesh = SubResource("BoxMesh_a4yxd")

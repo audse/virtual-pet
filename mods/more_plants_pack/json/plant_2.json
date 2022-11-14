@@ -1,0 +1,20 @@
+{
+    "id": "plant_2",
+    "display_name": "Pointy fern",
+    "category_id": "grass",
+    "world_layer": "foliage",
+    "mesh": "more_plants_pack/meshes/plant_2.tres",
+    "price": 15,
+    "flags": [
+        "consumable"
+    ],
+    "total_uses": 4,
+    "fulfills_needs": [
+        "hunger"
+    ],
+    "mesh_scale": {
+        "x": 0.5,
+        "y": 0.5,
+        "z": 0.5
+    }
+}

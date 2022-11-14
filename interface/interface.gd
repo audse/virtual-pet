@@ -8,10 +8,13 @@ extends Control
 @onready var settings_button := %SettingsButton as Button
 @onready var pause_button := %PauseButton as Button
 @onready var fate_button := %FateButton as Button
+@onready var goals_button := %GoalsButton as Button
 @onready var datetime_label := %DatetimeLabel as TitleLabel
 @onready var settings_menu := %SettingsMenu as Control
+@onready var goals_menu := %GoalsMenu as Control
 @onready var paused_overlay := %PausedOverlay as Panel
-
+@onready var show_roof_button := %ShowRoofButton as Button
+@onready var hide_roof_button := %HideRoofButton as Button
 
 @onready var mode_buttons := {
 	GameModeState.Mode.LIVE: live_mode_button,
@@ -78,6 +81,8 @@ func _ready() -> void:
 	settings_menu.opening.connect(open_backdrop)
 	settings_menu.closing.connect(close_backdrop)
 	
+	goals_button.pressed.connect(goals_menu.open)
+	
 	# Connect pause button
 	pause_button.pressed.connect(
 		func() -> void: 
@@ -94,6 +99,20 @@ func _ready() -> void:
 	
 	build_mode_button.pressed.connect(
 		func() -> void: Game.Mode.set_to(GameModeState.Mode.BUILD)
+	)
+	
+	hide_roof_button.pressed.connect(
+		func() -> void: Settings.data.hide_roofs = true
+	)
+	
+	show_roof_button.pressed.connect(
+		func() -> void: Settings.data.hide_roofs = false
+	)
+	
+	Settings.data.hide_roofs_changed.connect(
+		func(hide_roofs: bool) -> void:
+			hide_roof_button.visible = not hide_roofs
+			show_roof_button.visible = hide_roofs
 	)
 	
 	Game.Mode.exit_state.connect(exit_mode)

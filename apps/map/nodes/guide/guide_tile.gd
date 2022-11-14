@@ -12,11 +12,7 @@ var building_material: StandardMaterial3D:
 		return mat
 
 var is_buildable: bool:
-	get:
-		for c in CellMap.from_2x2_to_1x1_coords([coord]):
-			if not c in WorldData.blocks: return false
-			if not WorldData.blocks[c].is_buildable: return false
-		return true
+	get: return BuildData.is_area_buildable([coord])
 
 var coord: Vector3i
 

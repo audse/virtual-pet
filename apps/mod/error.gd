@@ -1,9 +1,11 @@
 extends Node
 
 const Error = {
+	UNKNOWN_ENUM_KEY = 403,
 	MISSING_REQUIRED_FIELD = 404,
 	MISSING_REQUIRED_FUNCTION = 405,
 	INCORRECT_FIELD_TYPE = 501,
+	INCORRECT_FILE_TYPE = 502,
 }
 
 
@@ -28,6 +30,7 @@ func report_string_missing_required_field(mod: FileAccess, missing_field: String
 			provided_fields = data.keys()
 		})
 	)
+
 
 func report_string_incorrect_field_type(mod: FileAccess, field: String, expected_type: int, data: Dictionary) -> String:
 	return report_string(

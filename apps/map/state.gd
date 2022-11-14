@@ -77,18 +77,26 @@ var shader_args: Dictionary:
 			"albedo_texture": foundation_tex,
 			"normal_texture": foundation_normal,
 			"normal_depth": 2.0,
+			"cut_pos": Vector2.ZERO,
+			"cut_size": Vector2.ZERO,
 		},
 		"Exterior": {
 			"albedo_texture": outer_wall_tex,
-			"normal_texture": outer_wall_normal
+			"normal_texture": outer_wall_normal,
+			"cut_pos": Vector2.ZERO,
+			"cut_size": Vector2.ZERO,
 		},
 		"Interior": {
 			"albedo_texture": inner_wall_tex,
 			"normal_texture": inner_wall_normal,
+			"cut_pos": Vector2.ZERO,
+			"cut_size": Vector2.ZERO,
 		},
 		"Floor": {
 			"albedo_texture": floor_tex,
-			"normal_texture": floor_normal
+			"normal_texture": floor_normal,
+			"cut_pos": Vector2.ZERO,
+			"cut_size": Vector2.ZERO,
 		}
 	}
 

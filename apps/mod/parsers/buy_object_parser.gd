@@ -11,18 +11,17 @@ const required_fields := {
 
 const optional_fields := {
 	category_id = TYPE_STRING,
+	menu = TYPE_STRING,
 	description = TYPE_STRING,
 	colorway_id = TYPE_STRING,
 	dimensions = TYPE_DICTIONARY,
 	mesh_scale = TYPE_DICTIONARY,
 	rarity = TYPE_FLOAT,
-	consumed_meshes = TYPE_STRING,
 	collision_shape = TYPE_STRING,
 	flags = TYPE_ARRAY,
 	fulfills_needs = TYPE_ARRAY,
-	actions = TYPE_ARRAY,
 	total_uses = TYPE_FLOAT,
-	# TODO script
+	mesh_script = TYPE_STRING,
 }
 
 
@@ -36,14 +35,13 @@ static func parse(context: Node, json_file: FileAccess) -> BuyableObjectData:
 	data = parse_required_data(context, json_file, data)
 	if (data.size() == 0): return null
 	
-	data = parse_optional_data(context, json_file, data)
-	
+	data = parse_optional_data(context, json_file, data, parser)
 	return BuyableObjectData.new(data)
 
 
-static func parse_required_data(_context: Node, _json_file: FileAccess, data: Dictionary) -> Dictionary:
+static func parse_required_data(_context: Node, json_file: FileAccess, data: Dictionary) -> Dictionary:
 	# Convert `world_layer` param from string to enum
-	# TODO: maybe this shouldn't be an enum, for more extensibility
+	BuyableObjectParser.check_layer_name(json_file, data.world_layer)
 	data.world_layer = WorldObjectData.Layer[data.world_layer.to_upper() + "_LAYER"]
 	
 	# Load mesh file
@@ -55,12 +53,16 @@ static func parse_required_data(_context: Node, _json_file: FileAccess, data: Di
 	return data
 
 
-static func parse_optional_data(_context: Node, _json_file: FileAccess, data: Dictionary) -> Dictionary:
+static func parse_optional_data(_context: Node, _json_file: FileAccess, data: Dictionary, parser: ModParser) -> Dictionary:
+	if "menu" in data and data.menu in BuyCategoryData.Menu:
+		data.menu = BuyCategoryData.Menu[data.menu]
+	
 	# Convert dimension width & height to `Vector2i`
 	var dimensions := Vector3i(1, 1, 1)
-	if "width" in data.dimensions: dimensions.x = data.dimensions.width as int
-	if "height" in data.dimensions: dimensions.y = data.dimensions.height as int
-	if "depth" in data.dimensions: dimensions.z = data.dimensions.depth as int
+	if "dimensions" in data:
+		if "width" in data.dimensions: dimensions.x = data.dimensions.width as int
+		if "height" in data.dimensions: dimensions.y = data.dimensions.height as int
+		if "depth" in data.dimensions: dimensions.z = data.dimensions.depth as int
 	data.dimensions = dimensions
 	
 	# Load collision shape file
@@ -80,14 +82,6 @@ static func parse_optional_data(_context: Node, _json_file: FileAccess, data: Di
 			func(flag: String) -> BuyableObjectData.Flag: return BuyableObjectData.Flag[flag.to_upper()]
 		)
 	
-	# Load all available meshes
-	if "consumed_meshes" in data:
-		var i := 0
-		for mesh in data.consumed_meshes:
-			if mesh.contains("res://"): data.consumed_meshes[i] = load(mesh)
-			else: data.consumed_meshes[i] = load("res://mods/" + mesh)
-			i += 1
-	
 	# Convert JSON floats to ints
 	if "rarity" in data: data.rarity = int(data.rarity)
 	if "total_uses" in data: data.total_uses = int(data.total_uses)
@@ -99,4 +93,18 @@ static func parse_optional_data(_context: Node, _json_file: FileAccess, data: Di
 		data.mesh_scale.z if "z" in data.mesh_scale else 1.0
 	)
 	
+	# Load the script for the `MeshInstance3D`
+	if "mesh_script" in data:
+		data.mesh_script = parser.get_as_script(data.mesh_script)
+	
 	return data
+
+
+static func check_layer_name(json_file: FileAccess, layer: String) -> void:
+	assert((layer.to_upper() + "_LAYER") in WorldObjectData.Layer.keys(), ModError.report_string(
+		json_file,
+		ModError.Error.UNKNOWN_ENUM_KEY,
+		"{0} is not a valid `world_layer` value. (`world_layer` must be one of [`BUILDING`, `FLOOR_OBJECT`, `WALL_OBJECT`, `FOLIAGE`])".format([layer])
+	))
+
+	

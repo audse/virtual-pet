@@ -10,6 +10,12 @@ enum Mode {
 var is_live: bool:
 	get: return state == Mode.LIVE
 
+var is_build: bool:
+	get: return state == Mode.BUILD
+
+var is_buy: bool:
+	get: return state == Mode.BUY
+
 var is_paused: bool:
 	get: return state != Mode.LIVE
 

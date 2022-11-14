@@ -7,46 +7,79 @@ const GuideTile := preload("guide_tile.gd")
 
 @onready var cell_map := $GuideCellMap as CellMap
 
-var disabled := false
+var disabled := true
 var debounce := 0
-var debounce_max := 4
+var debounce_max := 2
+
+
 var start_coord := Vector3i.ZERO
+var end_coord := Vector3i.ZERO
+
+
+var prev_start_coord := Vector3i.ZERO
+var prev_end_coord := Vector3i.ZERO
+
 var is_dragging: bool = false
 
 
-func handle_drag(event: InputEvent, event_pos: Vector3) -> void:
-	if event is InputEventScreenTouch and not disabled:
-		is_dragging = event.pressed
-		
-		if is_dragging:
-			start_coord = cell_map.world_to_map(event_pos)
-		else:
-			_on_complete(event_pos)
+func _ready() -> void:
+	BuildData.confirm_build.connect(release)
+	BuildData.confirm_destroy.connect(release)
+	BuildData.state.exit_state.connect(
+		func(_state: BuildModeState.BuildState) -> void:
+			release()
+			clear()
+	)
 
-	if event is InputEventScreenDrag and not disabled:
-		if debounce == debounce_max:
-			redraw(event_pos)
-			debounce = 0
-		else: debounce += 1
+
+func handle_drag(event: InputEvent, event_pos: Vector3) -> void:
+	if not disabled:
+		if event is InputEventScreenTouch:
+			is_dragging = event.pressed
+	
+			end_coord = cell_map.world_to_map(event_pos)
+			
+			if event.pressed: start()
+			else: complete()
+
+		if event is InputEventScreenDrag:
+			if debounce == debounce_max:
+				end_coord = cell_map.world_to_map(event_pos)
+				redraw()
+			else: debounce += 1
 
 
 func disable() -> void:
 	disabled = true
-	is_dragging = false
-	start_coord = Vector3i.ZERO
+	release()
 
 
 func enable() -> void:
 	disabled = false
-	is_dragging = false
-	start_coord = Vector3i.ZERO
+	release()
 
 
-func redraw(event_pos: Vector3) -> void:
+func redraw() -> void:
 	clear()
 	debounce = 0
 	await get_tree().process_frame
-	set_cells_betweenv(start_coord, cell_map.world_to_map(event_pos))
+	set_cells_betweenv(start_coord, end_coord)
+	prev_start_coord = start_coord
+	prev_end_coord = end_coord
+
+
+func start() -> void:
+	is_dragging = true
+	debounce = 0
+	start_coord = end_coord
+
+
+func release() -> void:
+	is_dragging = false
+	start_coord = Vector3i.ZERO
+	end_coord = Vector3i.ZERO
+	debounce = 0
+	clear()
 
 
 func clear() -> void:
@@ -57,13 +90,13 @@ func set_cellv(coord: Vector3i, set_many: bool = false) -> Cell:
 	return cell_map.set_cellv(coord, GuideTile.new(coord), set_many)
 
 
-func set_cells_betweenv(start: Vector3i, end: Vector3i) -> void:
-	for coord in cell_map.get_empty_coords_betweenv(start, end):
+func set_cells_betweenv(s: Vector3i, e: Vector3i) -> void:
+	for coord in cell_map.get_empty_coords_betweenv(s, e):
 		set_cellv(coord, true)
 
 
-func _on_complete(event_pos: Vector3) -> void:
+func complete() -> void:
 	await get_tree().process_frame
-	clear()
-	drag_complete.emit(start_coord, cell_map.world_to_map(event_pos))
-	start_coord = Vector3i.ZERO
+	drag_complete.emit(start_coord, end_coord)
+	prev_start_coord = start_coord
+	prev_end_coord = end_coord

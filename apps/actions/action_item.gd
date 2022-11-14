@@ -27,9 +27,9 @@ func make_button() -> Button:
 		parent.add_child(button)
 		button.pressed.connect(_on_pressed)
 		
-		if args.is_cheat:
-			button.modulate = Color("#f0abfc")
-			button.text = "* " + button.text
+		# if args.is_cheat:
+		# 	button.modulate = Color("#f0abfc")
+		# 	button.text = "* " + button.text
 	
 	return button
 

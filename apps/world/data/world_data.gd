@@ -19,13 +19,14 @@ var grid_size_vector: Vector3:
 
 
 func _ready() -> void:
-	for x in range(-10, 10):
-		for z in range(-10, 10):
+	for x in range(-25, 25):
+		for z in range(-25, 25):
 			var coord := Vector3i(x, 0, z)
 			blocks[coord] = WorldBlockData.new(coord)
 	
 	load_pets()
 	load_objects()
+	load_buildings()
 	
 	# Save all objects position & rotation when leaving buy mode
 	Game.Mode.exit_state.connect(
@@ -35,16 +36,22 @@ func _ready() -> void:
 
 
 func add_object(object: WorldObjectData) -> void:
-	if len(object.data_path) < 1:
-		object.data_path = str(object.get_instance_id())
+	objects.append(object.setup())
 	object.save_data()
-	objects.append(object)
 	objects_changed.emit()
 
 
 func remove_object(object: WorldObjectData) -> void:
 	objects.erase(object)
+	object.delete_data()
 	objects_changed.emit()
+
+
+func add_building(building: BuildingData) -> void:
+	if not building in buildings:
+		buildings.append(building.setup())
+		building.save_data()
+		buildings_changed.emit()
 
 
 func find_nearby_opportunities(pet: PetData, radius := 5) -> Array[OppportunityData]:
@@ -114,13 +121,9 @@ func to_grid(position) -> Vector3i:
 
 
 func load_pets() -> void:
-	pets = []
-	if not DirAccess.dir_exists_absolute("user://pets"):
-		DirAccess.make_dir_absolute("user://pets")
-	var pets_dir := DirAccess.open("user://pets")
-	for pet_path in pets_dir.get_files():
+	for pet_path in Utils.open_or_make_dir("user://pets").get_files():
 		var pet_data := load("user://pets/" + pet_path)
-		if pet_data is PetData: pets.append(pet_data)
+		if pet_data is PetData: pets.append(pet_data.setup())
 
 
 func save_pets() -> void:
@@ -128,17 +131,20 @@ func save_pets() -> void:
 
 
 func load_objects() -> void:
-	objects = []
-	if not DirAccess.dir_exists_absolute("user://world"):
-		DirAccess.make_dir_absolute("user://world")
-	var objects_dir := DirAccess.open("user://world")
-	for object_path in objects_dir.get_files():
+	for object_path in Utils.open_or_make_dir("user://world").get_files():
 		var object_data := load("user://world/" + object_path)
 		if object_data is WorldObjectData: add_object(object_data)
 
 
 func save_objects() -> void:
-	for object in objects: 
-		if len(object.data_path) < 1: 
-			object.data_path = str(get_instance_id())
-		object.save_data()
+	for object in objects:  object.save_data()
+
+
+func load_buildings() -> void:
+	for building_path in Utils.open_or_make_dir("user://buildings").get_files():
+		var building_data := load("user://buildings/" + building_path)
+		if building_data is BuildingData: add_building(building_data)
+
+
+func save_buildings() -> void:
+	for building in buildings: building.save_data()

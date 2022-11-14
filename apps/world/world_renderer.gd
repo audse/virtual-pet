@@ -14,21 +14,27 @@ func _ready() -> void:
 	for pet in WorldData.pets:
 		render_pet(pet)
 	
+	for building in WorldData.buildings:
+		render_building(building)
+	
 	BuyData.object_bought.connect(_on_object_bought)
 	
 	BuildData.state.enter_state.connect(
 		func(mode: BuildModeState.BuildState) -> void:
 			match mode:
-				BuildModeState.BuildState.CREATING, BuildModeState.BuildState.EDITING:
-					render_building(BuildData.state.current_building)
+				BuildModeState.BuildState.EDIT: render_building(BuildData.state.current_building)
 	)
 
 
 func render_object(object_data: WorldObjectData) -> WorldObject:
-	var renderer := ObjectScene.instantiate()
-	add_child(renderer)
-	renderer.update_object_data(object_data)
-	return renderer
+	return WorldRenderer.render_object_to(self, object_data)
+
+
+static func render_object_to(parent: Node, object_data: WorldObjectData) -> WorldObject:
+	object_data.instance = ObjectScene.instantiate()
+	parent.add_child(object_data.instance)
+	object_data.instance.update_object_data(object_data)
+	return object_data.instance
 
 
 func render_pet(pet_data: PetData) -> void:
@@ -37,17 +43,26 @@ func render_pet(pet_data: PetData) -> void:
 	add_child(pet)
 
 
-func _on_object_bought(object_data: BuyableObjectData) -> void:
-	var world_object := WorldObjectData.new({
-		buyable_object_data = object_data,
-		coord = Vector2(4, 0)
-	})
-	WorldData.add_object(world_object)
-	render_object(world_object)
-
-
 func render_building(building_data: BuildingData) -> void:
-	if not building_data.instance:
+	if building_data and not building_data.instance:
 		building_data.instance = BuildScene.instantiate()
 		add_child(building_data.instance)
 		building_data.instance.building_data = building_data
+
+
+func _on_object_bought(object_data: BuyableObjectData) -> void:
+	match object_data.menu:
+		BuyCategoryData.Menu.BUY:
+			var world_object := WorldObjectData.new({
+				buyable_object_data = object_data,
+				coord = Vector2(4, 0)
+			})
+			WorldData.add_object(world_object)
+			render_object(world_object)
+		BuyCategoryData.Menu.BUILD:
+			var building_object := BuildingObjectData.new({
+				buyable_object_data = object_data,
+				coord = Vector2(4, 0)
+			})
+			if BuildData.state.current_building:
+				BuildData.state.current_building.add_object(building_object)

@@ -66,3 +66,4 @@ personality_data = SubResource("Resource_swg84")
 command_data = SubResource("Resource_c5d7p")
 interface_data = SubResource("Resource_jcweo")
 world_coord = Vector2i(-1, -1)
+data_path = null

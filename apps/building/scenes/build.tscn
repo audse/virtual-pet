@@ -1,11 +1,32 @@
-[gd_scene load_steps=15 format=3 uid="uid://d2mxrw16b4scs"]
+[gd_scene load_steps=16 format=3 uid="uid://d2mxrw16b4scs"]
 
 [ext_resource type="Script" path="res://apps/building/scenes/build.gd" id="1_xogq3"]
 [ext_resource type="Script" path="res://apps/map/nodes/guide/guide_map.gd" id="4_hclhc"]
 [ext_resource type="Script" path="res://apps/map/nodes/cell_map/cell_map.gd" id="5_u26lr"]
 [ext_resource type="Script" path="res://apps/map/nodes/grid/uneven_grid.gd" id="6_hngqn"]
-[ext_resource type="Script" path="res://apps/map/nodes/tile_set/spacial_tile_factory.gd" id="7_c8vi8"]
 [ext_resource type="Shader" path="res://apps/map/assets/shaders/spatial_grid.gdshader" id="8_ok1in"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_0hvyy"]
+size = Vector3(2.5, 0.5, 2.5)
+
+[sub_resource type="GDScript" id="GDScript_y4e3q"]
+script/source = "extends MeshInstance3D
+
+
+func _ready() -> void:
+	visible = false
+	scale = Vector3(0.8, 0.0, 0.8)
+	position.y = -0.25
+	transparency = 1.0
+	
+	await get_tree().create_timer(0.6).timeout
+	visible = true
+	var tween := create_tween().set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_SINE)
+	tween.parallel().tween_property(self, \"scale:y\", 1.0, 0.3)
+	tween.parallel().tween_property(self, \"position:y\", 0.0, 0.3)
+	tween.parallel().tween_property(self, \"transparency\", 0.0, 0.3)
+	tween.tween_property(self, \"scale\", Vector3(1.0, 1.0, 1.0), 0.5)
+"
 
 [sub_resource type="Resource" id="Resource_2qypc"]
 script = ExtResource("6_hngqn")
@@ -48,7 +69,7 @@ metallic_specular = 0.0
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_t2roi"]
 material = SubResource("StandardMaterial3D_t7ecs")
-size = Vector2(100, 100)
+size = Vector2(50, 50)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_782er"]
 render_priority = 0
@@ -63,6 +84,20 @@ shader_parameter/size = Vector3(1, 1, 1)
 [node name="Build" type="Node3D"]
 script = ExtResource("1_xogq3")
 
+[node name="RoofContainer" type="Node3D" parent="."]
+visible = false
+
+[node name="RoofMesh" type="MeshInstance3D" parent="RoofContainer"]
+mesh = SubResource("BoxMesh_0hvyy")
+skeleton = NodePath("../..")
+script = SubResource("GDScript_y4e3q")
+
+[node name="RoofMap" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.25, 0)
+script = ExtResource("5_u26lr")
+grid = SubResource("Resource_2qypc")
+use_autotile = false
+
 [node name="GuideMap" type="Node3D" parent="."]
 script = ExtResource("4_hclhc")
 
@@ -75,9 +110,6 @@ use_autotile = false
 script = ExtResource("5_u26lr")
 grid = SubResource("Resource_2qypc")
 
-[node name="SpacialTileFactory" type="Node3D" parent="CellMap"]
-script = ExtResource("7_c8vi8")
-
 [node name="DrawArea" type="Area3D" parent="."]
 
 [node name="DrawAreaBox" type="CollisionShape3D" parent="DrawArea"]
@@ -89,5 +121,24 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0)
 visible = false
 mesh = SubResource("PlaneMesh_t2roi")
 surface_material_override/0 = SubResource("ShaderMaterial_782er")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = 2
+
+[node name="EditButton" type="Button" parent="CanvasLayer"]
+unique_name_in_owner = true
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -62.5
+offset_top = -43.5
+offset_right = 62.5
+offset_bottom = 43.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "Edit"
 
 [connection signal="input_event" from="DrawArea" to="." method="_on_area_3d_input_event"]

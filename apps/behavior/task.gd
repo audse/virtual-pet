@@ -101,7 +101,7 @@ func _on_subtask_cancelled(_subtask: Task) -> void:
 
 
 func logs(s: String, last_in_tree: bool = false) -> void:
-	if tree and tree.log and log_this_task:
+	if tree and tree.logging_enabled and log_this_task:
 		var indentations: Array[String] = []
 		indentations.resize(depth)
 		indentations.fill("│ ")

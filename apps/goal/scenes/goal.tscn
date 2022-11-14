@@ -1,0 +1,160 @@
+[gd_scene load_steps=8 format=3 uid="uid://cw6jro65238i"]
+
+[ext_resource type="Script" path="res://apps/goal/scenes/goal.gd" id="1_cx7bu"]
+[ext_resource type="Texture2D" uid="uid://mtsnf211sb8n" path="res://static/icons/backpack.svg" id="2_mq4i8"]
+[ext_resource type="Texture2D" uid="uid://cef3h50hkcuoe" path="res://static/icons/crystal_ball.svg" id="2_ruitq"]
+[ext_resource type="Texture2D" uid="uid://d3xeptw4tv8d0" path="res://static/icons/shopping_cart.svg" id="3_hunrg"]
+[ext_resource type="Texture2D" uid="uid://dd3b5wmivti0x" path="res://static/icons/give_heart.svg" id="4_svr54"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_qbenc"]
+content_margin_bottom = 12.0
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_m5jlj"]
+
+[node name="PanelContainer" type="PanelContainer"]
+self_modulate = Color(0.894118, 0.894118, 0.905882, 1)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -24.0
+offset_top = -36.0
+offset_right = 24.0
+offset_bottom = 36.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_cx7bu")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+offset_left = 24.0
+offset_top = 36.0
+offset_right = 672.0
+offset_bottom = 385.0
+theme_override_constants/separation = 4
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+offset_right = 648.0
+offset_bottom = 157.0
+
+[node name="CollectGoalIcon" type="TextureRect" parent="VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+visible = false
+custom_minimum_size = Vector2(120, 0)
+offset_right = 120.0
+offset_bottom = 115.0
+texture = ExtResource("2_mq4i8")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="SellGoalIcon" type="TextureRect" parent="VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+visible = false
+custom_minimum_size = Vector2(120, 0)
+offset_right = 120.0
+offset_bottom = 115.0
+texture = ExtResource("3_hunrg")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="CuddleGoalIcon" type="TextureRect" parent="VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(120, 0)
+offset_right = 120.0
+offset_bottom = 157.0
+texture = ExtResource("4_svr54")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="VSeparator" type="VSeparator" parent="VBoxContainer/HBoxContainer"]
+offset_left = 132.0
+offset_right = 136.0
+offset_bottom = 157.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/HBoxContainer"]
+offset_left = 148.0
+offset_right = 648.0
+offset_bottom = 157.0
+theme_override_constants/separation = 0
+
+[node name="Title" type="Label" parent="VBoxContainer/HBoxContainer/VBoxContainer"]
+unique_name_in_owner = true
+offset_right = 500.0
+offset_bottom = 69.0
+theme_type_variation = &"H3"
+text = "Goal title"
+vertical_alignment = 2
+
+[node name="Description" type="Label" parent="VBoxContainer/HBoxContainer/VBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(500, 0)
+offset_top = 69.0
+offset_right = 500.0
+offset_bottom = 130.0
+theme_type_variation = &"Subtitle"
+theme_override_styles/normal = SubResource("StyleBoxEmpty_qbenc")
+text = "Goal description goes here."
+autowrap_mode = 3
+
+[node name="ProgressBar" type="ProgressBar" parent="VBoxContainer/HBoxContainer/VBoxContainer"]
+unique_name_in_owner = true
+offset_top = 130.0
+offset_right = 500.0
+offset_bottom = 157.0
+max_value = 10.0
+step = 1.0
+rounded = true
+
+[node name="HSeparator" type="HSeparator" parent="VBoxContainer"]
+offset_top = 161.0
+offset_right = 648.0
+offset_bottom = 225.0
+
+[node name="RewardsContainer" type="HBoxContainer" parent="VBoxContainer"]
+unique_name_in_owner = true
+offset_top = 229.0
+offset_right = 648.0
+offset_bottom = 349.0
+theme_override_constants/separation = 48
+alignment = 1
+
+[node name="Label" type="Label" parent="VBoxContainer/RewardsContainer"]
+offset_left = 201.0
+offset_top = 35.0
+offset_right = 332.0
+offset_bottom = 84.0
+theme_type_variation = &"Subtitle"
+text = "You'll get..."
+
+[node name="FateRewardContainer" type="VBoxContainer" parent="VBoxContainer/RewardsContainer"]
+unique_name_in_owner = true
+offset_left = 380.0
+offset_right = 446.0
+offset_bottom = 120.0
+theme_override_constants/separation = 0
+
+[node name="FateIcon" type="TextureRect" parent="VBoxContainer/RewardsContainer/FateRewardContainer"]
+custom_minimum_size = Vector2(0, 70)
+offset_right = 66.0
+offset_bottom = 70.0
+texture = ExtResource("2_ruitq")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="FateAmountLabel" type="Label" parent="VBoxContainer/RewardsContainer/FateRewardContainer"]
+unique_name_in_owner = true
+offset_top = 70.0
+offset_right = 66.0
+offset_bottom = 120.0
+theme_type_variation = &"H1"
+theme_override_constants/line_spacing = 0
+theme_override_styles/normal = SubResource("StyleBoxEmpty_m5jlj")
+text = "100"
+
+[node name="ClaimRewardButton" type="Button" parent="VBoxContainer"]
+unique_name_in_owner = true
+visible = false
+offset_top = 353.0
+offset_right = 648.0
+offset_bottom = 440.0
+text = "Claim reward!"

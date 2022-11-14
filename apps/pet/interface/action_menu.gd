@@ -58,7 +58,7 @@ func _ready() -> void:
 		}),
 		ActionItemParams.new({
 			id = CUDDLE,
-			text = "cuddle...",
+			text = "cuddle",
 			on_pressed = _on_cuddle_pressed,
 		}),
 		ActionItemParams.new({
@@ -110,3 +110,7 @@ func open_at(pos: Vector2) -> void:
 
 func close() -> void:
 	if action_menu.open: action_menu._on_close()
+
+
+func has_action(id: String) -> bool:
+	return id in action_menu.actions

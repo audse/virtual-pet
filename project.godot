@@ -114,10 +114,20 @@ _global_script_classes=[{
 "language": &"GDScript",
 "path": "res://apps/building/build_state.gd"
 }, {
-"base": "Resource",
+"base": "SaveableResource",
 "class": &"BuildingData",
 "language": &"GDScript",
 "path": "res://apps/building/data/building_data.gd"
+}, {
+"base": "WorldObjectData",
+"class": &"BuildingObjectData",
+"language": &"GDScript",
+"path": "res://apps/building/data/building_object_data.gd"
+}, {
+"base": "Node3D",
+"class": &"BuildingRenderer",
+"language": &"GDScript",
+"path": "res://apps/building/scenes/building_renderer.gd"
 }, {
 "base": "Resource",
 "class": &"BuyCategoryData",
@@ -129,7 +139,7 @@ _global_script_classes=[{
 "language": &"GDScript",
 "path": "res://apps/mod/parsers/buy_category_parser.gd"
 }, {
-"base": "Resource",
+"base": "SaveableResource",
 "class": &"BuyableObjectData",
 "language": &"GDScript",
 "path": "res://apps/buy/data/buyable_object_data.gd"
@@ -199,6 +209,11 @@ _global_script_classes=[{
 "language": &"GDScript",
 "path": "res://interface/components/circle_menu/circle_menu_simple.gd"
 }, {
+"base": "GoalData",
+"class": &"CollectGoalData",
+"language": &"GDScript",
+"path": "res://apps/goal/data/collect_goal_data.gd"
+}, {
 "base": "Object",
 "class": &"ColorRef",
 "language": &"GDScript",
@@ -219,7 +234,7 @@ _global_script_classes=[{
 "language": &"GDScript",
 "path": "res://apps/behavior/decorators/condition.gd"
 }, {
-"base": "Node3D",
+"base": "WorldObjectMeshInstance",
 "class": &"ConsumableObject",
 "language": &"GDScript",
 "path": "res://apps/world_object/scenes/consumable.gd"
@@ -228,6 +243,11 @@ _global_script_classes=[{
 "class": &"ControlRef",
 "language": &"GDScript",
 "path": "res://utils/control_ref.gd"
+}, {
+"base": "GoalData",
+"class": &"CuddleGoalData",
+"language": &"GDScript",
+"path": "res://apps/goal/data/cuddle_goal_data.gd"
 }, {
 "base": "ImageTexture",
 "class": &"CustomSizeTexture2D",
@@ -299,6 +319,11 @@ _global_script_classes=[{
 "language": &"GDScript",
 "path": "res://apps/game/game_mode.gd"
 }, {
+"base": "SaveableResource",
+"class": &"GoalData",
+"language": &"GDScript",
+"path": "res://apps/goal/data/goal_data.gd"
+}, {
 "base": "ColorRect",
 "class": &"GradientNoiseRect",
 "language": &"GDScript",
@@ -319,7 +344,7 @@ _global_script_classes=[{
 "language": &"GDScript",
 "path": "res://apps/pet/behavior/ai/tasks/handle_need.gd"
 }, {
-"base": "Camera3D",
+"base": "Marker3D",
 "class": &"IsoCamera",
 "language": &"GDScript",
 "path": "res://utils/nodes/iso_camera.gd"
@@ -424,7 +449,7 @@ _global_script_classes=[{
 "language": &"GDScript",
 "path": "res://apps/pet/scenes/actor.gd"
 }, {
-"base": "Resource",
+"base": "SaveableResource",
 "class": &"PetData",
 "language": &"GDScript",
 "path": "res://apps/pet/data/pet_data.gd"
@@ -459,10 +484,20 @@ _global_script_classes=[{
 "language": &"GDScript",
 "path": "res://apps/behavior/decorators/repeat_until_succeed.gd"
 }, {
+"base": "Resource",
+"class": &"RewardData",
+"language": &"GDScript",
+"path": "res://apps/goal/data/reward_data.gd"
+}, {
 "base": "Container",
 "class": &"RightDrawerComponent",
 "language": &"GDScript",
 "path": "res://interface/components/right_drawer/right_drawer.gd"
+}, {
+"base": "Resource",
+"class": &"SaveableResource",
+"language": &"GDScript",
+"path": "res://utils/saveable_resource.gd"
 }, {
 "base": "Object",
 "class": &"Scenes",
@@ -478,6 +513,11 @@ _global_script_classes=[{
 "class": &"Selector",
 "language": &"GDScript",
 "path": "res://apps/behavior/composites/selector.gd"
+}, {
+"base": "GoalData",
+"class": &"SellGoalData",
+"language": &"GDScript",
+"path": "res://apps/goal/data/sell_goal_data.gd"
 }, {
 "base": "Composite",
 "class": &"Sequence",
@@ -649,10 +689,15 @@ _global_script_classes=[{
 "language": &"GDScript",
 "path": "res://apps/world_object/scenes/world_object.gd"
 }, {
-"base": "Resource",
+"base": "SaveableResource",
 "class": &"WorldObjectData",
 "language": &"GDScript",
 "path": "res://apps/world_object/data/world_object_data.gd"
+}, {
+"base": "MeshInstance3D",
+"class": &"WorldObjectMeshInstance",
+"language": &"GDScript",
+"path": "res://apps/world_object/scenes/world_object_mesh.gd"
 }, {
 "base": "Node3D",
 "class": &"WorldRenderer",
@@ -682,6 +727,8 @@ _global_script_class_icons={
 "Bowl": "res://apps/cooking/mixing/nodes/bowl.svg",
 "BuildModeState": "",
 "BuildingData": "",
+"BuildingObjectData": "",
+"BuildingRenderer": "",
 "BuyCategoryData": "",
 "BuyCategoryParser": "",
 "BuyableObjectData": "",
@@ -698,12 +745,14 @@ _global_script_class_icons={
 "CircleContainer": "res://interface/components/circle_container/circle_container.svg",
 "CircleMenu": "",
 "CircleMenuSimple": "",
+"CollectGoalData": "",
 "ColorRef": "",
 "CommandData": "",
 "Composite": "",
 "Condition": "res://apps/behavior/assets/condition.svg",
 "ConsumableObject": "",
 "ControlRef": "",
+"CuddleGoalData": "",
 "CustomSizeTexture2D": "",
 "DatetimeData": "",
 "Decorator": "",
@@ -718,6 +767,7 @@ _global_script_class_icons={
 "FoliageData": "",
 "FontStyleSheet": "",
 "GameModeState": "",
+"GoalData": "",
 "GradientNoiseRect": "res://utils/nodes/noise_rect.svg",
 "Guard": "",
 "GuideMap": "",
@@ -750,10 +800,13 @@ _global_script_class_icons={
 "QuickSpatialGrid": "res://utils/nodes/quick_spatial_grid.svg",
 "RepeatUntilFail": "res://apps/behavior/assets/repeat_until_fail.svg",
 "RepeatUntilSucceed": "res://apps/behavior/assets/repeat_until_succeed.svg",
+"RewardData": "",
 "RightDrawerComponent": "res://interface/components/right_drawer/right_drawer.svg",
+"SaveableResource": "",
 "Scenes": "",
 "ScriptRef": "",
 "Selector": "res://apps/behavior/assets/selector.svg",
+"SellGoalData": "",
 "Sequence": "res://apps/behavior/assets/sequence.svg",
 "SettingsData": "",
 "SpacialTile": "res://apps/map/nodes/tile_set/spacial_tile_icon.svg",
@@ -789,6 +842,7 @@ _global_script_class_icons={
 "WorldBlockData": "",
 "WorldObject": "",
 "WorldObjectData": "",
+"WorldObjectMeshInstance": "",
 "WorldRenderer": "res://apps/world/assets/icons/world_renderer.svg"
 }
 
@@ -815,7 +869,9 @@ BuildData="*res://apps/building/data/build_data.gd"
 
 [debug]
 
+file_logging/max_log_files=10
 settings/stdout/print_fps=true
+settings/stdout/verbose_stdout=true
 gdscript/warnings/return_value_discarded=0
 
 [display]
@@ -832,10 +888,6 @@ window/stretch/aspect="expand"
 [dotnet]
 
 project/assembly_name="pet-sim"
-
-[filesystem]
-
-import/blender/enabled=false
 
 [global]
 
@@ -901,7 +953,11 @@ pointing/emulate_touch_from_mouse=true
 
 [rendering]
 
+renderer/rendering_method="mobile"
 global_illumination/gi/use_half_resolution=true
+camera/depth_of_field/depth_of_field_bokeh_shape=0
+environment/ssao/quality=1
+environment/ssil/quality=1
 global_illumination/sdfgi/frames_to_converge=1
 global_illumination/sdfgi/frames_to_update_lights=3
 anti_aliasing/quality/screen_space_aa=1

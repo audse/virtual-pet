@@ -5,6 +5,8 @@ signal opened
 signal closing
 signal closed
 
+@export var menu: BuyCategoryData.Menu = BuyCategoryData.Menu.BUY
+
 @onready var button := %Button as Button
 @onready var tabs := %TabContainer as TabContainer
 
@@ -14,6 +16,8 @@ signal closed
 		flow_container = tabs.get_node("All items/VFlowContainer")
 	}
 }
+
+@onready var object_nodes := {}
 
 @onready var thumbnail_size: Vector2:
 	get: 
@@ -47,32 +51,42 @@ func _ready() -> void:
 	
 	Game.Mode.enter_state.connect(
 		func(state: GameModeState.Mode) -> void:
-			if state == GameModeState.Mode.BUY:
+			if state == GameModeState.Mode.BUY and menu == BuyCategoryData.Menu.BUY:
 				visible = true
 				create()
 				open()
-			else:
+			elif state == GameModeState.Mode.BUILD and menu == BuyCategoryData.Menu.BUILD:
+				create()	
+	)
+	
+	Game.Mode.exit_state.connect(
+		func(state: GameModeState.Mode) -> void:
+			if (
+				(state == GameModeState.Mode.BUY and menu == BuyCategoryData.Menu.BUY)
+				or (state == GameModeState.Mode.BUILD and menu == BuyCategoryData.Menu.BUILD)
+			):
 				await close()
 				destroy()
 				visible = false
 	)
+	
 	# Close menu to focus on placement when buying an object
 	BuyData.object_bought.connect(func(_obj): close())
 
 
 func create() -> void:
 	# Create category tabs
-	for category in BuyData.categories: add_category(category)
+	for category in BuyData.categories: 
+		if category.menu == menu: add_category(category)
 	# Add items
-	for object in BuyData.objects: add_object(object)
+	for object in BuyData.objects:
+		if len(object.category_id) and object.category_id in category_nodes:
+			add_object(object)
 
 
 func destroy() -> void:
-	for category_node in tabs.get_children():
-		if category_node.name != "All items":
-			category_node.queue_free()
-	for object_node in category_nodes.all_items.flow_container.get_children():
-		object_node.queue_free()
+	for category_node in category_nodes.values():
+		tabs.remove_child(category_node.scroll_container)
 
 
 func open() -> void:
@@ -105,35 +119,74 @@ func close() -> void:
 	closed.emit()
 
 
-func make_thumbnail(object: BuyableObjectData) -> BuyableObjectThumbnail:
-	var thumbnail := BuyableObjectThumbnail.new(object)
-	thumbnail.custom_minimum_size = thumbnail_size * Vector2(object.dimensions.x, object.dimensions.y)
-	return thumbnail
-
-
 func add_category(category: BuyCategoryData) -> void:
-	var scroll_container := ScrollContainer.new()
-	var flow_container := VFlowContainer.new()
-	
-	tabs.add_child(scroll_container)
-	scroll_container.add_child(flow_container)
-	
-	scroll_container.name = category.display_name
-	scroll_container.vertical_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
-	flow_container.size_flags_horizontal = SIZE_EXPAND_FILL
-	flow_container.size_flags_vertical = SIZE_EXPAND_FILL
-	
-	category_nodes[category.id] = {
-		scroll_container = scroll_container,
-		flow_container = flow_container
-	}
+	if not category.id in category_nodes:
+		var scroll_container := ScrollContainer.new()
+		var flow_container := VFlowContainer.new()
+		
+		tabs.add_child(scroll_container)
+		scroll_container.add_child(flow_container)
+		
+		scroll_container.name = category.display_name
+		scroll_container.vertical_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+		flow_container.size_flags_horizontal = SIZE_EXPAND_FILL
+		flow_container.size_flags_vertical = SIZE_EXPAND_FILL
+		
+		category_nodes[category.id] = {
+			scroll_container = scroll_container,
+			flow_container = flow_container
+		}
+	else:
+		tabs.add_child(category_nodes[category.id].scroll_container)
 
 
 func add_object(object: BuyableObjectData) -> void:
-	# Add to category
-	if len(object.category_id):
-		var category_node = category_nodes[object.category_id]
-		category_node.flow_container.add_child(make_thumbnail(object))
+	if not object.id in object_nodes: object_nodes[object.id] = (
+		BuyableObjectThumbnailNode
+			.new(object, thumbnail_size)
+			.render(category_nodes.get(object.category_id, {}), category_nodes.all_items)
+	)
+	else: object_nodes[object.id].render()
+
+
+class BuyableObjectThumbnailNode:
+	var object: BuyableObjectData
 	
-	# Add to "All items"
-	category_nodes.all_items.flow_container.add_child(make_thumbnail(object))
+	var category_tab: Button
+	var all_tab: Button
+	
+	var category_container: Dictionary
+	var all_items_container: Dictionary
+	
+	var object_size: Vector2:
+		get: return Vector2(object.dimensions.x, object.dimensions.y)
+	
+	
+	func _init(object_value: BuyableObjectData, min_size: Vector2) -> void:
+		object = object_value
+		
+		category_tab = BuyableObjectThumbnail.new(object)
+		all_tab = BuyableObjectThumbnail.new(object)
+		
+		category_tab.custom_minimum_size = min_size * object_size
+		all_tab.custom_minimum_size = min_size * object_size
+	
+	
+	func render(
+		category_container_value := category_container,
+		all_items_container_value := all_items_container
+	) -> BuyableObjectThumbnailNode:
+		category_container = category_container_value
+		all_items_container = all_items_container_value
+		
+		if category_container.size(): category_container.flow_container.add_child(category_tab)
+		all_items_container.flow_container.add_child(all_tab)
+		
+		return self
+	
+	
+	func destroy() -> BuyableObjectThumbnailNode:
+		if category_tab.is_inside_tree() and category_container.size(): category_container.flow_container.remove_child(category_tab)
+		if all_tab.is_inside_tree(): all_items_container.flow_container.remove_child(all_tab)
+		
+		return self

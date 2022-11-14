@@ -4,12 +4,6 @@ extends Resource
 @export var coord: Vector3i
 
 
-var is_buildable: bool:
-	get: return (
-		len(get_objects()) == 0 
-		and len(get_buildings()) == 0
-	)
-
 var is_occupiable: bool:
 	get: 
 		for object in get_objects():
@@ -21,6 +15,7 @@ var _object_cache_is_valid: bool = false
 var _cached_objects: Array[WorldObjectData] = []
 
 var _building_cache_is_valid: bool = false
+
 var _cached_buildings: Array[BuildingData] = []
 
 var _pet_cache_is_valid: bool = false
@@ -38,6 +33,13 @@ func _init(coord_value: Vector3i) -> void:
 	WorldData.pets_changed.connect(
 		func() -> void: _pet_cache_is_valid = false
 	)
+
+
+func is_buildable_by_building(start_building: BuildingData) -> bool:
+	if len(get_objects()) != 0: return false
+	for building in get_buildings():
+		if building != start_building: return false
+	return true
 
 
 func is_occupiable_by_object(start_object: WorldObjectData) -> bool:
@@ -66,8 +68,7 @@ func get_buildings() -> Array[BuildingData]:
 	if _building_cache_is_valid: return _cached_buildings
 	
 	var buildings: Array[BuildingData] = WorldData.buildings.filter(
-		func(building: BuildingData) -> bool:
-			return coord in building.coords
+		func(building: BuildingData) -> bool: return building.has_coord(coord)
 	)
 	_building_cache_is_valid = true
 	_cached_buildings = buildings

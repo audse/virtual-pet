@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://dwpbivgvduijm"]
+[gd_scene load_steps=14 format=3 uid="uid://dwpbivgvduijm"]
 
 [ext_resource type="Script" path="res://interface/components/modal/modal.gd" id="1_kslah"]
 [ext_resource type="Texture2D" uid="uid://bn61fbcpokvek" path="res://apps/painter/assets/icons/back.svg" id="1_yduqs"]
@@ -10,6 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://dnx0yr17qeqwn" path="res://static/icons/tree.svg" id="6_4ed8m"]
 [ext_resource type="Texture2D" uid="uid://bgqmbqpl6rgk1" path="res://static/icons/wallpaper.svg" id="7_wy4j0"]
 [ext_resource type="Texture2D" uid="uid://b1e8oy1xfc2hg" path="res://static/icons/floor.svg" id="8_2uog6"]
+[ext_resource type="PackedScene" uid="uid://dq06gd36buf3b" path="res://apps/buy/interface/buy_object_palette.tscn" id="11_uppiy"]
 
 [sub_resource type="GDScript" id="GDScript_m70jq"]
 script/source = "extends MarginContainer
@@ -18,8 +19,9 @@ script/source = "extends MarginContainer
 @onready var back_button := %BackButton as Button
 
 @onready var add_house_button := %AddHouseButton as Button
-@onready var walls_button := %WallsButton as Button
 @onready var destroy_button := %DestroyButton as Button
+@onready var walls_button := %WallsButton as Button
+@onready var doors_button := %DoorsButton as Button
 
 @onready var controller := %ModalController as ModalController
 @onready var options_container := %OptionsContainer as MarginContainer
@@ -27,6 +29,8 @@ script/source = "extends MarginContainer
 
 @onready var step_1_container := %Step1Container as HBoxContainer
 @onready var step_2_container := %Step2Container as HBoxContainer
+
+@onready var buy_object_palette := %BuyObjectPalette as Control
 
 
 func _ready() -> void:
@@ -36,15 +40,16 @@ func _ready() -> void:
 			match state:
 				BuildModeState.BuildState.BUILDING_WALLS, BuildModeState.BuildState.DESTROYING_WALLS:
 					show_await_confirm()
-				BuildModeState.BuildState.CREATING, BuildModeState.BuildState.EDITING:
+				BuildModeState.BuildState.EDIT:
 					show_step_2()
-					show_home()
-				_: 
+					if BuildData.state.prev_state != BuildModeState.BuildState.READY: 
+						show_home()
+				BuildModeState.BuildState.READY: 
 					show_step_1()
 					show_home()
 	)
 	
-	add_house_button.pressed.connect(BuildData.state.set_to.bind(BuildModeState.BuildState.CREATING))
+	add_house_button.pressed.connect(BuildData.state.start_new)
 	walls_button.pressed.connect(BuildData.state.set_to.bind(BuildModeState.BuildState.BUILDING_WALLS))
 	destroy_button.pressed.connect(BuildData.state.set_to.bind(BuildModeState.BuildState.DESTROYING_WALLS))
 	
@@ -60,9 +65,13 @@ func _ready() -> void:
 			match BuildData.state.state:
 				BuildModeState.BuildState.BUILDING_WALLS, BuildModeState.BuildState.DESTROYING_WALLS:
 					BuildData.state.cancel()
-				BuildModeState.BuildState.READY: 
+				BuildModeState.BuildState.READY:
 					Game.Mode.set_to(Game.Mode.prev_state)
+				BuildModeState.BuildState.EDIT:
+					BuildData.state.set_to(BuildModeState.BuildState.READY)
 	)
+	
+	doors_button.pressed.connect(buy_object_palette.open)
 	
 	Game.Mode.exit_state.connect(
 		func(state: GameModeState.Mode) -> void:
@@ -150,6 +159,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 script = SubResource("GDScript_m70jq")
 
 [node name="ModalController" type="Control" parent="." node_paths=PackedStringArray("target")]
@@ -160,6 +170,7 @@ offset_left = 24.0
 offset_top = 24.0
 offset_right = 804.0
 offset_bottom = 1768.0
+mouse_filter = 2
 script = ExtResource("1_kslah")
 target = NodePath("..")
 enter_from = 3
@@ -326,7 +337,6 @@ custom_minimum_size = Vector2(150, 0)
 offset_left = 174.0
 offset_right = 324.0
 offset_bottom = 150.0
-disabled = true
 icon = ExtResource("5_03fra")
 expand_icon = true
 
@@ -369,3 +379,19 @@ theme_override_styles/disabled = SubResource("StyleBoxFlat_u1is1")
 disabled = true
 text = "?"
 expand_icon = true
+
+[node name="BuyObjectPalette" parent="." instance=ExtResource("11_uppiy")]
+unique_name_in_owner = true
+visible = false
+anchors_preset = 0
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 24.0
+offset_top = 24.0
+offset_right = 804.0
+offset_bottom = 1768.0
+grow_horizontal = 1
+grow_vertical = 1
+menu = 1

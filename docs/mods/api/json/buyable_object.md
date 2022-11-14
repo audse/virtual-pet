@@ -19,37 +19,30 @@ interface BuyableObject {
      * Optional properties
      */
     category_id?: string,
+    menu?: BuyMenu, // [1] defaults to `BuyMenu.BUY`
     description?: string,
     colorway_id?: string,
-    dimensions?: BuyableObjectDimensions,
-    mesh_scale?: BuyableObjectDimensions,
+    dimensions?: Dimensions, // [2]
+    mesh_scale?: Dimensions, // [2]
     colors?: BuyableObjectColor[], // a list of other color options for this item
     rarity?: number,
     collision_shape?: string, // path to `.tres` `Shape3D` file - only applies if you are making your mod in Godot
     flags?: Flag[], // array of strings
-    actions?: string,
     total_uses?: number, // only applies for consumable objects
     fulfills_needs?: string[],
-    consumed_meshes?: string[], // path to 3D models of the mesh's appearance after being consumed. the order is important; the first path should be the item with 1 use left (almost all the way gone), the next with 2 uses left, and so on. consumable objects without this set will use the default mesh for all states.
-    script?: string, // a script that is run whenever this object enters the scene. should include the function `_on_placed_in_world`
+    mesh_script?: string, // a script that is attached to every instance of this mesh
 }
 
 enum WorldLayer {
-    Floor_Object,
-    Wall_Object,
-    Foliage,
-    Building,
+    FLOOR_OBJECT,
+    WALL_OBJECT,
+    FOLIAGE,
+    BUILDING,
 }
 
 enum Flag {
-    Consumable,
-    Ownable,
-}
-
-interface BuyableObjectDimensions {
-    width?: number, // default = 1
-    height?: number, // default = 1
-    depth?: number, // default = 1
+    CONSUMABLE,
+    OWNABLE,
 }
 
 interface BuyableObjectColor {
@@ -57,6 +50,12 @@ interface BuyableObjectColor {
     materials: string[] // paths to all `.mtl` files needed for the recolor (in order of surface)
 }
 ```
+
+### References
+
+1. [`BuyMenu`](buy_category.md)
+2. [`Dimensions`](types.md#dimensions)
+
 
 ## Examples
 
@@ -69,7 +68,7 @@ interface BuyableObjectColor {
         "width": 1,
         "height": 1,
     },
-    "world_layer": "FloorObject",
+    "world_layer": "FLOOR_OBJECT",
     "category_id": "lighting",
     "description": "The coolest way to light your room!",
     "flags": ["Ownable"],
@@ -108,15 +107,11 @@ interface BuyableObjectColor {
         "height": 1,
         "depth": 1
     },
-    "world_layer": "Foliage",
+    "world_layer": "FOLIAGE",
     "category_id": "wildflower",
     "flags": ["Consumable"],
     "total_uses": 2,
     "fulfills_needs": ["Hunger"],
-    "consumed_meshes": [
-        "cute_garden_stuff/dandelion/dandelion_with_no_seeds.obj",
-    ],
-    "actions": ["make a wish"],
     "rarity": 0,
     "script": "cute_garden_stuff/dandelion/make_a_wish.gd",
     "mesh_scale": {

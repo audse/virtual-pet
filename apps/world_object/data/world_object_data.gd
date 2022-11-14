@@ -1,5 +1,8 @@
 class_name WorldObjectData
-extends Resource
+extends SaveableResource
+
+signal is_on_changed(is_on: bool)
+signal uses_left_changed(uses_left: int)
 
 enum {
 	ERR_CANT_CONSUME = 100
@@ -19,33 +22,32 @@ enum Layer {
 ## The base data for this object- where `WorldObjectData` is an instance, `BuyObjectData` is its prototype
 @export var buyable_object_data: BuyableObjectData
 
-@export var coord: Vector2i:
-	set(value):
-		coord = value
-
+@export var coord: Vector2i
 @export var rotation: int = 0:
 	set(value): 
 		rotation = wrapi(int(snapped(value, 45)), 0, 360)
-
 @export var flags: Array[Flag]:
 	set(value):
 		flags = value
-		save_data()
+		emit_changed()
 
 @export var owner: PetData:
 	set(value):
 		owner = value
-		save_data()
+		emit_changed()
 
 @export var uses_left: int = -1: # infinite
 	set(value):
 		uses_left = value
-		save_data()
+		emit_changed()
+		uses_left_changed.emit(uses_left)
 
-@export var data_path: String
-
-var _data_path: String:
-	get: return "user://world/" + data_path + ".tres"
+## Some items can be turned on, e.g. lights, music
+@export var is_on: bool = false:
+	set(value):
+		is_on = value
+		emit_changed()
+		is_on_changed.emit(is_on)
 
 var sell_price: int:
 	get: 
@@ -64,6 +66,11 @@ func _init(args: Dictionary = {}) -> void:
 		if key in self: self[key] = args[key]
 	if buyable_object_data:
 		uses_left = buyable_object_data.total_uses
+	super._init()
+
+
+func _get_dir() -> String:
+	return "world"
 
 
 func get_used_coords() -> Array[Vector2i]:
@@ -126,13 +133,13 @@ func set_rotation_from_world_rotation(world_rotation: Vector3) -> void:
 
 
 func can_use() -> bool:
-	if instance and "consume" in instance:
+	if instance and instance.is_consumable:
 		return uses_left > 0
 	else: return true
 
 
 func use() -> int:
-	if instance and "consume" in instance:
+	if instance and instance.is_consumable:
 		if uses_left > 0: 
 			uses_left -= 1
 			instance.consume()
@@ -143,9 +150,6 @@ func use() -> int:
 
 func reset_uses() -> void:
 	uses_left = buyable_object_data.total_uses
-	if instance and "consume" in instance:
+	if instance and instance.is_consumable:
 		instance.reset()
 
-
-func save_data() -> void:
-	ResourceSaver.save(self, _data_path)

@@ -1,9 +1,6 @@
 extends Node
 
-signal start_building
 signal confirm_build
-
-signal start_destroying
 signal confirm_destroy
 
 signal cancel
@@ -22,8 +19,9 @@ func _ready() -> void:
 	)
 
 
-func is_area_buildable(coords: Array[Vector3i]) -> bool:
-	for coord in coords:
+func is_area_buildable(coords_2x2: Array[Vector3i]) -> bool:
+	var coords_1x1 := CellMap.from_2x2_to_1x1_coords(coords_2x2)
+	for coord in coords_1x1:
 		if not coord in WorldData.blocks: return false
-		if not WorldData.blocks[coord].is_buildable: return false
+		if not WorldData.blocks[coord].is_buildable_by_building(state.current_building): return false
 	return true

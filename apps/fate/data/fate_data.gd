@@ -14,6 +14,7 @@ enum ReasonForEarning {
 	GAVE_OBJECT,
 	CUDDLED,
 	HAPPY_PET,
+	GOAL_COMPLETE,
 }
 
 
@@ -22,6 +23,7 @@ const EarnAmount := {
 	ReasonForEarning.GAVE_OBJECT: 50,
 	ReasonForEarning.CUDDLED: 10,
 	ReasonForEarning.HAPPY_PET: 10,
+	ReasonForEarning.GOAL_COMPLETE: 50,
 }
 
 

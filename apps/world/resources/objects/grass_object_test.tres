@@ -17,10 +17,8 @@ dimensions = Vector3i(1, 1, 1)
 world_layer = 0
 mesh_scale = Vector3(1, 1, 1)
 rarity = 0
-consumed_meshes = null
 flags = [1]
 fulfills_needs = [2]
-actions = []
 total_uses = 3
 
 [resource]

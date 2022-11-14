@@ -8,6 +8,7 @@ const required_fields := {
 
 const optional_fields := {
 	description = TYPE_STRING,
+	menu = TYPE_STRING,
 }
 
 
@@ -18,4 +19,7 @@ static func parse(context: Node, json_file: FileAccess) -> BuyCategoryData:
 	if not parser.are_required_fields_ok(): return null
 	if not parser.are_optional_fields_ok(optional_fields): return null
 	
+	if "menu" in data and data.menu in BuyCategoryData.Menu:
+		data.menu = BuyCategoryData.Menu[data.menu]
+
 	return BuyCategoryData.new(data)

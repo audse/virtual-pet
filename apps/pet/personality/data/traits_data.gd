@@ -16,6 +16,7 @@ const num_possible_traits = 3
 	set(value):
 		traits = value
 		traits_changed.emit()
+		emit_changed()
 
 @export var num_allowed_traits := 3
 

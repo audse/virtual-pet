@@ -12,7 +12,7 @@ var camera: Camera3D
 
 var camera_size: float:
 	get: return {
-		1: 2.0,
+		1: 3.0,
 		2: 5.0,
 		3: 8.0,
 		4: 12.0,

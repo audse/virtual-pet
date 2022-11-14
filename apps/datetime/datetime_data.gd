@@ -26,6 +26,7 @@ signal time_paused
 signal time_unpaused
 
 signal time_changed(value: int)
+signal hour_changed(value: int)
 signal day_changed(value: Day)
 signal week_changed(value: int)
 signal season_changed(value: Season)
@@ -55,6 +56,10 @@ var paused: bool = false:
 @export_range(0, 1439, 10) var time: int = 0:
 	set(value):
 		time = snapped(value, 10) as int
+		
+		# emit signal for turn of the hour
+		if time % 60 == 0:
+			hour_changed.emit(int(float(time) / 60.0))
 		
 		# reset day after 1440 minutes
 		if time > 1439:

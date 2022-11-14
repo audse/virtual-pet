@@ -4,7 +4,8 @@ extends Resource
 enum DesignType {
 	INTERIOR_WALL,
 	EXTERIOR_WALL,
-	FLOOR
+	FLOOR,
+	ROOF,
 }
 
 

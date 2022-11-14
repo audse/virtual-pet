@@ -72,12 +72,7 @@ func _on_input_event(
 
 func _physics_process(_delta: float) -> void:
 	if enabled:
-		# move towards the nearest grid square
-		var target: Vector3 = (
-			object.position.lerp(object.position.snapped(WorldData.grid_size_vector), 0.1)
-			if not enable_fallback_position
-			else fallback_position
-		)
+		var target := Vector3(object.position.snapped(WorldData.grid_size_vector))
 		
 		if is_dragging and elapsed_frames > 5:
 			target = Vector3Ref.project_position_to_floor_simple(
@@ -91,11 +86,17 @@ func _physics_process(_delta: float) -> void:
 			position_changed.emit(target)
 			
 		else:
+			target = (
+				object.position.lerp(target, 0.1)
+				if not enable_fallback_position
+				else fallback_position
+			)
 			# Move back towards original ground position
 			target.y = lerp(target.y, start_distance_from_ground, 0.1)
 		
-		if object is PhysicsBody3D: object.move_and_collide(target - object.position)
-		else: object.position = target
+		if object.position.distance_to(target) > 0.05:
+			if object is PhysicsBody3D: object.move_and_collide(target - object.position)
+			else: object.position = target
 
 
 func _on_tapped() -> void:

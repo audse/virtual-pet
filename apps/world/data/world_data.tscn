@@ -1,11 +1,6 @@
-[gd_scene load_steps=5 format=3 uid="uid://dyx35frhk8dsy"]
+[gd_scene load_steps=2 format=3 uid="uid://dyx35frhk8dsy"]
 
 [ext_resource type="Script" path="res://apps/world/data/world_data.gd" id="1_4yn8x"]
-[ext_resource type="Resource" uid="uid://y0p4ov45xviv" path="res://apps/world/resources/objects/bed_object_test.tres" id="2_00bnj"]
-[ext_resource type="Resource" uid="uid://bhjhxphjix4f2" path="res://apps/pet/scenes/pet_data_test.tres" id="2_oruo7"]
-[ext_resource type="Resource" uid="uid://scjawr88nkob" path="res://apps/world/resources/objects/grass_object_test.tres" id="3_v4tyk"]
 
 [node name="WorldData" type="Node"]
 script = ExtResource("1_4yn8x")
-pets = [ExtResource("2_oruo7")]
-objects = [ExtResource("2_00bnj"), ExtResource("3_v4tyk")]

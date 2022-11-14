@@ -2,7 +2,7 @@ class_name BehaviorTree
 extends Task
 @icon("assets/behavior_tree.svg")
 
-@export var log: bool = false
+@export var logging_enabled: bool = false
 
 @onready var child: Task = (
 	get_children()

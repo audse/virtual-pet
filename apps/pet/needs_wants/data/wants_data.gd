@@ -83,6 +83,7 @@ func select_wants(pet_data: PetData) -> void:
 	wants.resize(3)
 	
 	wants_changed.emit(wants)
+	emit_changed()
 
 
 func get_want_string(want: Want) -> String:
