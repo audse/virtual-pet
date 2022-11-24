@@ -95,6 +95,10 @@ func set_cells_betweenv(s: Vector3i, e: Vector3i) -> void:
 		set_cellv(coord, true)
 
 
+func set_cells(cells: Array[Vector3i]) -> void:
+	for cell in cells: set_cellv(cell, true)
+
+
 func complete() -> void:
 	await get_tree().process_frame
 	drag_complete.emit(start_coord, end_coord)

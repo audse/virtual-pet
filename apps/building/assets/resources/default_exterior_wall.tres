@@ -1,13 +1,17 @@
-[gd_resource type="Resource" load_steps=2 format=3 uid="uid://cn7mh1ioioefg"]
+[gd_resource type="Resource" load_steps=4 format=3 uid="uid://cn7mh1ioioefg"]
 
 [ext_resource type="Script" path="res://apps/building/data/design_data.gd" id="1_6sb6i"]
+[ext_resource type="Texture2D" uid="uid://cen7577c0pdkr" path="res://mods/content_siding_exterior/textures/vertical_siding__white__albedo.png" id="1_40ins"]
+[ext_resource type="Texture2D" uid="uid://xogj8nu7mqbq" path="res://mods/content_siding_exterior/textures/vertical_siding__normal.png" id="2_2y530"]
 
 [resource]
 script = ExtResource("1_6sb6i")
 id = "default"
 display_name = "Default"
-category_id = 1
+design_type = 0
 price = null
+category_id = ""
 description = ""
-tags = null
 rarity = 0
+albedo_texture = ExtResource("1_40ins")
+normal_texture = ExtResource("2_2y530")

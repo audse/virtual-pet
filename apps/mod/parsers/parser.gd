@@ -45,6 +45,14 @@ func get_as_script(path: String) -> Script:
 	return script as Script
 
 
+func parse_dimensions(dimensions: Dictionary, default := Vector3.ONE) -> Vector3:
+	return Vector3(
+		float(dimensions.width) if "width" in dimensions else default.x,
+		float(dimensions.height) if "height" in dimensions else default.y,
+		float(dimensions.depth) if "depth" in dimensions else default.z
+	)
+
+
 func is_script(script) -> void:
 	assert(script is Script, ModError.report_string(
 		json_file,

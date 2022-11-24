@@ -54,6 +54,16 @@ _global_script_classes=[{
 "language": &"GDScript",
 "path": "res://apps/mod/templates/add_buyable_objects.gd"
 }, {
+"base": "Module",
+"class": &"AddDesignCategoriesModule",
+"language": &"GDScript",
+"path": "res://apps/mod/templates/add_design_categories.gd"
+}, {
+"base": "Module",
+"class": &"AddDesignsModule",
+"language": &"GDScript",
+"path": "res://apps/mod/templates/add_designs.gd"
+}, {
 "base": "Decorator",
 "class": &"AlwaysFail",
 "language": &"GDScript",
@@ -153,11 +163,6 @@ _global_script_classes=[{
 "class": &"BuyableObjectScript",
 "language": &"GDScript",
 "path": "res://apps/mod/scripts/buyable_object_script.gd"
-}, {
-"base": "Button",
-"class": &"BuyableObjectThumbnail",
-"language": &"GDScript",
-"path": "res://apps/buy/interface/object_thumbnail_viewport.gd"
 }, {
 "base": "Object",
 "class": &"Cell",
@@ -265,9 +270,24 @@ _global_script_classes=[{
 "path": "res://apps/behavior/decorator.gd"
 }, {
 "base": "Resource",
+"class": &"DesignCategoryData",
+"language": &"GDScript",
+"path": "res://apps/building/data/design_category_data.gd"
+}, {
+"base": "Object",
+"class": &"DesignCategoryParser",
+"language": &"GDScript",
+"path": "res://apps/mod/parsers/design_category_parser.gd"
+}, {
+"base": "Resource",
 "class": &"DesignData",
 "language": &"GDScript",
 "path": "res://apps/building/data/design_data.gd"
+}, {
+"base": "Object",
+"class": &"DesignParser",
+"language": &"GDScript",
+"path": "res://apps/mod/parsers/design_parser.gd"
 }, {
 "base": "Object",
 "class": &"DictRef",
@@ -468,6 +488,41 @@ _global_script_classes=[{
 "class": &"PlacementRect",
 "language": &"GDScript",
 "path": "res://apps/interface/placement/placement.gd"
+}, {
+"base": "RefCounted",
+"class": &"Polygon",
+"language": &"GDScript",
+"path": "res://utils/polygon.gd"
+}, {
+"base": "Node3D",
+"class": &"PolygonEditor",
+"language": &"GDScript",
+"path": "res://apps/polygon_editor/scenes/polygon_editor.gd"
+}, {
+"base": "Area3D",
+"class": &"PolygonEditorAddPointButton",
+"language": &"GDScript",
+"path": "res://apps/polygon_editor/scenes/add_point.gd"
+}, {
+"base": "StaticBody3D",
+"class": &"PolygonEditorEdgeHandle",
+"language": &"GDScript",
+"path": "res://apps/polygon_editor/scenes/edge.gd"
+}, {
+"base": "RigidBody3D",
+"class": &"PolygonEditorPoint",
+"language": &"GDScript",
+"path": "res://apps/polygon_editor/scenes/point.gd"
+}, {
+"base": "Object",
+"class": &"ProcMesh",
+"language": &"GDScript",
+"path": "res://utils/proc_mesh.gd"
+}, {
+"base": "Object",
+"class": &"ProcMeshParams",
+"language": &"GDScript",
+"path": "res://utils/proc_mesh_params.gd"
 }, {
 "base": "Node3D",
 "class": &"QuickSpatialGrid",
@@ -714,6 +769,8 @@ _global_script_class_icons={
 "AddActionItemModule": "",
 "AddBuyCategoriesModule": "",
 "AddBuyableObjectsModule": "",
+"AddDesignCategoriesModule": "",
+"AddDesignsModule": "",
 "AlwaysFail": "res://apps/behavior/assets/always_fail.svg",
 "AlwaysSucceed": "res://apps/behavior/assets/always_succeed.svg",
 "Anim": "",
@@ -734,7 +791,6 @@ _global_script_class_icons={
 "BuyableObjectData": "",
 "BuyableObjectParser": "",
 "BuyableObjectScript": "",
-"BuyableObjectThumbnail": "",
 "Cell": "",
 "CellMap": "res://apps/map/nodes/cell_map/cell_map_icon.svg",
 "Chance": "res://apps/behavior/assets/chance.svg",
@@ -756,7 +812,10 @@ _global_script_class_icons={
 "CustomSizeTexture2D": "",
 "DatetimeData": "",
 "Decorator": "",
+"DesignCategoryData": "",
+"DesignCategoryParser": "",
 "DesignData": "",
+"DesignParser": "",
 "DictRef": "",
 "Draggable": "res://utils/nodes/draggable.svg",
 "Draggable3D": "res://utils/nodes/draggable.gd",
@@ -797,6 +856,13 @@ _global_script_class_icons={
 "PetInterfaceData": "",
 "PillRange": "res://interface/components/pill_range.svg",
 "PlacementRect": "",
+"Polygon": "",
+"PolygonEditor": "",
+"PolygonEditorAddPointButton": "",
+"PolygonEditorEdgeHandle": "",
+"PolygonEditorPoint": "",
+"ProcMesh": "",
+"ProcMeshParams": "",
 "QuickSpatialGrid": "res://utils/nodes/quick_spatial_grid.svg",
 "RepeatUntilFail": "res://apps/behavior/assets/repeat_until_fail.svg",
 "RepeatUntilSucceed": "res://apps/behavior/assets/repeat_until_succeed.svg",
@@ -872,7 +938,6 @@ BuildData="*res://apps/building/data/build_data.gd"
 file_logging/max_log_files=10
 settings/stdout/print_fps=true
 settings/stdout/verbose_stdout=true
-gdscript/warnings/return_value_discarded=0
 
 [display]
 
@@ -888,6 +953,10 @@ window/stretch/aspect="expand"
 [dotnet]
 
 project/assembly_name="pet-sim"
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/script-name-on-top/plugin.cfg")
 
 [global]
 
@@ -953,11 +1022,11 @@ pointing/emulate_touch_from_mouse=true
 
 [rendering]
 
-renderer/rendering_method="mobile"
 global_illumination/gi/use_half_resolution=true
 camera/depth_of_field/depth_of_field_bokeh_shape=0
 environment/ssao/quality=1
 environment/ssil/quality=1
+scaling_3d/mode=1
 global_illumination/sdfgi/frames_to_converge=1
 global_illumination/sdfgi/frames_to_update_lights=3
 anti_aliasing/quality/screen_space_aa=1

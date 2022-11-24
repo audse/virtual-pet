@@ -18,16 +18,15 @@ const SHADER = preload("res://apps/normal_map_maker/assets/shaders/height_map_to
 func _ready() -> void:	
 	Utils.adjust_margins_for_landscape($MarginContainer)
 	
-	var finder := FileAccess.new()
-	if not finder.dir_exists(NORMAL_MAP_GALLERY_PATH):
-		finder.make_dir(NORMAL_MAP_GALLERY_PATH)
+	if not DirAccess.dir_exists_absolute(NORMAL_MAP_GALLERY_PATH):
+		DirAccess.make_dir_absolute(NORMAL_MAP_GALLERY_PATH)
 
 
 #func load_image(path: String) -> void:
 #	var image := Image.load_from_file(NORMAL_MAP_GALLERY_PATH + path + ".png")
 #	var texture := ImageTexture.new().create_from_image(image)
 #	canvas.set_meta("canvas_name", path)
-#	canvas.material.set_shader_uniform("image", texture)
+#	canvas.material.set_shader_parameter("image", texture)
 
 
 func _on_save_pressed(save_name: String) -> void:
@@ -41,16 +40,16 @@ func _on_gallery_button_pressed() -> void:
 
 func _on_gallery_canvas_selected(canvas_viewport: SubViewport, canvas_name: String) -> void:
 	var image := canvas_viewport.get_texture()
-	canvas.material.set_shader_uniform("image", image)
-	canvas.material.set_shader_uniform("resolution", image.get_size())
-	canvas.material.set_shader_uniform("power", -10)
+	canvas.material.set_shader_parameter("image", image)
+	canvas.material.set_shader_parameter("resolution", image.get_size())
+	canvas.material.set_shader_parameter("power", -10)
 	canvas.set_meta("canvas_name", canvas_name)
 	%Gallery.close()
 	%SaveButton.update_name_field(canvas_name)
 
 
 func _on_invert_checkbox_toggled(_button_pressed: bool) -> void:
-	canvas.material.set_shader_uniform("power", power)
+	canvas.material.set_shader_parameter("power", power)
 
 
 func _on_save_button_pressed() -> void:
@@ -62,8 +61,8 @@ func _on_main_menu_button_pressed() -> void:
 
 
 func _on_depth_value_changed(_value: float) -> void:
-	canvas.material.set_shader_uniform("depth", depth)
+	canvas.material.set_shader_parameter("depth", depth)
 
 
 func _on_power_value_changed(_value: float) -> void:
-	canvas.material.set_shader_uniform("power", power)
+	canvas.material.set_shader_parameter("power", power)

@@ -1,0 +1,9 @@
+{
+    "id": "vertical_siding__white",
+    "display_name": "Vertical Siding (white)",
+    "design_type": "EXTERIOR_WALL",
+    "category_id": "siding_exterior",
+    "price": 500,
+    "albedo_texture": "content_siding_exterior/textures/vertical_siding__white__albedo.png",
+    "normal_texture": "content_siding_exterior/textures/vertical_siding__normal.png"
+}

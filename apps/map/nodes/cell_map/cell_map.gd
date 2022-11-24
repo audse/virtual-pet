@@ -194,31 +194,3 @@ func map_to_world(coords: Vector3i, center: bool = false) -> Vector3:
 func world_to_map_to_world(world_pos: Vector3, center: bool = false) -> Vector3:
 	var coords := world_to_map(world_pos)
 	return map_to_world(coords, center)
-
-
-## [    ] --> [ ][ ]
-## [    ]     [ ][ ]
-static func from_2x2_to_1x1_coords(coords_2x2: Array[Vector3i]) -> Array[Vector3i]:
-	var coords: Array[Vector3i] = []
-	for coord in coords_2x2:
-		var c := coord * 2
-		coords.append_array([
-			c,
-			c - Vector3i(1, 0, 0),
-			c - Vector3i(1, 0, 1),
-			c - Vector3i(0, 0, 1),
-		])
-	return coords
-
-
-## [ ][ ] --> [    ]
-## [ ][ ]     [    ]
-static func from_1x1_to_2x2_coords(coords_1x1: Array[Vector3i]) -> Array[Vector3i]:
-	var coords: Array[Vector3i] = []
-	for c in coords_1x1:
-		if c % 2 == Vector3i.ZERO:
-			coords.append(c / 2)
-	if len(coords) == 0:
-		coords.append(coords_1x1[0] / 2)
-	return coords
-		

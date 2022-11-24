@@ -17,6 +17,9 @@ var current_canvases: Array[String] = []
 func _ready() -> void:
 	load_gallery()
 	%PanelContainer.sort_children.connect(fit_panel)
+	
+	if get_tree().current_scene == self:
+		open()
 
 
 func _notification(what: int) -> void:
@@ -37,11 +40,11 @@ func fit_panel() -> void:
 
 
 func open() -> void:
-	%GalleryDrawer.open()
+	%ModalController.open()
 
 
 func close() -> void:
-	%GalleryDrawer.close()
+	%ModalController.close()
 
 
 func clear_gallery() -> void:

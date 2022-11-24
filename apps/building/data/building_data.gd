@@ -4,6 +4,9 @@ extends SaveableResource
 signal coords_changed
 signal objects_changed
 signal object_added(object: BuildingObjectData)
+signal design_changed(design_type: DesignData.DesignType, design: DesignData)
+
+signal shape_changed(prev_shape: PackedVector2Array, current_shape: PackedVector2Array)
 
 const DefaultInteriorWall := preload("res://apps/building/assets/resources/default_interior_wall.tres")
 const DefaultExteriorWall := preload("res://apps/building/assets/resources/default_exterior_wall.tres")
@@ -18,7 +21,9 @@ const DefaultDesign := {
 }
 
 @export var coords: Array[Vector3i] = []
-@export var designs: Array[DesignData] = []
+@export var shape: PackedVector2Array
+@export var designs := {}
+
 @export var objects: Array[BuildingObjectData] = []
 
 var instance: Node3D
@@ -47,23 +52,21 @@ var center_coord: Vector3i:
 		return rect.size / 2 + rect.position
 
 
-func get_design(design_type: DesignData.DesignType) -> DesignData:
-	var design := designs.filter(
-		func(design: DesignData) -> bool: return design.category_id == design_type
-	)
-	if len(design) > 0: return design[0]
-	else: return DefaultDesign[design_type]
-
-
 func add_area(added_coords: Array[Vector3i]) -> void:
 	for coord in added_coords:
 		if not coord in coords: coords.append(coord)
+	var prev_shape := shape.duplicate()
+	shape = get_shape_from_coords()
+	shape_changed.emit(prev_shape, shape)
 	coords_changed.emit()
 	emit_changed()
 
 
 func remove_area(removed_coords: Array[Vector3i]) -> void:
 	for coord in removed_coords: coords.erase(coord)
+	var prev_shape := shape.duplicate()
+	shape = get_shape_from_coords()
+	shape_changed.emit(prev_shape, shape)
 	coords_changed.emit()
 	emit_changed()
 
@@ -82,15 +85,50 @@ func remove_object(object: BuildingObjectData) -> void:
 
 
 func has_coord(coord: Vector3i) -> bool:
-	# Building tiles are 2x2, so we need to check all four subcoords
-	# included in each building coord
-	for c in CellMap.from_1x1_to_2x2_coords([coord]):
-		if c in coords: return true
-	return false
+	return coord in coords
 
 
 func has_world_position(world_pos: Vector3) -> bool:
 	return has_coord(WorldData.to_grid(world_pos))
+
+
+func get_shape_from_coords() -> PackedVector2Array:
+	var points := PackedVector2Array()
+	coords.sort()
+	for coord in coords:
+		var polygon := [
+			Vector2(coord.x, coord.z),
+			Vector2(coord.x, coord.z + 1),
+			Vector2(coord.x + 1, coord.z + 1),
+			Vector2(coord.x + 1, coord.z),
+		]
+		points.append_array(polygon)
+	
+	return Polygon.alpha_hull(points)
+
+
+func get_coords_from_shape() -> Array[Vector3i]:
+	var coords_list: Array[Vector3i] = []
+	if shape.size() == 0: return coords_list
+	var min_coord := Vector2i(shape[0])
+	var max_coord := min_coord
+	for point in shape:
+		if point.x < min_coord.x: min_coord.x = int(point.x)
+		if point.x > max_coord.x: max_coord.x = int(point.x)
+		if point.y < min_coord.y: min_coord.y = int(point.y)
+		if point.y > max_coord.y: max_coord.y = int(point.y)
+	for x in range(min_coord.x, max_coord.x):
+		for y in range(min_coord.y, max_coord.y):
+			var coord := Vector2(x, y)
+			if Geometry2D.is_point_in_polygon(coord, shape): 
+				coords_list.append(Vector3i(int(coord.x), 0, int(coord.y)))
+	return coords_list
+
+
+func add_design(design_type: DesignData.DesignType, design: DesignData) -> void:
+	designs[design_type] = design
+	emit_changed()
+	design_changed.emit(design_type, design)
 
 
 func _get_dir() -> String:

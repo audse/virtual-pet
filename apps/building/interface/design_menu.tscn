@@ -1,0 +1,227 @@
+[gd_scene load_steps=4 format=3 uid="uid://c0vvm4rn77wbb"]
+
+[ext_resource type="Script" path="res://interface/components/modal/modal.gd" id="1_030t6"]
+[ext_resource type="Texture2D" uid="uid://bn61fbcpokvek" path="res://apps/painter/assets/icons/back.svg" id="2_ujpux"]
+
+[sub_resource type="GDScript" id="GDScript_s3u6r"]
+script/source = "extends Control
+
+@onready var controller := $ModalController as ModalController
+
+@onready var tab_bar := %TabBar as TabBar
+@onready var back_button := %BackButton as Button
+
+@onready var exterior_container := %ExteriorButtonContainer as VFlowContainer
+@onready var interior_container := %InteriorButtonContainer as VFlowContainer
+@onready var floor_container := %FloorButtonContainer as VFlowContainer
+
+@onready var containers := {
+	DesignData.DesignType.INTERIOR_WALL: interior_container,
+	DesignData.DesignType.EXTERIOR_WALL: exterior_container,
+	DesignData.DesignType.FLOOR: floor_container,
+}
+
+
+func _ready() -> void:
+	for design_type in DesignData.DesignType.values():
+		for design in BuildData.designs[design_type]:
+			containers[design_type].add_child(make_button(design))
+	
+	tab_bar.tab_changed.connect(
+		func(tab: int) -> void:
+			for container in containers.values():
+				container.visible = false
+			match tab:
+				0: containers[DesignData.DesignType.EXTERIOR_WALL].visible = true
+				1: containers[DesignData.DesignType.INTERIOR_WALL].visible = true
+				2: containers[DesignData.DesignType.FLOOR].visible = true
+	)
+	
+	visible = true
+	
+	back_button.pressed.connect(close)
+	tab_bar.tab_button_pressed.emit(0)
+
+
+func make_button(design: DesignData) -> Button:
+	var button := Button.new()
+	button.clip_children = CanvasItem.CLIP_CHILDREN_ONLY
+	button.custom_minimum_size = Vector2(120, 120)
+	button.add_theme_stylebox_override(\"hover\", button.get_theme_stylebox(\"normal\"))
+	
+	var texture := TextureRect.new()
+	button.add_child(texture)
+	texture.texture = design.albedo_texture
+	texture.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	texture.ignore_texture_size = true
+	
+	Ui.hover_scale(button)
+	
+	button.pressed.connect(
+		func() -> void: 
+			if BuildData.state.current_building: BuildData.state.current_building.add_design(design.design_type, design)
+	)
+	
+	return button
+
+
+func open() -> void:
+	tab_bar.current_tab = 0
+	controller.open()
+
+
+func close() -> void:
+	controller.close()
+"
+
+[node name="DesignMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = SubResource("GDScript_s3u6r")
+
+[node name="ModalController" type="Control" parent="." node_paths=PackedStringArray("target")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_030t6")
+target = NodePath("..")
+enter_from = 3
+exit_to = 3
+use_backdrop = false
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 0
+mouse_filter = 2
+
+[node name="MarginContainer2" type="MarginContainer" parent="VBoxContainer"]
+offset_right = 828.0
+offset_bottom = 148.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/MarginContainer2"]
+offset_left = 24.0
+offset_top = 24.0
+offset_right = 804.0
+offset_bottom = 124.0
+theme_override_constants/separation = 24
+
+[node name="BackButton" type="Button" parent="VBoxContainer/MarginContainer2/HBoxContainer"]
+unique_name_in_owner = true
+modulate = Color(0.894118, 0.894118, 0.905882, 1)
+custom_minimum_size = Vector2(100, 100)
+offset_right = 100.0
+offset_bottom = 100.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_type_variation = &"CircleButton"
+icon = ExtResource("2_ujpux")
+expand_icon = true
+
+[node name="TabBar" type="TabBar" parent="VBoxContainer/MarginContainer2/HBoxContainer"]
+unique_name_in_owner = true
+offset_left = 124.0
+offset_top = 6.0
+offset_right = 780.0
+offset_bottom = 93.0
+size_flags_horizontal = 3
+size_flags_vertical = 4
+scrolling_enabled = false
+scroll_to_selected = false
+tab_count = 3
+tab_0/title = "Exterior"
+tab_1/title = "Interior"
+tab_2/title = "Floor"
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer"]
+offset_top = 160.0
+offset_right = 828.0
+offset_bottom = 666.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="Backdrop" type="MarginContainer" parent="VBoxContainer/MarginContainer"]
+offset_left = 24.0
+offset_top = 24.0
+offset_right = 804.0
+offset_bottom = 482.0
+theme_override_constants/margin_left = -24
+theme_override_constants/margin_top = -24
+theme_override_constants/margin_right = -24
+theme_override_constants/margin_bottom = -200
+
+[node name="ColorRect" type="ColorRect" parent="VBoxContainer/MarginContainer/Backdrop"]
+offset_left = -24.0
+offset_top = -24.0
+offset_right = 804.0
+offset_bottom = 658.0
+grow_horizontal = 2
+grow_vertical = 0
+color = Color(0.247059, 0.247059, 0.27451, 1)
+
+[node name="ExteriorContainer" type="ScrollContainer" parent="VBoxContainer/MarginContainer"]
+offset_left = 24.0
+offset_top = 24.0
+offset_right = 804.0
+offset_bottom = 482.0
+mouse_filter = 2
+vertical_scroll_mode = 0
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/MarginContainer/ExteriorContainer"]
+custom_minimum_size = Vector2(0, 450)
+offset_right = 780.0
+offset_bottom = 458.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 12
+
+[node name="ExteriorButtonContainer" type="VFlowContainer" parent="VBoxContainer/MarginContainer/ExteriorContainer/MarginContainer"]
+unique_name_in_owner = true
+offset_left = 12.0
+offset_top = 12.0
+offset_right = 768.0
+offset_bottom = 446.0
+
+[node name="Button" type="Button" parent="VBoxContainer/MarginContainer/ExteriorContainer/MarginContainer/ExteriorButtonContainer"]
+visible = false
+clip_children = 1
+custom_minimum_size = Vector2(100, 100)
+offset_right = 100.0
+offset_bottom = 100.0
+
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer/MarginContainer/ExteriorContainer/MarginContainer/ExteriorButtonContainer/Button"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="InteriorButtonContainer" type="VFlowContainer" parent="VBoxContainer/MarginContainer/ExteriorContainer/MarginContainer"]
+unique_name_in_owner = true
+offset_left = 12.0
+offset_top = 12.0
+offset_right = 768.0
+offset_bottom = 446.0
+size_flags_horizontal = 3
+
+[node name="FloorButtonContainer" type="VFlowContainer" parent="VBoxContainer/MarginContainer/ExteriorContainer/MarginContainer"]
+unique_name_in_owner = true
+offset_left = 12.0
+offset_top = 12.0
+offset_right = 768.0
+offset_bottom = 446.0

@@ -9,6 +9,9 @@ extends Node3D
 @onready var roof_map: CellMap = $RoofMap
 @onready var roof_mesh: MeshInstance3D = $RoofContainer/RoofMesh
 
+@onready var editor := %PolygonEditor as PolygonEditor
+@onready var renderer: BuildingRenderer = %BuildingRenderer
+
 @onready var edit_button: Button = %EditButton
 
 var building_data := BuildingData.new():
@@ -45,6 +48,8 @@ func _ready() -> void:
 	edit_button.pressed.connect(
 		func() -> void: BuildData.state.edit(building_data)
 	)
+	
+	editor.polygon_changed.connect(renderer.draw_building)
 
 
 func _physics_process(_delta: float) -> void:
@@ -55,31 +60,18 @@ func _physics_process(_delta: float) -> void:
 		and not building_data.is_empty
 	)
 	if edit_button.visible:
-		var center_coord: Vector3i = building_data.center_coord
-		var center := CellMap.from_2x2_to_1x1_coords([center_coord])[0]
-		edit_button.position = camera.unproject_position(center)
+		edit_button.position = camera.unproject_position(building_data.center_coord)
 
 
 func update_from_data() -> void:
-	map.clear()
-	map.set_cells(building_data.coords)
-	roof_map.clear()
-	roof_map.set_cells(building_data.coords, roof_mesh)
+	renderer.update_from_data(building_data)
+	
+	# Render objects
+	for object_data in building_data.objects:
+		get_parent().render_object_to(self, object_data)
 	
 	if not building_data.object_added.is_connected(_on_object_added):
 		building_data.object_added.connect(_on_object_added)
-	
-	await get_tree().create_timer(0.1).timeout
-	update_cutouts()
-	if not building_data.coords_changed.is_connected(update_cutouts):
-		building_data.coords_changed.connect(update_cutouts)
-
-
-func update_cutouts() -> void:
-	for object in building_data.objects:
-		var coord: Vector3i = object.building_coord
-		var cell: Cell = map.find_cell_by_coordv(coord)
-		if cell and cell.tile: object.intersect_tile(cell.tile)
 
 
 func enable() -> void:
@@ -105,16 +97,12 @@ func _on_start() -> void:
 func _on_built() -> void:
 	var empty_coords := map.get_empty_coords_betweenv(guide_map.prev_start_coord, guide_map.prev_end_coord)
 	if BuildData.is_area_buildable(empty_coords):
-		map.set_cells(empty_coords)
-		roof_map.set_cells(empty_coords, roof_mesh)
 		building_data.add_area(empty_coords)
 
 
 func _on_destroyed() -> void:
 	if is_current:
 		var filled_coords := map.get_filled_coords_betweenv(guide_map.prev_start_coord, guide_map.prev_end_coord)
-		map.erase_coords(filled_coords)
-		roof_map.erase_coords(filled_coords)
 		building_data.remove_area(filled_coords)
 
 

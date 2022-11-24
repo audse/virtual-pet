@@ -1,0 +1,54 @@
+[gd_scene load_steps=6 format=3 uid="uid://cqifwgoqkrmun"]
+
+[ext_resource type="Script" path="res://utils/nodes/draggable_3d.gd" id="1_i5aq2"]
+[ext_resource type="Script" path="res://apps/polygon_editor/scenes/point.gd" id="1_m8vev"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_06k3q"]
+resource_local_to_scene = true
+blend_mode = 1
+shading_mode = 0
+albedo_color = Color(1, 0, 0, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_4ndpm"]
+resource_local_to_scene = true
+material = SubResource("StandardMaterial3D_06k3q")
+radius = 0.1
+height = 0.1
+radial_segments = 16
+rings = 8
+is_hemisphere = true
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_t2hpq"]
+points = PackedVector3Array(0.00294255, 0.0249255, 0.0945317, -0.00599595, 0.000526434, -0.0960103, -0.0209538, 0.000624046, -0.0897994, -0.00581615, 0.0980526, -0.00869687, 0.0960179, 0.000522511, -0.00597762, -0.0960103, 0.000526434, 0.00599595, 0.0605313, 0.077407, -0.00574253, -0.0644857, 0.0749483, 0.00290195, 0.0696, 9.62115e-05, 0.0696, 0.0719133, 0.0234665, -0.0719133, -0.00288855, 0.0688788, -0.0695795, 0.00574253, 0.077407, 0.0605313, -0.0695866, 9.2219e-05, 0.0696056, -0.0623252, 0.0455819, -0.0623439, -0.0593956, 0.0609609, 0.0593956, 0.0623413, 0.0455917, 0.0623227, 0.0719133, -0.00156349, -0.0719133, -0.0695866, 9.2219e-05, -0.0696056, -0.0406288, 0.0859908, -0.0406288, 0.0465867, 0.0747678, -0.0465685, 0.0859044, 0.0485482, 0.00295134, -0.0859086, 0.0485578, -0.00293292, 0.0374666, 0.0831668, 0.0374485, -0.0229812, 0.0916772, 0.028722, 0.00295059, 0.0485582, -0.0859011, 0.00597762, 0.000522511, 0.0960179, 0.0174568, 0.0951598, -0.0203754, 0.00295061, 0.0485582, 0.0859017, -0.0945401, 0.0249233, 0.0029243, 0.0203584, 0.0951627, 0.0174579, 0.0945273, 0.0249362, 0.00294241, -0.00294255, 0.0249255, -0.0945317)
+
+[node name="RigidBody3D" type="RigidBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0385931, 0)
+freeze = true
+script = ExtResource("1_m8vev")
+
+[node name="Draggable3D" type="Node" parent="." node_paths=PackedStringArray("object")]
+unique_name_in_owner = true
+script = ExtResource("1_i5aq2")
+object = NodePath("..")
+is_enabled = true
+distance_from_mouse = Vector2(0, 0)
+snap_to_grid = true
+collision_enabled = false
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+unique_name_in_owner = true
+mesh = SubResource("SphereMesh_4ndpm")
+skeleton = NodePath("../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1.1, 0, 0, 0, 1.1, 0, 0, 0, 1.1, 0, 0, 0)
+shape = SubResource("ConvexPolygonShape3D_t2hpq")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.033063, 0)
+light_color = Color(1, 0, 0, 1)
+light_energy = 0.25
+light_indirect_energy = 0.5
+omni_range = 0.5
+omni_attenuation = 2.0

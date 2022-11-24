@@ -160,8 +160,8 @@ func resize_axis(axis: String, to: float) -> void:
 	(get_tree()
 		.create_tween()
 		.tween_method(
-			set_shader_uniform.bind(axis), 
-			grid.material.get_shader_uniform(axis) as float, 
+			set_shader_parameter.bind(axis), 
+			(grid.material as ShaderMaterial).get_shader_parameter(axis) as float, 
 			to,
 			0.15
 		)
@@ -169,9 +169,9 @@ func resize_axis(axis: String, to: float) -> void:
 		.set_trans(Tween.TRANS_CIRC))
 
 
-func set_shader_uniform(to: float, axis: String) -> void:
+func set_shader_parameter(to: float, axis: String) -> void:
 	# this just changes the order of the args so we can bind them
-	grid.material.set_shader_uniform(axis, to)
+	(grid.material as ShaderMaterial).set_shader_parameter(axis, to)
 
 
 func add(pixels: Array[Sprite2D], is_ghost: bool = false) -> void:
@@ -293,13 +293,12 @@ func pan(keycode: int) -> void:
 
 
 func save_canvas(canvas_name: String) -> int:
-	var file := FileAccess.new()
-	var err := file.open(GALLERY_PATH + canvas_name + EXTENSION, FileAccess.WRITE)
+	var file := FileAccess.open(GALLERY_PATH + canvas_name + EXTENSION, FileAccess.WRITE)
 #	if not err == OK: return err
 	
 	for pixel in canvas.get_children():
 		if pixel not in [cursor, ghost]: file.store_var(pixel, true)
-	file.close()
+	
 	return OK
 
 
@@ -350,8 +349,8 @@ func _on_change_action(_new_action: int) -> void:
 
 
 func _on_precision_changed(precision: float) -> void:
-	grid.material.set_shader_uniform("minigrid_x", precision)
-	grid.material.set_shader_uniform("minigrid_y", precision)
+	(grid.material as ShaderMaterial).set_shader_parameter("minigrid_x", precision)
+	(grid.material as ShaderMaterial).set_shader_parameter("minigrid_y", precision)
 
 
 func _on_tile_gui_input(event: InputEvent, tile: String) -> void:

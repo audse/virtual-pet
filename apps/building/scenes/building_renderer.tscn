@@ -1,7 +1,8 @@
-[gd_scene load_steps=16 format=3 uid="uid://cuh7nhha37oyy"]
+[gd_scene load_steps=19 format=3 uid="uid://cuh7nhha37oyy"]
 
 [ext_resource type="Script" path="res://apps/building/scenes/building_renderer.gd" id="1_8ai77"]
 [ext_resource type="Texture2D" uid="uid://ch8peslvr07ga" path="res://temp/siding.png" id="2_g2usg"]
+[ext_resource type="Script" path="res://apps/building/data/building_data.gd" id="2_sc7jc"]
 [ext_resource type="Texture2D" uid="uid://bn56x5mbqm5wj" path="res://temp/siding_map.png" id="3_h5jpi"]
 [ext_resource type="Texture2D" uid="uid://c5u07om0m5rf7" path="res://temp/interior.png" id="3_xkfm8"]
 [ext_resource type="PackedScene" uid="uid://b6dya0dbxdg1f" path="res://environment/scenes/environment.tscn" id="4_vgac7"]
@@ -10,18 +11,26 @@
 [ext_resource type="Texture2D" uid="uid://bkpifcrqahmks" path="res://temp/floor.png" id="6_r0adt"]
 [ext_resource type="Texture2D" uid="uid://b3aplr0lph4q5" path="res://temp/floor_map.png" id="7_qamut"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1dbtn"]
-albedo_color = Color(0.501961, 0.501961, 0.501961, 1)
+[sub_resource type="Resource" id="Resource_ex60r"]
+script = ExtResource("2_sc7jc")
+coords = []
+shape = PackedVector2Array(0, 0, 10, 0, 10, 6, 8, 6, 8, 8, 4, 8, 4, 6, 0, 6)
+designs = {}
+objects = []
+data_path = null
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_72xla"]
 albedo_texture = ExtResource("2_g2usg")
 normal_enabled = true
-normal_scale = 0.25
+normal_scale = 0.5
 normal_texture = ExtResource("3_h5jpi")
-uv1_scale = Vector3(1, 0.25, 0)
+uv1_scale = Vector3(0.5, 0.25, 0.5)
 uv1_triplanar = true
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_30di0"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_l0sfi"]
+cull_mode = 1
 albedo_texture = ExtResource("3_xkfm8")
 normal_enabled = true
 normal_texture = ExtResource("5_8qoj4")
@@ -31,22 +40,29 @@ uv1_triplanar = true
 [sub_resource type="ArrayMesh" id="ArrayMesh_rwq7t"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dk05e"]
-albedo_color = Color(0.54902, 0.54902, 0.54902, 1)
 albedo_texture = ExtResource("6_r0adt")
 normal_enabled = true
 normal_scale = -1.0
 normal_texture = ExtResource("7_qamut")
+uv1_scale = Vector3(0.5, 0.5, 0.5)
 uv1_triplanar = true
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_ktxau"]
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_nviwy"]
+albedo_color = Color(0.45098, 0.45098, 0.45098, 1)
+normal_scale = -1.0
+normal_texture = ExtResource("7_qamut")
+uv1_scale = Vector3(0.5, 0.5, 0.5)
+uv1_triplanar = true
+
 [node name="BuildingRenderer" type="Node3D"]
 script = ExtResource("1_8ai77")
-points = PackedVector2Array(0, 0, 4, 0, 4, 4, 3, 4, 3, 5, 1, 5, 1, 4, 0, 4)
+building_data = SubResource("Resource_ex60r")
 
 [node name="ExteriorWalls" type="MeshInstance3D" parent="."]
 unique_name_in_owner = true
-material_override = SubResource("StandardMaterial3D_1dbtn")
+material_override = SubResource("StandardMaterial3D_72xla")
 mesh = SubResource("ArrayMesh_30di0")
 
 [node name="InteriorWalls" type="MeshInstance3D" parent="."]
@@ -59,20 +75,18 @@ unique_name_in_owner = true
 material_override = SubResource("StandardMaterial3D_dk05e")
 mesh = SubResource("ArrayMesh_ktxau")
 
+[node name="WallTops" type="MeshInstance3D" parent="."]
+unique_name_in_owner = true
+material_override = SubResource("StandardMaterial3D_nviwy")
+mesh = SubResource("ArrayMesh_ktxau")
+
 [node name="Environment" parent="." instance=ExtResource("4_vgac7")]
 
-[node name="Marker3D" type="Marker3D" parent="."]
+[node name="RendererMarker3D" type="Marker3D" parent="."]
 script = ExtResource("5_opb36")
 
-[node name="Camera3D" type="Camera3D" parent="Marker3D"]
+[node name="Camera3D" type="Camera3D" parent="RendererMarker3D"]
 transform = Transform3D(0.766045, -0.413176, 0.492403, 0, 0.766044, 0.642788, -0.642787, -0.492404, 0.586824, 15, 15, 15)
 projection = 1
 current = true
 size = 22.0
-
-[node name="Label3D" type="Label3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
-modulate = Color(0, 0, 0, 1)
-text = "(0, 0)"
-font_size = 100
-outline_size = 0

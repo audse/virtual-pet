@@ -150,6 +150,9 @@ func add_object(object: BuyableObjectData) -> void:
 
 
 class BuyableObjectThumbnailNode:
+	
+	const BuyableObjectThumbnailScene := preload("res://apps/buy/scenes/buyable_object_thumbnail.tscn")
+
 	var object: BuyableObjectData
 	
 	var category_tab: Button
@@ -165,8 +168,11 @@ class BuyableObjectThumbnailNode:
 	func _init(object_value: BuyableObjectData, min_size: Vector2) -> void:
 		object = object_value
 		
-		category_tab = BuyableObjectThumbnail.new(object)
-		all_tab = BuyableObjectThumbnail.new(object)
+		category_tab = BuyableObjectThumbnailScene.instantiate()
+		category_tab.object_data = object
+		
+		all_tab = BuyableObjectThumbnailScene.instantiate()
+		all_tab.object_data = object
 		
 		category_tab.custom_minimum_size = min_size * object_size
 		all_tab.custom_minimum_size = min_size * object_size

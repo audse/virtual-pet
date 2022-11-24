@@ -1,0 +1,9 @@
+{
+    "id": "paint__white",
+    "display_name": "Basic paint (white)",
+    "design_type": "INTERIOR_WALL",
+    "category_id": "paint_interior",
+    "price": 100,
+    "albedo_texture": "content_paint_interior/textures/paint__white.png",
+    "normal_texture": "content_paint_interior/textures/paint__normal.png"
+}

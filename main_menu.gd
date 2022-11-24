@@ -1,7 +1,7 @@
 extends Control
 
 const PaintingScene:  PackedScene = preload("res://apps/painter/painter.tscn")
-const BuildingScene:  PackedScene = preload("res://main.tscn")
+const BuildingScene:  PackedScene = preload("res://apps/world/world.tscn")
 const NormalMapScene: PackedScene = preload("res://apps/normal_map_maker/normal_map_maker.tscn")
 
 

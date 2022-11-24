@@ -192,4 +192,4 @@ func _on_canvas_resume_draw() -> void:
 
 
 func _on_main_menu_button_pressed() -> void:
-	get_tree().change_scene_to(load("res://main_menu.tscn"))
+	get_tree().change_scene_to_packed(load("res://main_menu.tscn"))

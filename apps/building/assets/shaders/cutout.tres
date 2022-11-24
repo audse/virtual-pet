@@ -1,0 +1,200 @@
+[gd_resource type="VisualShader" load_steps=14 format=3 uid="uid://du5ep68wdk8nn"]
+
+[sub_resource type="VisualShaderNodeVectorOp" id="VisualShaderNodeVectorOp_cnn2d"]
+
+[sub_resource type="VisualShaderNodeCompare" id="VisualShaderNodeCompare_behjn"]
+default_input_values = [0, Vector3(0, 0, 0), 1, Vector3(0, 0, 0), 2, 1e-05]
+type = 3
+function = 5
+
+[sub_resource type="VisualShaderNodeCompare" id="VisualShaderNodeCompare_wsdae"]
+default_input_values = [0, Vector3(0, 0, 0), 1, Vector3(0, 0, 0), 2, 1e-05]
+type = 3
+function = 3
+
+[sub_resource type="VisualShaderNodeSwitch" id="VisualShaderNodeSwitch_o8lml"]
+default_input_values = [0, false, 1, 0.0, 2, 1.0]
+
+[sub_resource type="VisualShaderNodeIntOp" id="VisualShaderNodeIntOp_k71xr"]
+operator = 7
+
+[sub_resource type="VisualShaderNodeVaryingGetter" id="VisualShaderNodeVaryingGetter_ge8wa"]
+varying_name = "vert"
+varying_type = 3
+
+[sub_resource type="VisualShaderNodeTextureParameterTriplanar" id="VisualShaderNodeTextureParameterTriplanar_c0p68"]
+parameter_name = "NormalMap"
+
+[sub_resource type="VisualShaderNodeFloatParameter" id="VisualShaderNodeFloatParameter_4uynu"]
+parameter_name = "NormalMapDepth"
+default_value_enabled = true
+default_value = 1.0
+
+[sub_resource type="VisualShaderNodeTextureParameterTriplanar" id="VisualShaderNodeTextureParameterTriplanar_dqia0"]
+parameter_name = "Albedo"
+
+[sub_resource type="VisualShaderNodeVec3Parameter" id="VisualShaderNodeVec3Parameter_vsgs1"]
+parameter_name = "CutoutBoxSize"
+
+[sub_resource type="VisualShaderNodeVec3Parameter" id="VisualShaderNodeVec3Parameter_nkktr"]
+parameter_name = "CutoutBoxPosition"
+
+[sub_resource type="VisualShaderNodeVaryingSetter" id="VisualShaderNodeVaryingSetter_snykr"]
+varying_name = "vert"
+varying_type = 3
+
+[sub_resource type="VisualShaderNodeInput" id="VisualShaderNodeInput_4j5c1"]
+input_name = "vertex"
+
+[resource]
+code = "shader_type spatial;
+
+// Varyings
+varying vec3 vert;
+
+uniform sampler2D Albedo;
+uniform vec3 CutoutBoxPosition;
+uniform vec3 CutoutBoxSize;
+uniform sampler2D NormalMap;
+uniform float NormalMapDepth = 1;
+
+
+// TextureUniformTriplanar
+	vec4 triplanar_texture(sampler2D p_sampler, vec3 p_weights, vec3 p_triplanar_pos) {
+		vec4 samp = vec4(0.0);
+		samp += texture(p_sampler, p_triplanar_pos.xy) * p_weights.z;
+		samp += texture(p_sampler, p_triplanar_pos.xz) * p_weights.y;
+		samp += texture(p_sampler, p_triplanar_pos.zy * vec2(-1.0, 1.0)) * p_weights.x;
+		return samp;
+	}
+
+	uniform vec3 triplanar_scale = vec3(1.0, 1.0, 1.0);
+	uniform vec3 triplanar_offset;
+	uniform float triplanar_sharpness = 0.5;
+
+	varying vec3 triplanar_power_normal;
+	varying vec3 triplanar_pos;
+
+void vertex() {
+// TextureUniformTriplanar
+	{
+		triplanar_power_normal = pow(abs(NORMAL), vec3(triplanar_sharpness));
+		triplanar_power_normal /= dot(triplanar_power_normal, vec3(1.0));
+		triplanar_pos = VERTEX * triplanar_scale + triplanar_offset;
+		triplanar_pos *= vec3(1.0, -1.0, 1.0);
+	}
+
+// Input:3
+	vec3 n_out3p0 = VERTEX;
+
+
+// VaryingSetter:2
+	vert = n_out3p0;
+
+
+}
+
+void fragment() {
+// TextureUniformTriplanar:2
+	vec4 n_out2p0 = triplanar_texture(Albedo, triplanar_power_normal, triplanar_pos);
+
+
+// VaryingGetter:15
+	vec3 n_out15p0 = vert;
+
+
+// Vector3Parameter:4
+	vec3 n_out4p0 = CutoutBoxPosition;
+
+
+	bool n_out12p0;
+// Compare:12
+	{
+		bvec3 _bv = greaterThanEqual(n_out15p0, n_out4p0);
+		n_out12p0 = all(_bv);
+	}
+
+
+// Vector3Parameter:3
+	vec3 n_out3p0 = CutoutBoxSize;
+
+
+// VectorOp:10
+	vec3 n_out10p0 = n_out4p0 + n_out3p0;
+
+
+	bool n_out11p0;
+// Compare:11
+	{
+		bvec3 _bv = lessThanEqual(n_out15p0, n_out10p0);
+		n_out11p0 = all(_bv);
+	}
+
+
+// IntOp:14
+	int n_out14p0 = (n_out12p0 ? 1 : 0) & (n_out11p0 ? 1 : 0);
+
+
+	float n_out13p0;
+// Switch:13
+	float n_in13p1 = 0.00000;
+	float n_in13p2 = 1.00000;
+	if(n_out14p0 > 0 ? true : false)
+	{
+		n_out13p0 = n_in13p1;
+	}
+	else
+	{
+		n_out13p0 = n_in13p2;
+	}
+
+
+// TextureUniformTriplanar:16
+	vec4 n_out16p0 = triplanar_texture(NormalMap, triplanar_power_normal, triplanar_pos);
+
+
+// FloatParameter:18
+	float n_out18p0 = NormalMapDepth;
+
+
+// Output:0
+	ALBEDO = vec3(n_out2p0.xyz);
+	ALPHA = n_out13p0;
+	NORMAL_MAP = vec3(n_out16p0.xyz);
+	NORMAL_MAP_DEPTH = n_out18p0;
+	ALPHA_HASH_SCALE = n_out13p0;
+
+
+}
+"
+graph_offset = Vector2(-320.73, 173.152)
+varyings/vert = "0,3"
+nodes/vertex/2/node = SubResource("VisualShaderNodeVaryingSetter_snykr")
+nodes/vertex/2/position = Vector2(-1100, 620)
+nodes/vertex/3/node = SubResource("VisualShaderNodeInput_4j5c1")
+nodes/vertex/3/position = Vector2(-1900, 620)
+nodes/vertex/connections = PackedInt32Array(3, 0, 2, 0)
+nodes/fragment/0/position = Vector2(740, 80)
+nodes/fragment/2/node = SubResource("VisualShaderNodeTextureParameterTriplanar_dqia0")
+nodes/fragment/2/position = Vector2(-340, 20)
+nodes/fragment/3/node = SubResource("VisualShaderNodeVec3Parameter_vsgs1")
+nodes/fragment/3/position = Vector2(-1820, 1300)
+nodes/fragment/4/node = SubResource("VisualShaderNodeVec3Parameter_nkktr")
+nodes/fragment/4/position = Vector2(-1820, 1000)
+nodes/fragment/10/node = SubResource("VisualShaderNodeVectorOp_cnn2d")
+nodes/fragment/10/position = Vector2(-1140, 1100)
+nodes/fragment/11/node = SubResource("VisualShaderNodeCompare_behjn")
+nodes/fragment/11/position = Vector2(-800, 1020)
+nodes/fragment/12/node = SubResource("VisualShaderNodeCompare_wsdae")
+nodes/fragment/12/position = Vector2(-800, 620)
+nodes/fragment/13/node = SubResource("VisualShaderNodeSwitch_o8lml")
+nodes/fragment/13/position = Vector2(40, 680)
+nodes/fragment/14/node = SubResource("VisualShaderNodeIntOp_k71xr")
+nodes/fragment/14/position = Vector2(-400, 880)
+nodes/fragment/15/node = SubResource("VisualShaderNodeVaryingGetter_ge8wa")
+nodes/fragment/15/position = Vector2(-1360, 660)
+nodes/fragment/16/node = SubResource("VisualShaderNodeTextureParameterTriplanar_c0p68")
+nodes/fragment/16/position = Vector2(-320, 1160)
+nodes/fragment/18/node = SubResource("VisualShaderNodeFloatParameter_4uynu")
+nodes/fragment/18/position = Vector2(-220, 1720)
+nodes/fragment/connections = PackedInt32Array(3, 0, 10, 1, 4, 0, 10, 0, 10, 0, 11, 1, 4, 0, 12, 1, 12, 0, 14, 0, 11, 0, 14, 1, 14, 0, 13, 0, 15, 0, 12, 0, 15, 0, 11, 0, 2, 0, 0, 0, 13, 0, 0, 20, 13, 0, 0, 1, 16, 0, 0, 9, 18, 0, 0, 10)

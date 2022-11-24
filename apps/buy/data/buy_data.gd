@@ -7,8 +7,8 @@ signal object_bought(BuyableObjectData)
 signal object_sold(WorldObjectData)
 
 
-var categories: Array[BuyCategoryData]
-var objects: Array[BuyableObjectData]
+var categories: Array[BuyCategoryData] = []
+var objects: Array[BuyableObjectData] = []
 
 
 func _ready() -> void:

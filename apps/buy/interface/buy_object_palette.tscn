@@ -48,7 +48,7 @@ vertical_scroll_mode = 0
 
 [node name="VFlowContainer" type="VFlowContainer" parent="MarginContainer/TabContainer/All items"]
 offset_right = 502.0
-offset_bottom = 440.0
+offset_bottom = 484.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3

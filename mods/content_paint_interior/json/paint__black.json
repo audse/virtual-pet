@@ -1,0 +1,9 @@
+{
+    "id": "paint__black",
+    "display_name": "Basic paint (black)",
+    "design_type": "INTERIOR_WALL",
+    "category_id": "paint_interior",
+    "price": 100,
+    "albedo_texture": "content_paint_interior/textures/paint__black.png",
+    "normal_texture": "content_paint_interior/textures/paint__normal.png"
+}

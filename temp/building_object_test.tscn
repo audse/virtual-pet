@@ -1,20 +1,23 @@
-[gd_scene load_steps=9 format=3 uid="uid://pekl1f2liem1"]
+[gd_scene load_steps=12 format=3 uid="uid://pekl1f2liem1"]
 
 [ext_resource type="Script" path="res://apps/building/data/building_object_data.gd" id="1_1fyse"]
-[ext_resource type="Shader" path="res://apps/map/assets/shaders/distort.gdshader" id="1_a1p3l"]
+[ext_resource type="Shader" uid="uid://du5ep68wdk8nn" path="res://apps/building/assets/shaders/cutout.tres" id="1_nb8r8"]
+[ext_resource type="Texture2D" uid="uid://c5u07om0m5rf7" path="res://temp/interior.png" id="2_i48fy"]
 [ext_resource type="ArrayMesh" uid="uid://d2n73kmxajjpo" path="res://apps/building/assets/tile_sets/building_01/meshes/building_02_corner_tile.obj" id="2_o3x3l"]
+[ext_resource type="Texture2D" uid="uid://ws58h4kqc0rf" path="res://temp/interior_map.png" id="3_4n30n"]
+[ext_resource type="PackedScene" uid="uid://b6dya0dbxdg1f" path="res://environment/scenes/environment.tscn" id="5_6bnj3"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_xecym"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_vlp37"]
 render_priority = 0
-shader = ExtResource("1_a1p3l")
-shader_parameter/cut_pos = Vector3(-0.5, 2, -0.5)
-shader_parameter/cut_size = Vector3(1, 1, 2)
-shader_parameter/distort_amount = null
-shader_parameter/is_corner = null
-shader_parameter/albedo_color = null
-shader_parameter/normal_depth = null
-shader_parameter/normal_scale = null
-shader_parameter/uv_rotation = null
+shader = ExtResource("1_nb8r8")
+shader_parameter/Albedo = ExtResource("2_i48fy")
+shader_parameter/CutoutBoxPosition = Vector3(-0.5, 2, -0.5)
+shader_parameter/CutoutBoxSize = Vector3(1, 1, 2)
+shader_parameter/NormalMap = ExtResource("3_4n30n")
+shader_parameter/NormalMapDepth = 1.0
+shader_parameter/triplanar_offset = null
+shader_parameter/triplanar_scale = Vector3(0.5, 0.25, 0.5)
+shader_parameter/triplanar_sharpness = 1.0
 
 [sub_resource type="GDScript" id="GDScript_nkciv"]
 script/source = "extends MeshInstance3D
@@ -49,8 +52,8 @@ size = Vector3(1, 1, 0.5)
 [sub_resource type="BoxMesh" id="BoxMesh_a4yxd"]
 size = Vector3(0.75, 0.75, 1)
 
-[node name="WallMesh" type="MeshInstance3D"]
-material_override = SubResource("ShaderMaterial_xecym")
+[node name="MeshInstance3D" type="MeshInstance3D"]
+material_override = SubResource("ShaderMaterial_vlp37")
 mesh = ExtResource("2_o3x3l")
 script = SubResource("GDScript_nkciv")
 building_object_data = SubResource("Resource_ky8j1")
@@ -65,3 +68,5 @@ mesh = SubResource("BoxMesh_c6q5c")
 [node name="CSGMesh3D2" type="CSGMesh3D" parent="CSGCombiner3D"]
 operation = 2
 mesh = SubResource("BoxMesh_a4yxd")
+
+[node name="Environment" parent="." instance=ExtResource("5_6bnj3")]

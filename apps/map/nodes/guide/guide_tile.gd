@@ -1,6 +1,6 @@
 extends MeshInstance3D
 
-const SIZE := Vector3(2.1, 0.1, 2.1)
+const SIZE := Vector3(1.0, 0.1, 1.0)
 const Y_POS := SIZE.y + 0.25
 
 var building_material: StandardMaterial3D: 

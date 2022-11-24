@@ -51,7 +51,6 @@ var paused: bool = false:
 		
 		day_changed.emit(day)
 
-
 # Time is incremented by 10 minutes
 @export_range(0, 1439, 10) var time: int = 0:
 	set(value):
@@ -152,3 +151,6 @@ var display_time: String:
 			minute = str(minute).lpad(2, "0"),
 			am_pm = am_pm
 		})
+
+var day_completeness: float:
+	get: return float(time) / float(1440)

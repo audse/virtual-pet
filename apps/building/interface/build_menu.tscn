@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://dwpbivgvduijm"]
+[gd_scene load_steps=15 format=3 uid="uid://dwpbivgvduijm"]
 
 [ext_resource type="Script" path="res://interface/components/modal/modal.gd" id="1_kslah"]
 [ext_resource type="Texture2D" uid="uid://bn61fbcpokvek" path="res://apps/painter/assets/icons/back.svg" id="1_yduqs"]
@@ -11,9 +11,10 @@
 [ext_resource type="Texture2D" uid="uid://bgqmbqpl6rgk1" path="res://static/icons/wallpaper.svg" id="7_wy4j0"]
 [ext_resource type="Texture2D" uid="uid://b1e8oy1xfc2hg" path="res://static/icons/floor.svg" id="8_2uog6"]
 [ext_resource type="PackedScene" uid="uid://dq06gd36buf3b" path="res://apps/buy/interface/buy_object_palette.tscn" id="11_uppiy"]
+[ext_resource type="PackedScene" uid="uid://c0vvm4rn77wbb" path="res://apps/building/interface/design_menu.tscn" id="12_xytvx"]
 
 [sub_resource type="GDScript" id="GDScript_m70jq"]
-script/source = "extends MarginContainer
+script/source = "extends Control
 
 @onready var ok_button := %OkButton as Button
 @onready var back_button := %BackButton as Button
@@ -22,6 +23,7 @@ script/source = "extends MarginContainer
 @onready var destroy_button := %DestroyButton as Button
 @onready var walls_button := %WallsButton as Button
 @onready var doors_button := %DoorsButton as Button
+@onready var wallpaper_button := %WallpaperButton as Button
 
 @onready var controller := %ModalController as ModalController
 @onready var options_container := %OptionsContainer as MarginContainer
@@ -31,6 +33,7 @@ script/source = "extends MarginContainer
 @onready var step_2_container := %Step2Container as HBoxContainer
 
 @onready var buy_object_palette := %BuyObjectPalette as Control
+@onready var design_menu := %DesignMenu as Control
 
 
 func _ready() -> void:
@@ -72,6 +75,11 @@ func _ready() -> void:
 	)
 	
 	doors_button.pressed.connect(buy_object_palette.open)
+	
+	wallpaper_button.pressed.connect(design_menu.open)
+	
+	design_menu.controller.opening.connect(hide_options)
+	design_menu.controller.closed.connect(show_options)
 	
 	Game.Mode.exit_state.connect(
 		func(state: GameModeState.Mode) -> void:
@@ -153,7 +161,8 @@ corner_radius_top_right = 32
 corner_radius_bottom_right = 32
 corner_radius_bottom_left = 32
 
-[node name="BuildMenu" type="MarginContainer"]
+[node name="BuildMenu" type="Control"]
+layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -177,7 +186,14 @@ enter_from = 3
 exit_to = 3
 use_backdrop = false
 
-[node name="Panel" type="PanelContainer" parent="."]
+[node name="MarginContainer" type="MarginContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="PanelContainer" parent="MarginContainer"]
 self_modulate = Color(0.894118, 0.894118, 0.905882, 1)
 offset_left = 24.0
 offset_top = 1271.0
@@ -187,7 +203,7 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_vertical = 8
 
-[node name="MarginContainer" type="MarginContainer" parent="Panel"]
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/Panel"]
 offset_left = 24.0
 offset_top = 36.0
 offset_right = 756.0
@@ -199,18 +215,18 @@ theme_override_constants/margin_top = -64
 theme_override_constants/margin_right = 12
 theme_override_constants/margin_bottom = 72
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Panel/MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/Panel/MarginContainer"]
 offset_left = 12.0
 offset_top = -64.0
 offset_right = 720.0
 offset_bottom = 353.0
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Panel/MarginContainer/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/Panel/MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 115)
 offset_right = 708.0
 offset_bottom = 115.0
 
-[node name="BackButton" type="Button" parent="Panel/MarginContainer/VBoxContainer/HBoxContainer"]
+[node name="BackButton" type="Button" parent="MarginContainer/Panel/MarginContainer/VBoxContainer/HBoxContainer"]
 unique_name_in_owner = true
 modulate = Color(0.894118, 0.894118, 0.905882, 1)
 custom_minimum_size = Vector2(100, 100)
@@ -220,7 +236,7 @@ theme_type_variation = &"CircleButton"
 icon = ExtResource("1_yduqs")
 expand_icon = true
 
-[node name="Spacer" type="Control" parent="Panel/MarginContainer/VBoxContainer/HBoxContainer"]
+[node name="Spacer" type="Control" parent="MarginContainer/Panel/MarginContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 3
 anchors_preset = 0
 offset_left = 112.0
@@ -229,7 +245,7 @@ offset_bottom = 115.0
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.25
 
-[node name="OkButton" type="Button" parent="Panel/MarginContainer/VBoxContainer/HBoxContainer"]
+[node name="OkButton" type="Button" parent="MarginContainer/Panel/MarginContainer/VBoxContainer/HBoxContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(150, 100)
 offset_left = 558.0
@@ -243,7 +259,7 @@ text = "Ok"
 icon = ExtResource("3_kg33k")
 expand_icon = true
 
-[node name="OptionsContainerSpacer" type="Control" parent="Panel/MarginContainer/VBoxContainer"]
+[node name="OptionsContainerSpacer" type="Control" parent="MarginContainer/Panel/MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 3
 anchors_preset = 0
@@ -251,7 +267,7 @@ offset_top = 127.0
 offset_right = 708.0
 offset_bottom = 127.0
 
-[node name="OptionsContainer" type="MarginContainer" parent="Panel/MarginContainer/VBoxContainer"]
+[node name="OptionsContainer" type="MarginContainer" parent="MarginContainer/Panel/MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
 offset_top = 139.0
 offset_right = 708.0
@@ -260,13 +276,13 @@ size_flags_horizontal = 3
 theme_override_constants/margin_left = 0
 theme_override_constants/margin_right = 0
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Panel/MarginContainer/VBoxContainer/OptionsContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/Panel/MarginContainer/VBoxContainer/OptionsContainer"]
 offset_top = 24.0
 offset_right = 708.0
 offset_bottom = 254.0
 theme_override_constants/separation = -24
 
-[node name="DestroyButton" type="Button" parent="Panel/MarginContainer/VBoxContainer/OptionsContainer/HBoxContainer"]
+[node name="DestroyButton" type="Button" parent="MarginContainer/Panel/MarginContainer/VBoxContainer/OptionsContainer/HBoxContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(150, 150)
 offset_top = 40.0
@@ -277,26 +293,27 @@ size_flags_vertical = 4
 icon = ExtResource("3_xvocg")
 expand_icon = true
 
-[node name="Panel" type="PanelContainer" parent="Panel/MarginContainer/VBoxContainer/OptionsContainer/HBoxContainer"]
+[node name="Panel" type="PanelContainer" parent="MarginContainer/Panel/MarginContainer/VBoxContainer/OptionsContainer/HBoxContainer"]
 offset_left = 126.0
 offset_right = 708.0
 offset_bottom = 230.0
 size_flags_horizontal = 3
 
-[node name="ScrollContainer" type="ScrollContainer" parent="Panel/MarginContainer/VBoxContainer/OptionsContainer/HBoxContainer/Panel"]
+[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/Panel/MarginContainer/VBoxContainer/OptionsContainer/HBoxContainer/Panel"]
 offset_left = 24.0
 offset_top = 36.0
 offset_right = 558.0
 offset_bottom = 194.0
 vertical_scroll_mode = 0
 
-[node name="Step1Container" type="HBoxContainer" parent="Panel/MarginContainer/VBoxContainer/OptionsContainer/HBoxContainer/Panel/ScrollContainer"]
+[node name="Step1Container" type="HBoxContainer" parent="MarginContainer/Panel/MarginContainer/VBoxContainer/OptionsContainer/HBoxContainer/Panel/ScrollContainer"]
 unique_name_in_owner = true
+visible = false
 custom_minimum_size = Vector2(0, 150)
 offset_right = 502.0
 offset_bottom = 150.0
 
-[node name="AddHouseButton" type="Button" parent="Panel/MarginContainer/VBoxContainer/OptionsContainer/HBoxContainer/Panel/ScrollContainer/Step1Container"]
+[node name="AddHouseButton" type="Button" parent="MarginContainer/Panel/MarginContainer/VBoxContainer/OptionsContainer/HBoxContainer/Panel/ScrollContainer/Step1Container"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(340, 0)
 offset_right = 340.0
@@ -305,7 +322,7 @@ text = "New building"
 icon = ExtResource("5_j7fr7")
 expand_icon = true
 
-[node name="ComingSoonButton" type="Button" parent="Panel/MarginContainer/VBoxContainer/OptionsContainer/HBoxContainer/Panel/ScrollContainer/Step1Container"]
+[node name="ComingSoonButton" type="Button" parent="MarginContainer/Panel/MarginContainer/VBoxContainer/OptionsContainer/HBoxContainer/Panel/ScrollContainer/Step1Container"]
 custom_minimum_size = Vector2(150, 0)
 offset_left = 352.0
 offset_right = 502.0
@@ -315,15 +332,14 @@ disabled = true
 text = "?"
 expand_icon = true
 
-[node name="Step2Container" type="HBoxContainer" parent="Panel/MarginContainer/VBoxContainer/OptionsContainer/HBoxContainer/Panel/ScrollContainer"]
+[node name="Step2Container" type="HBoxContainer" parent="MarginContainer/Panel/MarginContainer/VBoxContainer/OptionsContainer/HBoxContainer/Panel/ScrollContainer"]
 unique_name_in_owner = true
-visible = false
 custom_minimum_size = Vector2(0, 150)
-offset_right = 1020.0
+offset_right = 846.0
 offset_bottom = 150.0
 theme_override_constants/separation = 24
 
-[node name="WallsButton" type="Button" parent="Panel/MarginContainer/VBoxContainer/OptionsContainer/HBoxContainer/Panel/ScrollContainer/Step2Container"]
+[node name="WallsButton" type="Button" parent="MarginContainer/Panel/MarginContainer/VBoxContainer/OptionsContainer/HBoxContainer/Panel/ScrollContainer/Step2Container"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(150, 0)
 offset_right = 150.0
@@ -331,7 +347,7 @@ offset_bottom = 150.0
 icon = ExtResource("4_vyoeo")
 expand_icon = true
 
-[node name="DoorsButton" type="Button" parent="Panel/MarginContainer/VBoxContainer/OptionsContainer/HBoxContainer/Panel/ScrollContainer/Step2Container"]
+[node name="DoorsButton" type="Button" parent="MarginContainer/Panel/MarginContainer/VBoxContainer/OptionsContainer/HBoxContainer/Panel/ScrollContainer/Step2Container"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(150, 0)
 offset_left = 174.0
@@ -340,40 +356,39 @@ offset_bottom = 150.0
 icon = ExtResource("5_03fra")
 expand_icon = true
 
-[node name="FoliageButton" type="Button" parent="Panel/MarginContainer/VBoxContainer/OptionsContainer/HBoxContainer/Panel/ScrollContainer/Step2Container"]
+[node name="WallpaperButton" type="Button" parent="MarginContainer/Panel/MarginContainer/VBoxContainer/OptionsContainer/HBoxContainer/Panel/ScrollContainer/Step2Container"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(150, 0)
 offset_left = 348.0
 offset_right = 498.0
 offset_bottom = 150.0
-disabled = true
-icon = ExtResource("6_4ed8m")
+icon = ExtResource("7_wy4j0")
 expand_icon = true
 
-[node name="WallpaperButton" type="Button" parent="Panel/MarginContainer/VBoxContainer/OptionsContainer/HBoxContainer/Panel/ScrollContainer/Step2Container"]
+[node name="FloorButton" type="Button" parent="MarginContainer/Panel/MarginContainer/VBoxContainer/OptionsContainer/HBoxContainer/Panel/ScrollContainer/Step2Container"]
+unique_name_in_owner = true
+visible = false
+custom_minimum_size = Vector2(150, 0)
+offset_left = 522.0
+offset_right = 672.0
+offset_bottom = 150.0
+icon = ExtResource("8_2uog6")
+expand_icon = true
+
+[node name="FoliageButton" type="Button" parent="MarginContainer/Panel/MarginContainer/VBoxContainer/OptionsContainer/HBoxContainer/Panel/ScrollContainer/Step2Container"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(150, 0)
 offset_left = 522.0
 offset_right = 672.0
 offset_bottom = 150.0
 disabled = true
-icon = ExtResource("7_wy4j0")
+icon = ExtResource("6_4ed8m")
 expand_icon = true
 
-[node name="FloorButton" type="Button" parent="Panel/MarginContainer/VBoxContainer/OptionsContainer/HBoxContainer/Panel/ScrollContainer/Step2Container"]
-unique_name_in_owner = true
+[node name="ComingSoonButton" type="Button" parent="MarginContainer/Panel/MarginContainer/VBoxContainer/OptionsContainer/HBoxContainer/Panel/ScrollContainer/Step2Container"]
 custom_minimum_size = Vector2(150, 0)
 offset_left = 696.0
 offset_right = 846.0
-offset_bottom = 150.0
-disabled = true
-icon = ExtResource("8_2uog6")
-expand_icon = true
-
-[node name="ComingSoonButton" type="Button" parent="Panel/MarginContainer/VBoxContainer/OptionsContainer/HBoxContainer/Panel/ScrollContainer/Step2Container"]
-custom_minimum_size = Vector2(150, 0)
-offset_left = 870.0
-offset_right = 1020.0
 offset_bottom = 150.0
 theme_override_styles/disabled = SubResource("StyleBoxFlat_u1is1")
 disabled = true
@@ -383,15 +398,12 @@ expand_icon = true
 [node name="BuyObjectPalette" parent="." instance=ExtResource("11_uppiy")]
 unique_name_in_owner = true
 visible = false
-anchors_preset = 0
+anchors_preset = 12
 anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-offset_left = 24.0
-offset_top = 24.0
-offset_right = 804.0
-offset_bottom = 1768.0
-grow_horizontal = 1
-grow_vertical = 1
+anchor_top = 1.0
+grow_vertical = 0
 menu = 1
+
+[node name="DesignMenu" parent="." instance=ExtResource("12_xytvx")]
+unique_name_in_owner = true
+visible = false

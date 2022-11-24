@@ -1,15 +1,22 @@
-[gd_scene load_steps=16 format=3 uid="uid://d2mxrw16b4scs"]
+[gd_scene load_steps=20 format=3 uid="uid://d2mxrw16b4scs"]
 
 [ext_resource type="Script" path="res://apps/building/scenes/build.gd" id="1_xogq3"]
+[ext_resource type="PackedScene" uid="uid://cuh7nhha37oyy" path="res://apps/building/scenes/building_renderer.tscn" id="2_ck8i1"]
+[ext_resource type="PackedScene" uid="uid://b7hfuorbcf4ev" path="res://apps/polygon_editor/scenes/polygon_editor.tscn" id="2_qjfo1"]
 [ext_resource type="Script" path="res://apps/map/nodes/guide/guide_map.gd" id="4_hclhc"]
 [ext_resource type="Script" path="res://apps/map/nodes/cell_map/cell_map.gd" id="5_u26lr"]
 [ext_resource type="Script" path="res://apps/map/nodes/grid/uneven_grid.gd" id="6_hngqn"]
+[ext_resource type="PackedScene" uid="uid://b6dya0dbxdg1f" path="res://environment/scenes/environment.tscn" id="8_gd1gy"]
 [ext_resource type="Shader" path="res://apps/map/assets/shaders/spatial_grid.gdshader" id="8_ok1in"]
 
-[sub_resource type="BoxMesh" id="BoxMesh_0hvyy"]
-size = Vector3(2.5, 0.5, 2.5)
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_w40mg"]
+albedo_color = Color(0.470588, 0.470588, 0.470588, 1)
 
-[sub_resource type="GDScript" id="GDScript_y4e3q"]
+[sub_resource type="BoxMesh" id="BoxMesh_kos1x"]
+material = SubResource("StandardMaterial3D_w40mg")
+size = Vector3(1.25, 0.3, 1.25)
+
+[sub_resource type="GDScript" id="GDScript_6dc4n"]
 script/source = "extends MeshInstance3D
 
 
@@ -28,20 +35,20 @@ func _ready() -> void:
 	tween.tween_property(self, \"scale\", Vector3(1.0, 1.0, 1.0), 0.5)
 "
 
-[sub_resource type="Resource" id="Resource_2qypc"]
+[sub_resource type="Resource" id="Resource_28inl"]
 script = ExtResource("6_hngqn")
-cell_size = Vector3(2, 2, 2)
-x_offset_range = [-0.75, 0.75]
-z_offset_range = [-0.75, 0.75]
+cell_size = Vector3(1, 1, 1)
+x_offset_range = [0.0, 0.0]
+z_offset_range = [0.0, 0.0]
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_on456"]
+[sub_resource type="BoxShape3D" id="BoxShape3D_i685v"]
 size = Vector3(50, 0.5, 50)
 
-[sub_resource type="Gradient" id="Gradient_u647y"]
+[sub_resource type="Gradient" id="Gradient_emk7w"]
 offsets = PackedFloat32Array(0, 0.286472, 1)
 colors = PackedColorArray(0.788235, 0.788235, 0.788235, 1, 0.776471, 0.776471, 0.776471, 1, 0.811871, 0.811871, 0.811871, 1)
 
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_7ece0"]
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_rnn45"]
 noise_type = 2
 frequency = 0.05
 fractal_octaves = 1
@@ -54,24 +61,24 @@ domain_warp_amplitude = 15.0
 domain_warp_fractal_octaves = 1
 domain_warp_fractal_lacunarity = 4.0
 
-[sub_resource type="NoiseTexture2D" id="NoiseTexture_bg2y7"]
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_x4q3w"]
 width = 2160
 height = 2160
 invert = true
 seamless = true
-color_ramp = SubResource("Gradient_u647y")
-noise = SubResource("FastNoiseLite_7ece0")
+color_ramp = SubResource("Gradient_emk7w")
+noise = SubResource("FastNoiseLite_rnn45")
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_t7ecs"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_a6vsr"]
 albedo_color = Color(0.670588, 0.670588, 0.670588, 1)
-albedo_texture = SubResource("NoiseTexture_bg2y7")
+albedo_texture = SubResource("NoiseTexture2D_x4q3w")
 metallic_specular = 0.0
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_t2roi"]
-material = SubResource("StandardMaterial3D_t7ecs")
+[sub_resource type="PlaneMesh" id="PlaneMesh_6woyn"]
+material = SubResource("StandardMaterial3D_a6vsr")
 size = Vector2(50, 50)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_782er"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_vuwok"]
 render_priority = 0
 shader = ExtResource("8_ok1in")
 shader_parameter/color = Color(1, 1, 1, 1)
@@ -84,43 +91,48 @@ shader_parameter/size = Vector3(1, 1, 1)
 [node name="Build" type="Node3D"]
 script = ExtResource("1_xogq3")
 
+[node name="BuildingRenderer" parent="." instance=ExtResource("2_ck8i1")]
+unique_name_in_owner = true
+distortion_range_start = Vector2(0, 0)
+distortion_range_end = Vector2(0, 0)
+
 [node name="RoofContainer" type="Node3D" parent="."]
 visible = false
 
 [node name="RoofMesh" type="MeshInstance3D" parent="RoofContainer"]
-mesh = SubResource("BoxMesh_0hvyy")
+mesh = SubResource("BoxMesh_kos1x")
 skeleton = NodePath("../..")
-script = SubResource("GDScript_y4e3q")
+script = SubResource("GDScript_6dc4n")
 
 [node name="RoofMap" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.25, 0)
 script = ExtResource("5_u26lr")
-grid = SubResource("Resource_2qypc")
+grid = SubResource("Resource_28inl")
 use_autotile = false
 
 [node name="GuideMap" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0, 0.5)
 script = ExtResource("4_hclhc")
 
 [node name="GuideCellMap" type="Node3D" parent="GuideMap"]
 script = ExtResource("5_u26lr")
-grid = SubResource("Resource_2qypc")
+grid = SubResource("Resource_28inl")
 use_autotile = false
 
 [node name="CellMap" type="Node3D" parent="."]
 script = ExtResource("5_u26lr")
-grid = SubResource("Resource_2qypc")
+grid = SubResource("Resource_28inl")
 
 [node name="DrawArea" type="Area3D" parent="."]
 
 [node name="DrawAreaBox" type="CollisionShape3D" parent="DrawArea"]
-shape = SubResource("BoxShape3D_on456")
+shape = SubResource("BoxShape3D_i685v")
 
 [node name="GridPlane" type="MeshInstance3D" parent="."]
 unique_name_in_owner = true
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0)
 visible = false
-mesh = SubResource("PlaneMesh_t2roi")
-surface_material_override/0 = SubResource("ShaderMaterial_782er")
+mesh = SubResource("PlaneMesh_6woyn")
+surface_material_override/0 = SubResource("ShaderMaterial_vuwok")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 layer = 2
@@ -140,5 +152,10 @@ offset_bottom = 43.5
 grow_horizontal = 2
 grow_vertical = 2
 text = "Edit"
+
+[node name="Environment" parent="." instance=ExtResource("8_gd1gy")]
+
+[node name="PolygonEditor" parent="." instance=ExtResource("2_qjfo1")]
+unique_name_in_owner = true
 
 [connection signal="input_event" from="DrawArea" to="." method="_on_area_3d_input_event"]

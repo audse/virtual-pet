@@ -1,0 +1,9 @@
+{
+    "id": "basic_linoleum__black",
+    "display_name": "Basic linoleum (black)",
+    "design_type": "FLOOR",
+    "category_id": "linoleum_floor",
+    "price": 100,
+    "albedo_texture": "content_linoleum_floor/textures/linoleum__black.png",
+    "normal_texture": "content_linoleum_floor/textures/linoleum__normal.png"
+}
