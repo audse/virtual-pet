@@ -46,12 +46,12 @@ func _init() -> void:
 				var mod_scripts = []
 				var parent_classes = []
 				var is_cheat = []
-#				for mod_script_path in mod_script_paths:
-#					var script = load(mod_path + "/mod/" + mod_script_path)
-#					var constants = script.get_script_constant_map()
-#					mod_scripts.append(script)
-#					parent_classes.append(ModHooks.get_class_path(constants.ParentClass))
-#					is_cheat.append(constants.IsCheat if "IsCheat" in constants else false)
+				for mod_script_path in mod_script_paths:
+					var script = load(mod_path + "/mod/" + mod_script_path)
+					var constants = script.get_script_constant_map()
+					mod_scripts.append(script)
+					parent_classes.append(ModHooks.get_class_path(constants.ParentClass))
+					is_cheat.append(constants.IsCheat if "IsCheat" in constants else false)
 				
 				registered_modules[mod_name] = {
 					name = mod_name,

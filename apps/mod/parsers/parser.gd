@@ -53,6 +53,14 @@ func parse_dimensions(dimensions: Dictionary, default := Vector3.ONE) -> Vector3
 	)
 
 
+func parse_position(position: Dictionary, default := Vector3.ONE) -> Vector3:
+	return Vector3(
+		float(position.x) if "x" in position else default.x,
+		float(position.y) if "y" in position else default.y,
+		float(position.z) if "z" in position else default.z
+	)
+
+
 func is_script(script) -> void:
 	assert(script is Script, ModError.report_string(
 		json_file,

@@ -1,3 +1,4 @@
+class_name AddCategoryFoodBowl
 extends AddBuyCategoriesModule
 
 const ParentClass := "Buy.Data"

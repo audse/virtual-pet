@@ -77,7 +77,7 @@ func find_nearby_need_source(_pet: PetData, need: NeedsData.Need, coord: Vector2
 #		func(a: WorldObjectData, b: WorldObjectData) -> bool:
 #			return false if a.owner and a.owner.get_rid() == pet.get_rid() else true
 #	)
-	if len(nearby_objects): return nearby_objects[0]
+	if nearby_objects.size(): return nearby_objects[0]
 	else: return null
 
 
@@ -89,6 +89,17 @@ func find_nearby_objects(coord: Vector2i, radius := 5) -> Array[WorldObjectData]
 	)
 
 
+func get_nearest_occupiable_coord(coord: Vector2i) -> Vector2i:
+	var result := search_radius(coord, 10,
+		func(next_coord: Vector2i) -> Vector2i:
+			var _next_coord := Vector3i(next_coord.x, 0, next_coord.y)
+			if _next_coord in blocks and blocks[_next_coord].is_occupiable: return next_coord
+			else: return Vector2i.ZERO
+	)
+	if result.size(): return result[0]
+	else: return Vector2i.ZERO
+
+
 func find_nearby_pets(coord: Vector2i, radius := 5) -> Array[PetData]:
 	return search_radius(coord, radius,
 		func(next_coord: Vector2i) -> Array[PetData]:
@@ -97,7 +108,7 @@ func find_nearby_pets(coord: Vector2i, radius := 5) -> Array[PetData]:
 	)
 
 
-func search_radius(center: Vector2i, radius: int, filter: Callable) -> Array:
+func search_radius(center: Vector2i, radius: int, filter: Callable, stop_after_found := false) -> Array:
 	var nearby: Array = []
 	var checked_coords: Array[Vector2i] = []
 	var checked_radius := 1
@@ -107,6 +118,7 @@ func search_radius(center: Vector2i, radius: int, filter: Callable) -> Array:
 				var result = filter.call(coord)
 				if result and result is Array: nearby.append_array(result)
 				elif result: nearby.append(result)
+				if result and stop_after_found: return nearby
 			checked_coords.append(coord)
 		checked_radius += 1
 	return nearby

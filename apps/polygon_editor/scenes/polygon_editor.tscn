@@ -1,7 +1,7 @@
-[gd_scene load_steps=13 format=3 uid="uid://b7hfuorbcf4ev"]
+[gd_scene load_steps=7 format=3 uid="uid://b7hfuorbcf4ev"]
 
 [ext_resource type="Script" path="res://apps/polygon_editor/scenes/polygon_editor.gd" id="1_q035n"]
-[ext_resource type="Shader" path="res://apps/map/assets/shaders/spatial_grid.gdshader" id="3_j67h2"]
+[ext_resource type="PackedScene" uid="uid://b6dya0dbxdg1f" path="res://environment/scenes/environment.tscn" id="2_nbkc0"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_g532e"]
 albedo_color = Color(0.0901961, 0.0901961, 0.0901961, 1)
@@ -9,50 +9,6 @@ albedo_color = Color(0.0901961, 0.0901961, 0.0901961, 1)
 [sub_resource type="PlaneMesh" id="PlaneMesh_gklrm"]
 material = SubResource("StandardMaterial3D_g532e")
 size = Vector2(20, 20)
-
-[sub_resource type="Gradient" id="Gradient_u647y"]
-offsets = PackedFloat32Array(0, 0.286472, 1)
-colors = PackedColorArray(0.788235, 0.788235, 0.788235, 1, 0.776471, 0.776471, 0.776471, 1, 0.811871, 0.811871, 0.811871, 1)
-
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_7ece0"]
-noise_type = 2
-frequency = 0.05
-fractal_octaves = 1
-fractal_lacunarity = 25.0
-fractal_gain = -0.5
-cellular_distance_function = 1
-cellular_jitter = 1.0
-cellular_return_type = 0
-domain_warp_amplitude = 15.0
-domain_warp_fractal_octaves = 1
-domain_warp_fractal_lacunarity = 4.0
-
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_lui0t"]
-width = 2160
-height = 2160
-invert = true
-seamless = true
-color_ramp = SubResource("Gradient_u647y")
-noise = SubResource("FastNoiseLite_7ece0")
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_t7ecs"]
-albedo_color = Color(0.670588, 0.670588, 0.670588, 1)
-albedo_texture = SubResource("NoiseTexture2D_lui0t")
-metallic_specular = 0.0
-
-[sub_resource type="PlaneMesh" id="PlaneMesh_sr5kc"]
-material = SubResource("StandardMaterial3D_t7ecs")
-size = Vector2(50, 50)
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_wonbv"]
-render_priority = 0
-shader = ExtResource("3_j67h2")
-shader_parameter/color = Color(1, 1, 1, 1)
-shader_parameter/dot_size = 0.25
-shader_parameter/grid_size = 0.25
-shader_parameter/show_dots = true
-shader_parameter/show_grid = false
-shader_parameter/size = Vector3(1, 1, 1)
 
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_1t24h"]
 points = PackedVector3Array(-5, 0, -5, -5, 0, 5, 5, 0, -5, 5, 0, 5)
@@ -71,13 +27,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1, 0)
 visible = false
 mesh = SubResource("PlaneMesh_gklrm")
 
-[node name="GridPlane" type="MeshInstance3D" parent="Floor"]
-unique_name_in_owner = true
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.05, 0)
-mesh = SubResource("PlaneMesh_sr5kc")
-skeleton = NodePath("../..")
-surface_material_override/0 = SubResource("ShaderMaterial_wonbv")
-
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Floor"]
 shape = SubResource("ConvexPolygonShape3D_1t24h")
 
@@ -85,3 +34,5 @@ shape = SubResource("ConvexPolygonShape3D_1t24h")
 unique_name_in_owner = true
 visible = false
 material_override = SubResource("StandardMaterial3D_pqodl")
+
+[node name="Environment" parent="." instance=ExtResource("2_nbkc0")]

@@ -1,0 +1,20 @@
+================================================================
+handle_crash: Program crashed with signal 11
+Engine version: Godot Engine v4.0.beta6.mono.official (7f8ecffa56834dce3ccbd736738b613d51133dea)
+Dumping the backtrace. Please include this when reporting the bug on: https://github.com/godotengine/godot/issues
+[1] sigsegv_handler(int, __siginfo*, void*)
+[2] 2   libsystem_platform.dylib            0x00000001a3f174a4 _sigtramp + 56
+[3] 3   IOGPU                               0x00000001beafb974 __IOGPUNotificationQueueSetDispatchQueue_block_invoke + 164
+[4] 4   libdispatch.dylib                   0x00000001a3d3c274 _dispatch_client_callout4 + 20
+[5] 5   libdispatch.dylib                   0x00000001a3d5853c _dispatch_mach_msg_invoke + 464
+[6] 6   libdispatch.dylib                   0x00000001a3d43784 _dispatch_lane_serial_drain + 376
+[7] 7   libdispatch.dylib                   0x00000001a3d5925c _dispatch_mach_invoke + 456
+[8] 8   libdispatch.dylib                   0x00000001a3d43784 _dispatch_lane_serial_drain + 376
+[9] 9   libdispatch.dylib                   0x00000001a3d44438 _dispatch_lane_invoke + 444
+[10] 10  libdispatch.dylib                   0x00000001a3d43784 _dispatch_lane_serial_drain + 376
+[11] 11  libdispatch.dylib                   0x00000001a3d44404 _dispatch_lane_invoke + 392
+[12] 12  libdispatch.dylib                   0x00000001a3d4ec98 _dispatch_workloop_worker_thread + 648
+[13] 13  libsystem_pthread.dylib             0x00000001a3efc360 _pthread_wqthread + 288
+[14] 14  libsystem_pthread.dylib             0x00000001a3efb080 start_wqthread + 8
+-- END OF BACKTRACE --
+================================================================

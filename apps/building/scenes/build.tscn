@@ -1,54 +1,16 @@
-[gd_scene load_steps=20 format=3 uid="uid://d2mxrw16b4scs"]
+[gd_scene load_steps=12 format=3 uid="uid://d2mxrw16b4scs"]
 
 [ext_resource type="Script" path="res://apps/building/scenes/build.gd" id="1_xogq3"]
 [ext_resource type="PackedScene" uid="uid://cuh7nhha37oyy" path="res://apps/building/scenes/building_renderer.tscn" id="2_ck8i1"]
 [ext_resource type="PackedScene" uid="uid://b7hfuorbcf4ev" path="res://apps/polygon_editor/scenes/polygon_editor.tscn" id="2_qjfo1"]
-[ext_resource type="Script" path="res://apps/map/nodes/guide/guide_map.gd" id="4_hclhc"]
-[ext_resource type="Script" path="res://apps/map/nodes/cell_map/cell_map.gd" id="5_u26lr"]
-[ext_resource type="Script" path="res://apps/map/nodes/grid/uneven_grid.gd" id="6_hngqn"]
 [ext_resource type="PackedScene" uid="uid://b6dya0dbxdg1f" path="res://environment/scenes/environment.tscn" id="8_gd1gy"]
 [ext_resource type="Shader" path="res://apps/map/assets/shaders/spatial_grid.gdshader" id="8_ok1in"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_w40mg"]
-albedo_color = Color(0.470588, 0.470588, 0.470588, 1)
-
-[sub_resource type="BoxMesh" id="BoxMesh_kos1x"]
-material = SubResource("StandardMaterial3D_w40mg")
-size = Vector3(1.25, 0.3, 1.25)
-
-[sub_resource type="GDScript" id="GDScript_6dc4n"]
-script/source = "extends MeshInstance3D
-
-
-func _ready() -> void:
-	visible = false
-	scale = Vector3(0.8, 0.0, 0.8)
-	position.y = -0.25
-	transparency = 1.0
-	
-	await get_tree().create_timer(0.6).timeout
-	visible = true
-	var tween := create_tween().set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_SINE)
-	tween.parallel().tween_property(self, \"scale:y\", 1.0, 0.3)
-	tween.parallel().tween_property(self, \"position:y\", 0.0, 0.3)
-	tween.parallel().tween_property(self, \"transparency\", 0.0, 0.3)
-	tween.tween_property(self, \"scale\", Vector3(1.0, 1.0, 1.0), 0.5)
-"
-
-[sub_resource type="Resource" id="Resource_28inl"]
-script = ExtResource("6_hngqn")
-cell_size = Vector3(1, 1, 1)
-x_offset_range = [0.0, 0.0]
-z_offset_range = [0.0, 0.0]
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_i685v"]
-size = Vector3(50, 0.5, 50)
-
-[sub_resource type="Gradient" id="Gradient_emk7w"]
+[sub_resource type="Gradient" id="Gradient_vsvbo"]
 offsets = PackedFloat32Array(0, 0.286472, 1)
 colors = PackedColorArray(0.788235, 0.788235, 0.788235, 1, 0.776471, 0.776471, 0.776471, 1, 0.811871, 0.811871, 0.811871, 1)
 
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_rnn45"]
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_bh5dg"]
 noise_type = 2
 frequency = 0.05
 fractal_octaves = 1
@@ -61,24 +23,24 @@ domain_warp_amplitude = 15.0
 domain_warp_fractal_octaves = 1
 domain_warp_fractal_lacunarity = 4.0
 
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_x4q3w"]
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_gd87p"]
 width = 2160
 height = 2160
 invert = true
 seamless = true
-color_ramp = SubResource("Gradient_emk7w")
-noise = SubResource("FastNoiseLite_rnn45")
+color_ramp = SubResource("Gradient_vsvbo")
+noise = SubResource("FastNoiseLite_bh5dg")
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_a6vsr"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rqmgx"]
 albedo_color = Color(0.670588, 0.670588, 0.670588, 1)
-albedo_texture = SubResource("NoiseTexture2D_x4q3w")
+albedo_texture = SubResource("NoiseTexture2D_gd87p")
 metallic_specular = 0.0
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_6woyn"]
-material = SubResource("StandardMaterial3D_a6vsr")
+[sub_resource type="PlaneMesh" id="PlaneMesh_mtlgv"]
+material = SubResource("StandardMaterial3D_rqmgx")
 size = Vector2(50, 50)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_vuwok"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_01g0o"]
 render_priority = 0
 shader = ExtResource("8_ok1in")
 shader_parameter/color = Color(1, 1, 1, 1)
@@ -96,43 +58,11 @@ unique_name_in_owner = true
 distortion_range_start = Vector2(0, 0)
 distortion_range_end = Vector2(0, 0)
 
-[node name="RoofContainer" type="Node3D" parent="."]
-visible = false
-
-[node name="RoofMesh" type="MeshInstance3D" parent="RoofContainer"]
-mesh = SubResource("BoxMesh_kos1x")
-skeleton = NodePath("../..")
-script = SubResource("GDScript_6dc4n")
-
-[node name="RoofMap" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.25, 0)
-script = ExtResource("5_u26lr")
-grid = SubResource("Resource_28inl")
-use_autotile = false
-
-[node name="GuideMap" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0, 0.5)
-script = ExtResource("4_hclhc")
-
-[node name="GuideCellMap" type="Node3D" parent="GuideMap"]
-script = ExtResource("5_u26lr")
-grid = SubResource("Resource_28inl")
-use_autotile = false
-
-[node name="CellMap" type="Node3D" parent="."]
-script = ExtResource("5_u26lr")
-grid = SubResource("Resource_28inl")
-
-[node name="DrawArea" type="Area3D" parent="."]
-
-[node name="DrawAreaBox" type="CollisionShape3D" parent="DrawArea"]
-shape = SubResource("BoxShape3D_i685v")
-
 [node name="GridPlane" type="MeshInstance3D" parent="."]
 unique_name_in_owner = true
 visible = false
-mesh = SubResource("PlaneMesh_6woyn")
-surface_material_override/0 = SubResource("ShaderMaterial_vuwok")
+mesh = SubResource("PlaneMesh_mtlgv")
+surface_material_override/0 = SubResource("ShaderMaterial_01g0o")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 layer = 2
@@ -157,5 +87,3 @@ text = "Edit"
 
 [node name="PolygonEditor" parent="." instance=ExtResource("2_qjfo1")]
 unique_name_in_owner = true
-
-[connection signal="input_event" from="DrawArea" to="." method="_on_area_3d_input_event"]

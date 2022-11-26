@@ -13,6 +13,7 @@ extends Node3D
 @onready var exterior_mesh := %ExteriorWalls as MeshInstance3D
 @onready var interior_mesh := %InteriorWalls as MeshInstance3D
 @onready var wall_tops_mesh := %WallTops as MeshInstance3D
+@onready var collision_shape := %CollisionShape3D as CollisionShape3D
 
 @onready var designs := {
 	DesignData.DesignType.INTERIOR_WALL: interior_mesh,
@@ -39,62 +40,70 @@ func _ready() -> void:
 
 func update_from_data(data: BuildingData) -> void:
 	building_data = data
-	building_data.shape = building_data.get_shape_from_coords()
 	draw_building(building_data.shape)
 	update_all_designs()
 	update_collisions()
-	building_data.shape_changed.connect(tween_shape)
 	building_data.design_changed.connect(update_design)
+	building_data.rerender.connect(
+		func() -> void: draw_building(building_data.shape)
+	)
 
 
-func tween_shape(prev_shape: PackedVector2Array, current_shape: PackedVector2Array) -> void:
-	if prev_shape.size() != current_shape.size(): 
-		draw_building(current_shape)
-		return
-	
-	prev_shape = Polygon.sort(prev_shape)
-	current_shape = Polygon.sort(current_shape)
-	
-	var tween := create_tween().set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_BACK).set_parallel()
-	
-	for i in prev_shape.size():
-		if prev_shape[i] != current_shape[i]:
-			tween.tween_method(
-				func(pos: Vector2) -> void:
-					prev_shape[i] = pos
-					draw_building(prev_shape),
-				prev_shape[i],
-				current_shape[i],
-				0.5
-			)
-	
-	await tween.finished
-	update_collisions()
-
-
-func draw_building(shape: PackedVector2Array) -> void:
-	# Get building's polygon
-	var polygon := Polygon.shrink(shape, 0.0)
-	
+func draw_building(shape: PackedVector2Array) -> void:	
 	# Add a bit of distortion
-	for point in polygon.size():
-		polygon[point] += Vector2(
+	for point in shape.size():
+		shape[point] += Vector2(
 			randf_range(distortion_range_start.x, distortion_range_end.x), 
 			randf_range(distortion_range_start.y, distortion_range_end.y)
 		)
 	
 	# Get the other components' polygons
-	var inner_polygon := Polygon.shrink(polygon, wall_thickness)
-	var outer_polygon := Polygon.grow(polygon, foundation_thickness)
+	var inner_polygon := Polygon.shrink(shape, wall_thickness)
 	
 	# Draw all the components
 	floor_mesh.mesh = ProcMesh.new_polygon(inner_polygon)
-	exterior_mesh.mesh = ProcMesh.new_wall(polygon, ProcMeshParams.new({ height = wall_height }))
-	interior_mesh.mesh = ProcMesh.new_wall(inner_polygon, ProcMeshParams.new({ height = wall_height }))
-	wall_tops_mesh.mesh = ProcMesh.new_outline_polygon(polygon, ProcMeshParams.new({ 
+	wall_tops_mesh.mesh = ProcMesh.new_outline_polygon(shape, ProcMeshParams.new({ 
 		thickness = wall_thickness, 
 		offset = Vector3(0.0, wall_height, 0.0) 
 	}))
+	
+	draw_walls(shape)
+
+
+func draw_walls(shape: PackedVector2Array) -> void:
+	exterior_mesh.mesh = null
+	interior_mesh.mesh = null
+	if not building_data: return
+	
+	var cutouts: Array[Array] = []
+	
+	var i := 0
+	for edge in Polygon.get_edges(Polygon.grow(shape, 0.0)):
+		var objects: Array[WorldObjectData] = building_data.get_objects_on_edge(edge[0], edge[1])
+		cutouts.append(objects.map(
+			func(object: WorldObjectData) -> Rect2: return Rect2(
+				Vector2(object.coord).distance_to(edge[0]) + object.buyable_object_data.intersection_rect.position.x,
+				object.buyable_object_data.intersection_rect.position.y,
+				object.buyable_object_data.intersection_rect.size.x,
+				object.buyable_object_data.intersection_rect.size.y
+			)
+		))
+		var rects: Array[Rect2] = cutouts[i]
+		exterior_mesh.mesh = ProcMesh.new_wall_with_rect_cutouts(edge[0], edge[1], rects, ProcMeshParams.new({
+			mesh = exterior_mesh.mesh,
+			height = wall_height,
+			facing = Polygon3.get_facing(edge[0], edge[1])
+		}))
+		i += 1
+	i = 0
+	for edge in Polygon.get_edges(Polygon.shrink(shape, wall_thickness)):
+		var rects: Array[Rect2] = cutouts[i]
+		interior_mesh.mesh = ProcMesh.new_wall_with_rect_cutouts(edge[0], edge[1], rects, ProcMeshParams.new({
+			mesh = interior_mesh.mesh,
+			height = wall_height,
+			facing = Polygon3.get_facing(edge[0], edge[1], true)
+		}))
+		i += 1
 
 
 func update_all_designs() -> void:
@@ -117,7 +126,4 @@ func update_design(design_type: DesignData.DesignType, design: DesignData) -> vo
 
 
 func update_collisions() -> void:
-	for mesh in [floor_mesh, exterior_mesh, interior_mesh, wall_tops_mesh]:
-		for child in (mesh as Node).get_children():
-			child.queue_free()
-		(mesh as MeshInstance3D).create_convex_collision()
+	collision_shape.make_convex_from_siblings()

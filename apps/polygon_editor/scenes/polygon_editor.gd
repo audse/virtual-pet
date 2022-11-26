@@ -20,14 +20,31 @@ var edges: Array[PackedVector2Array] = []
 var center := Vector2(2, 2)
 
 @onready var walls_mesh := %Walls as MeshInstance3D
+@onready var floor_mesh := $Floor/MeshInstance3D as MeshInstance3D
 
 
 func _ready():
 	polygon_changed.connect(_on_polygon_changed)
+	if get_tree().current_scene == self: 
+		enable()
+		walls_mesh.visible = true
+		floor_mesh.visible = true
+
+
+func enable() -> void:
 	polygon_changed.emit(polygon)
 	
 	await RenderingServer.frame_post_draw
 	polygon_changed.emit(polygon)
+
+
+func disable() -> void:
+	for node in PolygonEditorPoint.get_all(self):
+		node.queue_free()
+	for node in PolygonEditorEdgeHandle.get_all(self):
+		node.queue_free()
+	for node in PolygonEditorAddPointButton.get_all(self):
+		node.queue_free()
 
 
 func update_walls() -> void:
@@ -109,9 +126,9 @@ func update_add_point_buttons() -> void:
 
 
 func set_point(index: int, to_pos: Vector2, bulk: bool = false) -> bool:
-	var snapped: Vector2 = to_pos.snapped(Vector2(WorldData.grid_size, WorldData.grid_size))
-	if not polygon[index].is_equal_approx(snapped):
-		polygon[index] = snapped
+	var snapped_point: Vector2 = to_pos.snapped(Vector2(WorldData.grid_size, WorldData.grid_size))
+	if not polygon[index].is_equal_approx(snapped_point):
+		polygon[index] = snapped_point
 		if not bulk: polygon_changed.emit(polygon)
 		return true
 	return false
@@ -127,9 +144,9 @@ func _on_add_point_button_input(_camera: Node, event: InputEvent, _pos: Vector3,
 		var point := Vector2(int(button.position.x), int(button.position.z))
 		polygon.insert(index, point)
 		polygon_changed.emit(polygon)
+		button.queue_free()
 		await RenderingServer.frame_post_draw
 		polygon_changed.emit(polygon)
-		button.queue_free()
 
 
 func _on_edge_node_position_changed(pos: Vector3, node) -> void:
@@ -145,8 +162,8 @@ func _on_edge_node_position_changed(pos: Vector3, node) -> void:
 		var p1_changed := set_point(i, curr - offset1, true)
 		var p2_changed := set_point(i - 1, curr - offset2, true)
 		if p1_changed or p2_changed: polygon_changed.emit(polygon)
-		var center := (polygon[i] + polygon[i - 1]) / 2.0
-		(node.get_child(0) as Draggable3D).fallback_position = Vector3(center.x, 0, center.y)
+		var c := (polygon[i] + polygon[i - 1]) / 2.0
+		(node.get_child(0) as Draggable3D).fallback_position = Vector3(c.x, 0, c.y)
 
 
 func _on_polygon_changed(_polygon) -> void:

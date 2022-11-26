@@ -1,0 +1,24 @@
+[gd_scene load_steps=5 format=3 uid="uid://6w2h1mwv71lk"]
+
+[ext_resource type="PackedScene" uid="uid://b6dya0dbxdg1f" path="res://environment/scenes/environment.tscn" id="1_0quab"]
+[ext_resource type="Script" path="res://temp/cutout_proc_mesh.gd" id="1_76yxc"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gmgyu"]
+albedo_color = Color(0.729412, 0.729412, 0.729412, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_frrkj"]
+albedo_color = Color(0.588235, 0.588235, 0.588235, 1)
+
+[node name="Node3D" type="Node3D"]
+script = ExtResource("1_76yxc")
+
+[node name="Environment" parent="." instance=ExtResource("1_0quab")]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+material_override = SubResource("StandardMaterial3D_gmgyu")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+material_override = SubResource("StandardMaterial3D_frrkj")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="."]
+material_override = SubResource("StandardMaterial3D_frrkj")

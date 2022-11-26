@@ -59,10 +59,27 @@ func update_object_data(object_data_value: WorldObjectData) -> void:
 		
 		# rebind drag signals
 		draggable.position_changed.connect(_on_position_changed)
-		draggable.rotation_changed.connect(object_data.set_rotation_from_world_rotation)
+		draggable.rotation_changed.connect(_on_rotation_changed)
 		
 		# update position and rotation
 		place_in_world()
+		
+		# for wall objects, slide along wall during drag
+		if object_data.building_data:
+			draggable.custom_snap_func = snap_to_wall.bind(object_data.building_data)
+
+
+func snap_to_wall(target: Vector3, _current_pos: Vector3, building_data: BuildingData) -> Vector3:
+	var t := Vector2(target.x, target.z)
+	var points: Array[int] = Polygon.closest_edge(building_data.shape, t)
+	if points.size():
+		var p1 := building_data.shape[points[0]]
+		var p2 := building_data.shape[points[1]]
+		var snapped_target: Vector2 = Polygon.snap_to_edge(p1, p2, t)
+		var target_rotation := deg_to_rad(object_data.rotation + 90) - p1.angle_to_point(p2)
+		rotation.y = target_rotation
+		return Vector3(snapped_target.x, target.y, snapped_target.y)
+	return target
 
 
 func place_in_world() -> void:
@@ -80,6 +97,13 @@ func _on_position_changed(new_position: Vector3) -> void:
 		# Update the fallback position so that if the object can't be dragged any further, 
 		# it will return to the most recent spot
 		draggable.fallback_position = Vector3(world_coord)
+	
+	if object_data.building_data: object_data.building_data.rerender.emit()
+
+
+func _on_rotation_changed(rot: Vector3) -> void:
+	object_data.set_rotation_from_world_rotation(rot)
+	if object_data.building_data: object_data.building_data.rerender.emit()
 
 
 func consume() -> void:
@@ -87,5 +111,4 @@ func consume() -> void:
 
 
 func reset() -> void:
-	print("resetting...")
 	if is_consumable: mesh.reset()

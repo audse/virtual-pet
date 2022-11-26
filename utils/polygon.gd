@@ -9,12 +9,16 @@ static func get_center(polygon: PackedVector2Array) -> Vector2:
 	return center
 
 
-static func get_center_3d(polygon: PackedVector3Array) -> Vector3:
-	var center := Vector3.ZERO
-	for p in polygon:
-		center += p
-	center /= polygon.size()
-	return center
+static func closest_point(polygon: PackedVector2Array, to_point: Vector2) -> int:
+	if polygon.size() == 0: return -1
+	var point: int = 0
+	var dist: float = abs(to_point.distance_to(polygon[0]))
+	for i in range(1, polygon.size()):
+		var pdist: float = abs(to_point.distance_to(polygon[i]))
+		if pdist < dist:
+			point = i
+			dist = pdist
+	return point
 
 
 static func sort(polygon: PackedVector2Array) -> PackedVector2Array:
@@ -29,7 +33,7 @@ static func sort(polygon: PackedVector2Array) -> PackedVector2Array:
 
 static func grow(polygon: PackedVector2Array, delta: float) -> PackedVector2Array:
 	var points := Geometry2D.offset_polygon(polygon, delta, Geometry2D.JOIN_MITER)
-	return Polygon.sort(points[0]) if len(points) > 0 else PackedVector2Array()
+	return points[0] if len(points) > 0 else PackedVector2Array()
 
 
 static func shrink(polygon: PackedVector2Array, delta: float) -> PackedVector2Array:
@@ -40,16 +44,15 @@ static func shrink(polygon: PackedVector2Array, delta: float) -> PackedVector2Ar
 static func to_outline(polygon: PackedVector2Array, width: float) -> Array[PackedVector2Array]:
 	var faces: Array[PackedVector2Array] = []
 	
-	polygon = Polygon.sort(polygon)
-	var offset_polygon := Polygon.sort(Polygon.grow(polygon, width))
+	var offset_polygon := Polygon.grow(polygon, width)
 	
 	if polygon.size() == offset_polygon.size():
 	
 		for i in polygon.size():
 			var point: Vector2 = polygon[i]
 			var prev: Vector2 = polygon[i - 1]
-			var inner_point: Vector2 = offset_polygon[i]
-			var inner_prev: Vector2 = offset_polygon[i - 1]
+			var inner_point: Vector2 = offset_polygon[Polygon.closest_point(offset_polygon, point)]
+			var inner_prev: Vector2 = offset_polygon[Polygon.closest_point(offset_polygon, prev)]
 			faces.append(PackedVector2Array([
 				point,
 				inner_point,
@@ -142,3 +145,44 @@ static func get_edges(polygon: PackedVector2Array, join: bool = true) -> Array[P
 		edges.append(PackedVector2Array([p2, p1]))
 	
 	return edges
+
+
+static func segment_has_point(s1: Vector2, s2: Vector2, point: Vector2) -> bool:
+	var is_collinear := func(a, b, c) -> bool:
+		# if a, b, and c all lie on the same line
+		return is_equal_approx((b.x - a.x) * (c.y - a.y), (c.x - a.x) * (b.y - a.y))
+	var is_within := func(a, b, c) -> bool:
+		# if q is between p and r (inclusive)
+		return (a <= b and b <= c) or (c <= b and b <= a)
+	
+	return is_collinear.call(s1, s2, point) and (
+		is_within.call(s1.x, point.x, s2.x) 
+		if not is_equal_approx(s1.x, s2.x) 
+		else is_within.call(s1.y, point.y, s2.y)
+	)
+
+
+static func find_edge_with_point(polygon: PackedVector2Array, point: Vector2) -> Array[int]:
+	for i in polygon.size():
+		if Polygon.segment_has_point(polygon[i], polygon[i - 1], point): return [i, i - 1]
+	return []
+
+
+static func closest_edge(polygon: PackedVector2Array, point: Vector2) -> Array[int]:
+	var num_points := polygon.size()
+	if num_points < 3: return []
+	var p := 0
+	var dist := -1.0
+	for i in num_points:
+		var p1 := polygon[i]
+		var p2 := polygon[i - 1]
+		var s := Polygon.snap_to_edge(p1, p2, point)
+		var sdist := point.distance_to(s)
+		if dist < 0.0 or sdist < dist:
+			dist = sdist
+			p = i
+	return [p, p - 1]
+
+
+static func snap_to_edge(e1: Vector2, e2: Vector2, point: Vector2) -> Vector2:
+	return e1.lerp(e2, clamp(point.distance_to(e1) / (e2 - e1).length(), 0.0, 1.0))

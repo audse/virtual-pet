@@ -3,18 +3,19 @@
 [ext_resource type="Script" path="res://apps/polygon_editor/scenes/add_point.gd" id="1_044k8"]
 [ext_resource type="Texture2D" uid="uid://clkhxy6au5cmr" path="res://static/icons/circle_plus.svg" id="1_l6067"]
 
-[sub_resource type="CylinderShape3D" id="CylinderShape3D_btxe6"]
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_jjo1e"]
 height = 0.05
-radius = 0.3
+radius = 0.4
 
 [node name="AddPointButton" type="Area3D"]
+collision_priority = 3.0
 script = ExtResource("1_044k8")
 
 [node name="Decal" type="Decal" parent="."]
-extents = Vector3(0.15, 0.15, 0.15)
+extents = Vector3(0.25, 0.25, 0.25)
 texture_albedo = ExtResource("1_l6067")
 modulate = Color(1, 0, 0, 1)
 upper_fade = 2.0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-shape = SubResource("CylinderShape3D_btxe6")
+shape = SubResource("CylinderShape3D_jjo1e")

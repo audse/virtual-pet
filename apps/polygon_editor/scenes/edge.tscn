@@ -3,25 +3,26 @@
 [ext_resource type="Script" path="res://utils/nodes/draggable_3d.gd" id="1_55pif"]
 [ext_resource type="Script" path="res://apps/polygon_editor/scenes/edge.gd" id="1_i5ndl"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_d2xv5"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_eja05"]
 resource_local_to_scene = true
 shading_mode = 0
 albedo_color = Color(1, 0, 0, 1)
 
-[sub_resource type="SphereMesh" id="SphereMesh_qtqny"]
+[sub_resource type="SphereMesh" id="SphereMesh_77q5u"]
 resource_local_to_scene = true
-material = SubResource("StandardMaterial3D_d2xv5")
-radius = 0.15
-height = 0.3
+material = SubResource("StandardMaterial3D_eja05")
+radius = 0.25
+height = 0.5
 radial_segments = 24
 rings = 12
 
-[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_5gecn"]
-points = PackedVector3Array(-0.0172618, -0.14701, -0.0172618, 0.0194573, 0.146974, 0.0148536, 0.0375438, 0.141209, 0.0284114, -0.0852608, -0.022701, 0.119305, -0.10364, 0.0570981, -0.10364, 0.143085, -0.0183077, -0.0401067, 0.0742083, -0.0182699, 0.129075, 0.0420326, 0.0272789, -0.139941, -0.108251, -0.0819989, -0.0626833, -0.107382, 0.0813477, 0.0643767, 0.00562886, -0.0863619, -0.121635, 0.0439385, -0.142835, 0.0439385, 0.0915501, 0.0904501, 0.0915501, 0.0735185, 0.10867, -0.0713469, -0.13577, -0.0501687, 0.0375759, -0.00800207, 0.0819755, 0.124049, -0.030709, -0.113595, 0.0919991, 0.0916627, -0.0860232, -0.0804121, 0.13253, -0.0543721, 0.0418719, -0.0398542, 0.131989, -0.0580497, -0.136298, 0.0503621, -0.0355166, 0.124289, 0.082107, 0.00564561, -0.0444631, -0.022753, -0.140128, 0.00109999, -0.0412088, 0.143092, -0.00343544, 0.0864869, -0.121813, -0.0852914, -0.113659, 0.0465466, -0.0625778, 0.131916, 0.0329389, 0.10546, 0.0226857, -0.10326, 0.129075, 0.0182699, 0.0742083, 0.0599164, -0.0814752, 0.109743, 0.0604754, -0.132521, -0.0354585, -0.126257, -0.0227128, -0.0762148)
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_ndogw"]
+points = PackedVector3Array(-0.0365085, -0.245213, -0.0135138, 0.0323989, 0.244983, 0.0247252, 0.0324319, 0.245248, -0.02115, 0.247288, -0.030662, -0.00584148, 0.00942714, -0.0306045, 0.246828, -0.187306, 0.0377737, -0.15702, 0.0700136, -0.0454599, -0.233242, -0.210804, 0.0455275, 0.123254, -0.195777, -0.144338, 0.054992, 0.0970132, -0.222197, 0.0970132, 0.176126, 0.0454453, 0.168528, 0.0773994, 0.14362, -0.187199, -0.0963883, 0.188806, 0.130131, -0.11902, -0.143385, -0.164292, 0.122498, -0.181119, -0.118946, -0.149503, 0.181544, -0.0813879, 0.199351, 0.136715, -0.058941, -0.104009, -0.143557, 0.175622, 0.0920385, 0.172985, 0.152213, -0.0592336, 0.0533864, -0.234639, 0.175721, -0.0378068, -0.172121, -0.243263, -0.0305609, -0.0364371, -0.0668912, 0.030471, 0.238488, 0.167866, -0.0905771, 0.160345, -0.203049, 0.144141, -0.00575885, 0.198364, 0.136032, 0.0622375, 0.20678, -0.136621, -0.0133273, -0.058849, 0.189498, -0.149799, -0.00575885, -0.144141, -0.203049, 0.0170147, 0.0913356, 0.230163, 0.0396789, -0.143921, 0.198789, -0.0591421, -0.220861, 0.100777)
 
 [node name="Edge" type="StaticBody3D"]
 collision_layer = 2
 collision_mask = 2
+collision_priority = 3.0
 script = ExtResource("1_i5ndl")
 
 [node name="Draggable3D" type="Node" parent="." node_paths=PackedStringArray("object")]
@@ -39,12 +40,11 @@ collision_enabled = false
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 transparency = 0.15
-mesh = SubResource("SphereMesh_qtqny")
+mesh = SubResource("SphereMesh_77q5u")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
-shape = SubResource("ConvexPolygonShape3D_5gecn")
+shape = SubResource("ConvexPolygonShape3D_ndogw")
 
 [node name="OmniLight3D" type="OmniLight3D" parent="."]
 unique_name_in_owner = true

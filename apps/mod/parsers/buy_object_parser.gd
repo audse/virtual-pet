@@ -22,6 +22,8 @@ const optional_fields := {
 	fulfills_needs = TYPE_ARRAY,
 	total_uses = TYPE_FLOAT,
 	mesh_script = TYPE_STRING,
+	intersection_type = TYPE_STRING,
+	intersection_rect = TYPE_DICTIONARY,
 }
 
 
@@ -54,16 +56,11 @@ static func parse_required_data(_context: Node, json_file: FileAccess, data: Dic
 
 
 static func parse_optional_data(_context: Node, _json_file: FileAccess, data: Dictionary, parser: ModParser) -> Dictionary:
-	if "menu" in data and data.menu in BuyCategoryData.Menu:
-		data.menu = BuyCategoryData.Menu[data.menu]
+	if "menu" in data and data.menu in BuyCategoryData.Menu: data.menu = BuyCategoryData.Menu[data.menu.to_upper()]
 	
-	# Convert dimension width & height to `Vector2i`
-	var dimensions := Vector3i(1, 1, 1)
-	if "dimensions" in data:
-		if "width" in data.dimensions: dimensions.x = data.dimensions.width as int
-		if "height" in data.dimensions: dimensions.y = data.dimensions.height as int
-		if "depth" in data.dimensions: dimensions.z = data.dimensions.depth as int
-	data.dimensions = dimensions
+	# Convert dimension width, height, and depth to `Vector3i`
+	if "dimensions" in data: data.dimensions = Vector3i(parser.parse_dimensions(data.dimensions))
+	else: data.dimensions = Vector3i.ONE
 	
 	# Load collision shape file
 	if "collision_shape" in data:
@@ -71,31 +68,33 @@ static func parse_optional_data(_context: Node, _json_file: FileAccess, data: Di
 		else: data.collision_shape = load("res://mods/" + data.collision_shape)
 	
 	# Parse needs
-	if "fulfills_needs" in data:
-		data.fulfills_needs = data.fulfills_needs.map(
-			func(need: String) -> NeedsData.Need: return NeedsData.Need[need.to_upper()]
-		)
+	if "fulfills_needs" in data: data.fulfills_needs = data.fulfills_needs.map(
+		func(need: String) -> NeedsData.Need: return NeedsData.Need[need.to_upper()]
+	)
 	
 	# Parse flags
-	if "flags" in data:
-		data.flags = data.flags.map(
-			func(flag: String) -> BuyableObjectData.Flag: return BuyableObjectData.Flag[flag.to_upper()]
-		)
+	if "flags" in data: data.flags = data.flags.map(
+		func(flag: String) -> BuyableObjectData.Flag: return BuyableObjectData.Flag[flag.to_upper()]
+	)
 	
 	# Convert JSON floats to ints
 	if "rarity" in data: data.rarity = int(data.rarity)
 	if "total_uses" in data: data.total_uses = int(data.total_uses)
 	
 	# Convert scale of mesh to Vector3
-	if "mesh_scale" in data: data.mesh_scale = Vector3(
-		data.mesh_scale.x if "x" in data.mesh_scale else 1.0,
-		data.mesh_scale.y if "y" in data.mesh_scale else 1.0,
-		data.mesh_scale.z if "z" in data.mesh_scale else 1.0
-	)
+	if "mesh_scale" in data: data.mesh_scale = parser.parse_position(data.mesh_scale, Vector3.ONE)
 	
 	# Load the script for the `MeshInstance3D`
-	if "mesh_script" in data:
-		data.mesh_script = parser.get_as_script(data.mesh_script)
+	if "mesh_script" in data: data.mesh_script = parser.get_as_script(data.mesh_script)
+	
+	if "intersection_type" in data: data.intersection_type = BuyableObjectData.BuildingIntersectionType[data.intersection_type.to_upper()]
+	if "intersection_rect" in data:
+		data.intersection_rect = Rect2(
+			data.intersection_rect.x if "x" in data.intersection_rect else 0,
+			data.intersection_rect.y if "y" in data.intersection_rect else 0,
+			data.intersection_rect.width if "width" in data.intersection_rect else 0,
+			data.intersection_rect.height if "height" in data.intersection_rect else 0,
+		)
 	
 	return data
 

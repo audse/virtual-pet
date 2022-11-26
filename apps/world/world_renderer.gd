@@ -51,18 +51,19 @@ func render_building(building_data: BuildingData) -> void:
 
 
 func _on_object_bought(object_data: BuyableObjectData) -> void:
+	var coord := WorldData.to_grid(Auto.get_screen_center_in_world())
 	match object_data.menu:
 		BuyCategoryData.Menu.BUY:
 			var world_object := WorldObjectData.new({
 				buyable_object_data = object_data,
-				coord = Vector2(4, 0)
+				coord = WorldData.get_nearest_occupiable_coord(Vector2i(coord.x, coord.z))
 			})
 			WorldData.add_object(world_object)
 			render_object(world_object)
 		BuyCategoryData.Menu.BUILD:
-			var building_object := BuildingObjectData.new({
-				buyable_object_data = object_data,
-				coord = Vector2(4, 0)
-			})
 			if BuildData.state.current_building:
+				var building_object := WorldObjectData.new({
+					buyable_object_data = object_data,
+					coord = WorldData.get_nearest_occupiable_coord(Vector2i(coord.x, coord.z))
+				})
 				BuildData.state.current_building.add_object(building_object)

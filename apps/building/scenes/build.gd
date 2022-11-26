@@ -2,16 +2,9 @@ extends Node3D
 
 @onready var viewport := get_viewport()
 @onready var camera := viewport.get_camera_3d()
-
-@onready var map: CellMap = $CellMap
-@onready var guide_map: GuideMap = $GuideMap
 @onready var grid_plane: MeshInstance3D = %GridPlane
-@onready var roof_map: CellMap = $RoofMap
-@onready var roof_mesh: MeshInstance3D = $RoofContainer/RoofMesh
-
 @onready var editor := %PolygonEditor as PolygonEditor
 @onready var renderer: BuildingRenderer = %BuildingRenderer
-
 @onready var edit_button: Button = %EditButton
 
 var building_data := BuildingData.new():
@@ -24,8 +17,8 @@ var is_current: bool:
 
 
 func _ready() -> void:
-	BuildData.confirm_build.connect(_on_built)
-	BuildData.confirm_destroy.connect(_on_destroyed)
+#	BuildData.confirm_build.connect(_on_built)
+#	BuildData.confirm_destroy.connect(_on_destroyed)
 	
 	BuildData.state.enter_state.connect(
 		func(state: BuildModeState.BuildState) -> void:
@@ -37,9 +30,9 @@ func _ready() -> void:
 						_on_cancelled()
 	)
 	
-	Settings.data.hide_roofs_changed.connect(
-		func(hide_roofs: bool) -> void: roof_map.visible = not hide_roofs
-	)
+#	Settings.data.hide_roofs_changed.connect(
+#		func(hide_roofs: bool) -> void: roof_map.visible = not hide_roofs
+#	)
 	
 	Game.Mode.enter_state.connect(
 		func(_state) -> void: edit_button.visible = Game.Mode.is_build
@@ -49,7 +42,12 @@ func _ready() -> void:
 		func() -> void: BuildData.state.edit(building_data)
 	)
 	
-	editor.polygon_changed.connect(renderer.draw_building)
+	editor.polygon_changed.connect(
+		func(polygon) -> void:
+			if is_current: 
+				building_data.shape = editor.polygon
+				renderer.draw_building(polygon)
+	)
 
 
 func _physics_process(_delta: float) -> void:
@@ -60,7 +58,8 @@ func _physics_process(_delta: float) -> void:
 		and not building_data.is_empty
 	)
 	if edit_button.visible:
-		edit_button.position = camera.unproject_position(building_data.center_coord)
+		var center := Polygon.get_center(building_data.shape)
+		edit_button.position = camera.unproject_position(Vector3(center.x, 2.0, center.y))
 
 
 func update_from_data() -> void:
@@ -75,44 +74,34 @@ func update_from_data() -> void:
 
 
 func enable() -> void:
-	grid_plane.visible = true
-	guide_map.visible = true
-	guide_map.release()
-	guide_map.enable()
+	if is_current:
+		editor.enable()
+		grid_plane.visible = true
 
 
 func disable() -> void:
+	editor.disable()
 	grid_plane.visible = false
-	guide_map.visible = false
-	guide_map.release()
-	guide_map.disable()
 
 
 func _on_start() -> void:
-	await get_tree().create_timer(0.1).timeout
-	grid_plane.visible = true
-	enable()
-
-
-func _on_built() -> void:
-	var empty_coords := map.get_empty_coords_betweenv(guide_map.prev_start_coord, guide_map.prev_end_coord)
-	if BuildData.is_area_buildable(empty_coords):
-		building_data.add_area(empty_coords)
-
-
-func _on_destroyed() -> void:
 	if is_current:
-		var filled_coords := map.get_filled_coords_betweenv(guide_map.prev_start_coord, guide_map.prev_end_coord)
-		building_data.remove_area(filled_coords)
+		await get_tree().create_timer(0.1).timeout
+		editor.polygon = building_data.shape
+		enable()
 
 
-func _on_object_added(object: BuildingObjectData) -> void:
+#func _on_built() -> void:
+#	if is_current: building_data.shape = editor.polygon
+#
+#
+#func _on_destroyed() -> void:
+#	pass
+
+
+func _on_object_added(object: WorldObjectData) -> void:
 	get_parent().render_object_to(self, object)
 
 
 func _on_cancelled() -> void:
 	disable()
-
-
-func _on_area_3d_input_event(_camera: Node, event: InputEvent, event_pos: Vector3, _normal: Vector3, _shape_idx: int) -> void:
-	if is_current: guide_map.handle_drag(event, event_pos)

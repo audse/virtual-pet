@@ -31,6 +31,15 @@ interface BuyableObject {
     total_uses?: number, // only applies for consumable objects
     fulfills_needs?: string[],
     mesh_script?: string, // a script that is attached to every instance of this mesh
+
+    // these options are for objects that appear in the build menu, such as doors and windows
+    intersection_type?: IntersectionType,
+    intersection_rect?: {
+        x?: number, // the horizontal offset from the left of this object
+        y?: number, // the vertical offset from the top of the building
+        width?: number,
+        height?: number, // the building's height is 4, so should be below that
+    }
 }
 
 enum WorldLayer {
@@ -48,6 +57,12 @@ enum Flag {
 interface BuyableObjectColor {
     name: string, // set this to `default` for one of the colors
     materials: string[] // paths to all `.mtl` files needed for the recolor (in order of surface)
+}
+
+enum IntersectionType {
+    OPEN_DOORWAY, // e.g. arches
+    CLOSED_DOORWAY, // e.g. regular doors
+    WINDOW,
 }
 ```
 

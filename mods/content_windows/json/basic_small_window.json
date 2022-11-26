@@ -1,0 +1,16 @@
+{
+    "id": "basic_small_window",
+    "display_name": "Basic small window",
+    "mesh": "content_windows/meshes/basic_small_window.tres",
+    "world_layer": "BUILDING",
+    "price": 100,
+    "category_id": "window",
+    "menu": "BUILD",
+    "intersection_type": "WINDOW",
+    "intersection_rect": {
+        "x": -0.4,
+        "y": 0.5,
+        "width": 0.8,
+        "height": 1
+    }
+}

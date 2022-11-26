@@ -14,6 +14,8 @@ func _ready():
 	Datetime.data.time_changed.connect(
 		func(_time) -> void: update_lights()
 	)
+	
+	AddCategoryFoodBowl.new()
 
 
 func update_lights() -> void:
@@ -23,9 +25,9 @@ func update_lights() -> void:
 	
 	if percent < 0.5:
 		for light in [main_light, soft_light]:
-			light.light_energy = lerp(0.0, 1.5, percent * 2.0)
-			light.light_indirect_energy = lerp(0.0, 1.5, percent * 2.0)
+			light.light_energy = lerp(0.0, 1.0, percent * 2.0)
+			light.light_indirect_energy = lerp(0.0, 1.0, percent * 2.0)
 	else:
 		for light in [main_light, soft_light]:
-			light.light_energy = lerp(1.5, 0.0, (percent - 0.5) * 2.0)
-			light.light_indirect_energy = lerp(1.5, 0.0, (percent - 0.5) * 2.0)
+			light.light_energy = lerp(1.0, 0.0, (percent - 0.5) * 2.0)
+			light.light_indirect_energy = lerp(1.0, 0.0, (percent - 0.5) * 2.0)

@@ -60,6 +60,8 @@ var sell_price: int:
 var instance: Node3D
 var collision_instance: Node3D
 
+var building_data: BuildingData
+
 
 func _init(args: Dictionary = {}) -> void:
 	for key in args.keys():

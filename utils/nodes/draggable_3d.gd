@@ -24,6 +24,9 @@ signal rotation_changed(Vector3)
 
 @export var collision_enabled: bool = true
 
+var custom_snap_func: Callable
+
+
 var is_dragging: bool = false:
 	set(value):
 		var prev_dragging := is_dragging
@@ -121,18 +124,18 @@ func _physics_process(_delta: float) -> void:
 		if snap_to_grid: target = target.snapped(grid)
 		
 		if object.position.distance_to(target) > 0.05:
+			if custom_snap_func: target = custom_snap_func.call(target, object.position)
 			if collision_enabled: object.move_and_collide(target - object.position)
 			else: object.position = object.position.slerp(target, 0.25)
 
 
 func _on_tapped() -> void:
 	if enabled:
-		var tween := object.create_tween().set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_BACK)
+		var tween := object.create_tween().set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_BACK).set_parallel()
 		tween.tween_property(object, "position:y", start_distance_from_ground + distance_from_ground_while_dragging * 0.75, 0.15)
 		tween.tween_property(object, "rotation:y", object.rotation.y + deg_to_rad(45.0), 0.15)
-		tween.tween_property(object, "position:y", start_distance_from_ground, 0.15)
+		tween.set_parallel(false).tween_property(object, "position:y", start_distance_from_ground, 0.15)
 		await tween.finished
 		
 		rotation_changed.emit(object.rotation)
-
 

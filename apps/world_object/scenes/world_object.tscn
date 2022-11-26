@@ -12,8 +12,10 @@ script = ExtResource("1_73iwd")
 unique_name_in_owner = true
 script = ExtResource("2_k7mtm")
 object = NodePath("..")
-distance_from_ground_while_dragging = 2.0
+distance_from_ground_while_dragging = 0.01
 enable_fallback_position = true
+distance_from_mouse = Vector2(0, 100)
+collision_enabled = false
 
 [node name="InteractWithObjectActionMenu" parent="." instance=ExtResource("3_3yewo")]
 unique_name_in_owner = true

@@ -6,6 +6,12 @@ enum Flag {
 	CONSUMABLE,
 }
 
+enum BuildingIntersectionType {
+	OPEN_DOORWAY,
+	CLOSED_DOORWAY,
+	WINDOW,
+}
+
 @export_group("Object identity")
 @export var id: String
 @export var display_name: String
@@ -27,6 +33,10 @@ enum Flag {
 @export var rarity := 0
 @export var collision_shape: Shape3D = null
 @export var mesh_script: Script
+
+@export_subgroup("Optional building data")
+@export var intersection_type: BuildingIntersectionType
+@export var intersection_rect: Rect2
 
 @export_group("Use data")
 @export var flags: Array[Flag] = []

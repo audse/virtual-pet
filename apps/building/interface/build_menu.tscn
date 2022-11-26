@@ -16,7 +16,6 @@
 [sub_resource type="GDScript" id="GDScript_m70jq"]
 script/source = "extends Control
 
-@onready var ok_button := %OkButton as Button
 @onready var back_button := %BackButton as Button
 
 @onready var add_house_button := %AddHouseButton as Button
@@ -56,13 +55,6 @@ func _ready() -> void:
 	walls_button.pressed.connect(BuildData.state.set_to.bind(BuildModeState.BuildState.BUILDING_WALLS))
 	destroy_button.pressed.connect(BuildData.state.set_to.bind(BuildModeState.BuildState.DESTROYING_WALLS))
 	
-	ok_button.pressed.connect(
-		func() -> void:
-			match BuildData.state.state:
-				BuildModeState.BuildState.BUILDING_WALLS: BuildData.confirm_build.emit()
-				BuildModeState.BuildState.DESTROYING_WALLS: BuildData.confirm_destroy.emit()
-	)
-	
 	back_button.pressed.connect(
 		func() -> void:
 			match BuildData.state.state:
@@ -90,9 +82,6 @@ func _ready() -> void:
 		func(state: GameModeState.Mode) -> void:
 			if state == GameModeState.Mode.BUILD: open()
 	)
-	
-	await RenderingServer.frame_post_draw
-	ok_button.scale = Vector2.ZERO
 
 
 func open() -> void:
@@ -107,12 +96,10 @@ func close() -> void:
 
 
 func show_await_confirm() -> void:
-	await Ui.scale_in(ok_button)
 	hide_options()
 
 
 func show_home() -> void:
-	await Ui.scale_out(ok_button)
 	await show_options()
 
 
@@ -240,13 +227,14 @@ expand_icon = true
 layout_mode = 3
 anchors_preset = 0
 offset_left = 112.0
-offset_right = 546.0
+offset_right = 708.0
 offset_bottom = 115.0
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.25
 
 [node name="OkButton" type="Button" parent="MarginContainer/Panel/MarginContainer/VBoxContainer/HBoxContainer"]
 unique_name_in_owner = true
+visible = false
 custom_minimum_size = Vector2(150, 100)
 offset_left = 558.0
 offset_top = 2.0
@@ -308,7 +296,6 @@ vertical_scroll_mode = 0
 
 [node name="Step1Container" type="HBoxContainer" parent="MarginContainer/Panel/MarginContainer/VBoxContainer/OptionsContainer/HBoxContainer/Panel/ScrollContainer"]
 unique_name_in_owner = true
-visible = false
 custom_minimum_size = Vector2(0, 150)
 offset_right = 502.0
 offset_bottom = 150.0
@@ -334,6 +321,7 @@ expand_icon = true
 
 [node name="Step2Container" type="HBoxContainer" parent="MarginContainer/Panel/MarginContainer/VBoxContainer/OptionsContainer/HBoxContainer/Panel/ScrollContainer"]
 unique_name_in_owner = true
+visible = false
 custom_minimum_size = Vector2(0, 150)
 offset_right = 846.0
 offset_bottom = 150.0
