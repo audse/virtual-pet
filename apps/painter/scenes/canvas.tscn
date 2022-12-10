@@ -1,10 +1,11 @@
-[gd_scene load_steps=11 format=3 uid="uid://bn5p31m1beflu"]
+[gd_scene load_steps=13 format=3 uid="uid://bn5p31m1beflu"]
 
 [ext_resource type="Script" path="res://apps/painter/nodes/canvas.gd" id="1_m4qb3"]
 [ext_resource type="Texture2D" uid="uid://xtyu065fl2xv" path="res://apps/painter/assets/shapes/square.svg" id="2_i46ic"]
 [ext_resource type="Shader" path="res://apps/painter/assets/shaders/grid.gdshader" id="2_ir7hh"]
 [ext_resource type="Script" path="res://apps/painter/nodes/cursor.gd" id="4_6ws3i"]
 [ext_resource type="Texture2D" uid="uid://c0j4jpxyh071g" path="res://apps/painter/assets/resources/canvas_texture.tres" id="5_63mbt"]
+[ext_resource type="PackedScene" uid="uid://bpes7jjsdturr" path="res://static/shaders/blurry_backdrop.tscn" id="5_u4yw3"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_tmijp"]
 shader = ExtResource("2_ir7hh")
@@ -15,6 +16,8 @@ shader_parameter/grid_x = 50.0
 shader_parameter/grid_y = 50.0
 shader_parameter/minigrid_x = -1.0
 shader_parameter/minigrid_y = -1.0
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_018w0"]
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_efslj"]
 viewport_path = NodePath("Canvas/SubViewport")
@@ -69,7 +72,9 @@ mouse_force_pass_scroll_events = false
 
 [node name="SubViewport" type="SubViewport" parent="Canvas"]
 unique_name_in_owner = true
+transparent_bg = true
 handle_input_locally = false
+screen_space_aa = 1
 canvas_item_default_texture_filter = 3
 gui_disable_input = true
 size = Vector2i(800, 800)
@@ -107,7 +112,7 @@ region_rect = Rect2(0, 0, 650, 650)
 script = ExtResource("4_6ws3i")
 
 [node name="Shadow" type="Sprite2D" parent="Canvas/SubViewport/Canvas/Cursor"]
-modulate = Color(0.117647, 0.160784, 0.231373, 0.027451)
+modulate = Color(0.1173, 0.160502, 0.23, 0.0431373)
 show_behind_parent = true
 scale = Vector2(1.01, 1.01)
 texture = ExtResource("2_i46ic")
@@ -148,6 +153,7 @@ region_filter_clip_enabled = true
 
 [node name="Ghost" type="Sprite2D" parent="Canvas/SubViewport/Canvas"]
 modulate = Color(1, 1, 1, 0.490196)
+texture = SubResource("PlaceholderTexture2D_018w0")
 
 [node name="Backdrop" type="ColorRect" parent="."]
 anchors_preset = 15
@@ -157,6 +163,8 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 1
 color = Color(0.117647, 0.160784, 0.231373, 1)
+
+[node name="Backdrop2" parent="." instance=ExtResource("5_u4yw3")]
 
 [node name="CanvasCopy" type="TextureRect" parent="."]
 unique_name_in_owner = true
@@ -487,6 +495,7 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_f1txh")
 metadata/_edit_layout_mode = 1
 
 [connection signal="gui_input" from="Backdrop" to="." method="_on_backdrop_gui_input"]
+[connection signal="gui_input" from="Backdrop2" to="." method="_on_backdrop_gui_input"]
 [connection signal="gui_input" from="CanvasCopy" to="." method="_on_tile_gui_input" binds= ["."]]
 [connection signal="gui_input" from="CanvasCopy/TileTopLeft" to="." method="_on_tile_gui_input" binds= ["TileTopLeft"]]
 [connection signal="gui_input" from="CanvasCopy/TileTop" to="." method="_on_tile_gui_input" binds= ["TileTop"]]

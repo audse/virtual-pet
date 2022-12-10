@@ -1,26 +1,17 @@
-[gd_scene load_steps=9 format=3 uid="uid://c7xjorqjkaula"]
+[gd_scene load_steps=8 format=3 uid="uid://c7xjorqjkaula"]
 
 [ext_resource type="Script" path="res://apps/world/world.gd" id="1_xch6f"]
 [ext_resource type="Script" path="res://apps/world/world_renderer.gd" id="3_3p2vm"]
 [ext_resource type="PackedScene" uid="uid://b6dya0dbxdg1f" path="res://environment/scenes/environment.tscn" id="3_nx4s3"]
+[ext_resource type="PackedScene" uid="uid://ne8guqpxprqf" path="res://temp/land.tscn" id="4_4jhxd"]
 [ext_resource type="PackedScene" uid="uid://cagfmccv3vm8w" path="res://interface/interface.tscn" id="4_ffd0p"]
 
-[sub_resource type="NavigationMesh" id="NavigationMesh_8usga"]
-vertices = PackedVector3Array(-18.5, 0.48181, -24.5, -24.5, 0.48181, -24.5, -24.5, 0.48181, -18.5, -24.5, 0.48181, 18.25, -24.5, 0.48181, 24.5, -18.5, 0.48181, 24.5, 24.5, 0.48181, -18.5, 24.5, 0.48181, -24.5, 18.25, 0.48181, -24.5, 18.25, 0.48181, 24.5, 24.5, 0.48181, 24.5, 24.5, 0.48181, 18.25, -24.5, 0.48181, 12.25, -24.5, 0.48181, 18.25, -18.5, 0.48181, 24.5, -12.25, 0.48181, 24.5, 24.5, 0.48181, -18.5, 18.25, 0.48181, -24.5, 12.25, 0.48181, -24.5, 24.5, 0.48181, -12.25, -12.25, 0.48181, -24.5, -18.5, 0.48181, -24.5, -24.5, 0.48181, -18.5, -24.5, 0.48181, -12.25, 12.25, 0.48181, 24.5, 18.25, 0.48181, 24.5, 24.5, 0.48181, 18.25, 6, 0.48181, 24.5, 24.5, 0.48181, 12.25, 24.5, 0.48181, 6, 0, 0.48181, 24.5, 12.25, 0.48181, 24.5, 24.5, 0.48181, 18.25, 24.5, 0.48181, 12.25, 6, 0.48181, 24.5, 0, 0.48181, -24.5, -6.25, 0.48181, -24.5, -24.5, 0.48181, -6.25, -24.5, 0.48181, 0, 24.5, 0.48181, 0, 0, 0.48181, -24.5, -24.5, 0.48181, 0, -6.25, 0.48181, 24.5, 0, 0.48181, 24.5, 24.5, 0.48181, 6, -24.5, 0.48181, 12.25, -12.25, 0.48181, 24.5, -6.25, 0.48181, 24.5, -24.5, 0.48181, 6, 24.5, 0.48181, -6.25, 24.5, 0.48181, -12.25, 12.25, 0.48181, -24.5, 6, 0.48181, -24.5, -6.25, 0.48181, -24.5, -12.25, 0.48181, -24.5, -24.5, 0.48181, -12.25, -24.5, 0.48181, -6.25, -24.5, 0.48181, 0, -24.5, 0.48181, 6, -6.25, 0.48181, 24.5, 24.5, 0.48181, -6.25, 6, 0.48181, -24.5, 0, 0.48181, -24.5, 24.5, 0.48181, 0)
-polygons = [PackedInt32Array(2, 1, 0), PackedInt32Array(5, 4, 3), PackedInt32Array(8, 7, 6), PackedInt32Array(11, 10, 9), PackedInt32Array(13, 12, 14), PackedInt32Array(14, 12, 15), PackedInt32Array(17, 16, 18), PackedInt32Array(18, 16, 19), PackedInt32Array(21, 20, 22), PackedInt32Array(22, 20, 23), PackedInt32Array(26, 25, 24), PackedInt32Array(28, 27, 29), PackedInt32Array(29, 27, 30), PackedInt32Array(32, 31, 33), PackedInt32Array(33, 31, 34), PackedInt32Array(36, 35, 37), PackedInt32Array(37, 35, 38), PackedInt32Array(44, 43, 39), PackedInt32Array(39, 43, 42), PackedInt32Array(39, 42, 41), PackedInt32Array(39, 41, 40), PackedInt32Array(46, 45, 47), PackedInt32Array(47, 45, 48), PackedInt32Array(50, 49, 51), PackedInt32Array(51, 49, 52), PackedInt32Array(54, 53, 55), PackedInt32Array(55, 53, 56), PackedInt32Array(59, 58, 57), PackedInt32Array(61, 60, 62), PackedInt32Array(62, 60, 63)]
-agent_max_climb = 0.5
+[sub_resource type="NavigationMesh" id="NavigationMesh_64p8p"]
+agent_height = 0.5
+agent_max_climb = 1.5
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kakm8"]
-albedo_color = Color(0.21, 0.21, 0.21, 0.490196)
-
-[sub_resource type="PlaneMesh" id="PlaneMesh_l06tn"]
-material = SubResource("StandardMaterial3D_kakm8")
-size = Vector2(50, 50)
-subdivide_width = 10
-subdivide_depth = 10
-
-[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_ta066"]
-points = PackedVector3Array(25.3919, 0.396748, 25.3919, -25.3919, -0.396748, -25.3919, -25.3919, 0.396748, -25.3919, 25.3919, -0.396748, -25.3919, -25.3919, -0.396748, 25.3919, -25.3919, 0.396748, 25.3919, 25.3919, 0.396748, -25.3919, 25.3919, -0.396748, 25.3919)
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ryqpr"]
+albedo_color = Color(1, 0, 0, 1)
 
 [node name="World" type="Node"]
 script = ExtResource("1_xch6f")
@@ -31,19 +22,16 @@ script = ExtResource("3_3p2vm")
 
 [node name="Environment" parent="Renderer" instance=ExtResource("3_nx4s3")]
 
+[node name="Land" parent="Renderer" instance=ExtResource("4_4jhxd")]
+
 [node name="NavigationRegion3D" type="NavigationRegion3D" parent="Renderer"]
-navmesh = SubResource("NavigationMesh_8usga")
+unique_name_in_owner = true
+navmesh = SubResource("NavigationMesh_64p8p")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="Renderer/NavigationRegion3D"]
-input_ray_pickable = false
-
-[node name="Plane" type="MeshInstance3D" parent="Renderer/NavigationRegion3D/StaticBody3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.018, 0)
-mesh = SubResource("PlaneMesh_l06tn")
+[node name="WalkableMesh" type="MeshInstance3D" parent="Renderer/NavigationRegion3D"]
+unique_name_in_owner = true
+visible = false
+material_override = SubResource("StandardMaterial3D_ryqpr")
 skeleton = NodePath("")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Renderer/NavigationRegion3D/StaticBody3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0181896, 0)
-shape = SubResource("ConvexPolygonShape3D_ta066")
 
 [node name="Interface" parent="." instance=ExtResource("4_ffd0p")]

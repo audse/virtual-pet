@@ -118,6 +118,24 @@ func _ready() -> void:
 	Game.Mode.exit_state.connect(exit_mode)
 	Game.Mode.enter_state.connect(enter_mode)
 	enter_mode(Game.Mode.state)
+	
+	Game.goal_complete.connect(
+		func(_goal: GoalData) -> void: 
+			%GoalCompleteParticles.emit()
+			%GoalsButtonUnreadIndicator.visible = true
+	)
+	
+	goals_menu.controller.opening.connect(
+		func() -> void: %GoalsButtonUnreadIndicator.visible = false
+	)
+
+## TEMPORARY
+func _input(event: InputEvent) -> void:
+	if event is InputEventKey and not get_viewport().gui_get_focus_owner():
+		match event.keycode:
+			KEY_I: $InventoryMenu.open()
+			KEY_C: $CreateAPet.open()
+			KEY_M: Modules.go_to_portal()
 
 
 func enter_mode(mode: int) -> void:

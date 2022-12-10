@@ -25,7 +25,6 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_kkk06")
 [node name="TempButton" type="Button" parent="."]
 unique_name_in_owner = true
 visible = false
-layout_mode = 2
 offset_left = 36.0
 offset_top = 24.0
 offset_right = 124.0
@@ -34,7 +33,6 @@ theme_type_variation = &"CircleButton_PaddingSm"
 text = "Tm"
 
 [node name="PetList" type="VBoxContainer" parent="."]
-layout_mode = 2
 offset_left = 48.0
 offset_top = 48.0
 offset_right = 48.0

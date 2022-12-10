@@ -1,0 +1,123 @@
+[gd_scene load_steps=5 format=3 uid="uid://bpes7jjsdturr"]
+
+[sub_resource type="Shader" id="Shader_sad4i"]
+code = "shader_type canvas_item;
+
+float easeInOutSine (float x) {
+	return -(cos(PI * x) - 1.0) / 2.0;
+}
+
+float easeInOutCubic (float x) {
+	return x < 0.5 ? 4.0 * x * x * x : 1.0 - pow(-2.0 * x + 2.0, 3.0) / 2.0;
+}
+
+mat2 rotate2d(float angle) {
+    return mat2(vec2(cos(angle),-sin(angle)),
+                vec2(sin(angle),cos(angle)));
+}
+
+float variation(vec2 v1, vec2 v2, float strength, float speed) {
+	return sin(
+        dot(normalize(v1), normalize(v2)) * strength + TIME * speed
+    ) / 100.0;
+}
+
+vec3 paintCircle (vec2 uv, vec2 center, float rad, float width) {
+    
+    vec2 diff = center - uv;
+    float len = easeInOutCubic(length(diff));
+
+    len += variation(diff, vec2(0.0, 1.0), 6.0, 0.1);
+    len -= variation(diff, vec2(1.0, 0.0), 6.0, 0.1);
+    
+    float circle = smoothstep(rad - width, rad, len) - smoothstep(rad, rad + width, len);
+    return vec3(circle);
+}
+
+void fragment () {
+	vec2 uv = SCREEN_UV;
+    uv.x *= 1.5;
+    uv.x -= 0.25;
+    
+    vec3 color;
+    float radius = 0.45;
+    vec2 center = vec2(0.5);
+     
+    //paint color circle
+    color = paintCircle(uv, center, radius, 0.45);
+    
+    //color with gradient
+    vec2 v = rotate2d(TIME / 2.0) * uv;
+    color *= vec3(v.x, v.y, 0.7 - v.y * v.x);
+    
+    //paint white circle
+    color += paintCircle(uv, center, radius, 0.01);
+    
+    
+	COLOR = vec4(color, 0.1);
+}
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_wix0d"]
+shader = SubResource("Shader_sad4i")
+
+[sub_resource type="Shader" id="Shader_yvyxv"]
+code = "shader_type canvas_item;
+render_mode blend_mix;
+
+const highp float NOISE_GRANULARITY = 4.0 / 255.0;
+
+highp float random (highp vec2 coords) {
+   return fract(sin(dot(coords.xy, vec2(12.9898,78.233))) * 43758.5453);
+}
+ 
+void fragment () {
+  highp vec2 coordinates = SCREEN_UV;
+
+  vec4 fragmentColor = texture(SCREEN_TEXTURE, SCREEN_UV, 4.0);
+  fragmentColor += mix(-NOISE_GRANULARITY, NOISE_GRANULARITY, random(coordinates + vec2(cos(TIME))));
+  COLOR = fragmentColor;
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_m53g2"]
+shader = SubResource("Shader_yvyxv")
+
+[node name="Backdrop" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.152941, 0.152941, 0.164706, 1)
+
+[node name="PatternRect" type="ColorRect" parent="."]
+unique_name_in_owner = true
+material = SubResource("ShaderMaterial_wix0d")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="BackBufferCopy" type="BackBufferCopy" parent="."]
+copy_mode = 2
+rect = Rect2(0, 0, 0, 0)
+
+[node name="BlurRect" type="ColorRect" parent="."]
+unique_name_in_owner = true
+material = SubResource("ShaderMaterial_m53g2")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2

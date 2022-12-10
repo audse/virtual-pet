@@ -40,15 +40,12 @@ func _ready() -> void:
 			%Gallery.load_gallery()
 	)
 	
-	var display_rect := Utils.get_display_area(self)
-	
 	# landscape
-	if display_rect.size.x > display_rect.size.y:
+	if Utils.is_landscape():
 		%ShapePanelButton.button_pressed = true
 		%SwatchPanelButton.button_pressed = true
 		%ToolsPanelButton.button_pressed = true
-		%CanvasTools.add_theme_constant_override("margin_left", display_rect.size.x * 0.05)
-		%CanvasTools.add_theme_constant_override("margin_right", display_rect.size.x * 0.05)
+		Utils.adjust_margins_for_landscape(%CanvasTools)
 	
 	%Gallery.canvas_selected.connect(
 		func(canvas: SubViewport, canvas_name: String):
@@ -58,6 +55,10 @@ func _ready() -> void:
 	States.Paint.canvas_selected.connect(
 		func(_canvas: SubViewport, canvas_name: String):
 			%SaveButton.update_name_field(canvas_name + " copy")
+	)
+	
+	States.Paint.line_changed.connect(
+		func() -> void: %OkButton.visible = States.Paint.line != null
 	)
 
 
@@ -104,18 +105,10 @@ func _input(event: InputEvent) -> void:
 					States.Paint.line = prev_point.pixels[0].position
 
 
-func selected(button: Button) -> void:
-	button.theme_type_variation = "Selected_Button"
-
-
-func deselected(button: Button) -> void:
-	button.theme_type_variation = ""
-
-
 func _on_action_changed(action: int) -> void:
 	for tool in tool_buttons.values():
-		deselected(tool)
-	selected(tool_buttons[action])
+		Themes.deselect(tool)
+	Themes.select(tool_buttons[action])
 	
 	match States.Paint.prev_action:
 		PaintState.Action.LINE, PaintState.Action.RECT: States.Paint.line = null
@@ -153,7 +146,7 @@ func _on_redo_button_pressed() -> void:
 
 func _on_tool_button_pressed(tool: int) -> void:
 	States.Paint.set_action(tool)
-	if %ToolsPanelButton.button_pressed:
+	if %ToolsPanelButton.button_pressed and not Utils.is_landscape():
 		%ToolsPanelButton.close()
 
 
@@ -192,4 +185,4 @@ func _on_canvas_resume_draw() -> void:
 
 
 func _on_main_menu_button_pressed() -> void:
-	get_tree().change_scene_to_packed(load("res://main_menu.tscn"))
+	Modules.go_to_portal()

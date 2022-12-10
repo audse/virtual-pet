@@ -1,0 +1,37 @@
+[gd_scene load_steps=2 format=3 uid="uid://b62dkbiedsf2r"]
+
+[sub_resource type="GDScript" id="GDScript_s7oaj"]
+script/source = "extends HFlowContainer
+
+
+@export var wants_data: WantsData:
+	set(value):
+		wants_data = value
+		update()
+
+
+func _ready() -> void:
+	update()
+
+
+func update() -> void:
+	if not wants_data or not is_inside_tree(): return
+	wants_data.wants_changed.connect(
+		func(_wants) -> void: update_wants()
+	)
+	update_wants()
+
+
+func update_wants() -> void:
+	for child in get_children(): child.queue_free()
+	
+	for want in wants_data.wants:
+		add_child(Ui.tag(WantsData.get_want_name(want)))
+"
+
+[node name="WantsContainer" type="HFlowContainer"]
+unique_name_in_owner = true
+offset_top = 901.0
+offset_right = 650.0
+offset_bottom = 901.0
+script = SubResource("GDScript_s7oaj")

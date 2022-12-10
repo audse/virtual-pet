@@ -14,8 +14,6 @@ func _ready():
 	Datetime.data.time_changed.connect(
 		func(_time) -> void: update_lights()
 	)
-	
-	AddCategoryFoodBowl.new()
 
 
 func update_lights() -> void:

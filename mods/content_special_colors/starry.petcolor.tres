@@ -1,0 +1,23 @@
+[gd_resource type="Resource" load_steps=5 format=3]
+
+[ext_resource type="Texture2D" path="res://mods/content_special_colors/textures/starry.png" id="1_igw07"]
+[ext_resource type="Script" path="res://apps/pet/animal/data/pet_color_data.gd" id="2_lmit1"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jasxe"]
+resource_name = "Dog"
+diffuse_mode = 1
+albedo_color = Color(0.321568, 0.321568, 0.356863, 1)
+albedo_texture = ExtResource("1_igw07")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8w1p5"]
+resource_name = "Eyelids"
+albedo_color = Color(0.0941176, 0.0941176, 0.105882, 1)
+albedo_texture = ExtResource("1_igw07")
+
+[resource]
+script = ExtResource("2_lmit1")
+id = "starry"
+display_name = "Starry"
+animals = [0]
+body_material = SubResource("StandardMaterial3D_jasxe")
+detail_material = SubResource("StandardMaterial3D_8w1p5")

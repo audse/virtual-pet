@@ -6,10 +6,10 @@
 [ext_resource type="Texture2D" uid="uid://d3xeptw4tv8d0" path="res://static/icons/shopping_cart.svg" id="3_hunrg"]
 [ext_resource type="Texture2D" uid="uid://dd3b5wmivti0x" path="res://static/icons/give_heart.svg" id="4_svr54"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_qbenc"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_xhmo2"]
 content_margin_bottom = 12.0
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_m5jlj"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_xaket"]
 
 [node name="PanelContainer" type="PanelContainer"]
 self_modulate = Color(0.894118, 0.894118, 0.905882, 1)
@@ -92,7 +92,7 @@ offset_top = 69.0
 offset_right = 500.0
 offset_bottom = 130.0
 theme_type_variation = &"Subtitle"
-theme_override_styles/normal = SubResource("StyleBoxEmpty_qbenc")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_xhmo2")
 text = "Goal description goes here."
 autowrap_mode = 3
 
@@ -148,7 +148,7 @@ offset_right = 66.0
 offset_bottom = 120.0
 theme_type_variation = &"H1"
 theme_override_constants/line_spacing = 0
-theme_override_styles/normal = SubResource("StyleBoxEmpty_m5jlj")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_xaket")
 text = "100"
 
 [node name="ClaimRewardButton" type="Button" parent="VBoxContainer"]

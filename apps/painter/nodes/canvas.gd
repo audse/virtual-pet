@@ -1,3 +1,4 @@
+class_name Canvas
 extends Control
 
 signal action_completed(action: int, pixels: Array)
@@ -112,7 +113,7 @@ func get_texture() -> ImageTexture:
 	cursor.visible = false
 	await RenderingServer.frame_post_draw
 	var img: Image = %SubViewport.get_texture().get_image()
-	var tex := ImageTexture.new().create_from_image(img)
+	var tex := ImageTexture.create_from_image(img)
 	cursor.visible = true
 	return tex
 
@@ -293,25 +294,21 @@ func pan(keycode: int) -> void:
 
 
 func save_canvas(canvas_name: String) -> int:
-	var file := FileAccess.open(GALLERY_PATH + canvas_name + EXTENSION, FileAccess.WRITE)
-#	if not err == OK: return err
-	
-	for pixel in canvas.get_children():
-		if pixel not in [cursor, ghost]: file.store_var(pixel, true)
-	
+	CanvasData.create(canvas_name, self).save_data()
 	return OK
 
 
 func clear_canvas() -> void:
 	for pixel in canvas.get_children():
-		if pixel not in [cursor, ghost]: pixel.queue_free()
+		if pixel is Sprite2D and not pixel in [cursor, ghost]: pixel.queue_free()
 
 
 func load_canvas(from_canvas: SubViewport, _canvas_name: String) -> void:
 	clear_canvas()
 	for pixel in from_canvas.get_children():
-		if pixel is Node2D: canvas.add_child(pixel.duplicate())
+		if pixel is Sprite2D: canvas.add_child(pixel.duplicate())
 	cursor.move_to_front()
+	ghost.move_to_front()
 
 
 func zoom_in() -> void:

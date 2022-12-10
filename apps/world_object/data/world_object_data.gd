@@ -15,17 +15,27 @@ enum Flag {
 enum Layer {
 	FOLIAGE_LAYER,
 	BUILDING_LAYER,
+	RUG_OBJECT_LAYER,
 	FLOOR_OBJECT_LAYER,
 	WALL_OBJECT_LAYER,
 }
 
-## The base data for this object- where `WorldObjectData` is an instance, `BuyObjectData` is its prototype
-@export var buyable_object_data: BuyableObjectData
+## The base data for this object- where `WorldObjectData` is an instance, `ItemData` is its prototype
+@export var item_data: ItemData
 
-@export var coord: Vector2i
+@export var coord: Vector2i:
+	set(value):
+		coord = value
+		used_coords = get_used_coords()
+		emit_changed()
+
 @export var rotation: int = 0:
 	set(value): 
-		rotation = wrapi(int(snapped(value, 45)), 0, 360)
+		var new_rotation := wrapi(int(snapped(value, 45)), 0, 360)
+		if rotation - new_rotation > 40:
+			rotation = new_rotation
+			emit_changed()
+
 @export var flags: Array[Flag]:
 	set(value):
 		flags = value
@@ -49,25 +59,33 @@ enum Layer {
 		emit_changed()
 		is_on_changed.emit(is_on)
 
+var used_coords: Array[Vector2i]:
+	get:
+		if used_coords.size() > 0: return used_coords
+		else: 
+			used_coords = get_used_coords()
+			return used_coords
+
+var building_data: BuildingData
+
 var sell_price: int:
 	get: 
-		var p: float = float(buyable_object_data.price) * 0.75
+		var p: float = float(item_data.price) * 0.75
 		# partially-used items sell for a lot less
-		if buyable_object_data.total_uses > 0:
-			p *= (uses_left as float / buyable_object_data.total_uses as float)
+		if item_data.use_data and item_data.use_data.total_uses > 0:
+			p *= (uses_left as float / item_data.use_data.total_uses as float)
 		return int(round(p))
 
 var instance: Node3D
 var collision_instance: Node3D
 
-var building_data: BuildingData
 
 
 func _init(args: Dictionary = {}) -> void:
 	for key in args.keys():
 		if key in self: self[key] = args[key]
-	if buyable_object_data:
-		uses_left = buyable_object_data.total_uses
+	if item_data and item_data.use_data:
+		uses_left = item_data.use_data.total_uses
 	super._init()
 
 
@@ -76,10 +94,11 @@ func _get_dir() -> String:
 
 
 func get_used_coords() -> Array[Vector2i]:
+	if not item_data.physical_data: return []
 	var coords: Array[Vector2i] = []
 	
-	var _tl := -1 * Vector2(buyable_object_data.dimensions.x, buyable_object_data.dimensions.z) / 2
-	var _br := Vector2(buyable_object_data.dimensions.x, buyable_object_data.dimensions.z) / 2
+	var _tl := -1 * Vector2(item_data.physical_data.dimensions.x, item_data.physical_data.dimensions.z) / 2
+	var _br := Vector2(item_data.physical_data.dimensions.x, item_data.physical_data.dimensions.z) / 2
 	var _tr := Vector2(_br.x, _tl.y)
 	var _bl := Vector2(_tl.x, _br.y)
 	
@@ -105,7 +124,7 @@ func get_world_position() -> Vector3:
 
 
 func get_world_dimensions() -> Vector3:
-	return (WorldData.grid_size if WorldData else 1) * Vector3(buyable_object_data.dimensions)
+	return (WorldData.grid_size if WorldData else 1) * Vector3(item_data.dimensions)
 
 
 func get_rect() -> Rect2:
@@ -151,7 +170,7 @@ func use() -> int:
 
 
 func reset_uses() -> void:
-	uses_left = buyable_object_data.total_uses
-	if instance and instance.is_consumable:
-		instance.reset()
+	if item_data and item_data.use_data:
+		uses_left = item_data.use_data.total_uses
+		if instance and instance.is_consumable: instance.reset()
 

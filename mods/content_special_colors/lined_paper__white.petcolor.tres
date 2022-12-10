@@ -1,0 +1,34 @@
+[gd_resource type="Resource" load_steps=7 format=3]
+
+[ext_resource type="Texture2D" path="res://mods/content_special_colors/textures/lined_paper__albedo.jpg" id="1_fm2cy"]
+[ext_resource type="Texture2D" path="res://mods/content_special_colors/textures/lined_paper__ao.jpg" id="2_4nyft"]
+[ext_resource type="Texture2D" path="res://mods/content_special_colors/textures/lined_paper__normal.jpg" id="3_m32jk"]
+[ext_resource type="Script" path="res://apps/pet/animal/data/pet_color_data.gd" id="4_6w88s"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7jbmy"]
+resource_name = "Dog"
+albedo_color = Color(0.654902, 0.654902, 0.721569, 1)
+albedo_texture = ExtResource("1_fm2cy")
+roughness = 0.5
+normal_enabled = true
+normal_texture = ExtResource("3_m32jk")
+ao_enabled = true
+ao_texture = ExtResource("2_4nyft")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wbhl1"]
+resource_name = "Eyelids"
+albedo_color = Color(0.392941, 0.392941, 0.432941, 1)
+albedo_texture = ExtResource("1_fm2cy")
+roughness = 0.5
+normal_enabled = true
+normal_texture = ExtResource("3_m32jk")
+ao_enabled = true
+ao_texture = ExtResource("2_4nyft")
+
+[resource]
+script = ExtResource("4_6w88s")
+id = "lined_paper__white"
+display_name = "Lined Paper (white)"
+animals = [0]
+body_material = SubResource("StandardMaterial3D_7jbmy")
+detail_material = SubResource("StandardMaterial3D_wbhl1")

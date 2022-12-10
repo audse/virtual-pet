@@ -1,0 +1,120 @@
+[gd_scene load_steps=17 format=3 uid="uid://bq0tyt4cbesoc"]
+
+[ext_resource type="Script" path="res://apps/item/interface/item_grid.gd" id="1_2jg0x"]
+[ext_resource type="Script" path="res://apps/item/data/physical_item_data.gd" id="2_rl1d8"]
+[ext_resource type="Script" path="res://apps/item/data/item_data.gd" id="3_pibs3"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_ow65r"]
+
+[sub_resource type="Resource" id="Resource_d8ghg"]
+script = ExtResource("2_rl1d8")
+mesh = SubResource("BoxMesh_ow65r")
+dimensions = Vector3i(1, 1, 1)
+world_layer = null
+mesh_scale = Vector3(1, 1, 1)
+stackable = false
+walkable = false
+
+[sub_resource type="Resource" id="Resource_tq3nv"]
+script = ExtResource("3_pibs3")
+id = null
+display_name = null
+category_id = ""
+description = ""
+colorway_id = ""
+rarity = 0
+flags = null
+physical_data = SubResource("Resource_d8ghg")
+data_path = null
+
+[sub_resource type="BoxMesh" id="BoxMesh_a1aje"]
+size = Vector3(2, 1, 2)
+
+[sub_resource type="Resource" id="Resource_edecf"]
+script = ExtResource("2_rl1d8")
+mesh = SubResource("BoxMesh_a1aje")
+dimensions = Vector3i(2, 2, 2)
+world_layer = null
+mesh_scale = Vector3(1, 1, 1)
+stackable = false
+walkable = false
+
+[sub_resource type="Resource" id="Resource_r6sxj"]
+script = ExtResource("3_pibs3")
+id = null
+display_name = null
+category_id = ""
+description = ""
+colorway_id = ""
+rarity = 0
+flags = null
+physical_data = SubResource("Resource_edecf")
+data_path = null
+
+[sub_resource type="BoxMesh" id="BoxMesh_62toh"]
+size = Vector3(3, 1, 1)
+
+[sub_resource type="Resource" id="Resource_5flhi"]
+script = ExtResource("2_rl1d8")
+mesh = SubResource("BoxMesh_62toh")
+dimensions = Vector3i(3, 1, 1)
+world_layer = null
+mesh_scale = Vector3(1, 1, 1)
+stackable = false
+walkable = false
+
+[sub_resource type="Resource" id="Resource_57e1r"]
+script = ExtResource("3_pibs3")
+id = null
+display_name = null
+category_id = ""
+description = ""
+colorway_id = ""
+rarity = 0
+flags = null
+physical_data = SubResource("Resource_5flhi")
+data_path = null
+
+[sub_resource type="Gradient" id="Gradient_db0qt"]
+interpolation_mode = 1
+offsets = PackedFloat32Array(0, 0.854015, 1)
+colors = PackedColorArray(0.35, 0.35, 0.35, 0, 1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_wwqcq"]
+gradient = SubResource("Gradient_db0qt")
+width = 512
+height = 512
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(1, 0.5)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_swekx"]
+transparency = 1
+shading_mode = 0
+albedo_texture = SubResource("GradientTexture2D_wwqcq")
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_dyiea"]
+material = SubResource("StandardMaterial3D_swekx")
+size = Vector2(0, 0)
+
+[node name="ItemGrid" type="Node3D"]
+script = ExtResource("1_2jg0x")
+items = [SubResource("Resource_tq3nv"), SubResource("Resource_r6sxj"), SubResource("Resource_tq3nv"), SubResource("Resource_tq3nv"), SubResource("Resource_57e1r")]
+margin = Vector2(0.2, 0.3)
+show_price_label = true
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+light_energy = 0.25
+light_indirect_energy = 0.5
+
+[node name="Camera3D" type="Camera3D" parent="."]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 0.766044, 0.642788, 0, -0.642787, 0.766045, 1, 5, 4)
+projection = 1
+current = true
+size = 15.0
+
+[node name="Rect" type="MeshInstance3D" parent="."]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.25, 0)
+mesh = SubResource("PlaneMesh_dyiea")

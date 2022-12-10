@@ -1,0 +1,5 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://dhnruyff55k4g"]
+
+[resource]
+resource_name = "Dog"
+albedo_color = Color(0.321568, 0.321568, 0.356863, 1)

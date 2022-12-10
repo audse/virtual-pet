@@ -1,7 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://duklyahfnuqrq"]
+[gd_scene load_steps=5 format=3]
 
 [ext_resource type="Script" path="res://apps/interface/interface.gd" id="1_hdehv"]
-[ext_resource type="Texture2D" uid="uid://cfd4gcr5qvsj7" path="res://static/icons/left_arrow.svg" id="2_rvcuj"]
+[ext_resource type="Texture2D" uid="uid://cfd4gcr5qvsj7" path="res://static/icons/caret_left.svg" id="2_rvcuj"]
 [ext_resource type="PackedScene" uid="uid://6ulp2gk1mb2g" path="res://apps/gallery/gallery.tscn" id="3_t82ij"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_cjinj"]

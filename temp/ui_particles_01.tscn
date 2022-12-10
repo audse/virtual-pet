@@ -1,0 +1,139 @@
+[gd_scene load_steps=10 format=3 uid="uid://dhxko5tpx4uqt"]
+
+[ext_resource type="Material" uid="uid://b7no2tgfxd541" path="res://interface/resources/burst_particles.tres" id="1_ipxd5"]
+[ext_resource type="Texture2D" uid="uid://bsehp151nke37" path="res://temp/kenney_particles/PNG (Transparent)/symbol_02.png" id="2_803qw"]
+[ext_resource type="Texture2D" uid="uid://bcdaedjyql3lh" path="res://temp/kenney_particles/PNG (Transparent)/star_07.png" id="3_0284x"]
+
+[sub_resource type="GDScript" id="GDScript_tgqkp"]
+script/source = "extends GPUParticles2D
+
+
+const Mat := preload(\"res://interface/resources/burst_particles.tres\")
+
+
+@export var main_texture: Texture2D
+@export var sub_texture: Texture2D
+
+@export var main_color := Color.WHITE
+@export var sub_color := Color.WHITE
+
+@export var main_scale := 1.0
+@export var sub_scale := 0.75
+
+@export var main_amount := 5
+@export var sub_amount := 3
+
+@onready var sub := $GPUParticles2D as GPUParticles2D
+
+
+func _ready():
+	process_material = Mat.duplicate()
+	sub.process_material = Mat.duplicate()
+	
+	process_material.scale_max = main_scale
+	process_material.scale_min = main_scale * 0.5
+	sub.process_material.scale_max = sub_scale
+	sub.process_material.scale_min = sub_scale * 0.5
+	
+	texture = main_texture
+	sub.texture = sub_texture
+	
+	process_material.color = main_color
+	sub.process_material.color = sub_color
+	
+	amount = main_amount
+	sub.amount = sub_amount
+	
+	var parent := get_parent()
+	if parent is Control: position = parent.size / 2
+
+
+func emit() -> void:
+	emit_at(position)
+
+
+func emit_at(pos) -> void:
+	var target_pos := position
+	if pos is Vector2: target_pos = pos
+	elif pos is Vector3:
+		var vp := get_viewport()
+		if vp: 
+			var cam := vp.get_camera_3d()
+			if cam: target_pos = cam.unproject_position(pos)
+	
+	restart()
+	position = target_pos
+	emitting = true
+	await get_tree().create_timer(lifetime).timeout
+"
+
+[sub_resource type="Gradient" id="Gradient_jdl41"]
+offsets = PackedFloat32Array(0, 0.406948, 0.739454, 1)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0.453897, 1, 1, 1, 0.148736, 1, 1, 1, 0.0347394)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_ody1e"]
+gradient = SubResource("Gradient_jdl41")
+width = 64
+
+[sub_resource type="Curve" id="Curve_6dkg4"]
+_data = [Vector2(0, 1), 0.0, 0.417298, 0, 0, Vector2(1, 0), -3.86891, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_40vf2"]
+width = 64
+curve = SubResource("Curve_6dkg4")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_uncqw"]
+emission_shape = 6
+emission_ring_axis = Vector3(0, 0, 1)
+emission_ring_height = 200.0
+emission_ring_radius = 100.0
+emission_ring_inner_radius = 99.0
+particle_flag_disable_z = true
+direction = Vector3(1, 1, 1)
+spread = 180.0
+initial_velocity_max = 500.0
+angular_velocity_min = -20.0
+angular_velocity_max = 20.0
+orbit_velocity_min = 0.0
+orbit_velocity_max = 0.3
+damping_max = 1.0
+angle_min = -10.0
+angle_max = 10.0
+scale_min = 0.1
+scale_max = 0.3
+scale_curve = SubResource("CurveTexture_40vf2")
+color = Color(1, 1, 1, 0.490196)
+color_ramp = SubResource("GradientTexture1D_ody1e")
+hue_variation_min = -0.01
+hue_variation_max = 0.01
+turbulence_enabled = true
+turbulence_noise_strength = 2.0
+sub_emitter_mode = 2
+sub_emitter_amount_at_end = 1
+
+[node name="GPUParticles2D" type="GPUParticles2D"]
+emitting = false
+amount = 5
+sub_emitter = NodePath("GPUParticles2D")
+lifetime = 1.5
+one_shot = true
+explosiveness = 1.0
+randomness = 0.1
+trail_lifetime = 0.1
+trail_sections = 2
+trail_section_subdivisions = 1
+process_material = ExtResource("1_ipxd5")
+texture = ExtResource("2_803qw")
+script = SubResource("GDScript_tgqkp")
+main_color = Color(0.996078, 0.988235, 0.909804, 1)
+main_scale = 0.3
+sub_scale = 0.2
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+emitting = false
+amount = 4
+lifetime = 1.5
+explosiveness = 1.0
+process_material = SubResource("ParticleProcessMaterial_uncqw")
+texture = ExtResource("3_0284x")

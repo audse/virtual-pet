@@ -8,10 +8,11 @@ enum Command {
 	PLAY,
 	WASH,
 	LOUNGE,
+	PLAY_TOGETHER
 }
 
 ## emitted when the user has selected a command
-signal receive_command(command: Command)
+signal receive_command(command: Command, args: Dictionary)
 
 ## emitted when the pet AI has decided to do something
 signal start_command(command: Command, target: WorldObjectData)

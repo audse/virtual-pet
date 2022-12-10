@@ -18,12 +18,15 @@ func _ready() -> void:
 		render_building(building)
 	
 	BuyData.object_bought.connect(_on_object_bought)
+	Inventory.data.object_removed.connect(_on_object_removed_from_inventory)
 	
 	BuildData.state.enter_state.connect(
 		func(mode: BuildModeState.BuildState) -> void:
 			match mode:
 				BuildModeState.BuildState.EDIT: render_building(BuildData.state.current_building)
 	)
+	
+	WorldData.pet_added.connect(render_pet)
 
 
 func render_object(object_data: WorldObjectData) -> WorldObject:
@@ -50,12 +53,12 @@ func render_building(building_data: BuildingData) -> void:
 		building_data.instance.building_data = building_data
 
 
-func _on_object_bought(object_data: BuyableObjectData) -> void:
+func _on_object_bought(object_data: BuyableItemData) -> void:
 	var coord := WorldData.to_grid(Auto.get_screen_center_in_world())
 	match object_data.menu:
 		BuyCategoryData.Menu.BUY:
 			var world_object := WorldObjectData.new({
-				buyable_object_data = object_data,
+				item_data = object_data,
 				coord = WorldData.get_nearest_occupiable_coord(Vector2i(coord.x, coord.z))
 			})
 			WorldData.add_object(world_object)
@@ -63,7 +66,12 @@ func _on_object_bought(object_data: BuyableObjectData) -> void:
 		BuyCategoryData.Menu.BUILD:
 			if BuildData.state.current_building:
 				var building_object := WorldObjectData.new({
-					buyable_object_data = object_data,
+					item_data = object_data,
 					coord = WorldData.get_nearest_occupiable_coord(Vector2i(coord.x, coord.z))
 				})
 				BuildData.state.current_building.add_object(building_object)
+
+
+func _on_object_removed_from_inventory(object_data: WorldObjectData) -> void:
+	WorldData.add_object(object_data)
+	render_object(object_data)

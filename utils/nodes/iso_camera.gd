@@ -5,16 +5,23 @@ const SPEED := 4.0
 const ROT_AMT := deg_to_rad(40)
 const ROT_DELTA := deg_to_rad(30)
 
-@export var disable_rotation: bool = false
+@export var disabled: bool = false
+@export var clamp_to_world: bool = true
 
 @onready var camera := $Camera3D as Camera3D
 @onready var target_rotation: float = rotation.y
-@onready var target_position: Vector3 = position
+@onready var target_position: Vector3 = position:
+	set(value):
+		if clamp_to_world:
+			var max_size = Vector3(WorldData.size.x, 100, WorldData.size.y) if WorldData else Vector3(100, 100, 100)
+			target_position = value.clamp(-max_size, max_size)
+		else: target_position = value
+	
 @onready var target_size: float = camera.size
 
 
 func _input(event: InputEvent) -> void:
-	if event is InputEventKey and not disable_rotation and event.is_pressed():
+	if event is InputEventKey and not disabled and event.is_pressed():
 		var zoom_ease := ease(camera.size / 24.0, 1.6)
 		match event.keycode:
 			KEY_COMMA: target_rotation = rotation.y - ROT_DELTA

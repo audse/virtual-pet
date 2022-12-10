@@ -1,6 +1,9 @@
 extends Control
 
-@export var needs_data: NeedsData
+@export var needs_data: NeedsData:
+	set(value):
+		needs_data = value
+		connect_all()
 
 @onready var activity := %ActivityRange as PillRange
 @onready var comfort := %ComfortRange as PillRange
@@ -10,22 +13,27 @@ extends Control
 
 
 func _ready() -> void:
-	needs_data.activity_changed.connect(
-		func (val: float) -> void: activity.value = val
-	)
-	needs_data.comfort_changed.connect(
-		func (val: float) -> void: comfort.value = val
-	)
-	needs_data.hunger_changed.connect(
-		func (val: float) -> void: hunger.value = val
-	)
-	needs_data.hygiene_changed.connect(
-		func (val: float) -> void: hygiene.value = val
-	)
-	needs_data.sleepy_changed.connect(
-		func (val: float) -> void: sleep.value = val
-	)
-	update_values()
+	connect_all()
+
+
+func connect_all() -> void:
+	if needs_data and is_inside_tree():
+		needs_data.activity_changed.connect(
+			func (val: float) -> void: activity.value = val
+		)
+		needs_data.comfort_changed.connect(
+			func (val: float) -> void: comfort.value = val
+		)
+		needs_data.hunger_changed.connect(
+			func (val: float) -> void: hunger.value = val
+		)
+		needs_data.hygiene_changed.connect(
+			func (val: float) -> void: hygiene.value = val
+		)
+		needs_data.sleepy_changed.connect(
+			func (val: float) -> void: sleep.value = val
+		)
+		update_values()
 
 
 func update_values() -> void:

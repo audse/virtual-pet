@@ -1,0 +1,61 @@
+[gd_scene load_steps=11 format=3 uid="uid://bta1rubgqedrv"]
+
+[ext_resource type="Shader" uid="uid://barl8kbj1wge5" path="res://addons/Godot4WaterShader-main/WaterShader.tres" id="1_0odhl"]
+[ext_resource type="PackedScene" uid="uid://b6dya0dbxdg1f" path="res://environment/scenes/environment.tscn" id="1_lm0o6"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_vfggi"]
+noise_type = 3
+seed = 1
+frequency = 0.015
+fractal_octaves = 2
+fractal_ping_pong_strength = 8.0
+domain_warp_type = 1
+domain_warp_amplitude = 20.0
+domain_warp_frequency = 0.01
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_lhrxp"]
+in_3d_space = true
+seamless = true
+noise = SubResource("FastNoiseLite_vfggi")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_m6u4a"]
+render_priority = 0
+shader = ExtResource("1_0odhl")
+shader_parameter/ColorParameter = Color(0.0901961, 0.0901961, 0.0901961, 1)
+shader_parameter/Noise = SubResource("NoiseTexture2D_lhrxp")
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_i37xu"]
+material = SubResource("ShaderMaterial_m6u4a")
+size = Vector2(300, 300)
+subdivide_width = 100
+subdivide_depth = 100
+
+[sub_resource type="Gradient" id="Gradient_jrtjo"]
+interpolation_mode = 2
+offsets = PackedFloat32Array(0.00243309, 1)
+colors = PackedColorArray(0.75, 0.75, 0.75, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_5ercu"]
+gradient = SubResource("Gradient_jrtjo")
+width = 512
+height = 1
+fill_to = Vector2(0.103647, 0)
+repeat = 1
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1wklj"]
+albedo_color = Color(0.2, 0.2, 0.2, 1)
+albedo_texture = SubResource("GradientTexture2D_5ercu")
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_ttn5p"]
+material = SubResource("StandardMaterial3D_1wklj")
+size = Vector2(300, 300)
+
+[node name="MeshInstance3D" type="MeshInstance3D"]
+mesh = SubResource("PlaneMesh_i37xu")
+
+[node name="Environment" parent="." instance=ExtResource("1_lm0o6")]
+visible = false
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, -4, 0)
+mesh = SubResource("PlaneMesh_ttn5p")

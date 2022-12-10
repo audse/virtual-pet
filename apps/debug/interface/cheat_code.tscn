@@ -1,0 +1,86 @@
+[gd_scene load_steps=2 format=3 uid="uid://nifyjuplhvnj"]
+
+[sub_resource type="GDScript" id="GDScript_y64ge"]
+script/source = "extends MarginContainer
+
+
+@onready var field := %CheatCodeLineEdit as LineEdit
+
+
+func _ready() -> void:
+	close()
+
+
+func _input(event: InputEvent) -> void:
+	if event.is_action_pressed(\"cheat_code\"):
+		open()
+	
+	if event is InputEventKey and not event.is_echo():
+		match event.keycode:
+			KEY_ESCAPE: close()
+			KEY_ENTER:
+				commit()
+				close()
+
+
+func commit() -> void:
+	print(\"[Cheat] Entered cheat `\", field.text, \"`\")
+	match field.text:
+		# Fate
+		\"motherlode\": Fate.data.fate += 1000
+		
+		# Datetime
+		\"noon\": Datetime.data.time = 1440 / 2
+		\"midnight\": Datetime.data.time = 0
+	
+	# e.g. `dior hunger 100`
+	for need in [\"activity\", \"comfort\", \"hunger\", \"hygiene\", \"sleepy\"]:
+		if need in field.text:
+			var data := field.text.split(\" \")
+			var pet_name: String = data[0]
+			var pet: PetData = PetManager.get_by_name(pet_name)
+			pet.needs_data[need] = float(data[2]) / 100.0
+	
+	if \"unstuck\" in field.text:
+		var pet_name: String = field.text.split(\" \")[0]
+		var pet: Node = PetManager.get_pet_node(PetManager.get_by_name(pet_name))
+		pet.place(WorldData.get_nearest_occupiable_coord(Vector2i.ZERO))
+	
+	field.clear()
+
+
+func open() -> void:
+	await get_tree().create_timer(0.05).timeout
+	field.clear()
+	field.visible = true
+	field.grab_focus()
+
+
+func close() -> void:
+	field.visible = false
+	field.clear()
+"
+
+[node name="CheatCode" type="MarginContainer"]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -199.0
+offset_right = 199.0
+offset_bottom = 135.0
+grow_horizontal = 2
+mouse_filter = 2
+script = SubResource("GDScript_y64ge")
+
+[node name="CheatCodeLineEdit" type="LineEdit" parent="."]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(350, 0)
+offset_left = 24.0
+offset_top = 24.0
+offset_right = 374.0
+offset_bottom = 111.0
+placeholder_text = "enter cheat code..."
+expand_to_text_length = true
+clear_button_enabled = true
+select_all_on_focus = true
+caret_blink = true

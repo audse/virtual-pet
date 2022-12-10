@@ -5,14 +5,14 @@
 [ext_resource type="PackedScene" uid="uid://brgwynk5h5uno" path="res://apps/world_object/interface/action_menus/interact_with_object.tscn" id="3_3yewo"]
 
 [node name="WorldObject" type="StaticBody3D"]
-input_capture_on_drag = true
+collision_priority = 2.0
 script = ExtResource("1_73iwd")
 
 [node name="Draggable3D" type="Node" parent="." node_paths=PackedStringArray("object")]
 unique_name_in_owner = true
 script = ExtResource("2_k7mtm")
 object = NodePath("..")
-distance_from_ground_while_dragging = 0.01
+distance_from_ground_while_dragging = 0.1
 enable_fallback_position = true
 distance_from_mouse = Vector2(0, 100)
 collision_enabled = false

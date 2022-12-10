@@ -1,4 +1,4 @@
-class_name AddBuyableObjectsModule
+class_name AddBuyableItemsModule
 extends Module
 
 
@@ -9,7 +9,7 @@ func get_data_paths() -> Array[String]:
 func _on_ready(context: Node) -> void:
 	for path in get_data_paths():
 		var full_path = path if "res://" in path else "res://mods/" + path
-		var buyable_object_json := FileAccess.open(full_path, FileAccess.READ)
-		if buyable_object_json:
-			var buyable_object := BuyableObjectParser.parse(context, buyable_object_json)
-			if buyable_object: BuyData.add_object(buyable_object)
+		var item_json := FileAccess.open(full_path, FileAccess.READ)
+		if item_json:
+			var item := ItemParser.parse(context, item_json)
+			if item and item is BuyableItemData: BuyData.add_object(item)

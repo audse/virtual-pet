@@ -1,11 +1,15 @@
 extends Node
 
 signal pets_changed
+signal pet_added(PetData)
+
 signal objects_changed
 signal buildings_changed
 
 @export var grid_size := 1
 @export var size := Vector2(100, 100)
+
+@export var terrain := TerrainData.load_data()
 
 @export var pets: Array[PetData] = []
 @export var objects: Array[WorldObjectData] = []
@@ -18,12 +22,9 @@ var grid_size_vector: Vector3:
 	get: return Vector3(grid_size, grid_size, grid_size)
 
 
-func _ready() -> void:
-	for x in range(-25, 25):
-		for z in range(-25, 25):
-			var coord := Vector3i(x, 0, z)
-			blocks[coord] = WorldBlockData.new(coord)
-	
+func _enter_tree() -> void:
+	for coord in terrain.get_used_coords():
+		blocks[coord] = WorldBlockData.new(coord)
 	load_pets()
 	load_objects()
 	load_buildings()
@@ -35,10 +36,17 @@ func _ready() -> void:
 	)
 
 
-func add_object(object: WorldObjectData) -> void:
+func add_pet(pet: PetData, save := true) -> void:
+	pets.append(pet.setup())
+	pets_changed.emit()
+	pet_added.emit(pet)
+	if save: pet.save_data()
+
+
+func add_object(object: WorldObjectData, save := true) -> void:
 	objects.append(object.setup())
-	object.save_data()
 	objects_changed.emit()
+	if save: object.save_data()
 
 
 func remove_object(object: WorldObjectData) -> void:
@@ -47,38 +55,42 @@ func remove_object(object: WorldObjectData) -> void:
 	objects_changed.emit()
 
 
-func add_building(building: BuildingData) -> void:
+func add_building(building: BuildingData, save := true) -> void:
 	if not building in buildings:
 		buildings.append(building.setup())
-		building.save_data()
 		buildings_changed.emit()
+	if save: building.save_data()
 
 
-func find_nearby_opportunities(pet: PetData, radius := 5) -> Array[OppportunityData]:
-	var coord := pet.world_coord
-	var _nearby_objects := find_nearby_objects(coord, radius)
-	var _nearby_pets := find_nearby_pets(coord, radius)
+func find_nearby_opportunities(pet: PetData) -> Array[OpportunityData]:
+	var opportunities: Array[OpportunityData] = []
 	
-	var opportunities: Array[OppportunityData] = []
-	# TODO
+	# Wants opportunities
+	for want in pet.wants_data.wants:
+		var opportunity: OpportunityData = OpportunityData.find_want_opportunity(pet, want)
+		if opportunity: opportunities.append(opportunity)
+	
 	return opportunities
 
 
-func find_nearby_need_source(_pet: PetData, need: NeedsData.Need, coord: Vector2i, radius := 15) -> WorldObjectData:	
+func find_nearby_need_source(pet: PetData, need: NeedsData.Need, coord: Vector2i, radius := 15) -> WorldObjectData:	
+	return find_all_nearby_need_sources(pet, need, coord, radius).pop_front()
+
+
+func find_all_nearby_need_sources(pet: PetData, need: NeedsData.Need, coord: Vector2i, radius := 15) -> Array[WorldObjectData]:	
 	var nearby_objects: Array[WorldObjectData] = find_nearby_objects(coord, radius).filter(
 		func(object: WorldObjectData) -> bool: return (
-			need in object.buyable_object_data.fulfills_needs
+			object.item_data.use_data
+			and need in object.item_data.use_data.fulfills_needs
 			and not WorldObjectData.Flag.CLAIMED in object.flags
 		)
 	)
 	# sort owned objects first
-	# TODO: this is throwing an error, why?
-#	nearby_objects.sort_custom(
-#		func(a: WorldObjectData, b: WorldObjectData) -> bool:
-#			return false if a.owner and a.owner.get_rid() == pet.get_rid() else true
-#	)
-	if nearby_objects.size(): return nearby_objects[0]
-	else: return null
+	nearby_objects.sort_custom(
+		func(a: WorldObjectData, b: WorldObjectData) -> bool:
+			return false if (b.owner and b.owner == pet) else true
+	)
+	return nearby_objects
 
 
 func find_nearby_objects(coord: Vector2i, radius := 5) -> Array[WorldObjectData]:
@@ -132,10 +144,14 @@ func to_grid(position) -> Vector3i:
 	else: return Vector3i.ZERO
 
 
+func to_world(position: Vector3i) -> Vector3:
+	return Vector3(position) * grid_size_vector
+
+
 func load_pets() -> void:
 	for pet_path in Utils.open_or_make_dir("user://pets").get_files():
 		var pet_data := load("user://pets/" + pet_path)
-		if pet_data is PetData: pets.append(pet_data.setup())
+		if pet_data is PetData: add_pet(pet_data, false)
 
 
 func save_pets() -> void:
@@ -145,7 +161,7 @@ func save_pets() -> void:
 func load_objects() -> void:
 	for object_path in Utils.open_or_make_dir("user://world").get_files():
 		var object_data := load("user://world/" + object_path)
-		if object_data is WorldObjectData: add_object(object_data)
+		if object_data is WorldObjectData: add_object(object_data, false)
 
 
 func save_objects() -> void:
@@ -155,7 +171,7 @@ func save_objects() -> void:
 func load_buildings() -> void:
 	for building_path in Utils.open_or_make_dir("user://buildings").get_files():
 		var building_data := load("user://buildings/" + building_path)
-		if building_data is BuildingData: add_building(building_data)
+		if building_data is BuildingData: add_building(building_data, false)
 
 
 func save_buildings() -> void:

@@ -1,0 +1,27 @@
+[gd_resource type="Resource" load_steps=4 format=3 uid="uid://8ywdjqitxnfl"]
+
+[ext_resource type="Script" path="res://apps/goal/data/reward_data.gd" id="1_wt17t"]
+[ext_resource type="Script" path="res://apps/goal/data/sell_goal_data.gd" id="2_ful86"]
+
+[sub_resource type="Resource" id="Resource_rpds8"]
+script = ExtResource("1_wt17t")
+fate = 100
+is_claimed = false
+
+[resource]
+script = ExtResource("2_ful86")
+any_item_in_category = "outdoor_lighting"
+id = ""
+display_title = "Let there be light"
+description = ""
+source = 0
+reward = SubResource("Resource_rpds8")
+activation = -1
+expiration = -1
+uses_in_game_clock = false
+expiration_is_relative = true
+total = 5
+progress = 0
+active = false
+complete = false
+data_path = ""

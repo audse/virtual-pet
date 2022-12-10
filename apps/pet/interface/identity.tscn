@@ -1,0 +1,124 @@
+[gd_scene load_steps=4 format=3 uid="uid://cq3ax20w6mxtx"]
+
+[ext_resource type="Texture2D" uid="uid://wptapsb76vyd" path="res://static/icons/happy.svg" id="1_me1ha"]
+
+[sub_resource type="GDScript" id="GDScript_j33m7"]
+script/source = "extends VBoxContainer
+
+const HappinessIcons := {
+	90: preload(\"res://static/icons/happiness_full.svg\"),
+	70: preload(\"res://static/icons/happiness_high.svg\"),
+	50: preload(\"res://static/icons/happy.svg\"),
+	30: preload(\"res://static/icons/happiness_low.svg\"),
+	0: preload(\"res://static/icons/happiness_very_low.svg\")
+}
+
+@export var pet_data: PetData:
+	set(value):
+		pet_data = value
+		update()
+
+@onready var happiness_indicator := %HappinessIndicator as TextureRect
+@onready var name_label := %NameLabel as Label
+@onready var bday_label := %BirthdayLabel as Label
+@onready var relative_bday_label := %RelativeBirthdayLabel as Label
+
+var use_pet_data: UsePetData
+
+
+func _ready() -> void:
+	update()
+
+
+func update() -> void:
+	if not pet_data or not is_inside_tree(): return
+	use_pet_data = UsePetData.new(pet_data)
+	
+	name_label.text = pet_data.name
+	bday_label.text = \"Born {date}\".format({
+		date = Dates.to_date_string(pet_data.birthday)
+	})
+	relative_bday_label.text = \"{relative} old\".format({
+		relative = Dates.to_relative_date_string(pet_data.birthday)
+	})
+	
+	pet_data.life_happiness_changed.connect(
+		func(_happiness) -> void: update_happiness()
+	)
+	
+	pet_data.needs_data.need_changed.connect(
+		func(_need, _val) -> void: update_happiness()
+	)
+	
+	update_happiness()
+
+
+func update_happiness() -> void:	
+	var happiness := use_pet_data.happiness
+	
+	happiness_indicator.modulate = ColorRef.interpolate([
+		Color(\"#f43f5e\"),
+		Color(\"#fed7aa\"),
+		Color(\"#34d399\"),
+	], happiness)
+	
+	for threshold in [0, 30, 50, 70, 90]:
+		if int(happiness * 100) >= threshold: happiness_indicator.texture = HappinessIcons[threshold]
+"
+
+[sub_resource type="LabelSettings" id="LabelSettings_5ig50"]
+line_spacing = 0.0
+font_size = 64
+
+[node name="Identity" type="VBoxContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = SubResource("GDScript_j33m7")
+
+[node name="HappinessIndicator" type="TextureRect" parent="."]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(60, 60)
+offset_right = 60.0
+offset_bottom = 60.0
+size_flags_horizontal = 0
+size_flags_vertical = 8
+texture = ExtResource("1_me1ha")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="NameLabel" type="Label" parent="."]
+unique_name_in_owner = true
+offset_top = 72.0
+offset_right = 828.0
+offset_bottom = 184.0
+theme_type_variation = &"H1"
+text = "Pet name"
+label_settings = SubResource("LabelSettings_5ig50")
+vertical_alignment = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+offset_top = 196.0
+offset_right = 828.0
+offset_bottom = 265.0
+theme_override_constants/separation = 48
+
+[node name="BirthdayLabel" type="Label" parent="HBoxContainer"]
+unique_name_in_owner = true
+offset_right = 390.0
+offset_bottom = 69.0
+size_flags_horizontal = 3
+theme_type_variation = &"H3"
+text = "Born YYYY-MM-DD"
+
+[node name="RelativeBirthdayLabel" type="Label" parent="HBoxContainer"]
+unique_name_in_owner = true
+self_modulate = Color(1, 1, 1, 0.490196)
+offset_left = 438.0
+offset_right = 828.0
+offset_bottom = 69.0
+size_flags_horizontal = 3
+theme_type_variation = &"H3"
+text = "1 year old"

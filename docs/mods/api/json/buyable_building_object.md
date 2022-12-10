@@ -5,8 +5,8 @@
 ## Schema
 
 ```ts
-// [1] `BuyableObject`
-interface BuyableBuildingObject extends BuyableObject {
+// [1] `BuyableItem`
+interface BuyableBuildingObject extends BuyableItem {
     intersection_type: IntersectionType,
     // relative to the building mesh, with { x: 0, y: 0, z: 0 } being the center
     intersection_rect: {
@@ -23,7 +23,7 @@ enum IntersectionType {
 ```
 
 ### References
-1. [`BuyableObject`](buyable_object.md)
+1. [`BuyableItem`](item.md)
 2. [`Position`](types.md#position)
 3. [`Dimensions`](types.md#dimensions)
 

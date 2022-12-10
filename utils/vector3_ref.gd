@@ -38,25 +38,7 @@ static func to_rect3(rect: Rect2, ignore_axis = "y") -> Dictionary:
 	}
 
 
-static func project_position_to_floor(camera: Camera3D, pos: Vector2, exclude: Array = []) -> Vector3:
-	# NOTE: (since I know I will forget again)
-	# If `direct_space_state` is null, that means this call needs to go in `physics_process`
-	var origin := camera.project_ray_origin(pos)
-	
-	var space_state := camera.get_world_3d().direct_space_state
-	var query := PhysicsRayQueryParameters3D.new()
-	query.from = origin
-	query.collide_with_areas = true
-	query.to = origin + camera.project_ray_normal(pos) * 2000
-	query.hit_back_faces = false
-	query.exclude = exclude
-	var intersection := space_state.intersect_ray(query)
-	
-	if "position" in intersection: return intersection.position
-	else: return Vector3.ZERO
-
-
-static func project_position_to_floor_simple(camera: Camera3D, pos: Vector2) -> Vector3:
+static func project_position_to_floor(camera: Camera3D, pos: Vector2) -> Vector3:
 	var origin := camera.project_ray_origin(pos)
 	var direction := camera.project_ray_normal(pos)
 	var distance := -origin.y / (direction.y if direction.y != 0 else 1.0)

@@ -15,7 +15,6 @@ func _init() -> void:
 
 
 func setup():
-	_has_set_is_in_use = false
 	if not changed.is_connected(save_data):
 		changed.connect(save_data)
 	return self
@@ -43,14 +42,6 @@ func delete_data() -> void:
 		OS.move_to_trash(ProjectSettings.globalize_path(full_data_path))
 
 
-# We don't want to save editor-only objects, so we want to make sure
-# each saved resource is part of the world in some way before saving.
-# We cache this because no point calculating more than once.
-var _is_in_use: bool = false
-var _has_set_is_in_use: bool = false
-
 func is_in_use() -> bool:
-	if not _has_set_is_in_use and Game and WorldData:
-		_is_in_use = Game.is_resource_in_use(self)
-		_has_set_is_in_use = true
-	return _is_in_use
+	if Game: return Game.is_resource_in_use(self)
+	return false

@@ -18,7 +18,10 @@ designs = {}
 objects = null
 data_path = null
 
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_rkhxf"]
+
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_72xla"]
+cull_mode = 2
 albedo_texture = ExtResource("2_g2usg")
 normal_enabled = true
 normal_scale = 0.5
@@ -29,6 +32,7 @@ uv1_triplanar = true
 [sub_resource type="ArrayMesh" id="ArrayMesh_30di0"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_l0sfi"]
+cull_mode = 2
 albedo_texture = ExtResource("3_xkfm8")
 normal_enabled = true
 normal_texture = ExtResource("5_8qoj4")
@@ -48,39 +52,18 @@ uv1_triplanar = true
 [sub_resource type="ArrayMesh" id="ArrayMesh_ktxau"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_nviwy"]
+cull_mode = 2
 albedo_color = Color(0.45098, 0.45098, 0.45098, 1)
 normal_scale = -1.0
 normal_texture = ExtResource("7_qamut")
 uv1_scale = Vector3(0.5, 0.5, 0.5)
 uv1_triplanar = true
 
-[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_rkhxf"]
-
 [node name="BuildingRenderer" type="Node3D"]
 script = ExtResource("1_8ai77")
 building_data = SubResource("Resource_ex60r")
 distortion_range_start = Vector2(0, 0)
 distortion_range_end = Vector2(0, 0)
-
-[node name="ExteriorWalls" type="MeshInstance3D" parent="."]
-unique_name_in_owner = true
-material_override = SubResource("StandardMaterial3D_72xla")
-mesh = SubResource("ArrayMesh_30di0")
-
-[node name="InteriorWalls" type="MeshInstance3D" parent="."]
-unique_name_in_owner = true
-material_override = SubResource("StandardMaterial3D_l0sfi")
-mesh = SubResource("ArrayMesh_rwq7t")
-
-[node name="Floor" type="MeshInstance3D" parent="."]
-unique_name_in_owner = true
-material_override = SubResource("StandardMaterial3D_dk05e")
-mesh = SubResource("ArrayMesh_ktxau")
-
-[node name="WallTops" type="MeshInstance3D" parent="."]
-unique_name_in_owner = true
-material_override = SubResource("StandardMaterial3D_nviwy")
-mesh = SubResource("ArrayMesh_ktxau")
 
 [node name="Environment" parent="." instance=ExtResource("4_vgac7")]
 
@@ -98,3 +81,33 @@ size = 22.0
 [node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
 unique_name_in_owner = true
 shape = SubResource("ConvexPolygonShape3D_rkhxf")
+
+[node name="ExteriorWalls" type="MeshInstance3D" parent="StaticBody3D"]
+unique_name_in_owner = true
+material_override = SubResource("StandardMaterial3D_72xla")
+mesh = SubResource("ArrayMesh_30di0")
+skeleton = NodePath("../..")
+
+[node name="InteriorWalls" type="MeshInstance3D" parent="StaticBody3D"]
+unique_name_in_owner = true
+material_override = SubResource("StandardMaterial3D_l0sfi")
+mesh = SubResource("ArrayMesh_rwq7t")
+skeleton = NodePath("../..")
+
+[node name="Floor" type="MeshInstance3D" parent="StaticBody3D"]
+unique_name_in_owner = true
+material_override = SubResource("StandardMaterial3D_dk05e")
+mesh = SubResource("ArrayMesh_ktxau")
+skeleton = NodePath("../..")
+
+[node name="WallTops" type="MeshInstance3D" parent="StaticBody3D"]
+unique_name_in_owner = true
+material_override = SubResource("StandardMaterial3D_nviwy")
+mesh = SubResource("ArrayMesh_ktxau")
+skeleton = NodePath("../..")
+
+[node name="Roof" type="MeshInstance3D" parent="StaticBody3D"]
+unique_name_in_owner = true
+material_override = SubResource("StandardMaterial3D_nviwy")
+mesh = SubResource("ArrayMesh_ktxau")
+skeleton = NodePath("../..")

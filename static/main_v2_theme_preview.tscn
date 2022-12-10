@@ -1,6 +1,6 @@
-[gd_scene load_steps=5 format=3 uid="uid://dmddgx8xrn2v8"]
+[gd_scene load_steps=5 format=3]
 
-[ext_resource type="Texture2D" uid="uid://cfd4gcr5qvsj7" path="res://static/icons/left_arrow.svg" id="1_vie3j"]
+[ext_resource type="Texture2D" uid="uid://cfd4gcr5qvsj7" path="res://static/icons/caret_left.svg" id="1_vie3j"]
 [ext_resource type="Script" path="res://interface/components/toggle_switch.gd" id="2_2oe5n"]
 [ext_resource type="Texture2D" uid="uid://c0xjwq26v2od3" path="res://apps/painter/assets/icons/load_save.svg" id="3_3wv4q"]
 [ext_resource type="Script" path="res://interface/components/checkbox_button.gd" id="3_av61j"]

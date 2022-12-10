@@ -9,14 +9,15 @@
     "description": "A simple doorway for your pets to walk through.",
     "intersection_type": "OPEN_DOORWAY",
     "intersection_rect": {
-        "x": -0.8,
+        "x": -1,
         "y": 1,
-        "width": 1.6,
+        "width": 2,
         "height": 3
     },
     "dimensions": {
         "width": 2,
-        "height": 2,
-        "depth": 2
-    }
+        "height": 1,
+        "depth": 1
+    },
+    "mesh_script": "content_open_doorways/scripts/open_doorway.gd"
 }

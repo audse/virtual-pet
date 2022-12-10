@@ -1,7 +1,7 @@
-[gd_scene load_steps=20 format=3]
+[gd_scene load_steps=19 format=3 uid="uid://o021q7ln8kb6"]
 
 [ext_resource type="Theme" uid="uid://wbvix152d8b5" path="res://apps/painter/assets/themes/draw_tools.tres" id="1_frw0o"]
-[ext_resource type="Texture2D" path="res://apps/gallery/assets/icons/save.svg" id="1_kgwxk"]
+[ext_resource type="Texture2D" uid="uid://o871cmutas55" path="res://apps/gallery/assets/icons/save.svg" id="1_kgwxk"]
 [ext_resource type="Script" path="res://apps/gallery/save_menu.gd" id="2_qsjbt"]
 [ext_resource type="FontFile" uid="uid://daeq7jndm4031" path="res://static/fonts/Nunito/Nunito-Bold.ttf" id="4_kdu1y"]
 [ext_resource type="Script" path="res://interface/components/drop_menu/drop_menu.gd" id="4_nmw1w"]
@@ -10,24 +10,11 @@
 [ext_resource type="Script" path="res://utils/stylesheet/nodes/style_sheet_setter.gd" id="7_78vht"]
 [ext_resource type="Script" path="res://utils/stylesheet/resources/stylebox_style_sheet.gd" id="8_ejsd4"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ks8d2"]
-content_margin_left = 24.0
-content_margin_top = 42.0
-content_margin_right = 24.0
-content_margin_bottom = 36.0
-bg_color = Color(0.2, 0.254902, 0.333333, 0.941176)
-border_width_top = 30
-border_color = Color(0.278431, 0.333333, 0.411765, 1)
-border_blend = true
-corner_radius_top_left = 30
-corner_radius_bottom_right = 30
-corner_radius_bottom_left = 30
-
 [sub_resource type="Resource" id="Resource_8jgub"]
 script = ExtResource("8_ejsd4")
+preset = 0
 apply_styles = "radius_30_0_30_30"
 default_style_names = "panel"
-preset = null
 
 [sub_resource type="Gradient" id="Gradient_x1euq"]
 offsets = PackedFloat32Array(0, 0.41055, 0.733945, 0.981735)
@@ -119,20 +106,21 @@ shadow_offset = Vector2(0, 3)
 
 [sub_resource type="Resource" id="Resource_65jp7"]
 script = ExtResource("8_ejsd4")
+preset = 0
 apply_styles = "content-margin_x_35"
 default_style_names = "normal hover pressed disabled"
-preset = null
 
 [node name="SaveButton" type="Button"]
 unique_name_in_owner = true
+anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
 offset_left = -114.0
 offset_bottom = 82.0
+grow_horizontal = 0
 size_flags_horizontal = 4
 size_flags_vertical = 4
-theme = ExtResource("1_frw0o")
-theme_type_variation = &"FloatingPanelButton"
+theme_type_variation = &"CircleButton_PaddingSm"
 icon = ExtResource("1_kgwxk")
 icon_alignment = 1
 expand_icon = true
@@ -140,10 +128,14 @@ script = ExtResource("2_qsjbt")
 
 [node name="MenuControl" type="Control" parent="."]
 unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 7
 anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 0
 script = ExtResource("4_nmw1w")
 origin = 2
 container = NodePath("../CanvasLayer/SaveMenu")
@@ -155,8 +147,8 @@ triangle_outline_width = {
 }
 right_angle = true
 margin = Vector2(0, -20)
-triangle_color = Color(0.27451, 0.329412, 0.407843, 1)
-triangle_outline_color = Color(0, 0, 0, 1)
+triangle_color = Color(0.247059, 0.247059, 0.27451, 1)
+triangle_outline_color = Color(0.152941, 0.152941, 0.164706, 1)
 remake = false
 test_open = false
 test_close = false
@@ -166,30 +158,30 @@ test_close = false
 [node name="AreaButton" type="Button" parent="CanvasLayer"]
 unique_name_in_owner = true
 visible = false
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 theme = ExtResource("1_frw0o")
 theme_type_variation = &"AreaButtonTopRight"
 
 [node name="SaveMenu" type="MarginContainer" parent="CanvasLayer"]
 visible = false
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_right = -339.0
-offset_bottom = -921.0
+offset_top = 62.0
+offset_right = -57.0
+grow_horizontal = 2
+grow_vertical = 2
 mouse_filter = 2
-theme = ExtResource("1_frw0o")
 theme_override_constants/margin_right = 0
 
 [node name="PanelContainer" type="PanelContainer" parent="CanvasLayer/SaveMenu"]
-offset_left = 24.0
-offset_top = 24.0
-offset_right = 489.0
-offset_bottom = 847.0
+layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 0
-theme_type_variation = &"DropMenuPanel"
-theme_override_styles/panel = SubResource("StyleBoxFlat_ks8d2")
 
 [node name="StyleSheetSetter" type="Node" parent="CanvasLayer/SaveMenu/PanelContainer"]
 script = ExtResource("7_78vht")
@@ -198,10 +190,7 @@ stylebox_style_sheet = SubResource("Resource_8jgub")
 update_base_node = false
 
 [node name="DropShadowContainer" type="MarginContainer" parent="CanvasLayer/SaveMenu/PanelContainer"]
-offset_left = 24.0
-offset_top = 42.0
-offset_right = 441.0
-offset_bottom = 787.0
+layout_mode = 2
 mouse_filter = 2
 theme_override_constants/margin_left = -80
 theme_override_constants/margin_top = -100
@@ -209,10 +198,7 @@ theme_override_constants/margin_right = -80
 theme_override_constants/margin_bottom = -150
 
 [node name="DropShadow" type="TextureRect" parent="CanvasLayer/SaveMenu/PanelContainer/DropShadowContainer"]
-offset_left = -80.0
-offset_top = -100.0
-offset_right = 497.0
-offset_bottom = 895.0
+layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 mouse_filter = 2
@@ -220,15 +206,11 @@ texture = SubResource("GradientTexture2D_lwh6j")
 ignore_texture_size = true
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/SaveMenu/PanelContainer"]
-offset_left = 24.0
-offset_top = 42.0
-offset_right = 441.0
-offset_bottom = 787.0
+layout_mode = 2
 theme_override_constants/separation = 12
 
 [node name="Label" type="Label" parent="CanvasLayer/SaveMenu/PanelContainer/VBoxContainer"]
-offset_right = 417.0
-offset_bottom = 34.0
+layout_mode = 2
 theme_override_colors/font_color = Color(0.580392, 0.639216, 0.721569, 1)
 theme_override_fonts/font = ExtResource("5_326a4")
 theme_override_font_sizes/font_size = 24
@@ -236,35 +218,26 @@ text = "S A V E    C A N V A S . . ."
 
 [node name="AspectRatioContainer" type="AspectRatioContainer" parent="CanvasLayer/SaveMenu/PanelContainer/VBoxContainer"]
 custom_minimum_size = Vector2(350, 350)
-offset_top = 46.0
-offset_right = 417.0
-offset_bottom = 396.0
+layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="CanvasTexture" type="TextureRect" parent="CanvasLayer/SaveMenu/PanelContainer/VBoxContainer/AspectRatioContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(100, 100)
-offset_left = 33.5
-offset_right = 383.5
-offset_bottom = 350.0
+layout_mode = 2
 size_flags_vertical = 3
 texture = SubResource("PlaceholderTexture2D_mmhs0")
 ignore_texture_size = true
 stretch_mode = 5
 
 [node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/SaveMenu/PanelContainer/VBoxContainer"]
-offset_top = 408.0
-offset_right = 417.0
-offset_bottom = 471.0
+layout_mode = 2
 theme_override_constants/margin_left = 12
 theme_override_constants/margin_bottom = 0
 
 [node name="CanvasNameLabel" type="Label" parent="CanvasLayer/SaveMenu/PanelContainer/VBoxContainer/MarginContainer"]
-offset_left = 12.0
-offset_top = 24.0
-offset_right = 393.0
-offset_bottom = 63.0
+layout_mode = 2
 size_flags_vertical = 0
 theme_override_fonts/font = ExtResource("4_kdu1y")
 theme_override_font_sizes/font_size = 28
@@ -273,44 +246,33 @@ vertical_alignment = 2
 
 [node name="CanvasNameField" type="LineEdit" parent="CanvasLayer/SaveMenu/PanelContainer/VBoxContainer"]
 unique_name_in_owner = true
-offset_top = 483.0
-offset_right = 417.0
-offset_bottom = 554.0
+layout_mode = 2
 size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 28
 text = "my_canvas"
 placeholder_text = "my_canvas"
 
 [node name="MarginContainer2" type="MarginContainer" parent="CanvasLayer/SaveMenu/PanelContainer/VBoxContainer"]
-offset_top = 566.0
-offset_right = 417.0
-offset_bottom = 658.0
+layout_mode = 2
 theme_override_constants/margin_left = 12
 theme_override_constants/margin_top = 0
 
 [node name="CanvasNameDescription" type="Label" parent="CanvasLayer/SaveMenu/PanelContainer/VBoxContainer/MarginContainer2"]
-offset_left = 12.0
-offset_right = 393.0
-offset_bottom = 68.0
+layout_mode = 2
 theme_type_variation = &"SmallLabel"
 text = "Don't worry, this name can be changed at any time."
 autowrap_mode = 3
 
 [node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/SaveMenu/PanelContainer/VBoxContainer"]
-offset_top = 670.0
-offset_right = 417.0
-offset_bottom = 745.0
+layout_mode = 2
 
 [node name="MaybeLaterButton" type="Button" parent="CanvasLayer/SaveMenu/PanelContainer/VBoxContainer/HBoxContainer"]
-offset_right = 179.0
-offset_bottom = 75.0
+layout_mode = 2
 text = "Maybe later"
 flat = true
 
 [node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/SaveMenu/PanelContainer/VBoxContainer/HBoxContainer"]
-offset_left = 203.0
-offset_right = 203.0
-offset_bottom = 75.0
+layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/margin_left = 0
 theme_override_constants/margin_top = 0
@@ -318,9 +280,7 @@ theme_override_constants/margin_right = 0
 theme_override_constants/margin_bottom = 0
 
 [node name="MarginContainer2" type="MarginContainer" parent="CanvasLayer/SaveMenu/PanelContainer/VBoxContainer/HBoxContainer"]
-offset_left = 227.0
-offset_right = 417.0
-offset_bottom = 75.0
+layout_mode = 2
 theme_override_constants/margin_left = 0
 theme_override_constants/margin_top = 0
 theme_override_constants/margin_right = 0
@@ -330,8 +290,7 @@ theme_override_constants/margin_bottom = 0
 unique_name_in_owner = true
 visible = false
 custom_minimum_size = Vector2(190, 75)
-offset_right = 190.0
-offset_bottom = 75.0
+layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 8
 theme_type_variation = &"SuccessButton"
@@ -352,11 +311,9 @@ update_base_node = false
 [node name="SaveAsButton" type="Button" parent="CanvasLayer/SaveMenu/PanelContainer/VBoxContainer/HBoxContainer/MarginContainer2"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(190, 75)
-offset_right = 190.0
-offset_bottom = 75.0
+layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 8
-theme_type_variation = &"SuccessButton"
 theme_override_constants/h_separation = 20
 theme_override_styles/normal = SubResource("StyleBoxFlat_5cnjb")
 theme_override_styles/hover = SubResource("StyleBoxFlat_kqau7")

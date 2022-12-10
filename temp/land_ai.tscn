@@ -1,0 +1,73 @@
+[gd_scene load_steps=8 format=3 uid="uid://dpfk5v4py8gcp"]
+
+[ext_resource type="PackedScene" uid="uid://b6dya0dbxdg1f" path="res://environment/scenes/environment.tscn" id="1_b2vth"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jh6mt"]
+cull_mode = 2
+albedo_color = Color(1, 0.4, 0.831373, 1)
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_7l16h"]
+
+[sub_resource type="GDScript" id="GDScript_w6xoi"]
+script/source = "extends MeshInstance3D
+
+@export var noise: NoiseTexture2D
+
+@export var subdivisions := 50
+
+
+func _ready() -> void:
+	
+	var noise_size := noise.get_size()
+	var noise_img := noise.noise.get_image(noise_size.x, noise_size.y)
+	
+	var points := PackedVector2Array()
+	
+	for x in subdivisions + 1:
+		for y in subdivisions + 1:
+			var percent := Vector2(x as float / subdivisions, y as float / subdivisions)
+			var color := noise_img.get_pixelv((percent * noise_size).clamp(Vector2.ZERO, noise_size - Vector2.ONE))
+			
+			var dist := absf(Vector2(0.5, 0.5).distance_to(percent))
+			color *= (1.0 - dist)
+			
+			if color.r > 0.25: 
+				points.append(Vector2(x, y))
+	
+	var tris := Geometry2D.triangulate_delaunay(points)
+	
+	var surface := SurfaceTool.new()
+	surface.begin(Mesh.PRIMITIVE_TRIANGLES)
+	surface.set_normal(Vector3.UP)
+	
+	for point in tris:
+		var vertex := points[point]
+		surface.add_vertex(Vector3(vertex.x, 0, vertex.y))
+	
+	surface.commit(mesh)
+			
+"
+
+[sub_resource type="Gradient" id="Gradient_dd7lu"]
+offsets = PackedFloat32Array(0, 0.0299786, 1)
+colors = PackedColorArray(0, 0, 0, 1, 0.17, 0.17, 0.17, 1, 1, 1, 1, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_iomjl"]
+frequency = 0.008
+fractal_octaves = 3
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_5jikg"]
+width = 256
+height = 256
+generate_mipmaps = false
+color_ramp = SubResource("Gradient_dd7lu")
+noise = SubResource("FastNoiseLite_iomjl")
+
+[node name="Node3D" type="MeshInstance3D"]
+material_override = SubResource("StandardMaterial3D_jh6mt")
+mesh = SubResource("ArrayMesh_7l16h")
+script = SubResource("GDScript_w6xoi")
+noise = SubResource("NoiseTexture2D_5jikg")
+subdivisions = 25
+
+[node name="Environment" parent="." instance=ExtResource("1_b2vth")]

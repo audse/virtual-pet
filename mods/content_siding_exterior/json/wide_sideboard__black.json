@@ -1,0 +1,9 @@
+{
+    "id": "wide_sideboard__black",
+    "display_name": "Wide Sideboard (black)",
+    "design_type": "EXTERIOR_WALL",
+    "category_id": "siding_exterior",
+    "price": 500,
+    "albedo_texture": "content_siding_exterior/textures/wide_sideboard__black__albedo.png",
+    "normal_texture": "content_siding_exterior/textures/wide_sideboard__normal.png"
+}

@@ -1,14 +1,22 @@
-[gd_scene load_steps=4 format=3 uid="uid://c314co5wd3hpx"]
+[gd_scene load_steps=5 format=3 uid="uid://c314co5wd3hpx"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2fww5"]
+[ext_resource type="Material" uid="uid://lmugatvqnano" path="res://static/shaders/blur.tres" id="1_x435v"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vpanu"]
 bg_color = Color(0.0979, 0.0979, 0.11, 0.784314)
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_s8f13"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_3impn"]
 
-[sub_resource type="GDScript" id="GDScript_mbse4"]
+[sub_resource type="GDScript" id="GDScript_8f1m2"]
 script/source = "extends Button
 
 @export var start_open: bool = false
+@export var use_blur: bool = true:
+	set(value):
+		use_blur = value
+		if blur_rect: blur_rect.visible = use_blur
+
+@onready var blur_rect := %BlurRect as ColorRect
 
 @onready var duration := Settings.anim_duration(0.2)
 
@@ -25,7 +33,7 @@ func connect_to(node: Node) -> void:
 		node.opening.connect(
 			func() -> void:
 				open()
-				if node.has_method(\"close\"):
+				if node.has_method(\"close\") and not pressed.is_connected(node.close):
 					pressed.connect(node.close, CONNECT_ONE_SHOT)
 		)
 	if node.has_signal(\"closing\"):
@@ -55,15 +63,29 @@ func close() -> void:
 "
 
 [node name="BackdropButton" type="Button"]
-unique_name_in_owner = true
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_styles/normal = SubResource("StyleBoxFlat_2fww5")
-theme_override_styles/hover = SubResource("StyleBoxFlat_2fww5")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_2fww5")
-theme_override_styles/disabled = SubResource("StyleBoxFlat_2fww5")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_s8f13")
-script = SubResource("GDScript_mbse4")
+theme_override_styles/normal = SubResource("StyleBoxFlat_vpanu")
+theme_override_styles/hover = SubResource("StyleBoxFlat_vpanu")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_vpanu")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_vpanu")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_3impn")
+script = SubResource("GDScript_8f1m2")
+
+[node name="BackBufferCopy" type="BackBufferCopy" parent="."]
+copy_mode = 2
+rect = Rect2(0, 0, 0, 0)
+
+[node name="BlurRect" type="ColorRect" parent="."]
+unique_name_in_owner = true
+material = ExtResource("1_x435v")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2

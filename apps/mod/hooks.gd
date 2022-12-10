@@ -11,7 +11,10 @@ const Paths := {
 	},
 	"Build": {
 		"Data": "res://apps/building/data/build_data.gd",
-	}
+	},
+	"Game": {
+		"Data": "res://apps/game/game.gd",
+	},
 }
 
 ## Converts `parent_class = "ActionMenu.Pet"` to full path, e.g. `res://apps/pet/...`

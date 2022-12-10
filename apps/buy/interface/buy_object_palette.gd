@@ -66,7 +66,6 @@ func _ready() -> void:
 				or (state == GameModeState.Mode.BUILD and menu == BuyCategoryData.Menu.BUILD)
 			):
 				await close()
-				destroy()
 				visible = false
 	)
 	
@@ -85,8 +84,8 @@ func create() -> void:
 
 
 func destroy() -> void:
-	for category_node in category_nodes.values():
-		tabs.remove_child(category_node.scroll_container)
+	for category_node in tabs.get_children():
+		tabs.remove_child(category_node)
 
 
 func open() -> void:
@@ -96,7 +95,7 @@ func open() -> void:
 	
 	# Expand container
 	anchor_left = 0.925
-	var tween := create_tween().set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_IN_OUT).set_parallel()
+	var tween := Ui.bouncer(self)
 	tween.tween_property(self, "anchor_left", 0.2, Settings.anim_duration(0.45))
 	tween.tween_property(button, "rotation", deg_to_rad(0.0), Settings.anim_duration(0.5))
 	tween.tween_property(tabs, "modulate:a", 1.0, Settings.anim_duration(0.35))
@@ -109,7 +108,7 @@ func open() -> void:
 func close() -> void:
 	closing.emit()
 	
-	var tween := create_tween().set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_IN_OUT).set_parallel()
+	var tween := Ui.bouncer(self)
 	tween.tween_property(self, "anchor_left", 0.925, Settings.anim_duration(0.35))
 	tween.tween_property(button, "rotation", deg_to_rad(180.0), Settings.anim_duration(0.45))
 	tween.tween_property(tabs, "modulate:a", 0.0, Settings.anim_duration(0.35))
@@ -117,6 +116,7 @@ func close() -> void:
 	
 	is_open = false
 	closed.emit()
+	destroy()
 
 
 func add_category(category: BuyCategoryData) -> void:
@@ -140,59 +140,15 @@ func add_category(category: BuyCategoryData) -> void:
 		tabs.add_child(category_nodes[category.id].scroll_container)
 
 
-func add_object(object: BuyableObjectData) -> void:
+func add_object(object: ItemData) -> void:
 	if not object.id in object_nodes: object_nodes[object.id] = (
-		BuyableObjectThumbnailNode
-			.new(object, thumbnail_size)
-			.render(category_nodes.get(object.category_id, {}), category_nodes.all_items)
+		ItemThumbnail
+			.new(object, { 
+				min_size = thumbnail_size,
+				on_pressed = func() -> void: BuyData.buy_object(object)
+			})
+			.render(category_nodes.get(object.category_id, {}).get("flow_container", null))
+			.render(category_nodes.all_items.get("flow_container", null))
 	)
-	else: object_nodes[object.id].render()
+	else: object_nodes[object.id].render_all()
 
-
-class BuyableObjectThumbnailNode:
-	
-	const BuyableObjectThumbnailScene := preload("res://apps/buy/scenes/buyable_object_thumbnail.tscn")
-
-	var object: BuyableObjectData
-	
-	var category_tab: Button
-	var all_tab: Button
-	
-	var category_container: Dictionary
-	var all_items_container: Dictionary
-	
-	var object_size: Vector2:
-		get: return Vector2(object.dimensions.x, object.dimensions.y)
-	
-	
-	func _init(object_value: BuyableObjectData, min_size: Vector2) -> void:
-		object = object_value
-		
-		category_tab = BuyableObjectThumbnailScene.instantiate()
-		category_tab.object_data = object
-		
-		all_tab = BuyableObjectThumbnailScene.instantiate()
-		all_tab.object_data = object
-		
-		category_tab.custom_minimum_size = min_size * object_size
-		all_tab.custom_minimum_size = min_size * object_size
-	
-	
-	func render(
-		category_container_value := category_container,
-		all_items_container_value := all_items_container
-	) -> BuyableObjectThumbnailNode:
-		category_container = category_container_value
-		all_items_container = all_items_container_value
-		
-		if category_container.size(): category_container.flow_container.add_child(category_tab)
-		all_items_container.flow_container.add_child(all_tab)
-		
-		return self
-	
-	
-	func destroy() -> BuyableObjectThumbnailNode:
-		if category_tab.is_inside_tree() and category_container.size(): category_container.flow_container.remove_child(category_tab)
-		if all_tab.is_inside_tree(): all_items_container.flow_container.remove_child(all_tab)
-		
-		return self

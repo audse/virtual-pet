@@ -107,7 +107,7 @@ func apply_styles_from(font: Font, styles: Array) -> Dictionary:
 		
 		# set font size
 		if "size" in style_string: font = set_size(font, style_string)
-		elif "color" in style_string: color = parse_color_string(style_string)
+		elif "color" in style_string: color = StyleSheetSetter.parse_color_string(style_string)
 	return {
 		font = font,
 		color = color

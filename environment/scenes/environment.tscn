@@ -43,7 +43,7 @@ mesh = ExtResource("3_tntc2")
 script = ExtResource("4_avapw")
 
 [node name="Camera3D" type="Camera3D" parent="Marker3D"]
-transform = Transform3D(0.766045, -0.413176, 0.492403, 0, 0.766044, 0.642788, -0.642787, -0.492404, 0.586824, 10, 13, 12)
+transform = Transform3D(0.766045, -0.413176, 0.492403, 0, 0.766044, 0.642788, -0.642787, -0.492404, 0.586824, 40, 60, 50)
 projection = 1
 current = true
 size = 22.0

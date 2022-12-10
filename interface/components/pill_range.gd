@@ -43,8 +43,8 @@ enum Direction { HORIZONTAL, VERTICAL }
 @onready var fill_hover_stylebox: StyleBox = get_theme_stylebox("filled_hover", "PillRange")
 @onready var fill_pressed_stylebox: StyleBox = get_theme_stylebox("filled_pressed", "PillRange")
 
-@onready var h_separation: int = get_theme_constant("h_separation", "PillRange")
-@onready var v_separation: int = get_theme_constant("v_separation", "PillRange")
+@onready var h_separation: int = const_override_h_separation if const_override_h_separation != -1 else get_theme_constant("h_separation", "PillRange")
+@onready var v_separation: int = const_override_v_separation if const_override_v_separation != -1 else get_theme_constant("v_separation", "PillRange")
 
 @onready var pill_size: Vector2:
 	get: match direction:
@@ -177,5 +177,6 @@ func _find_pill_at_pos(pos: Vector2) -> int:
 					.grow_individual(margin.x / 2, margin.y / 2, margin.x / 2, margin.y / 2)
 			)
 			if r.has_point(pos):
-				return index
+				if inverted: return num_pills - index
+				else: return index
 		return -1

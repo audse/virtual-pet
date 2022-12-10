@@ -13,5 +13,9 @@
     "fulfills_needs": [
         "hunger"
     ],
-    "mesh_script": "content_food_bowls/food_bowl.gd"
+    "mesh_script": "content_food_bowls/food_bowl.gd",
+    "dimensions": {
+        "width": 1,
+        "depth": 1
+    }
 }

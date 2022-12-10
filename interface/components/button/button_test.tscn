@@ -1,0 +1,61 @@
+[gd_scene load_steps=9 format=3 uid="uid://c2hdcauq1ikdh"]
+
+[ext_resource type="Script" path="res://interface/components/button/button.gd" id="1_tw2jt"]
+[ext_resource type="Texture2D" uid="uid://cfd4gcr5qvsj7" path="res://static/icons/caret_left.svg" id="2_dy8ye"]
+[ext_resource type="Texture2D" uid="uid://cltojcgvhv224" path="res://static/icons/caret_right.svg" id="3_wp0om"]
+[ext_resource type="Texture2D" uid="uid://fhybxb7b0uc8" path="res://static/icons/caret_up.svg" id="4_rvq7q"]
+[ext_resource type="Texture2D" uid="uid://cubjuifgu1ag1" path="res://static/icons/caret_down.svg" id="5_1v3dx"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_ds71e"]
+
+[sub_resource type="Gradient" id="Gradient_u6dex"]
+offsets = PackedFloat32Array(0.00856531, 1)
+colors = PackedColorArray(0.1472, 0.39192, 0.92, 0.239216, 0.48236, 0.2232, 0.93, 0.321569)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_qv4up"]
+gradient = SubResource("Gradient_u6dex")
+width = 320
+height = 190
+fill_to = Vector2(1, 1)
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Button" type="Button" parent="."]
+modulate = Color(0.988235, 0.988235, 0.988235, 1)
+clip_children = 2
+material = SubResource("CanvasItemMaterial_ds71e")
+custom_minimum_size = Vector2(320, 190)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -104.0
+offset_top = -45.5001
+offset_right = 104.0
+offset_bottom = 41.4999
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(160, 95)
+text = "My button"
+script = ExtResource("1_tw2jt")
+test_press = false
+enable_long_press = true
+floating = true
+icon_left = ExtResource("2_dy8ye")
+icon_right = ExtResource("3_wp0om")
+icon_top = ExtResource("4_rvq7q")
+icon_bottom = ExtResource("5_1v3dx")
+icon_modulate_left = Color(1, 1, 1, 0.262745)
+icon_modulate_right = Color(1, 1, 1, 0.392157)
+icon_modulate_top = Color(1, 1, 1, 0.392157)
+icon_modulate_bottom = Color(1, 1, 1, 0.392157)
+gradient_overlay = SubResource("GradientTexture2D_qv4up")
+gradient_blend_mode = 2

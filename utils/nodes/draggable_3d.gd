@@ -7,13 +7,19 @@ signal drag_finished
 signal position_changed(Vector3)
 signal rotation_changed(Vector3)
 
-@export var object: CollisionObject3D
+@export var object: CollisionObject3D:
+	set(value):
+		object = value
+		if object and is_inside_tree():
+			start_distance_from_ground = object.position.y
+			object.input_event.connect(_on_input_event)
+
 @export var distance_from_ground_while_dragging: float = 0.0
 
 @onready var viewport: Viewport = get_viewport()
 @onready var camera: Camera3D = viewport.get_camera_3d()
 
-@onready var start_distance_from_ground := object.position.y
+@onready var start_distance_from_ground := object.position.y if object else 0.0
 @export var enable_fallback_position: bool = false
 
 @export var is_enabled: bool
@@ -54,13 +60,13 @@ var elapsed_frames: int = 0:
 var mouse_offset := Vector3.ZERO
 
 var enabled: bool:
-	get: return Game.Mode.state == GameModeState.Mode.BUY or is_enabled
+	get: return Game.Mode.is_buy or is_enabled
 
 var fallback_position: Vector3
 
 
 func _ready() -> void:
-	object.input_event.connect(_on_input_event)
+	if object: object.input_event.connect(_on_input_event)
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -98,11 +104,11 @@ func _on_input_event(
 
 
 func _physics_process(_delta: float) -> void:
-	if enabled:
+	if enabled and object:
 		var target := Vector3(object.position.snapped(WorldData.grid_size_vector))
 		
 		if is_dragging and elapsed_frames > 5:
-			target = Vector3Ref.project_position_to_floor_simple(
+			target = Vector3Ref.project_position_to_floor(
 				camera,
 				# This is what makes the item under your mouse, instead of floating above it
 				# TODO: Will probably need to be adjusted for camera zoom

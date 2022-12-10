@@ -6,5 +6,9 @@
     "price": 150,
     "category_id": "outdoor_lighting",
     "description": "A small lightpost that gives off a little soft light.",
-    "mesh_script": "content_outdoor_lighting/outdoor_light.gd"
+    "mesh_script": "content_outdoor_lighting/outdoor_light.gd",
+    "dimensions": {
+        "width": 1,
+        "depth": 1
+    }
 }

@@ -1,6 +1,8 @@
 class_name BuildModeState
 extends State
 
+signal current_building_changed(BuildingData)
+
 enum BuildState {
 	READY,
 	EDIT,
@@ -8,7 +10,10 @@ enum BuildState {
 	DESTROYING_WALLS,
 }
 
-var current_building: BuildingData 
+var current_building: BuildingData :
+	set(value):
+		current_building = value
+		current_building_changed.emit(current_building)
 
 
 func _init() -> void:

@@ -1,9 +1,11 @@
-[gd_scene load_steps=4 format=3 uid="uid://cyc4d4e7dien"]
+[gd_scene load_steps=5 format=3 uid="uid://cyc4d4e7dien"]
 
 [ext_resource type="Script" path="res://apps/pet/scenes/actor.gd" id="1_dg3uu"]
-[ext_resource type="PackedScene" uid="uid://b6f845lr7g7f5" path="res://apps/pet/assets/meshes/dog_v2/dog_v2_anim.glb" id="2_3hir1"]
+[ext_resource type="Script" path="res://apps/pet/scenes/renderer.gd" id="2_7yoo3"]
+[ext_resource type="PackedScene" uid="uid://byf7hps4bnymk" path="res://apps/pet/assets/characters/dog.blend" id="3_mkvdm"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_72wo7"]
+radius = 0.426814
 height = 1.25
 
 [node name="Actor" type="CharacterBody3D"]
@@ -11,15 +13,17 @@ script = ExtResource("1_dg3uu")
 
 [node name="Navigator" type="NavigationAgent3D" parent="."]
 unique_name_in_owner = true
-avoidance_enabled = true
+path_desired_distance = 0.5
 
-[node name="Model" parent="." instance=ExtResource("2_3hir1")]
+[node name="Renderer" type="Node3D" parent="."]
+unique_name_in_owner = true
+script = ExtResource("2_7yoo3")
+
+[node name="Model" parent="Renderer" instance=ExtResource("3_mkvdm")]
 unique_name_in_owner = true
 transform = Transform3D(-0.15, 0, -1.31134e-08, 0, 0.15, 0, 1.31134e-08, 0, -0.15, 0, 0, 0)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0.5, 0.15)
 shape = SubResource("CapsuleShape3D_72wo7")
-
-[node name="Timer" type="Timer" parent="."]
-unique_name_in_owner = true
+disabled = true

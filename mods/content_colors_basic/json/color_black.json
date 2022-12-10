@@ -1,0 +1,9 @@
+{
+    "id": "black",
+    "display_name": "Black",
+    "animals": [
+        "dog"
+    ],
+    "body_material": "content_colors_basic/materials/body_black.tres",
+    "detail_material": "content_colors_basic/materials/detail_black.tres"
+}

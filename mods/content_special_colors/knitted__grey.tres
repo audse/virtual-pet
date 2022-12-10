@@ -1,0 +1,40 @@
+[gd_resource type="Resource" load_steps=7 format=3 uid="uid://btwle8mh46kgi"]
+
+[ext_resource type="Texture2D" uid="uid://b0xahcwybhp4v" path="res://mods/content_color_knitted/textures/knitted__albedo__grey.jpg" id="1_2f76k"]
+[ext_resource type="Texture2D" uid="uid://bb2w5u7pylx8l" path="res://mods/content_color_knitted/textures/knitted__ao.jpg" id="2_jcfbi"]
+[ext_resource type="Texture2D" uid="uid://ni1vi25yke7v" path="res://mods/content_color_knitted/textures/knitted__normal.jpg" id="3_i2mp4"]
+[ext_resource type="Script" path="res://apps/pet/animal/data/pet_color_data.gd" id="4_0oeen"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8gc62"]
+resource_name = "Dog"
+diffuse_mode = 1
+albedo_texture = ExtResource("1_2f76k")
+metallic = 0.2
+roughness = 0.9
+normal_enabled = true
+normal_scale = 1.5
+normal_texture = ExtResource("3_i2mp4")
+ao_enabled = true
+ao_light_affect = 0.5
+ao_texture = ExtResource("2_jcfbi")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_evaiy"]
+resource_name = "Eyelids"
+albedo_color = Color(0.6, 0.6, 0.6, 1)
+albedo_texture = ExtResource("1_2f76k")
+metallic = 0.2
+roughness = 0.9
+normal_enabled = true
+normal_scale = 1.5
+normal_texture = ExtResource("3_i2mp4")
+ao_enabled = true
+ao_light_affect = 0.5
+ao_texture = ExtResource("2_jcfbi")
+
+[resource]
+script = ExtResource("4_0oeen")
+id = "knitted__grey"
+display_name = "Knitted (grey)"
+animals = []
+body_material = SubResource("StandardMaterial3D_8gc62")
+detail_material = SubResource("StandardMaterial3D_evaiy")

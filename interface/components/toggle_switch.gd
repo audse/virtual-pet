@@ -35,8 +35,8 @@ func _notification(what: int) -> void:
 
 func _enter_tree() -> void:
 	toggle_mode = true
-	toggled.connect(_on_toggled)
 	theme_type_variation = "ToggleSwitch"
+	if not toggled.is_connected(_on_toggled): toggled.connect(_on_toggled)
 
 
 func _process(delta: float) -> void:

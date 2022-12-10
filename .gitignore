@@ -16,11 +16,14 @@ builds/ios
 builds/macos
 pet-sim.csproj
 pet-sim.csproj.old
+pet-sim.csproj.*
 pet-sim.sln
 export_presets.cfg
+addons/
 
 # temporary assets
 temp/Cooking Assets
 temp/Furniture Assets
 temp/cooked_rice_texture
 temp/shrubs_asset_pack
+temp/kenney_particles

@@ -1,11 +1,11 @@
-# `AddBuyableObjectsModule`
+# `AddBuyableItemsModule`
 
-`AddBuyableObjectsModule` is a GDScript class that makes adding objects to the buy menu easier.
+`AddBuyableItemsModule` is a GDScript class that makes adding objects to the buy menu easier.
 
 ## How to use
 
 ```
-extends AddBuyableObjectsModule
+extends AddBuyableItemsModule
 
 const ParentClass := "res://apps/buy/data/buy_data.gd"
 

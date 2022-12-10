@@ -1,0 +1,126 @@
+[gd_scene load_steps=5 format=3 uid="uid://b2lvl5vdl2cw2"]
+
+[ext_resource type="Script" path="res://apps/create_a_pet/interface/form_animal.gd" id="1_kh1sb"]
+[ext_resource type="Texture2D" uid="uid://do2yruqyjwxfw" path="res://apps/pet/assets/meshes/dog_v2/dog_icon.png" id="2_13c10"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_q05sm"]
+content_margin_left = 12.0
+content_margin_top = 12.0
+content_margin_right = 12.0
+content_margin_bottom = 12.0
+bg_color = Color(0.443137, 0.443137, 0.478431, 1)
+corner_radius_top_left = 100
+corner_radius_top_right = 100
+corner_radius_bottom_right = 100
+corner_radius_bottom_left = 100
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_7h0i8"]
+
+[node name="FormAnimal" type="VBoxContainer"]
+unique_name_in_owner = true
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_kh1sb")
+
+[node name="AnimalLabel" type="Label" parent="."]
+offset_right = 828.0
+offset_bottom = 69.0
+theme_type_variation = &"H3"
+text = "Animal"
+
+[node name="GridContainer" type="GridContainer" parent="."]
+offset_top = 81.0
+offset_right = 828.0
+offset_bottom = 281.0
+theme_override_constants/h_separation = 12
+theme_override_constants/v_separation = 12
+columns = 3
+
+[node name="DogButton" type="Button" parent="GridContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(200, 200)
+offset_left = 34.0
+offset_right = 234.0
+offset_bottom = 200.0
+size_flags_horizontal = 6
+size_flags_vertical = 6
+theme_type_variation = &"CircleButton_PaddingSm"
+theme_override_styles/pressed = SubResource("StyleBoxFlat_q05sm")
+toggle_mode = true
+icon = ExtResource("2_13c10")
+expand_icon = true
+
+[node name="RabbitButton" type="Button" parent="GridContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(200, 200)
+offset_left = 314.0
+offset_right = 514.0
+offset_bottom = 200.0
+size_flags_horizontal = 6
+size_flags_vertical = 6
+theme_type_variation = &"CircleButton_PaddingSm"
+disabled = true
+toggle_mode = true
+text = "?"
+expand_icon = true
+
+[node name="ThirdAnimalButton" type="Button" parent="GridContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(200, 200)
+offset_left = 594.0
+offset_right = 794.0
+offset_bottom = 200.0
+size_flags_horizontal = 6
+size_flags_vertical = 6
+theme_type_variation = &"CircleButton_PaddingSm"
+disabled = true
+text = "?"
+expand_icon = true
+
+[node name="HSeparator" type="HSeparator" parent="."]
+offset_top = 293.0
+offset_right = 828.0
+offset_bottom = 357.0
+theme_override_styles/separator = SubResource("StyleBoxEmpty_7h0i8")
+
+[node name="ColorLabel" type="Label" parent="."]
+offset_top = 369.0
+offset_right = 828.0
+offset_bottom = 438.0
+theme_type_variation = &"H3"
+text = "Color"
+
+[node name="HFlowContainer" type="HFlowContainer" parent="."]
+offset_top = 450.0
+offset_right = 828.0
+offset_bottom = 513.0
+
+[node name="WhiteButton" type="Button" parent="HFlowContainer"]
+unique_name_in_owner = true
+offset_right = 123.0
+offset_bottom = 63.0
+theme_type_variation = &"TagButton"
+disabled = true
+text = "white"
+
+[node name="GreyButton" type="Button" parent="HFlowContainer"]
+unique_name_in_owner = true
+modulate = Color(0.631373, 0.631373, 0.666667, 1)
+offset_left = 147.0
+offset_right = 253.0
+offset_bottom = 63.0
+theme_type_variation = &"TagButton"
+text = "grey"
+
+[node name="BlackButton" type="Button" parent="HFlowContainer"]
+unique_name_in_owner = true
+modulate = Color(0.321569, 0.321569, 0.356863, 1)
+offset_left = 277.0
+offset_right = 396.0
+offset_bottom = 63.0
+theme_type_variation = &"TagButton"
+disabled = true
+text = "black"

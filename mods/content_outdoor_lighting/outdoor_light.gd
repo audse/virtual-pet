@@ -49,7 +49,7 @@ func get_y_pos() -> float:
 	if not context: return 0.0
 	return {
 		ground_circular_lightpost = 1.0
-	}[context.object_data.buyable_object_data.id]
+	}[context.object_data.item_data.id]
 
 
 func _on_switched(_action_item: ActionItem) -> void:

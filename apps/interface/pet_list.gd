@@ -1,5 +1,6 @@
 extends VBoxContainer
 
+const PetStatsMenuScene := preload("res://apps/pet/interface/stats.tscn")
 
 @onready var temp_button := %TempButton as Button
 
@@ -21,11 +22,19 @@ func _render_buttons() -> void:
 	for pet in WorldData.pets:
 		if not pet.name in buttons:
 			buttons[pet] = _make_pet_button(pet)
+			
 			add_child(buttons[pet])
+			
+			var menu := PetStatsMenuScene.instantiate()
+			menu.pet_data = pet
+			add_child(menu)
+			
 			queue_redraw()
 			
 			buttons[pet].pressed.connect(
-				func() -> void: _on_pet_button_pressed(pet)
+				func() -> void: 
+					menu.open()
+#					_on_pet_button_pressed(pet)
 			)
 			pet.needs_data.need_changed.connect(
 				func(_need: NeedsData.Need, _value: float) -> void:
@@ -51,7 +60,6 @@ func _draw() -> void:
 
 func _make_pet_button(pet_data: PetData) -> Button:
 	var button := Button.new()
-	button.disabled = true
 	button.text = pet_data.name.substr(0, 2)
 	button.set_meta("pet_data", pet_data)
 	button.theme_type_variation = "CircleButton_PaddingSm"

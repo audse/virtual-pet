@@ -1,0 +1,251 @@
+[gd_scene load_steps=9 format=3 uid="uid://5hbglqotqej6"]
+
+[ext_resource type="Script" path="res://interface/components/modal/modal.gd" id="1_cfdvd"]
+[ext_resource type="Resource" uid="uid://bxlbxjfmdapwx" path="res://temp/Dior.tres" id="1_wocdp"]
+[ext_resource type="PackedScene" uid="uid://nbk3dbbr34pd" path="res://apps/pet/needs_wants/scenes/needs.tscn" id="2_1phmu"]
+[ext_resource type="PackedScene" uid="uid://dv1g6cku7jiyi" path="res://apps/pet/interface/pet_preview.tscn" id="3_dgp15"]
+[ext_resource type="PackedScene" uid="uid://bv6gh4mb2l2pc" path="res://apps/pet/personality/scenes/personality.tscn" id="3_rbk63"]
+[ext_resource type="PackedScene" uid="uid://cq3ax20w6mxtx" path="res://apps/pet/interface/identity.tscn" id="5_2a7rb"]
+[ext_resource type="PackedScene" uid="uid://b62dkbiedsf2r" path="res://apps/pet/needs_wants/scenes/wants.tscn" id="7_bjqt2"]
+
+[sub_resource type="GDScript" id="GDScript_j0bp2"]
+script/source = "extends Control
+
+@export var pet_data: PetData:
+	set(value):
+		pet_data = value
+		update()
+
+@onready var controller := %ModalController as ModalController
+@onready var grid := %GridContainer as GridContainer
+
+
+func _ready() -> void:
+	update()
+	
+	controller.opening.connect(
+		func() -> void: Datetime.data.paused = true
+	)
+	controller.closed.connect(
+		func() -> void: Datetime.data.paused = Datetime.data.prev_pause_state
+	)
+
+
+func _notification(what: int) -> void:
+	match what:
+		NOTIFICATION_RESIZED, NOTIFICATION_READY: resize()
+
+
+func update() -> void:
+	if not pet_data or not is_inside_tree(): return
+	
+	%Identity.pet_data = pet_data
+	%Needs.needs_data = pet_data.needs_data
+	%Personality.personality_data = pet_data.personality_data
+	%Wants.wants_data = pet_data.wants_data
+
+
+func resize() -> void:
+	if is_inside_tree() and grid:
+		var area := Utils.get_display_area(self)
+		var is_wide: bool = area.size.x > 1366
+		grid.columns = 3 if is_wide else 1
+		grid.move_child(%DetailsContainer if is_wide else %ViewContainer, 0)
+		%PersonalityContainer.visible = is_wide
+
+
+func open() -> void:
+	visible = true
+	controller.open()
+
+
+func close() -> void:
+	controller.close()
+	await controller.closed
+	visible = false
+"
+
+[node name="Stats" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = SubResource("GDScript_j0bp2")
+pet_data = ExtResource("1_wocdp")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = 5
+
+[node name="ModalController" type="Control" parent="CanvasLayer" node_paths=PackedStringArray("target")]
+unique_name_in_owner = true
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_cfdvd")
+target = NodePath("../GridContainer")
+enter_from = 0
+exit_to = 0
+
+[node name="GridContainer" type="GridContainer" parent="CanvasLayer"]
+unique_name_in_owner = true
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -324.0
+offset_bottom = 324.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="ViewContainer" type="SubViewportContainer" parent="CanvasLayer/GridContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(700, 500)
+layout_mode = 2
+offset_right = 828.0
+offset_bottom = 500.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 0
+stretch = true
+
+[node name="PetPreview" parent="CanvasLayer/GridContainer/ViewContainer" instance=ExtResource("3_dgp15")]
+
+[node name="DetailsContainer" type="MarginContainer" parent="CanvasLayer/GridContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+offset_top = 504.0
+offset_right = 828.0
+offset_bottom = 1541.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 2
+theme_override_constants/margin_left = 48
+theme_override_constants/margin_top = 48
+theme_override_constants/margin_right = 48
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/GridContainer/DetailsContainer"]
+layout_mode = 2
+offset_left = 89.0
+offset_top = 48.0
+offset_right = 739.0
+offset_bottom = 1013.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+mouse_filter = 2
+theme_override_constants/separation = 0
+alignment = 1
+
+[node name="Identity" parent="CanvasLayer/GridContainer/DetailsContainer/VBoxContainer" instance=ExtResource("5_2a7rb")]
+unique_name_in_owner = true
+layout_mode = 2
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_right = 650.0
+offset_bottom = 265.0
+grow_horizontal = 1
+grow_vertical = 1
+
+[node name="HSeparator" type="HSeparator" parent="CanvasLayer/GridContainer/DetailsContainer/VBoxContainer"]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+offset_top = 265.0
+offset_right = 650.0
+offset_bottom = 329.0
+
+[node name="NeedsLabel" type="Label" parent="CanvasLayer/GridContainer/DetailsContainer/VBoxContainer"]
+layout_mode = 2
+offset_top = 329.0
+offset_right = 650.0
+offset_bottom = 415.0
+theme_type_variation = &"H1"
+text = "Needs"
+
+[node name="Needs" parent="CanvasLayer/GridContainer/DetailsContainer/VBoxContainer" instance=ExtResource("2_1phmu")]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(650, 400)
+layout_mode = 2
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_top = 415.0
+offset_right = 650.0
+offset_bottom = 815.0
+grow_horizontal = 1
+grow_vertical = 1
+size_flags_horizontal = 6
+size_flags_vertical = 6
+mouse_filter = 2
+
+[node name="HSeparator2" type="HSeparator" parent="CanvasLayer/GridContainer/DetailsContainer/VBoxContainer"]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+offset_top = 815.0
+offset_right = 650.0
+offset_bottom = 879.0
+
+[node name="WantsLabel" type="Label" parent="CanvasLayer/GridContainer/DetailsContainer/VBoxContainer"]
+layout_mode = 2
+offset_top = 879.0
+offset_right = 650.0
+offset_bottom = 965.0
+theme_type_variation = &"H1"
+text = "Wants"
+
+[node name="Wants" parent="CanvasLayer/GridContainer/DetailsContainer/VBoxContainer" instance=ExtResource("7_bjqt2")]
+layout_mode = 2
+offset_top = 965.0
+offset_bottom = 965.0
+
+[node name="PersonalityContainer" type="MarginContainer" parent="CanvasLayer/GridContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+offset_top = 1545.0
+offset_right = 828.0
+offset_bottom = 2440.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 2
+theme_override_constants/margin_top = 48
+theme_override_constants/margin_right = 48
+theme_override_constants/margin_bottom = 48
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="CanvasLayer/GridContainer/PersonalityContainer"]
+layout_mode = 2
+offset_left = 127.0
+offset_top = 48.0
+offset_right = 677.0
+offset_bottom = 847.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+mouse_filter = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="CanvasLayer/GridContainer/PersonalityContainer/VBoxContainer2"]
+layout_mode = 2
+offset_right = 550.0
+offset_bottom = 86.0
+theme_type_variation = &"H1"
+text = "Personality"
+
+[node name="Personality" parent="CanvasLayer/GridContainer/PersonalityContainer/VBoxContainer2" instance=ExtResource("3_rbk63")]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(550, 250)
+layout_mode = 2
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_top = 98.0
+offset_right = 550.0
+offset_bottom = 799.0
+grow_horizontal = 1
+grow_vertical = 1
+size_flags_horizontal = 6
+size_flags_vertical = 6
+mouse_filter = 2

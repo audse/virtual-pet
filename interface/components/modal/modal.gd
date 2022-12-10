@@ -22,6 +22,10 @@ const BackdropButton := preload("res://interface/components/backdrop_button.tscn
 
 @export var start_open: bool = false
 @export var use_backdrop: bool = true
+@export var use_backdrop_blur: bool = true
+
+## Automatically open the modal if the target scene is the current scene
+@export var open_if_current_scene: bool = true
 
 @onready var start_anchor_top: float = target.anchor_top
 @onready var start_anchor_right: float = target.anchor_right
@@ -44,7 +48,6 @@ var is_open: bool = false
 
 func _ready() -> void:
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
-	
 	if not start_open:
 		target.modulate.a = 0
 		await RenderingServer.frame_post_draw
@@ -55,8 +58,15 @@ func _ready() -> void:
 		set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 		backdrop_button.start_open = start_open
 		backdrop_button.show_behind_parent = true
+		backdrop_button.use_blur = use_backdrop_blur
 		add_child(backdrop_button)
 		backdrop_button.connect_to(self)
+	
+	if open_if_current_scene:
+		var tree := get_tree()
+		if target == tree.current_scene or target.get_parent() == tree.current_scene: 
+			await tree.create_timer(0.5).timeout
+			open()
 
 
 func reset_to_before_enter() -> void:

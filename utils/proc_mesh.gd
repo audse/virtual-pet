@@ -17,7 +17,6 @@ static func new_polygon(polygon: PackedVector2Array, params := ProcMeshParams.ne
 
 
 static func new_wall(polygon: PackedVector2Array, params := ProcMeshParams.new()) -> ArrayMesh:
-	var mesh := ArrayMesh.new()
 	var faces = []
 	# Create a face for each edge of the polygon
 	var num_points := polygon.size()
@@ -46,13 +45,12 @@ static func new_wall(polygon: PackedVector2Array, params := ProcMeshParams.new()
 	
 	var arrays := surface.commit_to_arrays()
 	if len(arrays) > 0 and arrays[0] and len(arrays[0]) > 0:
-		mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arrays)
+		params.mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arrays)
 	
-	return mesh
+	return params.mesh
 
 
 static func new_outline_polygon(polygon: PackedVector2Array, params := ProcMeshParams.new()) -> ArrayMesh:
-	var mesh := ArrayMesh.new()
 	var surface := SurfaceTool.new()
 	surface.begin(Mesh.PRIMITIVE_TRIANGLES)
 	surface.set_normal(Vector3(0, 1, 0))
@@ -67,9 +65,9 @@ static func new_outline_polygon(polygon: PackedVector2Array, params := ProcMeshP
 	
 	var arrays := surface.commit_to_arrays()
 	if len(arrays) > 0 and arrays[0] and len(arrays[0]) > 0:
-		mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arrays)
+		params.mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arrays)
 	
-	return mesh
+	return params.mesh
 
 
 static func new_wall_with_rect_cutouts(edge1: Vector2, edge2: Vector2, cutouts: Array[Rect2], params := ProcMeshParams.new()) -> ArrayMesh:
@@ -211,3 +209,78 @@ static func new_wall_with_rect_cutouts(edge1: Vector2, edge2: Vector2, cutouts: 
 		params.mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arrays)
 	
 	return params.mesh
+
+
+static func new_rounded_plane(rect: Rect2, params := ProcMeshParams.new()) -> ArrayMesh:
+	var radius_vec := Vector2(params.corner_radius, params.corner_radius)
+	var inner_rect_x := Rect2(
+		Vector2(rect.position.x, rect.position.y + params.corner_radius),
+		Vector2(rect.size.x, rect.size.y - params.corner_radius * 2)
+	)
+	var inner_rect_y := Rect2(
+		Vector2(rect.position.x + params.corner_radius, rect.position.y),
+		Vector2(rect.size.x - params.corner_radius * 2, rect.size.y)
+	)
+	var inner_rect_tris := [
+		Polygon.sort([inner_rect_x.position, inner_rect_x.end, Vector2(inner_rect_x.position.x, inner_rect_x.end.y)]),
+		Polygon.sort([inner_rect_x.position, inner_rect_x.end, Vector2(inner_rect_x.end.x, inner_rect_x.position.y)]),
+		Polygon.sort([inner_rect_y.position, inner_rect_y.end, Vector2(inner_rect_y.position.x, inner_rect_y.end.y)]),
+		Polygon.sort([inner_rect_y.position, inner_rect_y.end, Vector2(inner_rect_y.end.x, inner_rect_y.position.y)]),
+	]
+	var corners := [rect.position, rect.end, Vector2(rect.position.x, rect.end.y), Vector2(rect.end.x, rect.position.y)]
+	var inner_corners := [corners[0] + radius_vec, corners[1] - radius_vec, corners[2] + radius_vec * Vector2(1, -1), corners[3] + radius_vec * Vector2(-1, 1)]
+	
+	var corner_tris: Array[PackedVector2Array] = []
+	
+	for c in corners.size():
+		var corner := corners[c]
+		var inner_corner := inner_corners[c]
+		
+		var corner_points := PackedVector2Array([Vector2(corner.x, inner_corner.y)])
+		
+		for p in params.corner_points:
+			var angle_1 := inner_corner.angle_to_point(Vector2(corner.x, inner_corner.y))
+			var angle_2 := inner_corner.angle_to_point(Vector2(inner_corner.x, corner.y))
+			var percent: float = (p + 1) as float / params.corner_points as float
+			var degree: float = lerp_angle(angle_1, angle_2, percent)
+			
+			corner_points.append(Vector2(
+				inner_corner.x + (params.corner_radius * cos(degree)),
+				inner_corner.y + (params.corner_radius * sin(degree))
+			))
+		
+		corner_points.append(Vector2(inner_corner.x, corner.y))
+		
+		for p in range(1, corner_points.size()):
+			corner_tris.append(Polygon.sort([
+				inner_corner,
+				corner_points[p],
+				corner_points[p - 1]
+			]))
+	
+	var surface := SurfaceTool.new()
+	surface.begin(Mesh.PRIMITIVE_TRIANGLES)
+	surface.set_normal(params.facing)
+	surface.set_uv(Vector2.ZERO)
+	
+	var to_v3 := func(v2: Vector2) -> Vector3:
+		if params.facing.is_equal_approx(Vector3.UP) or params.facing.is_equal_approx(Vector3.DOWN): 
+			return Vector3(v2.x, 0, v2.y)
+		elif params.facing.is_equal_approx(Vector3.FORWARD) or params.facing.is_equal_approx(Vector3.BACK): 
+			return Vector3(v2.x, v2.y, 0)
+		else: return Vector3(0, v2.x, v2.y)
+	
+	for tri in inner_rect_tris:
+		for vert in tri: surface.add_vertex(to_v3.call(vert))
+	for tri in corner_tris:
+		for vert in tri: surface.add_vertex(to_v3.call(vert))
+	
+	surface.generate_normals()
+	surface.generate_tangents()
+	
+	var arrays := surface.commit_to_arrays()
+	if len(arrays) > 0 and arrays[0] and len(arrays[0]) > 0:
+		params.mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arrays)
+	
+	return params.mesh
+

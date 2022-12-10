@@ -1,8 +1,9 @@
-[gd_scene load_steps=24 format=3 uid="uid://c7el7easmjxrd"]
+[gd_scene load_steps=23 format=3 uid="uid://c7el7easmjxrd"]
 
 [ext_resource type="Script" path="res://apps/painter/painter.gd" id="1_r1smx"]
 [ext_resource type="Script" path="res://apps/painter/nodes/undo.gd" id="2_fbwuv"]
 [ext_resource type="PackedScene" uid="uid://bn5p31m1beflu" path="res://apps/painter/scenes/canvas.tscn" id="3_bo72m"]
+[ext_resource type="Texture2D" uid="uid://cmf1yincragqk" path="res://static/icons/doghouse.svg" id="4_1of2x"]
 [ext_resource type="PackedScene" uid="uid://be6w6bw466eev" path="res://apps/painter/scenes/view_tools.tscn" id="5_xnosc"]
 [ext_resource type="PackedScene" uid="uid://bh7h5y83bw4o4" path="res://apps/painter/scenes/shape_menu.tscn" id="10_fmos1"]
 [ext_resource type="Script" path="res://interface/components/panel_button/panel_button.gd" id="10_hbpj8"]
@@ -10,12 +11,10 @@
 [ext_resource type="Texture2D" uid="uid://xhdcehevvme1" path="res://apps/painter/assets/icons/pencil.tres" id="13_83ghg"]
 [ext_resource type="Texture2D" uid="uid://mexdj1uqwyjs" path="res://apps/gallery/assets/icons/gallery.svg" id="13_f0mbl"]
 [ext_resource type="FontFile" uid="uid://daeq7jndm4031" path="res://static/fonts/Nunito/Nunito-Bold.ttf" id="13_jl8jr"]
-[ext_resource type="Theme" uid="uid://wbvix152d8b5" path="res://apps/painter/assets/themes/draw_tools.tres" id="15_icrpu"]
-[ext_resource type="PackedScene" path="res://apps/gallery/save_menu.tscn" id="16_0ik5s"]
+[ext_resource type="PackedScene" uid="uid://o021q7ln8kb6" path="res://apps/gallery/save_menu.tscn" id="16_0ik5s"]
 [ext_resource type="Texture2D" uid="uid://dwlu8jm1xyn6t" path="res://apps/painter/assets/icons/undo.svg" id="16_bta2x"]
 [ext_resource type="Texture2D" uid="uid://b2lpdvuywdedv" path="res://apps/painter/assets/icons/check.svg" id="16_m0h7j"]
 [ext_resource type="Texture2D" uid="uid://doiww8ogpl5kj" path="res://apps/painter/assets/icons/eraser.tres" id="16_plrep"]
-[ext_resource type="Texture2D" uid="uid://bn61fbcpokvek" path="res://apps/painter/assets/icons/back.svg" id="16_sdttm"]
 [ext_resource type="Texture2D" uid="uid://dp0xkjoprvqm7" path="res://apps/painter/assets/icons/redo.svg" id="17_nvjsf"]
 [ext_resource type="Texture2D" uid="uid://di8kl8pxuqm8w" path="res://apps/painter/assets/icons/line.tres" id="17_peo66"]
 [ext_resource type="Texture2D" uid="uid://rpab4o4s3gdg" path="res://apps/painter/assets/icons/rectangle.tres" id="18_womtx"]
@@ -32,7 +31,6 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-theme = ExtResource("15_icrpu")
 script = ExtResource("1_r1smx")
 
 [node name="Undo" type="Node" parent="."]
@@ -44,6 +42,20 @@ unique_name_in_owner = true
 layout_mode = 1
 mouse_filter = 1
 
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 0
+offset_right = 148.0
+offset_bottom = 148.0
+theme_override_constants/margin_top = 72
+
+[node name="HomeButton" type="Button" parent="MarginContainer"]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+size_flags_vertical = 0
+theme_type_variation = &"SubtleButton"
+icon = ExtResource("4_1of2x")
+expand_icon = true
+
 [node name="CanvasTools" type="MarginContainer" parent="."]
 unique_name_in_owner = true
 clip_contents = true
@@ -54,55 +66,29 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-theme_override_constants/margin_top = 110
+theme_override_constants/margin_left = 36
+theme_override_constants/margin_top = 180
+theme_override_constants/margin_right = 36
 theme_override_constants/margin_bottom = 130
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CanvasTools"]
 layout_mode = 2
-offset_left = 24.0
-offset_top = 110.0
-offset_right = 804.0
-offset_bottom = 1662.0
 size_flags_vertical = 3
 mouse_filter = 2
 theme_override_constants/separation = 48
 
 [node name="MetaToolsContainer" type="HBoxContainer" parent="CanvasTools/VBoxContainer"]
 layout_mode = 2
-offset_right = 780.0
-offset_bottom = 94.0
 mouse_filter = 2
 theme_override_constants/separation = 24
 
-[node name="MainMenuButton" type="Button" parent="CanvasTools/VBoxContainer/MetaToolsContainer"]
-custom_minimum_size = Vector2(80, 80)
-layout_mode = 2
-offset_right = 80.0
-offset_bottom = 94.0
-icon = ExtResource("16_sdttm")
-expand_icon = true
-
-[node name="ViewToolsButton" parent="CanvasTools/VBoxContainer/MetaToolsContainer" instance=ExtResource("5_xnosc")]
-layout_mode = 2
-offset_left = 104.0
-offset_right = 184.0
-offset_bottom = 94.0
-
 [node name="UndoButtons" type="PanelContainer" parent="CanvasTools/VBoxContainer/MetaToolsContainer"]
 layout_mode = 2
-offset_left = 208.0
-offset_right = 396.0
-offset_bottom = 94.0
 size_flags_horizontal = 8
 size_flags_vertical = 4
-theme_type_variation = &"FloatingPanel"
 
 [node name="HBoxContainer" type="HBoxContainer" parent="CanvasTools/VBoxContainer/MetaToolsContainer/UndoButtons"]
 layout_mode = 2
-offset_left = 12.0
-offset_top = 12.0
-offset_right = 176.0
-offset_bottom = 82.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_constants/separation = 24
@@ -110,52 +96,41 @@ alignment = 1
 
 [node name="UndoButton" type="Button" parent="CanvasTools/VBoxContainer/MetaToolsContainer/UndoButtons/HBoxContainer"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(70, 70)
+custom_minimum_size = Vector2(80, 80)
 layout_mode = 2
-offset_right = 70.0
-offset_bottom = 70.0
 size_flags_vertical = 0
-theme_type_variation = &"FloatingPanelButton"
+theme_type_variation = &"CircleButton_PaddingSm"
 icon = ExtResource("16_bta2x")
 icon_alignment = 1
 expand_icon = true
 
 [node name="RedoButton" type="Button" parent="CanvasTools/VBoxContainer/MetaToolsContainer/UndoButtons/HBoxContainer"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(70, 70)
+custom_minimum_size = Vector2(80, 80)
 layout_mode = 2
-offset_left = 94.0
-offset_right = 164.0
-offset_bottom = 70.0
 size_flags_vertical = 0
-theme_type_variation = &"FloatingPanelButton"
+theme_type_variation = &"CircleButton_PaddingSm"
 icon = ExtResource("17_nvjsf")
 icon_alignment = 1
 expand_icon = true
 
+[node name="ViewToolsButton" parent="CanvasTools/VBoxContainer/MetaToolsContainer" instance=ExtResource("5_xnosc")]
+layout_mode = 2
+size_flags_vertical = 0
+
 [node name="Spacer" type="MarginContainer" parent="CanvasTools/VBoxContainer/MetaToolsContainer"]
 layout_mode = 2
-offset_left = 420.0
-offset_right = 568.0
-offset_bottom = 94.0
 size_flags_horizontal = 3
 mouse_filter = 2
 
 [node name="GalleryButtons" type="PanelContainer" parent="CanvasTools/VBoxContainer/MetaToolsContainer"]
 layout_mode = 2
-offset_left = 592.0
-offset_right = 780.0
-offset_bottom = 94.0
 size_flags_horizontal = 8
 size_flags_vertical = 4
 theme_type_variation = &"FloatingPanel"
 
 [node name="HBoxContainer" type="HBoxContainer" parent="CanvasTools/VBoxContainer/MetaToolsContainer/GalleryButtons"]
 layout_mode = 2
-offset_left = 12.0
-offset_top = 12.0
-offset_right = 176.0
-offset_bottom = 82.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_constants/separation = 24
@@ -163,39 +138,26 @@ alignment = 1
 
 [node name="GalleryButton" type="Button" parent="CanvasTools/VBoxContainer/MetaToolsContainer/GalleryButtons/HBoxContainer"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(70, 70)
+custom_minimum_size = Vector2(80, 80)
 layout_mode = 2
-offset_right = 70.0
-offset_bottom = 70.0
 size_flags_horizontal = 4
 size_flags_vertical = 4
-theme_type_variation = &"FloatingPanelButton"
+theme_type_variation = &"CircleButton_PaddingSm"
 icon = ExtResource("13_f0mbl")
 icon_alignment = 1
 expand_icon = true
 
 [node name="SaveButton" parent="CanvasTools/VBoxContainer/MetaToolsContainer/GalleryButtons/HBoxContainer" instance=ExtResource("16_0ik5s")]
-custom_minimum_size = Vector2(70, 60)
+custom_minimum_size = Vector2(80, 80)
 layout_mode = 2
-anchor_left = 0.0
-anchor_right = 0.0
-offset_left = 94.0
-offset_top = 5.0
-offset_right = 164.0
-offset_bottom = 65.0
 size_flags_horizontal = 8
 
 [node name="HBoxContainer3" type="HBoxContainer" parent="CanvasTools/VBoxContainer"]
 layout_mode = 2
-offset_top = 142.0
-offset_right = 780.0
-offset_bottom = 454.0
 mouse_filter = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CanvasTools/VBoxContainer/HBoxContainer3"]
 layout_mode = 2
-offset_right = 688.0
-offset_bottom = 312.0
 size_flags_horizontal = 3
 mouse_filter = 2
 theme_override_constants/separation = 36
@@ -206,9 +168,6 @@ layout_mode = 2
 [node name="SwatchPanelButton" parent="CanvasTools/VBoxContainer/HBoxContainer3/VBoxContainer" instance=ExtResource("12_4owpo")]
 unique_name_in_owner = true
 layout_mode = 2
-offset_top = 116.0
-offset_right = 80.0
-offset_bottom = 196.0
 size_flags_horizontal = 0
 size_flags_vertical = 0
 
@@ -216,9 +175,6 @@ size_flags_vertical = 0
 unique_name_in_owner = true
 custom_minimum_size = Vector2(80, 80)
 layout_mode = 2
-offset_top = 232.0
-offset_right = 80.0
-offset_bottom = 312.0
 size_flags_horizontal = 0
 size_flags_vertical = 0
 toggle_mode = true
@@ -251,18 +207,11 @@ pivot_offset = Vector2(40, 40)
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CanvasTools/VBoxContainer/HBoxContainer3/VBoxContainer/ToolsPanelButton/MarginContainer"]
 layout_mode = 2
-offset_left = 24.0
-offset_top = 24.0
-offset_right = 416.0
-offset_bottom = 212.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="Label" type="Label" parent="CanvasTools/VBoxContainer/HBoxContainer3/VBoxContainer/ToolsPanelButton/MarginContainer/VBoxContainer"]
 layout_mode = 2
-offset_right = 392.0
-offset_bottom = 84.0
-theme_override_colors/font_color = Color(0.580392, 0.639216, 0.721569, 1)
 theme_override_constants/line_spacing = 50
 theme_override_fonts/font = ExtResource("13_jl8jr")
 theme_override_font_sizes/font_size = 24
@@ -272,20 +221,14 @@ vertical_alignment = 1
 
 [node name="HBoxContainer" type="HBoxContainer" parent="CanvasTools/VBoxContainer/HBoxContainer3/VBoxContainer/ToolsPanelButton/MarginContainer/VBoxContainer"]
 layout_mode = 2
-offset_top = 108.0
-offset_right = 392.0
-offset_bottom = 188.0
 
 [node name="DrawButton" type="Button" parent="CanvasTools/VBoxContainer/HBoxContainer3/VBoxContainer/ToolsPanelButton/MarginContainer/VBoxContainer/HBoxContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(80, 80)
 layout_mode = 2
-offset_right = 80.0
-offset_bottom = 80.0
-pivot_offset = Vector2(40, 40.0001)
 size_flags_horizontal = 4
 size_flags_vertical = 4
-theme_type_variation = &"Selected_Button"
+theme_type_variation = &"TagButton_Selected"
 icon = ExtResource("13_83ghg")
 icon_alignment = 1
 expand_icon = true
@@ -294,12 +237,9 @@ expand_icon = true
 unique_name_in_owner = true
 custom_minimum_size = Vector2(80, 80)
 layout_mode = 2
-offset_left = 104.0
-offset_right = 184.0
-offset_bottom = 80.0
-pivot_offset = Vector2(40, 40)
 size_flags_horizontal = 4
 size_flags_vertical = 4
+theme_type_variation = &"TagButton"
 icon = ExtResource("16_plrep")
 icon_alignment = 1
 expand_icon = true
@@ -308,12 +248,9 @@ expand_icon = true
 unique_name_in_owner = true
 custom_minimum_size = Vector2(80, 80)
 layout_mode = 2
-offset_left = 208.0
-offset_right = 288.0
-offset_bottom = 80.0
-pivot_offset = Vector2(40, 40)
 size_flags_horizontal = 4
 size_flags_vertical = 4
+theme_type_variation = &"TagButton"
 icon = ExtResource("17_peo66")
 icon_alignment = 1
 expand_icon = true
@@ -322,21 +259,15 @@ expand_icon = true
 unique_name_in_owner = true
 custom_minimum_size = Vector2(80, 80)
 layout_mode = 2
-offset_left = 312.0
-offset_right = 392.0
-offset_bottom = 80.0
-pivot_offset = Vector2(40, 40.0001)
 size_flags_horizontal = 4
 size_flags_vertical = 4
+theme_type_variation = &"TagButton"
 icon = ExtResource("18_womtx")
 icon_alignment = 1
 expand_icon = true
 
 [node name="VBoxContainer2" type="VBoxContainer" parent="CanvasTools/VBoxContainer/HBoxContainer3"]
 layout_mode = 2
-offset_left = 700.0
-offset_right = 780.0
-offset_bottom = 312.0
 mouse_filter = 2
 theme_override_constants/separation = 36
 
@@ -344,11 +275,9 @@ theme_override_constants/separation = 36
 unique_name_in_owner = true
 custom_minimum_size = Vector2(80, 80)
 layout_mode = 2
-offset_right = 80.0
-offset_bottom = 80.0
-pivot_offset = Vector2(41.0001, 41.0002)
 size_flags_horizontal = 0
 size_flags_vertical = 0
+theme_type_variation = &"CircleButton_PaddingSm"
 icon = ExtResource("24_4mq7p")
 expand_icon = true
 
@@ -356,30 +285,22 @@ expand_icon = true
 unique_name_in_owner = true
 custom_minimum_size = Vector2(80, 80)
 layout_mode = 2
-offset_top = 116.0
-offset_right = 80.0
-offset_bottom = 196.0
-pivot_offset = Vector2(41, 41)
 size_flags_horizontal = 0
 size_flags_vertical = 0
+theme_type_variation = &"CircleButton_PaddingSm"
 icon = ExtResource("25_4dkvo")
 expand_icon = true
 
 [node name="HBoxContainer" type="HBoxContainer" parent="CanvasTools/VBoxContainer"]
-custom_minimum_size = Vector2(0, 610)
 layout_mode = 2
-offset_top = 502.0
-offset_right = 780.0
-offset_bottom = 1552.0
 size_flags_horizontal = 3
-size_flags_vertical = 3
+size_flags_vertical = 10
 mouse_filter = 2
 
 [node name="OkButtonContainer" type="MarginContainer" parent="CanvasTools/VBoxContainer/HBoxContainer"]
 layout_mode = 2
-offset_right = 780.0
-offset_bottom = 1050.0
 size_flags_horizontal = 3
+size_flags_vertical = 8
 mouse_filter = 2
 
 [node name="OkButton" type="Button" parent="CanvasTools/VBoxContainer/HBoxContainer/OkButtonContainer"]
@@ -387,10 +308,6 @@ unique_name_in_owner = true
 visible = false
 custom_minimum_size = Vector2(120, 75)
 layout_mode = 2
-offset_left = 636.0
-offset_top = 951.0
-offset_right = 756.0
-offset_bottom = 1026.0
 size_flags_horizontal = 8
 size_flags_vertical = 8
 theme_type_variation = &"SuccessButton"
@@ -400,10 +317,8 @@ expand_icon = true
 
 [node name="Gallery" parent="." instance=ExtResource("22_n25rq")]
 unique_name_in_owner = true
+visible = false
 layout_mode = 1
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
 
 [node name="IosGuide" type="TextureRect" parent="."]
 visible = false
@@ -421,7 +336,7 @@ stretch_mode = 5
 [connection signal="updated" from="Undo" to="." method="_on_undo_updated"]
 [connection signal="action_completed" from="Canvas" to="." method="_on_canvas_action_completed"]
 [connection signal="resume_draw" from="Canvas" to="." method="_on_canvas_resume_draw"]
-[connection signal="pressed" from="CanvasTools/VBoxContainer/MetaToolsContainer/MainMenuButton" to="." method="_on_main_menu_button_pressed"]
+[connection signal="pressed" from="MarginContainer/HomeButton" to="." method="_on_main_menu_button_pressed"]
 [connection signal="pressed" from="CanvasTools/VBoxContainer/MetaToolsContainer/UndoButtons/HBoxContainer/UndoButton" to="." method="_on_undo_button_pressed"]
 [connection signal="pressed" from="CanvasTools/VBoxContainer/MetaToolsContainer/UndoButtons/HBoxContainer/RedoButton" to="." method="_on_redo_button_pressed"]
 [connection signal="pressed" from="CanvasTools/VBoxContainer/MetaToolsContainer/GalleryButtons/HBoxContainer/GalleryButton" to="." method="_on_gallery_button_pressed"]

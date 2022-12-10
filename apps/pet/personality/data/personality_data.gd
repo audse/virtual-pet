@@ -61,7 +61,7 @@ var social_percent: float:
 
 
 func _init(
-	is_random := true,
+	is_random := false,
 	active_value := active,
 	clean_value := clean,
 	playful_value := playful,
@@ -82,7 +82,7 @@ func _init(
 		traits_data = traits_data_value
 
 
-func generate_random() -> void:	
+func generate_random(generate_favorites := true, generate_traits := true) -> void:	
 	var points := 15
 	
 	# assign values in a random order (to not bias toward end)
@@ -91,18 +91,10 @@ func generate_random() -> void:
 	
 	for index in indeces:
 		
-		var value := 0
-		if points >= 5:
-			value = Auto.Random.randi_range(0, 5)
-			
-			# value of 0 should be kinda rare, reroll it once
-			if value == 0:
-				value = Auto.Random.randi_range(0, 5)
-			
-			points -= value
-		else:
-			value = points
-			points = 0
+		var value := randi_range(0, clampi(points, 0, 5))
+		# reroll 0 once
+		if value == 0: value = randi_range(0, clampi(points, 0, 5))
+		points -= value
 		
 		# assign random value based on random index
 		match index:
@@ -112,5 +104,5 @@ func generate_random() -> void:
 			3: smart = value
 			4: social = value
 	
-	favorites_data.generate_random()
-	traits_data.generate_random()
+	if generate_favorites: favorites_data.generate_random()
+	if generate_traits: traits_data.generate_random()

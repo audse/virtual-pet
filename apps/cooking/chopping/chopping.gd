@@ -33,7 +33,7 @@ func _physics_process(delta: float) -> void:
 func _input(event: InputEvent) -> void:
 	if event is InputEventScreenTouch:
 		if event.is_pressed():
-			var world_pos := Vector3Ref.project_position_to_floor_simple(_camera, event.position + MOUSE_OFFSET_IN_WORLD)
+			var world_pos := Vector3Ref.project_position_to_floor(_camera, event.position + MOUSE_OFFSET_IN_WORLD)
 			if choppable.bounds.has_point(world_pos):
 				_is_pressed = true
 				_press_start_pos = event.position

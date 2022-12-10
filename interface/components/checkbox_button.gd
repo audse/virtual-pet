@@ -52,7 +52,8 @@ var circle_positions: Array[Vector2]:
 
 
 func _enter_tree() -> void:
-	pressed.connect(queue_redraw)
+	if not pressed.is_connected(queue_redraw):
+		pressed.connect(queue_redraw)
 	toggle_mode = true
 	theme_type_variation = "CheckBoxButton"
 

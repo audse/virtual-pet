@@ -1,0 +1,8 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://dhi2idfrcigf1"]
+
+[ext_resource type="Shader" uid="uid://barl8kbj1wge5" path="res://addons/Godot4WaterShader-main/WaterShader.tres" id="1_nwlif"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_nwlif")
+shader_parameter/ColorParameter = null

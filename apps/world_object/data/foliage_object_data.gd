@@ -19,7 +19,7 @@ enum LifeStage {
 
 
 #func _init() -> void:
-#	buyable_object_data.layer = WorldObjectData.Layer.FOLIAGE_LAYER
+#	item_data.layer = WorldObjectData.Layer.FOLIAGE_LAYER
 	
 	# grass is an automatic food source
 #	if type == FoliageType.GRASS:

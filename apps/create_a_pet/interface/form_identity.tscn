@@ -1,0 +1,129 @@
+[gd_scene load_steps=3 format=3 uid="uid://wclbxg4k0jxl"]
+
+[ext_resource type="Texture2D" uid="uid://b2jk4ajjkgs5" path="res://static/icons/dice.svg" id="1_g7agg"]
+[ext_resource type="Script" path="res://apps/create_a_pet/interface/form_identity.gd" id="1_xy84a"]
+
+[node name="FormIdentity" type="VBoxContainer"]
+offset_left = 24.0
+offset_top = 24.0
+offset_right = 773.0
+offset_bottom = 352.0
+script = ExtResource("1_xy84a")
+
+[node name="IdentityLabel" type="Label" parent="."]
+layout_mode = 2
+offset_right = 749.0
+offset_bottom = 69.0
+theme_type_variation = &"H3"
+text = "Identity"
+
+[node name="GridContainer" type="GridContainer" parent="."]
+layout_mode = 2
+offset_top = 81.0
+offset_right = 749.0
+offset_bottom = 328.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/h_separation = 24
+theme_override_constants/v_separation = 24
+columns = 3
+
+[node name="NameLabel" type="Label" parent="GridContainer"]
+layout_mode = 2
+offset_top = 42.0
+offset_right = 112.0
+offset_bottom = 93.0
+text = "Name"
+vertical_alignment = 1
+
+[node name="NameField" type="LineEdit" parent="GridContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+offset_left = 136.0
+offset_right = 645.0
+offset_bottom = 136.0
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 64
+placeholder_text = "Fido"
+
+[node name="RandomNameButton" type="Button" parent="GridContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(80, 80)
+layout_mode = 2
+offset_left = 669.0
+offset_right = 749.0
+offset_bottom = 136.0
+theme_type_variation = &"SubtleButton"
+icon = ExtResource("1_g7agg")
+expand_icon = true
+
+[node name="BirthdayLabel" type="Label" parent="GridContainer"]
+layout_mode = 2
+offset_top = 178.0
+offset_right = 112.0
+offset_bottom = 229.0
+text = "Birthday"
+vertical_alignment = 1
+
+[node name="BirthdayFields" type="HBoxContainer" parent="GridContainer"]
+layout_mode = 2
+offset_left = 136.0
+offset_top = 160.0
+offset_right = 645.0
+offset_bottom = 247.0
+size_flags_horizontal = 3
+theme_override_constants/separation = 24
+
+[node name="BirthdaySeasonField" type="OptionButton" parent="GridContainer/BirthdayFields"]
+unique_name_in_owner = true
+layout_mode = 2
+offset_right = 212.0
+offset_bottom = 87.0
+disabled = true
+item_count = 4
+selected = 0
+popup/item_0/text = "Spring"
+popup/item_0/id = 0
+popup/item_1/text = "Summer"
+popup/item_1/id = 1
+popup/item_2/text = "Fall"
+popup/item_2/id = 2
+popup/item_3/text = "Winter"
+popup/item_3/id = 3
+
+[node name="BirthdayDateField" type="SpinBox" parent="GridContainer/BirthdayFields"]
+unique_name_in_owner = true
+layout_mode = 2
+offset_left = 236.0
+offset_right = 404.0
+offset_bottom = 87.0
+min_value = 1.0
+max_value = 28.0
+value = 1.0
+rounded = true
+editable = false
+update_on_text_changed = true
+suffix = "st"
+
+[node name="BirthdayYearLabel" type="Label" parent="GridContainer/BirthdayFields"]
+unique_name_in_owner = true
+layout_mode = 2
+offset_left = 428.0
+offset_top = 18.0
+offset_right = 509.0
+offset_bottom = 69.0
+text = "Year 1"
+vertical_alignment = 1
+
+[node name="RandomBirthdayButton" type="Button" parent="GridContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(80, 80)
+layout_mode = 2
+offset_left = 669.0
+offset_top = 160.0
+offset_right = 749.0
+offset_bottom = 247.0
+theme_type_variation = &"SubtleButton"
+disabled = true
+icon = ExtResource("1_g7agg")
+expand_icon = true

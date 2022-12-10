@@ -1,4 +1,4 @@
-extends AddBuyableObjectsModule
+extends AddBuyableItemsModule
 
 const ParentClass := "Buy.Data"
 

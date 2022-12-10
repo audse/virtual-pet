@@ -1,20 +1,35 @@
-[gd_scene load_steps=4 format=3 uid="uid://ne8guqpxprqf"]
+[gd_scene load_steps=7 format=3 uid="uid://ne8guqpxprqf"]
 
 [ext_resource type="Script" path="res://temp/land.gd" id="1_mmtvu"]
-[ext_resource type="PackedScene" uid="uid://b6dya0dbxdg1f" path="res://environment/scenes/environment.tscn" id="2_ierke"]
+[ext_resource type="PackedScene" uid="uid://bta1rubgqedrv" path="res://apps/world/scenes/ocean.tscn" id="2_s2s0u"]
 
-[sub_resource type="BoxMesh" id="BoxMesh_ip3et"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0bc56"]
+albedo_color = Color(0.45098, 0.45098, 0.45098, 1)
 
-[node name="Node3D" type="Node3D"]
+[sub_resource type="PlaneMesh" id="PlaneMesh_i8u37"]
+size = Vector2(50, 50)
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_6aam8"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_gk4ur"]
+size = Vector3(50, 0.05, 50)
+
+[node name="Land" type="StaticBody3D"]
 script = ExtResource("1_mmtvu")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-mesh = SubResource("BoxMesh_ip3et")
+[node name="Ground" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.05, 0)
+material_override = SubResource("StandardMaterial3D_0bc56")
+mesh = SubResource("PlaneMesh_i8u37")
 
-[node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(0.642788, -0.586824, 0.492403, 0, 0.642787, 0.766045, -0.766044, -0.492404, 0.413176, 8, 12.5, 7)
-projection = 1
-current = true
-size = 10.0
+[node name="Walls" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.05, 0)
+material_override = SubResource("StandardMaterial3D_0bc56")
+mesh = SubResource("ArrayMesh_6aam8")
 
-[node name="Environment" parent="." instance=ExtResource("2_ierke")]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_gk4ur")
+
+[node name="MeshInstance3D" parent="." instance=ExtResource("2_s2s0u")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -8, 0)
+visible = false

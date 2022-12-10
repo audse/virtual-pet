@@ -1,11 +1,13 @@
 class_name BuildingData
 extends SaveableResource
 
+const COST_PER_COORD := 50
+
 signal rerender
 signal coords_changed
 signal objects_changed
 signal object_added(object: WorldObjectData)
-signal design_changed(design_type: DesignData.DesignType, design: DesignData)
+signal design_changed(design_type: DesignData.DesignType, design: DesignData, prev: DesignData)
 
 signal shape_changed(prev_shape: PackedVector2Array, current_shape: PackedVector2Array)
 
@@ -38,23 +40,15 @@ var is_empty: bool:
 	get: return len(shape) == 0
 
 var bounding_rect: Dictionary:
-	get:
-		var min_coord := shape[0]
-		var max_coord := shape[1]
-		for point in shape:
-			for axis in ["x", "y"]:
-				if point[axis] < min_coord[axis]: min_coord[axis] = point[axis]
-				if point[axis] > max_coord[axis]: max_coord[axis] = point[axis]
-		return {
-			size = max_coord - min_coord,
-			position = min_coord,
-			end = max_coord
-		}
+	get: return Polygon.get_bounding_box(shape)
 
 var center: Vector2:
 	get: 
 		var rect := bounding_rect
 		return rect.size / 2 + rect.position
+
+var cost: int:
+	get: return BuildingData.get_cost(shape)
 
 
 func setup() -> BuildingData:
@@ -66,6 +60,7 @@ func setup() -> BuildingData:
 
 func add_object(object: WorldObjectData) -> void:
 	if not object in objects: objects.append(object.setup())
+	object.changed.connect(emit_changed)
 	objects_changed.emit()
 	object_added.emit(object)
 	emit_changed()
@@ -84,16 +79,34 @@ func get_objects_on_edge(p1: Vector2, p2: Vector2) -> Array[WorldObjectData]:
 	)
 
 
+func contains_coord(coord: Vector3) -> bool:
+	return Geometry2D.is_point_in_polygon(Vector2(coord.x, coord.z), shape)
+
+
 func has_world_position(world_pos: Vector3) -> bool:
 	var p: Vector3i = WorldData.to_grid(world_pos)
 	var i: int = shape.find(Vector2(p.x, p.z))
 	return i != -1
 
 
+func point_is_on_edge(point: Vector2, tolerance := 0.25) -> bool:
+	var edge := Polygon.closest_edge(shape, point)
+	if edge.size() == 0: return false
+	var snapped_point := Polygon.snap_to_edge(shape[edge[0]], shape[edge[1]], point)
+	if snapped_point.distance_to(point) < tolerance: return true
+	return false
+
+
 func add_design(design_type: DesignData.DesignType, design: DesignData) -> void:
+	var prev: DesignData = designs[design_type]
 	designs[design_type] = design
 	emit_changed()
-	design_changed.emit(design_type, design)
+	design_changed.emit(design_type, design, prev)
+
+
+static func get_cost(polygon: PackedVector2Array) -> int:
+	var size: Vector2 = Polygon.get_bounding_box(polygon).size
+	return size.x as int * COST_PER_COORD + size.y as int * COST_PER_COORD
 
 
 func _get_dir() -> String:

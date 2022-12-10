@@ -100,7 +100,7 @@ func _on_about_pressed(_action: ActionItem) -> void:
 
 
 func _on_action_pressed(action: ActionItem) -> void:
-	if pet_data: pet_data.command_data.receive_command.emit(action.id)
+	if pet_data: pet_data.command_data.receive_command.emit(action.id, {})
 
 
 func open_at(pos: Vector2) -> void:

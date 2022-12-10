@@ -1,5 +1,6 @@
 extends Node
 
+const ModPortal: PackedScene = preload("res://apps/mod/interface/mod_portal.tscn")
 const UseSpacialTiles: Script = preload("res://apps/map/nodes/cell_map/use_spacial_tiles.gd")
 
 
@@ -125,3 +126,7 @@ func _get_cached(script: Script, context: Node = null) -> Object:
 	
 	if context: _inject_context(module, context)
 	return module
+
+
+func go_to_portal() -> void:
+	get_tree().change_scene_to_packed(ModPortal)

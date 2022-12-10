@@ -1,16 +1,16 @@
 class_name CollectGoalData
 extends GoalData
 
-@export var one_object: BuyableObjectData
-@export var any_object_in_category: String
+@export var one_item: String = ""
+@export var any_item_in_category: String = ""
 
 
 func _init(args := {}) -> void:
 	super._init(args)
 	BuyData.object_bought.connect(
-		func(object: BuyableObjectData) -> void:
+		func(object: BuyableItemData) -> void:
 			if active and (
-				(one_object and object == one_object) 
-				or object.category_id == any_object_in_category
+				object.id == one_item
+				or object.category_id == any_item_in_category
 			): progress += 1
 	)

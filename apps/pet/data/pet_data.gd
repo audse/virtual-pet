@@ -7,7 +7,7 @@ signal life_happiness_decreased
 
 @export_category("Basic info")
 @export var name: String = ""
-@export var birthday: String = ""
+@export var birthday: int = 0
 @export var random: bool = false
 @export_range(0.0, 1.0, 0.01) var life_happiness: float = 0.0:
 	set(value):
@@ -19,6 +19,7 @@ signal life_happiness_decreased
 		
 		life_happiness_changed.emit(life_happiness)
 		emit_changed()
+@export var parent: int = -1
 
 @export_category("Data")
 @export var animal_data :=  AnimalData.new()
@@ -55,7 +56,7 @@ func _get_dir() -> String:
 
 func setup():
 	wants_data.select_wants(self)
-	wants_data.want_fulfilled.connect(increase_happiness)
+	wants_data.want_fulfilled.connect(func(_want): increase_happiness())
 	
 	# TODO: this will eventually be replaced with a cuddle minigame thing
 	# but for now clicking "cuddle" just increases your pets happiness
@@ -64,7 +65,7 @@ func setup():
 			if menu == PetInterfaceData.Menu.CUDDLE:
 				increase_happiness()
 	)
-	
+	animal_data.changed.connect(emit_changed)
 	needs_data.changed.connect(emit_changed)
 	wants_data.changed.connect(emit_changed)
 	personality_data.changed.connect(emit_changed)
@@ -91,3 +92,38 @@ func increase_happiness() -> void:
 
 func decrease_happiness() -> void:
 	life_happiness -= randf_range(0.005, 0.025)
+
+
+func get_relationship(pet: PetData) -> RelationshipData:
+	return PetManager.get_relationship(self, pet)
+
+
+func increase_fondness(pet: PetData) -> void:
+	get_relationship(pet).increase_fondness()
+
+
+func decrease_fondness(pet: PetData) -> void:
+	get_relationship(pet).decrease_fondness()
+
+
+func get_relationships() -> Array[RelationshipData]:
+	return PetManager.get_relationships(self)
+
+
+func get_friends() -> Array[PetData]:
+	var relationships := get_relationships()
+	relationships.sort_custom(
+		func(a: RelationshipData, b: RelationshipData) -> bool:
+			return a.fondness > b.fondness
+	)
+	return relationships \
+		.filter(func(relationship: RelationshipData) -> bool: return relationship.fondness > 0.5) \
+		.map(func(relationship: RelationshipData) -> PetData: return relationship.other(self))
+
+
+func get_best_friend() -> PetData:
+	return get_friends().front()
+
+
+func is_friends_with(pet: PetData) -> bool:
+	return get_relationship(pet).fondness > 0.5

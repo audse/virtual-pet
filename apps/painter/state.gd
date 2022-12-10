@@ -23,6 +23,7 @@ enum Tiling { NONE, HORIZONTAL, VERTICAL, ALL }
 signal action_changed(to: Action)
 signal aspect_ratio_changed(to: Dictionary)
 signal color_changed(to: Color)
+signal line_changed
 signal precision_changed(to: float)
 signal ratio_changed(to: Ratio)
 signal rotation_changed(to: int)
@@ -91,7 +92,10 @@ var color := Color.WHITE:
 		color = value
 		color_changed.emit(value)
 
-var line = null
+var line = null:
+	set(value):
+		line = value
+		line_changed.emit()
 
 var precision := -1.0:
 	set(value):
@@ -110,19 +114,20 @@ var ratio := Ratio.EVEN:
 
 var rotation := 0:
 	set(value):
-		rotation = value
+		rotation = snappedi(wrapi(value, 0, 359), 90)
 		# Keep rotation within 360 degrees
-		if rotation > 360: rotation -= 360
-		elif rotation < 0: rotation += 360
+#		if rotation > 360: rotation -= 360
+#		elif rotation < 0: rotation += 360
 		rotation_changed.emit(value)
 
 var shape := Shape.SQUARE:
 	set(value):
-		shape = value
-		if value > Shape.CONCAVE_SHARP:
-			shape = Shape.SQUARE
-		elif value < Shape.SQUARE:
-			shape = Shape.CONCAVE_SHARP
+		shape = wrapi(value, Shape.SQUARE, Shape.CONCAVE_SHARP) as Shape
+#		shape = value
+#		if value > Shape.CONCAVE_SHARP:
+#			shape = Shape.SQUARE
+#		elif value < Shape.SQUARE:
+#			shape = Shape.CONCAVE_SHARP
 		shape_changed.emit(value)
 
 var size := Size.MD:

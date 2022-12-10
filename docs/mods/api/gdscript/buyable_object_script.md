@@ -1,2 +1,2 @@
-# `BuyableObjectScript`
+# `BuyableItemScript`
 

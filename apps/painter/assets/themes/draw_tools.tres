@@ -3,7 +3,7 @@
 [ext_resource type="FontFile" uid="uid://cgf6tr8wj2gby" path="res://static/fonts/Nunito/Nunito-Black.ttf" id="1_22rho"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5gmqv"]
-bg_color = Color(0.117647, 0.160784, 0.231373, 0.490196)
+bg_color = Color(0.0979, 0.0979, 0.11, 0.490196)
 border_width_left = 400
 border_width_top = 400
 border_color = Color(0.117647, 0.160784, 0.231373, 0)
@@ -14,7 +14,7 @@ corner_detail = 20
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_jnk3n"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_axrbx"]
-bg_color = Color(0.117647, 0.160784, 0.231373, 0.490196)
+bg_color = Color(0.0979, 0.0979, 0.11, 0.490196)
 border_width_top = 400
 border_width_right = 400
 border_color = Color(0.117647, 0.160784, 0.231373, 0)

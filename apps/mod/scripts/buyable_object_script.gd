@@ -1,4 +1,4 @@
-class_name BuyableObjectScript
+class_name BuyableItemScript
 extends Object
 
 # TODO

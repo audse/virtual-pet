@@ -86,6 +86,16 @@ func generate_random() -> void:
 	sleepy = Auto.Random.randf_range(0.4, 0.8)
 
 
+func get_need(need: Need) -> float:
+	match need:
+		Need.ACTIVITY: return activity
+		Need.COMFORT: return comfort
+		Need.HUNGER: return hunger
+		Need.HYGIENE: return hygiene
+		Need.SLEEPY: return sleepy
+		_: return 0.0
+
+
 func play(is_boosted := false) -> void:
 	activity += randf_range(0.2, 0.4) * (1.25 if is_boosted else 1.0)
 	sleepy -= randf_range(0.05, 0.1)

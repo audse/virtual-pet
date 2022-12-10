@@ -23,8 +23,11 @@ container_path = NodePath("MarginContainer")
 [node name="CurrentShape" type="Button" parent="."]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(80, 80)
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 pivot_offset = Vector2(40, 40)
 size_flags_horizontal = 0
 size_flags_vertical = 0
@@ -42,15 +45,11 @@ offset_bottom = 48.0
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
 offset_left = 24.0
 offset_top = 24.0
-offset_right = 624.0
+offset_right = 604.0
 offset_bottom = 290.0
 theme_override_constants/separation = 12
 
 [node name="ShapesLabel" type="Label" parent="MarginContainer/VBoxContainer"]
-offset_right = 600.0
-offset_bottom = 84.0
-theme_type_variation = &"Overline"
-theme_override_colors/font_color = Color(0.580392, 0.639216, 0.721569, 1)
 theme_override_constants/line_spacing = 50
 theme_override_font_sizes/font_size = 24
 text = "S H A P E S"
@@ -58,25 +57,17 @@ horizontal_alignment = 2
 vertical_alignment = 1
 
 [node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
-offset_top = 108.0
-offset_right = 600.0
-offset_bottom = 278.0
 theme_override_constants/separation = 10
 
 [node name="LeftTools" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer"]
-offset_right = 90.0
-offset_bottom = 170.0
 size_flags_vertical = 3
 theme_override_constants/separation = 10
 alignment = 1
 
 [node name="RotateLeftButton" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer/LeftTools"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(90, 80)
-offset_right = 90.0
-offset_bottom = 80.0
-text = "
-"
+custom_minimum_size = Vector2(80, 80)
+theme_type_variation = &"CircleButton_PaddingSm"
 icon = ExtResource("5_vlw62")
 icon_alignment = 1
 expand_icon = true
@@ -84,161 +75,115 @@ expand_icon = true
 [node name="DecreaseSizeButton" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer/LeftTools"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(80, 80)
-offset_top = 90.0
-offset_right = 90.0
-offset_bottom = 170.0
+theme_type_variation = &"CircleButton_PaddingSm"
 icon = ExtResource("6_8ylm1")
 icon_alignment = 1
 expand_icon = true
 
 [node name="Shapes" type="ScrollContainer" parent="MarginContainer/VBoxContainer/HBoxContainer"]
 custom_minimum_size = Vector2(400, 100)
-offset_left = 100.0
-offset_right = 500.0
-offset_bottom = 170.0
 size_flags_vertical = 3
 horizontal_scroll_mode = 2
 vertical_scroll_mode = 0
 
 [node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/Shapes"]
 offset_right = 1048.0
-offset_bottom = 170.0
+offset_bottom = 100.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_constants/separation = 8
 
 [node name="Button" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer/Shapes/HBoxContainer"]
 custom_minimum_size = Vector2(80, 80)
-offset_top = 41.0
-offset_right = 80.0
-offset_bottom = 121.0
 size_flags_vertical = 4
+theme_type_variation = &"TagButton_Selected"
 script = ExtResource("2_ufv41")
 
 [node name="Button2" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer/Shapes/HBoxContainer"]
 custom_minimum_size = Vector2(80, 80)
-offset_left = 88.0
-offset_top = 41.0
-offset_right = 168.0
-offset_bottom = 121.0
 size_flags_vertical = 4
+theme_type_variation = &"TagButton"
 script = ExtResource("2_ufv41")
 shape = 2
 
 [node name="Button3" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer/Shapes/HBoxContainer"]
 custom_minimum_size = Vector2(80, 80)
-offset_left = 176.0
-offset_top = 41.0
-offset_right = 256.0
-offset_bottom = 121.0
 size_flags_vertical = 4
+theme_type_variation = &"TagButton"
 script = ExtResource("2_ufv41")
 shape = 3
 
 [node name="Button4" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer/Shapes/HBoxContainer"]
 custom_minimum_size = Vector2(80, 80)
-offset_left = 264.0
-offset_top = 41.0
-offset_right = 344.0
-offset_bottom = 121.0
 size_flags_vertical = 4
+theme_type_variation = &"TagButton"
 script = ExtResource("2_ufv41")
 shape = 4
 
 [node name="Button5" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer/Shapes/HBoxContainer"]
 custom_minimum_size = Vector2(80, 80)
-offset_left = 352.0
-offset_top = 41.0
-offset_right = 432.0
-offset_bottom = 121.0
 size_flags_vertical = 4
+theme_type_variation = &"TagButton"
 script = ExtResource("2_ufv41")
 shape = 5
 
 [node name="Button6" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer/Shapes/HBoxContainer"]
 custom_minimum_size = Vector2(80, 80)
-offset_left = 440.0
-offset_top = 41.0
-offset_right = 520.0
-offset_bottom = 121.0
 size_flags_vertical = 4
+theme_type_variation = &"TagButton"
 script = ExtResource("2_ufv41")
 shape = 6
 
 [node name="Button7" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer/Shapes/HBoxContainer"]
 custom_minimum_size = Vector2(80, 80)
-offset_left = 528.0
-offset_top = 41.0
-offset_right = 608.0
-offset_bottom = 121.0
 size_flags_vertical = 4
+theme_type_variation = &"TagButton"
 script = ExtResource("2_ufv41")
 shape = 7
 
 [node name="Button8" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer/Shapes/HBoxContainer"]
 custom_minimum_size = Vector2(80, 80)
-offset_left = 616.0
-offset_top = 41.0
-offset_right = 696.0
-offset_bottom = 121.0
 size_flags_vertical = 4
+theme_type_variation = &"TagButton"
 script = ExtResource("2_ufv41")
 shape = 8
 
 [node name="Button9" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer/Shapes/HBoxContainer"]
 custom_minimum_size = Vector2(80, 80)
-offset_left = 704.0
-offset_top = 41.0
-offset_right = 784.0
-offset_bottom = 121.0
 size_flags_vertical = 4
+theme_type_variation = &"TagButton"
 script = ExtResource("2_ufv41")
 shape = 9
 
 [node name="Button10" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer/Shapes/HBoxContainer"]
 custom_minimum_size = Vector2(80, 80)
-offset_left = 792.0
-offset_top = 41.0
-offset_right = 872.0
-offset_bottom = 121.0
 size_flags_vertical = 4
+theme_type_variation = &"TagButton"
 script = ExtResource("2_ufv41")
 shape = 10
 
 [node name="Button11" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer/Shapes/HBoxContainer"]
 custom_minimum_size = Vector2(80, 80)
-offset_left = 880.0
-offset_top = 41.0
-offset_right = 960.0
-offset_bottom = 121.0
 size_flags_vertical = 4
+theme_type_variation = &"TagButton"
 script = ExtResource("2_ufv41")
 shape = 11
 
 [node name="Button12" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer/Shapes/HBoxContainer"]
 custom_minimum_size = Vector2(80, 80)
-offset_left = 968.0
-offset_top = 41.0
-offset_right = 1048.0
-offset_bottom = 121.0
 size_flags_vertical = 4
+theme_type_variation = &"TagButton"
 script = ExtResource("2_ufv41")
 shape = 12
 
 [node name="RightTools" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer"]
-offset_left = 510.0
-offset_right = 600.0
-offset_bottom = 170.0
 theme_override_constants/separation = 10
 alignment = 1
 
 [node name="RotateRightButton" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer/RightTools"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(90, 80)
-offset_right = 90.0
-offset_bottom = 80.0
-text = "
-"
+custom_minimum_size = Vector2(80, 80)
+theme_type_variation = &"CircleButton_PaddingSm"
 icon = ExtResource("18_aiin7")
 icon_alignment = 1
 expand_icon = true
@@ -246,9 +191,7 @@ expand_icon = true
 [node name="IncreaseSizeButton" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer/RightTools"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(80, 80)
-offset_top = 90.0
-offset_right = 90.0
-offset_bottom = 170.0
+theme_type_variation = &"CircleButton_PaddingSm"
 icon = ExtResource("19_urgnv")
 icon_alignment = 1
 expand_icon = true

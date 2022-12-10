@@ -1,0 +1,18 @@
+{
+    "id": "wavy_geometric_rug__grey",
+    "display_name": "Wavy Geometric Rug (grey)",
+    "mesh": "content_rugs/meshes/wavy_geometric_rug__grey.res",
+    "world_layer": "rug_object",
+    "price": 100,
+    "category_id": "rug",
+    "flags": [
+        "ownable"
+    ],
+    "fulfills_needs": [
+        "comfort"
+    ],
+    "dimensions": {
+        "width": 6,
+        "depth": 4
+    }
+}

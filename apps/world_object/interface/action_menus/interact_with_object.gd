@@ -1,6 +1,7 @@
 extends Control
 
 signal sell_pressed
+signal put_in_inventory_pressed
 
 @export var object_data: WorldObjectData:
 	set(value):
@@ -37,7 +38,11 @@ func update_actions() -> void:
 	for child in action_menu.get_children(): child.queue_free()
 	
 	for need in NeedsData.need_list:
-		if object_data and need in object_data.buyable_object_data.fulfills_needs:
+		if (
+			object_data 
+			and object_data.item_data.use_data 
+			and need in object_data.item_data.use_data.fulfills_needs
+		):
 			action_menu.append_action(ActionItemParams.new({
 				id = need,
 				text = need_action_text[need],
@@ -45,7 +50,7 @@ func update_actions() -> void:
 				submenu = select_pet_menu
 			}))
 	
-	if object_data and BuyableObjectData.Flag.OWNABLE in object_data.buyable_object_data.flags:
+	if object_data and BuyableItemData.Flag.OWNABLE in object_data.item_data.flags:
 		action_menu.append_action(ActionItemParams.new({
 			id = "own",
 			text = "set owner...",
@@ -59,6 +64,12 @@ func update_actions() -> void:
 			text = "sell for {0}".format([object_data.sell_price]),
 			on_pressed = _on_sell_pressed
 		}))
+		action_menu.append_action(ActionItemParams.new({
+			id = "to_inventory",
+			text = "put in inventory",
+			on_pressed = _on_put_in_inventory_pressed
+			
+		}))
 
 
 func _on_action_pressed(action: ActionItem) -> void:
@@ -68,12 +79,17 @@ func _on_action_pressed(action: ActionItem) -> void:
 		else:
 			var need: NeedsData.Need = action.parent.parent_action.id
 			var command: CommandData.Command = CommandData.CommandToNeedMap[need]
-			(action.id as PetData).command_data.receive_command.emit(command)
+			(action.id as PetData).command_data.receive_command.emit(command, {})
 
 
 func _on_sell_pressed(_action: ActionItem) -> void:
 	BuyData.sell_object(object_data)
 	sell_pressed.emit()
+
+
+func _on_put_in_inventory_pressed(_action: ActionItem) -> void:
+	Inventory.data.add_object(object_data)
+	put_in_inventory_pressed.emit()
 
 
 func open_at(pos: Vector2) -> void:

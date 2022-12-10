@@ -3,15 +3,15 @@
 # V 1.0
 
 ## Controls
-- [-] Rotate camera
-- [-] Translate camera
-	- [ ] Edge scroll
+- [x] Rotate camera
+- [x] Translate camera
+- [ ] Edge scroll
 
 ## Building
 - [x] Outer walls
-- [ ] Flat roof
-- [ ] Door (archway)
-- [ ] Windows
+- [x] Flat roof
+- [x] Door (archway)
+- [x] Windows
 
 ## Animals
 - [ ] DNA
@@ -19,13 +19,13 @@
 	- [ ] Shape
 	- [ ] Personality
 - [ ] Colors (potion)
-- [ ] Personality
-- [ ] Needs
+- [x] Personality
+- [x] Needs
 - [ ] Wants
 
 ## Cooking
-- [-] Chop
-- [-] Mix
+- [x] Chop
+- [x] Mix
 - [ ] Potion (chop -> mix -> generate)
 
 ## Design
@@ -36,10 +36,10 @@
 ## Furniture
 ### Indoor
 - [ ] Pet beds
-- [ ] Lamps
+- [x] Lamps
 - [ ] Rugs
 - [ ] Wall art
-- [ ] Dishes
+- [x] Dishes
 
 ## World
 ### Foliage

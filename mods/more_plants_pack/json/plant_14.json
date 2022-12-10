@@ -16,5 +16,10 @@
         "x": 0.5,
         "y": 0.5,
         "z": 0.5
+    },
+    "stackable": true,
+    "dimensions": {
+        "width": 1,
+        "depth": 1
     }
 }

@@ -1,6 +1,13 @@
 class_name BuildingRenderer
 extends Node3D
 
+
+const TEXTURE_SCALE := {
+	DesignData.DesignType.INTERIOR_WALL: Vector3(0.5, 0.25, 0.5),
+	DesignData.DesignType.EXTERIOR_WALL: Vector3(0.5, 0.25, 0.5),
+	DesignData.DesignType.FLOOR: Vector3(0.5, 0.5, 0.5),
+}
+
 @export var building_data: BuildingData
 @export var wall_height := 4.0
 @export var wall_thickness := 0.1
@@ -14,6 +21,7 @@ extends Node3D
 @onready var interior_mesh := %InteriorWalls as MeshInstance3D
 @onready var wall_tops_mesh := %WallTops as MeshInstance3D
 @onready var collision_shape := %CollisionShape3D as CollisionShape3D
+@onready var roof_mesh := %Roof as MeshInstance3D
 
 @onready var designs := {
 	DesignData.DesignType.INTERIOR_WALL: interior_mesh,
@@ -21,32 +29,34 @@ extends Node3D
 	DesignData.DesignType.FLOOR: floor_mesh
 }
 
-const TEXTURE_SCALE := {
-	DesignData.DesignType.INTERIOR_WALL: Vector3(0.5, 0.25, 0.5),
-	DesignData.DesignType.EXTERIOR_WALL: Vector3(0.5, 0.25, 0.5),
-	DesignData.DesignType.FLOOR: Vector3(0.5, 0.5, 0.5),
-}
+@onready var thread := Thread.new()
 
 
 func _ready() -> void:
 	if get_tree().current_scene == self:
-		draw_building(building_data.shape)
+		thread.start(draw_building.bind(building_data.shape))
 		update_all_designs()
 	else:
-		$RendererMarker3D/Camera3D.current = false
 		$Environment.queue_free()
 		$RendererMarker3D.queue_free()
+	
+	Settings.data.hide_roofs_changed.connect(
+		func(hide: bool) -> void: roof_mesh.visible = not hide
+	)
+
+
+func _exit_tree() -> void:
+	thread.wait_to_finish()
 
 
 func update_from_data(data: BuildingData) -> void:
 	building_data = data
-	draw_building(building_data.shape)
+	thread.start(draw_building.bind(building_data.shape))
 	update_all_designs()
-	update_collisions()
 	building_data.design_changed.connect(update_design)
-	building_data.rerender.connect(
-		func() -> void: draw_building(building_data.shape)
-	)
+#	building_data.rerender.connect(
+#		func() -> void: thread.start(draw_building.bind(building_data.shape))
+#	)
 
 
 func draw_building(shape: PackedVector2Array) -> void:	
@@ -67,7 +77,18 @@ func draw_building(shape: PackedVector2Array) -> void:
 		offset = Vector3(0.0, wall_height, 0.0) 
 	}))
 	
+	var outer_polygon := Polygon.grow(shape, wall_thickness)
+	roof_mesh.mesh = ProcMesh.new_polygon(outer_polygon, ProcMeshParams.new({
+		offset = Vector3(0.0, wall_height + floor_thickness, 0.0),
+	}))
+	roof_mesh.mesh = ProcMesh.new_wall(outer_polygon, ProcMeshParams.new({
+		mesh = roof_mesh.mesh,
+		offset = Vector3(0.0, wall_height, 0.0),
+		height = floor_thickness,
+	}))
+	
 	draw_walls(shape)
+	update_collisions()
 
 
 func draw_walls(shape: PackedVector2Array) -> void:
@@ -81,12 +102,14 @@ func draw_walls(shape: PackedVector2Array) -> void:
 	for edge in Polygon.get_edges(Polygon.grow(shape, 0.0)):
 		var objects: Array[WorldObjectData] = building_data.get_objects_on_edge(edge[0], edge[1])
 		cutouts.append(objects.map(
-			func(object: WorldObjectData) -> Rect2: return Rect2(
-				Vector2(object.coord).distance_to(edge[0]) + object.buyable_object_data.intersection_rect.position.x,
-				object.buyable_object_data.intersection_rect.position.y,
-				object.buyable_object_data.intersection_rect.size.x,
-				object.buyable_object_data.intersection_rect.size.y
-			)
+			func(object: WorldObjectData) -> Rect2: 
+				if object.item_data.building_data: return Rect2(
+					Vector2(object.coord).distance_to(edge[0]) + object.item_data.building_data.intersection_rect.position.x,
+					object.item_data.building_data.intersection_rect.position.y,
+					object.item_data.building_data.intersection_rect.size.x,
+					object.item_data.building_data.intersection_rect.size.y
+				)
+				else: return Rect2(0, 0, 0, 0)
 		))
 		var rects: Array[Rect2] = cutouts[i]
 		exterior_mesh.mesh = ProcMesh.new_wall_with_rect_cutouts(edge[0], edge[1], rects, ProcMeshParams.new({
@@ -117,7 +140,7 @@ func update_all_designs() -> void:
 		update_design(design_type, design)
 
 
-func update_design(design_type: DesignData.DesignType, design: DesignData) -> void:
+func update_design(design_type: DesignData.DesignType, design: DesignData, _prev = null) -> void:
 	var node := designs[design_type] as MeshInstance3D
 	if node:
 		(node.material_override as StandardMaterial3D).albedo_texture = design.albedo_texture

@@ -1,52 +1,46 @@
-extends Node3D
+extends StaticBody3D
 
-@onready var mesh_instance := $MeshInstance3D
 
-var mesh := ImmediateMesh.new()
+@export var depth: float = 6.0
 
-var radius: float = 3.0
-var num_points := 30
-var angle := deg_to_rad(360) / num_points
+@onready var ground := $Ground as MeshInstance3D
+@onready var walls := $Walls as MeshInstance3D
+@onready var collision := $CollisionShape3D as CollisionShape3D
+
+var ground_mesh := ArrayMesh.new()
+var ground_surface := SurfaceTool.new()
 
 
 func _ready() -> void:
-	gen()
+	draw()
 
 
-func gen() -> void:
-	var radiuses := get_radiuses()
-	
-	var points: Array[Vector2] = []
-	var prev_points = []
-	for p in range(num_points):
-		var x = cos(angle * p) * radiuses[p]
-		var y = sin(angle * p) * radiuses[p]
-		var point := Vector2(x, y) + Vector2Ref.vrandf_range(0, 1.0)
-		if len(prev_points) > 0:
-			point = point.lerp(prev_points[0], 0.3)
-		prev_points = [point]
-		points.append(point)
-	
-	draw_mesh(Vector3Ref.from_vec2_array(points))
+func draw() -> void:
+	if WorldData.terrain:
+		var shape := Vector3Ref.from_vec2_array(WorldData.terrain.shape)
+		draw_ground_mesh(shape)
+		draw_walls_mesh(shape)
 
 
-func get_radiuses() -> Array:
-	var get_radius := func (i: int) -> float: 
-		return (radius * sin(num_points) + sin(num_points)) * randf_range(0.9, 1.1)
-	
-	return Iter.of_len(num_points).map(get_radius).array()
+func draw_walls_mesh(_points: Array[Vector3]) -> void:
+	walls.mesh = ProcMesh.new_wall(WorldData.terrain.shape, ProcMeshParams.new({
+		height = depth,
+		offset = Vector3(0, -depth, 0)
+	}))
 
 
-func draw_mesh(points: Array[Vector3]) -> void:
-	mesh.clear_surfaces()
-	mesh.surface_begin(Mesh.PRIMITIVE_TRIANGLES)
-	Iter.new(points).for_each(draw_point)
-	mesh.surface_end()
-	mesh_instance.mesh = mesh
+func draw_ground_mesh(points: Array[Vector3]) -> void:
+	ground_surface.begin(Mesh.PRIMITIVE_TRIANGLES)
+	ground_surface.set_normal(Vector3.UP)
+	ground_surface.set_smooth_group(0)
+	Iter.new(points).for_each(draw_ground_point)
+	ground_surface.commit(ground_mesh)
+	ground.mesh = ground_mesh
+	collision.make_convex_from_siblings()
 
 
-func draw_point(point: Vector3, i: int, iter: Iter) -> void:
+func draw_ground_point(point: Vector3, _i: int, iter: Iter) -> void:
 	var prev: Vector3 = iter.peek(-1)
-	mesh.surface_add_vertex(prev)
-	mesh.surface_add_vertex(point)
-	mesh.surface_add_vertex(Vector3.ZERO)
+	ground_surface.add_vertex(prev)
+	ground_surface.add_vertex(point)
+	ground_surface.add_vertex(Vector3.ZERO)

@@ -1,0 +1,157 @@
+[gd_scene load_steps=8 format=3 uid="uid://dv1g6cku7jiyi"]
+
+[ext_resource type="Script" path="res://apps/pet/scenes/renderer.gd" id="2_xldog"]
+[ext_resource type="PackedScene" uid="uid://byf7hps4bnymk" path="res://apps/pet/assets/characters/dog.blend" id="3_6yla2"]
+
+[sub_resource type="GDScript" id="GDScript_81wpy"]
+script/source = "extends SubViewport
+
+
+const ROT_DELTA := deg_to_rad(45.0)
+const SPEED := 4.0
+
+@export var pet_data: PetData:
+	set(value):
+		pet_data = value
+		if renderer: renderer.pet_data = pet_data
+
+
+@onready var parent := get_parent()
+@onready var renderer := %Renderer as PetRenderer
+@onready var model_timer := %Timer as Timer
+@onready var camera := %Camera3D as Camera3D
+@onready var camera_controller := %Marker3D as Marker3D
+
+
+var target_rotation := 0.0
+var last_mouse_pos := Vector2(-1, -1)
+
+var is_active: bool = true
+
+
+func _ready():
+	if renderer and renderer.animation_player: renderer.animation_player.play(\"Idle\")
+
+
+func _input(event: InputEvent) -> void:
+	if is_active:
+		if event is InputEventKey and event.is_pressed():
+			match event.keycode:
+				KEY_COMMA: target_rotation = camera_controller.rotation.y + ROT_DELTA
+				KEY_PERIOD: target_rotation = camera_controller.rotation.y - ROT_DELTA
+		
+		if event is InputEventMouseButton and event.is_pressed():
+			last_mouse_pos = event.position
+		
+		if event.is_action_released(\"tap\"): last_mouse_pos = Vector2(-1, -1)
+
+
+func _physics_process(delta: float) -> void:
+	if is_active:
+		if last_mouse_pos > Vector2.ZERO:
+			var current_pos := get_mouse_position()
+			var mouse_delta := current_pos - last_mouse_pos
+			target_rotation -= deg_to_rad(mouse_delta.normalized().x * SPEED)
+			last_mouse_pos = current_pos
+	
+		if abs(target_rotation - camera_controller.rotation.y) > 0.1:
+			camera_controller.rotation.y = lerpf(camera_controller.rotation.y, target_rotation, delta * SPEED)
+"
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_xv0vu"]
+sky_top_color = Color(0.5544, 0.70672, 0.84, 1)
+sky_horizon_color = Color(0.882353, 0.913725, 0.933333, 1)
+ground_bottom_color = Color(0.784314, 0.823529, 0.858824, 1)
+ground_horizon_color = Color(0.882353, 0.913725, 0.933333, 1)
+ground_curve = 0.367583
+sun_angle_max = 60.0
+
+[sub_resource type="Sky" id="Sky_dkis8"]
+sky_material = SubResource("ProceduralSkyMaterial_xv0vu")
+radiance_size = 2
+
+[sub_resource type="Environment" id="Environment_dgawu"]
+background_mode = 1
+background_color = Color(0.0941176, 0.0941176, 0.105882, 1)
+sky = SubResource("Sky_dkis8")
+sky_custom_fov = 1.0
+ambient_light_source = 3
+ambient_light_color = Color(0.505882, 0.505882, 0.505882, 1)
+ambient_light_sky_contribution = 0.25
+ambient_light_energy = 0.75
+tonemap_mode = 2
+tonemap_white = 15.0
+ssao_enabled = true
+ssao_radius = 2.0
+ssao_sharpness = 0.75
+ssao_light_affect = 0.25
+ssao_ao_channel_affect = 1.0
+ssil_enabled = true
+ssil_sharpness = 0.75
+sdfgi_cascades = 2
+sdfgi_max_distance = 51.2
+glow_normalized = true
+fog_light_color = Color(0.44, 0.44, 0.44, 1)
+fog_light_energy = 0.25
+fog_sun_scatter = 1.0
+volumetric_fog_density = 0.025
+volumetric_fog_albedo = Color(0.639216, 0.639216, 0.639216, 1)
+
+[sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_55now"]
+dof_blur_far_distance = 25.0
+dof_blur_far_transition = 15.0
+
+[node name="PetPreview" type="SubViewport"]
+unique_name_in_owner = true
+own_world_3d = true
+transparent_bg = true
+handle_input_locally = false
+size = Vector2i(828, 500)
+render_target_update_mode = 4
+script = SubResource("GDScript_81wpy")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_dgawu")
+camera_attributes = SubResource("CameraAttributesPractical_55now")
+
+[node name="Marker3D" type="Marker3D" parent="."]
+unique_name_in_owner = true
+
+[node name="Camera3D" type="Camera3D" parent="Marker3D"]
+unique_name_in_owner = true
+transform = Transform3D(0.766045, -0.413176, 0.492403, 0, 0.766044, 0.642788, -0.642787, -0.492404, 0.586824, 10, 20, 12)
+projection = 1
+current = true
+size = 22.0
+
+[node name="MainLight" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-1, 8.74228e-08, -1.28246e-15, -7.6194e-09, -0.0871558, 0.996195, 8.70901e-08, 0.996195, 0.0871558, 0, 0, 0)
+light_color = Color(0.988235, 0.988235, 0.988235, 1)
+light_energy = 0.75
+shadow_enabled = true
+shadow_bias = 0.15
+shadow_normal_bias = 2.0
+shadow_reverse_cull_face = true
+directional_shadow_mode = 1
+
+[node name="SoftLight" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866025, 0.433013, 0.25, -4.37114e-08, -0.5, 0.866025, 0.5, 0.75, 0.433013, 0, 0, 0)
+light_energy = 0.75
+shadow_enabled = true
+shadow_bias = 0.15
+shadow_normal_bias = 2.0
+shadow_reverse_cull_face = true
+directional_shadow_mode = 1
+
+[node name="Renderer" type="Node3D" parent="."]
+unique_name_in_owner = true
+script = ExtResource("2_xldog")
+
+[node name="Model" parent="Renderer" instance=ExtResource("3_6yla2")]
+unique_name_in_owner = true
+transform = Transform3D(0.75, 0, 0, 0, 0.75, 0, 0, 0, 0.75, 0, 0, 0)
+
+[node name="Timer" type="Timer" parent="."]
+unique_name_in_owner = true
+wait_time = 1.5
+autostart = true

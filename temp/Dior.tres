@@ -1,0 +1,72 @@
+[gd_resource type="Resource" load_steps=18 format=3 uid="uid://bxlbxjfmdapwx"]
+
+[ext_resource type="Script" path="res://apps/pet/animal/data/animal_data.gd" id="1_mml0u"]
+[ext_resource type="Script" path="res://apps/pet/data/command_data.gd" id="2_g4ejp"]
+[ext_resource type="Script" path="res://apps/pet/interface/interface_data.gd" id="3_cq2to"]
+[ext_resource type="Script" path="res://apps/pet/needs_wants/data/needs_data.gd" id="4_6wkjn"]
+[ext_resource type="Script" path="res://apps/pet/personality/data/favorites_data.gd" id="5_n8hw6"]
+[ext_resource type="Script" path="res://apps/pet/personality/data/personality_data.gd" id="6_r6ft6"]
+[ext_resource type="Script" path="res://apps/pet/personality/data/traits_data.gd" id="7_u7mmp"]
+[ext_resource type="Script" path="res://apps/pet/data/pet_data.gd" id="8_jera7"]
+[ext_resource type="Script" path="res://apps/pet/needs_wants/data/wants_data.gd" id="9_n6hyl"]
+
+[sub_resource type="Resource" id="Resource_fkn3g"]
+script = ExtResource("1_mml0u")
+animal = 0
+color = "grey"
+
+[sub_resource type="Resource" id="Resource_u3xpt"]
+script = ExtResource("2_g4ejp")
+
+[sub_resource type="Resource" id="Resource_ioy7w"]
+script = ExtResource("3_cq2to")
+is_recently_cuddled = false
+
+[sub_resource type="Resource" id="Resource_ethdx"]
+script = ExtResource("4_6wkjn")
+activity = 0.0
+comfort = 0.0
+hunger = 0.51
+hygiene = 0.0
+sleepy = 0.0
+
+[sub_resource type="Resource" id="Resource_mo1q3"]
+script = ExtResource("5_n8hw6")
+color = 4
+place = 1
+food = 2
+
+[sub_resource type="Resource" id="Resource_htus8"]
+script = ExtResource("7_u7mmp")
+traits = [2, 3]
+num_allowed_traits = 3
+
+[sub_resource type="Resource" id="Resource_qtjm8"]
+script = ExtResource("6_r6ft6")
+active = 1
+clean = 5
+playful = 3
+smart = 0
+social = 3
+favorites_data = SubResource("Resource_mo1q3")
+traits_data = SubResource("Resource_htus8")
+
+[sub_resource type="Resource" id="Resource_ttt2q"]
+script = ExtResource("9_n6hyl")
+wants = [6, 3, 9]
+
+[resource]
+script = ExtResource("8_jera7")
+name = "Dior"
+birthday = 0
+random = false
+life_happiness = 0.570609
+parent = -1
+animal_data = SubResource("Resource_fkn3g")
+needs_data = SubResource("Resource_ethdx")
+wants_data = SubResource("Resource_ttt2q")
+personality_data = SubResource("Resource_qtjm8")
+command_data = SubResource("Resource_u3xpt")
+interface_data = SubResource("Resource_ioy7w")
+world_coord = Vector2i(-4, -4)
+data_path = "Dior"

@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://be6w6bw466eev"]
+[gd_scene load_steps=22 format=3 uid="uid://be6w6bw466eev"]
 
 [ext_resource type="Theme" uid="uid://wbvix152d8b5" path="res://apps/painter/assets/themes/draw_tools.tres" id="1_cdixw"]
 [ext_resource type="Texture2D" uid="uid://c1oyf7lcynirk" path="res://apps/painter/assets/icons/advanced_view.svg" id="2_abnjo"]
@@ -27,24 +27,11 @@ fill = 1
 fill_from = Vector2(0.5, 0.5)
 fill_to = Vector2(1, 0.5)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vgr7x"]
-content_margin_left = 24.0
-content_margin_top = 42.0
-content_margin_right = 24.0
-content_margin_bottom = 36.0
-bg_color = Color(0.2, 0.254902, 0.333333, 0.941176)
-border_width_top = 30
-border_color = Color(0.278431, 0.333333, 0.411765, 1)
-border_blend = true
-corner_radius_top_right = 30
-corner_radius_bottom_right = 30
-corner_radius_bottom_left = 30
-
 [sub_resource type="Resource" id="Resource_3hirj"]
 script = ExtResource("10_5u8l2")
+preset = 0
 apply_styles = "radius_0_30_30_30"
 default_style_names = "panel"
-preset = null
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_14nvp"]
 
@@ -58,17 +45,21 @@ thickness = 2
 custom_minimum_size = Vector2(80, 80)
 offset_right = 80.0
 offset_bottom = 80.0
-theme = ExtResource("1_cdixw")
+theme_type_variation = &"CircleButton_PaddingSm"
 icon = ExtResource("2_abnjo")
 expand_icon = true
 script = ExtResource("3_amfqc")
 
 [node name="DropMenu" type="Control" parent="."]
 unique_name_in_owner = true
+layout_mode = 3
+anchors_preset = 7
 anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 0
 script = ExtResource("4_p4ikt")
 container = NodePath("../CanvasLayer/MarginContainer")
 triangle_outline_width = {
@@ -79,8 +70,8 @@ triangle_outline_width = {
 }
 right_angle = true
 margin = Vector2(0, -20)
-triangle_color = Color(0.27451, 0.329412, 0.407843, 1)
-triangle_outline_color = Color(0, 0, 0, 1)
+triangle_color = Color(0.247059, 0.247059, 0.27451, 1)
+triangle_outline_color = Color(0.152941, 0.152941, 0.164706, 1)
 remake = false
 test_open = false
 test_close = false
@@ -90,25 +81,30 @@ test_close = false
 [node name="AreaButton" type="Button" parent="CanvasLayer"]
 unique_name_in_owner = true
 visible = false
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 theme = ExtResource("1_cdixw")
 theme_type_variation = &"AreaButtonTopLeft"
 
 [node name="MarginContainer" type="MarginContainer" parent="CanvasLayer"]
 visible = false
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_right = -200.0
-offset_bottom = -476.0
+offset_left = 40.0
+offset_top = 60.0
+grow_horizontal = 2
+grow_vertical = 2
 mouse_filter = 2
-theme = ExtResource("1_cdixw")
 theme_override_constants/margin_left = 0
 
 [node name="DropShadowContainer" type="MarginContainer" parent="CanvasLayer/MarginContainer"]
 offset_top = 24.0
-offset_right = 604.0
-offset_bottom = 1292.0
+offset_right = 764.0
+offset_bottom = 1708.0
 mouse_filter = 2
 theme_override_constants/margin_left = -80
 theme_override_constants/margin_top = -100
@@ -129,11 +125,9 @@ ignore_texture_size = true
 custom_minimum_size = Vector2(490, 200)
 offset_top = 24.0
 offset_right = 490.0
-offset_bottom = 1292.0
+offset_bottom = 1371.0
 size_flags_horizontal = 0
 size_flags_vertical = 0
-theme_type_variation = &"DropMenuPanel"
-theme_override_styles/panel = SubResource("StyleBoxFlat_vgr7x")
 
 [node name="StyleSheetSetter" type="Node" parent="CanvasLayer/MarginContainer/PanelContainer"]
 script = ExtResource("9_t0rfg")
@@ -143,39 +137,39 @@ update_base_node = false
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/MarginContainer/PanelContainer"]
 offset_left = 24.0
-offset_top = 42.0
+offset_top = 36.0
 offset_right = 466.0
-offset_bottom = 1232.0
+offset_bottom = 1311.0
 theme_override_constants/separation = 0
 
 [node name="TileModeLabel" type="Label" parent="CanvasLayer/MarginContainer/PanelContainer/VBoxContainer"]
 offset_right = 442.0
-offset_bottom = 45.0
+offset_bottom = 39.0
 theme_override_constants/line_spacing = 0
 theme_override_fonts/font = ExtResource("4_cjkh7")
 text = "Tile mode"
 vertical_alignment = 2
 
 [node name="TileModeDescription" type="Label" parent="CanvasLayer/MarginContainer/PanelContainer/VBoxContainer"]
-offset_top = 45.0
+offset_top = 39.0
 offset_right = 442.0
-offset_bottom = 113.0
-theme_type_variation = &"SmallLabel"
+offset_bottom = 137.0
+theme_type_variation = &"Subtitle"
 text = "Tile mode allows you to see how your canvas looks when repeated."
 vertical_alignment = 2
 autowrap_mode = 3
 
 [node name="HSeparator" type="HSeparator" parent="CanvasLayer/MarginContainer/PanelContainer/VBoxContainer"]
-offset_top = 113.0
+offset_top = 137.0
 offset_right = 442.0
-offset_bottom = 133.0
+offset_bottom = 157.0
 theme_override_constants/separation = 20
 theme_override_styles/separator = SubResource("StyleBoxEmpty_14nvp")
 
 [node name="TileOptions" type="VBoxContainer" parent="CanvasLayer/MarginContainer/PanelContainer/VBoxContainer"]
-offset_top = 133.0
+offset_top = 157.0
 offset_right = 442.0
-offset_bottom = 525.0
+offset_bottom = 513.0
 size_flags_horizontal = 3
 
 [node name="TileNoneButton" type="Button" parent="CanvasLayer/MarginContainer/PanelContainer/VBoxContainer/TileOptions"]
@@ -183,7 +177,7 @@ unique_name_in_owner = true
 custom_minimum_size = Vector2(80, 80)
 offset_right = 442.0
 offset_bottom = 80.0
-theme_type_variation = &"Selected_Button"
+theme_type_variation = &"TagButton_Selected"
 theme_override_constants/h_separation = 20
 text = "No tiling"
 icon = ExtResource("8_0er15")
@@ -193,9 +187,10 @@ expand_icon = true
 [node name="TileAllButton" type="Button" parent="CanvasLayer/MarginContainer/PanelContainer/VBoxContainer/TileOptions"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(80, 80)
-offset_top = 104.0
+offset_top = 92.0
 offset_right = 442.0
-offset_bottom = 184.0
+offset_bottom = 172.0
+theme_type_variation = &"TagButton"
 theme_override_constants/h_separation = 20
 text = "All directions"
 icon = ExtResource("9_tcioc")
@@ -205,9 +200,10 @@ expand_icon = true
 [node name="TileHButton" type="Button" parent="CanvasLayer/MarginContainer/PanelContainer/VBoxContainer/TileOptions"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(80, 80)
-offset_top = 208.0
+offset_top = 184.0
 offset_right = 442.0
-offset_bottom = 288.0
+offset_bottom = 264.0
+theme_type_variation = &"TagButton"
 theme_override_constants/h_separation = 20
 text = "Horizontal"
 icon = ExtResource("10_gampn")
@@ -217,9 +213,10 @@ expand_icon = true
 [node name="TileVButton" type="Button" parent="CanvasLayer/MarginContainer/PanelContainer/VBoxContainer/TileOptions"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(80, 80)
-offset_top = 312.0
+offset_top = 276.0
 offset_right = 442.0
-offset_bottom = 392.0
+offset_bottom = 356.0
+theme_type_variation = &"TagButton"
 theme_override_constants/h_separation = 20
 text = "Vertical"
 icon = ExtResource("11_kw14v")
@@ -227,52 +224,51 @@ alignment = 0
 expand_icon = true
 
 [node name="HSeparator2" type="HSeparator" parent="CanvasLayer/MarginContainer/PanelContainer/VBoxContainer"]
-offset_top = 525.0
+offset_top = 513.0
 offset_right = 442.0
-offset_bottom = 585.0
+offset_bottom = 573.0
 theme_override_constants/separation = 60
 theme_override_styles/separator = SubResource("StyleBoxLine_pt6kw")
 
 [node name="RatioModeLabel" type="Label" parent="CanvasLayer/MarginContainer/PanelContainer/VBoxContainer"]
-offset_top = 585.0
+offset_top = 573.0
 offset_right = 442.0
-offset_bottom = 630.0
+offset_bottom = 612.0
 theme_override_constants/line_spacing = 0
 theme_override_fonts/font = ExtResource("4_cjkh7")
 text = "Ratio mode"
 vertical_alignment = 2
 
 [node name="RatioModeDescription" type="Label" parent="CanvasLayer/MarginContainer/PanelContainer/VBoxContainer"]
-offset_top = 630.0
+offset_top = 612.0
 offset_right = 442.0
-offset_bottom = 732.0
-theme_type_variation = &"SmallLabel"
+offset_bottom = 759.0
+theme_type_variation = &"Subtitle"
 text = "The ratio mode defines whether the canvas is divided into multiples of two, or multiples of three."
 vertical_alignment = 2
 autowrap_mode = 3
 
 [node name="HSeparator5" type="HSeparator" parent="CanvasLayer/MarginContainer/PanelContainer/VBoxContainer"]
-offset_top = 732.0
+offset_top = 759.0
 offset_right = 442.0
-offset_bottom = 752.0
+offset_bottom = 779.0
 theme_override_constants/separation = 20
 theme_override_styles/separator = SubResource("StyleBoxEmpty_14nvp")
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="CanvasLayer/MarginContainer/PanelContainer/VBoxContainer"]
-offset_top = 752.0
+offset_top = 779.0
 offset_right = 442.0
-offset_bottom = 832.0
+offset_bottom = 859.0
 size_flags_horizontal = 3
 
 [node name="EvenButton" type="Button" parent="CanvasLayer/MarginContainer/PanelContainer/VBoxContainer/HBoxContainer2"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(80, 80)
-offset_right = 209.0
+offset_right = 215.0
 offset_bottom = 80.0
-pivot_offset = Vector2(40, 40)
 size_flags_horizontal = 3
 size_flags_vertical = 4
-theme_type_variation = &"SuccessButton"
+theme_type_variation = &"TagButton_Selected"
 icon = ExtResource("5_kwijp")
 icon_alignment = 1
 expand_icon = true
@@ -280,55 +276,55 @@ expand_icon = true
 [node name="OddButton" type="Button" parent="CanvasLayer/MarginContainer/PanelContainer/VBoxContainer/HBoxContainer2"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(80, 80)
-offset_left = 233.0
+offset_left = 227.0
 offset_right = 442.0
 offset_bottom = 80.0
-pivot_offset = Vector2(40.0001, 40)
 size_flags_horizontal = 3
 size_flags_vertical = 4
+theme_type_variation = &"TagButton"
 icon = ExtResource("6_gqbvh")
 icon_alignment = 1
 expand_icon = true
 
 [node name="HSeparator7" type="HSeparator" parent="CanvasLayer/MarginContainer/PanelContainer/VBoxContainer"]
-offset_top = 832.0
+offset_top = 859.0
 offset_right = 442.0
-offset_bottom = 882.0
+offset_bottom = 909.0
 theme_override_constants/separation = 50
 theme_override_styles/separator = SubResource("StyleBoxLine_pt6kw")
 
 [node name="PrecisionModeLabel" type="Label" parent="CanvasLayer/MarginContainer/PanelContainer/VBoxContainer"]
-offset_top = 882.0
+offset_top = 909.0
 offset_right = 442.0
-offset_bottom = 927.0
+offset_bottom = 960.0
 size_flags_horizontal = 3
 theme_override_fonts/font = ExtResource("4_cjkh7")
 text = "Precision mode"
 
 [node name="PrecisionModeDescription" type="Label" parent="CanvasLayer/MarginContainer/PanelContainer/VBoxContainer"]
-offset_top = 927.0
+offset_top = 960.0
 offset_right = 442.0
-offset_bottom = 995.0
-theme_type_variation = &"SmallLabel"
+offset_bottom = 1058.0
+theme_type_variation = &"Subtitle"
 text = "Precision mode allows for more detailed placement."
 autowrap_mode = 3
 
 [node name="HSeparator9" type="HSeparator" parent="CanvasLayer/MarginContainer/PanelContainer/VBoxContainer"]
-offset_top = 995.0
+offset_top = 1058.0
 offset_right = 442.0
-offset_bottom = 1015.0
+offset_bottom = 1078.0
 theme_override_constants/separation = 20
 theme_override_styles/separator = SubResource("StyleBoxEmpty_14nvp")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/MarginContainer/PanelContainer/VBoxContainer"]
-offset_top = 1015.0
+offset_top = 1078.0
 offset_right = 442.0
-offset_bottom = 1065.0
+offset_bottom = 1138.0
 
 [node name="TextureRect" type="TextureRect" parent="CanvasLayer/MarginContainer/PanelContainer/VBoxContainer/HBoxContainer"]
 custom_minimum_size = Vector2(50, 0)
 offset_right = 50.0
-offset_bottom = 50.0
+offset_bottom = 60.0
 texture = ExtResource("7_cnrms")
 ignore_texture_size = true
 stretch_mode = 5
@@ -336,10 +332,10 @@ stretch_mode = 5
 [node name="PrecisionToggleLabel" type="Label" parent="CanvasLayer/MarginContainer/PanelContainer/VBoxContainer/HBoxContainer"]
 unique_name_in_owner = true
 modulate = Color(1, 1, 1, 0.784314)
-offset_left = 74.0
-offset_top = 5.0
-offset_right = 298.0
-offset_bottom = 44.0
+offset_left = 62.0
+offset_top = 4.0
+offset_right = 310.0
+offset_bottom = 55.0
 size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 28
 text = "Disabled"
@@ -349,27 +345,26 @@ unique_name_in_owner = true
 custom_minimum_size = Vector2(120, 50)
 offset_left = 322.0
 offset_right = 442.0
-offset_bottom = 50.0
+offset_bottom = 60.0
 size_flags_horizontal = 0
-theme_type_variation = &"CheckBoxButton"
+theme_type_variation = &"ToggleSwitch"
 toggle_mode = true
 script = ExtResource("15_8sgps")
 on_color = Color(0.0627451, 0.72549, 0.505882, 1)
 
 [node name="HSeparator3" type="HSeparator" parent="CanvasLayer/MarginContainer/PanelContainer/VBoxContainer"]
-offset_top = 1065.0
+offset_top = 1138.0
 offset_right = 442.0
-offset_bottom = 1115.0
+offset_bottom = 1188.0
 theme_override_constants/separation = 50
 theme_override_styles/separator = SubResource("StyleBoxLine_pt6kw")
 
 [node name="RecenterButton" type="Button" parent="CanvasLayer/MarginContainer/PanelContainer/VBoxContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(250, 75)
-offset_top = 1115.0
+offset_top = 1188.0
 offset_right = 442.0
-offset_bottom = 1190.0
-pivot_offset = Vector2(40, 40.0001)
+offset_bottom = 1275.0
 size_flags_horizontal = 3
 size_flags_vertical = 4
 theme_override_constants/h_separation = 20

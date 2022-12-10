@@ -1,0 +1,9 @@
+{
+    "id": "knitted__grey",
+    "display_name": "Knitted (grey)",
+    "animals": [
+        "dog"
+    ],
+    "body_material": "content_color_knitted/materials/knitted_body__grey.tres",
+    "detail_material": "content_color_knitted/materials/knitted_detail__grey.tres"
+}

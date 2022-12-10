@@ -1,9 +1,11 @@
-[gd_scene load_steps=16 format=3 uid="uid://dey747mo4yaeu"]
+[gd_scene load_steps=19 format=3 uid="uid://dey747mo4yaeu"]
 
 [ext_resource type="Resource" uid="uid://bhjhxphjix4f2" path="res://apps/pet/scenes/pet_data_test.tres" id="1_kg18k"]
 [ext_resource type="Script" path="res://apps/behavior/composites/selector.gd" id="1_vyuf1"]
 [ext_resource type="Script" path="res://apps/pet/behavior/ai/tasks/handle_need.gd" id="3_fr2ch"]
+[ext_resource type="Script" path="res://apps/pet/behavior/ai/tasks/find_opportunities.gd" id="4_rvg3a"]
 [ext_resource type="Script" path="res://apps/behavior/decorators/always_fail.gd" id="4_tub3w"]
+[ext_resource type="Script" path="res://apps/pet/behavior/ai/tasks/play_together.gd" id="5_oyb1m"]
 
 [sub_resource type="GDScript" id="GDScript_0td0l"]
 script/source = "extends BehaviorTree
@@ -31,9 +33,8 @@ func _setup() -> void:
 		
 		pet_data.command_data.receive_command.connect(_on_receive_command)
 		
-		timer.timeout.connect(
-			func() -> void: 
-				pet_data.needs_data.decrease_needs()
+		Datetime.data.hour_changed.connect(
+			func(_hr) -> void: pet_data.needs_data.decrease_needs()
 		)
 		Datetime.connect_timer_to_pause(timer)
 		
@@ -53,7 +54,7 @@ func _on_leaf_task_finished(_subtask: Task) -> void:
 	timer.timeout.connect(run, CONNECT_ONE_SHOT)
 
 
-func _on_receive_command(value: CommandData.Command) -> void:
+func _on_receive_command(value: CommandData.Command, args := {}) -> void:
 	match value:
 		CommandData.Command.EAT: command = %Eat
 		CommandData.Command.SLEEP: command = %Sleep
@@ -61,6 +62,10 @@ func _on_receive_command(value: CommandData.Command) -> void:
 		CommandData.Command.LOUNGE: command = %Lounge
 		CommandData.Command.WASH: command = %WashUp
 		CommandData.Command.IDLE: command = %Idle
+		CommandData.Command.PLAY_TOGETHER: 
+			command = %PlayTogether
+			command.friend = args.friend
+			command.toy = args.toy
 	
 	(%FollowCommand as Task).finished.connect(func(_task: Task): command = null)
 "
@@ -105,7 +110,7 @@ func run() -> void:
 			\"Received command! {0}% chance of obeying.\"
 				.format([(pet_data.obedience + 0.25) * 100])
 		)
-		if pet_data.will_obey_command():
+		if tree.command == %PlayTogether or pet_data.will_obey_command():
 			logs(\"Command obeyed!\")
 			tree.command.run()
 			tree.pet_data.command_data.obeyed_command.emit(tree.command)
@@ -211,6 +216,14 @@ func will_wash() -> bool:
 	return randf_range(0, 100) <= percent_chance
 "
 
+[sub_resource type="GDScript" id="GDScript_fym75"]
+script/source = "extends Condition
+
+
+func check() -> bool:
+	return false # TODO
+"
+
 [sub_resource type="GDScript" id="GDScript_xamje"]
 script/source = "extends AlwaysSucceed
 
@@ -264,8 +277,10 @@ need = 0
 unique_name_in_owner = true
 script = SubResource("GDScript_16it6")
 
-[node name="TODO_FindOpportunities" type="Node" parent="SelectTask"]
-script = ExtResource("4_tub3w")
+[node name="FindOpportunities" type="Node" parent="SelectTask"]
+script = ExtResource("4_rvg3a")
+disabled = null
+log_this_task = null
 
 [node name="HandleNeeds" type="Node" parent="SelectTask"]
 script = ExtResource("1_vyuf1")
@@ -312,6 +327,13 @@ need = 3
 
 [node name="HandleWants" type="Node" parent="SelectTask"]
 script = ExtResource("1_vyuf1")
+
+[node name="WillPlayTogether" type="Node" parent="SelectTask/HandleWants"]
+script = SubResource("GDScript_fym75")
+
+[node name="PlayTogether" type="Node" parent="SelectTask/HandleWants/WillPlayTogether"]
+unique_name_in_owner = true
+script = ExtResource("5_oyb1m")
 
 [node name="TODO" type="Node" parent="SelectTask/HandleWants"]
 script = ExtResource("4_tub3w")

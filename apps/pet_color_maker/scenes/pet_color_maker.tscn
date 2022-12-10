@@ -1,0 +1,853 @@
+[gd_scene load_steps=14 format=3 uid="uid://dphhjwatorq3y"]
+
+[ext_resource type="Script" path="res://apps/pet_color_maker/scenes/pet_color_maker.gd" id="1_7sqna"]
+[ext_resource type="PackedScene" uid="uid://dv1g6cku7jiyi" path="res://apps/pet/interface/pet_preview.tscn" id="1_c6lp0"]
+[ext_resource type="Texture2D" uid="uid://bneve00ab2acy" path="res://apps/painter/assets/icons/color_drop.svg" id="2_7mbcs"]
+[ext_resource type="PackedScene" uid="uid://bpes7jjsdturr" path="res://static/shaders/blurry_backdrop.tscn" id="2_78ol7"]
+[ext_resource type="Texture2D" uid="uid://ct7nw5aqpn5vx" path="res://static/icons/folder.svg" id="2_nrbvf"]
+[ext_resource type="Script" path="res://interface/components/checkbox_button.gd" id="2_ph0h2"]
+[ext_resource type="Texture2D" uid="uid://mexdj1uqwyjs" path="res://apps/gallery/assets/icons/gallery.svg" id="2_uilxj"]
+[ext_resource type="Texture2D" uid="uid://cmf1yincragqk" path="res://static/icons/doghouse.svg" id="3_biop1"]
+[ext_resource type="Script" path="res://interface/components/toggle_switch.gd" id="3_hspdp"]
+[ext_resource type="Texture2D" uid="uid://c0xjwq26v2od3" path="res://apps/painter/assets/icons/load_save.svg" id="3_opjq0"]
+[ext_resource type="Script" path="res://interface/components/pill_range.gd" id="3_qec75"]
+[ext_resource type="Texture2D" uid="uid://1jkeypdrwjsg" path="res://static/icons/close.svg" id="6_opa2e"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_63lt1"]
+
+[node name="PetColorMaker" type="CanvasLayer"]
+script = ExtResource("1_7sqna")
+
+[node name="OpenFileDialog" type="FileDialog" parent="."]
+unique_name_in_owner = true
+title = "Open a File"
+position = Vector2i(100, 100)
+size = Vector2i(1000, 700)
+ok_button_text = "Open"
+dialog_hide_on_ok = true
+file_mode = 0
+root_subfolder = "mods"
+
+[node name="Backdrop" parent="." instance=ExtResource("2_78ol7")]
+
+[node name="MarginContainer2" type="MarginContainer" parent="."]
+offset_right = 48.0
+offset_bottom = 48.0
+mouse_filter = 2
+theme_override_constants/margin_top = 72
+
+[node name="HomeButton" type="Button" parent="MarginContainer2"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(100, 100)
+offset_left = 24.0
+offset_top = 72.0
+offset_right = 124.0
+offset_bottom = 172.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+theme_type_variation = &"SubtleButton"
+icon = ExtResource("3_biop1")
+expand_icon = true
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 48
+theme_override_constants/margin_top = 72
+theme_override_constants/margin_right = 48
+theme_override_constants/margin_bottom = 72
+
+[node name="GridContainer" type="GridContainer" parent="MarginContainer"]
+unique_name_in_owner = true
+offset_left = 48.0
+offset_top = 72.0
+offset_right = 780.0
+offset_bottom = 2768.0
+mouse_filter = 2
+
+[node name="DetailsContainer" type="PanelContainer" parent="MarginContainer/GridContainer"]
+custom_minimum_size = Vector2(650, 0)
+offset_left = 41.0
+offset_right = 691.0
+offset_bottom = 1129.0
+size_flags_horizontal = 6
+size_flags_vertical = 6
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/GridContainer/DetailsContainer"]
+offset_left = 24.0
+offset_top = 36.0
+offset_right = 626.0
+offset_bottom = 1093.0
+
+[node name="Label" type="Label" parent="MarginContainer/GridContainer/DetailsContainer/VBoxContainer"]
+offset_right = 602.0
+offset_bottom = 86.0
+theme_type_variation = &"H1"
+text = "Color details"
+vertical_alignment = 2
+
+[node name="HSeparator" type="HSeparator" parent="MarginContainer/GridContainer/DetailsContainer/VBoxContainer"]
+offset_top = 98.0
+offset_right = 602.0
+offset_bottom = 162.0
+
+[node name="Label2" type="Label" parent="MarginContainer/GridContainer/DetailsContainer/VBoxContainer"]
+offset_top = 174.0
+offset_right = 602.0
+offset_bottom = 225.0
+text = "Unique ID"
+vertical_alignment = 1
+
+[node name="IdField" type="LineEdit" parent="MarginContainer/GridContainer/DetailsContainer/VBoxContainer"]
+unique_name_in_owner = true
+offset_top = 237.0
+offset_right = 602.0
+offset_bottom = 324.0
+size_flags_horizontal = 3
+
+[node name="HSeparator2" type="HSeparator" parent="MarginContainer/GridContainer/DetailsContainer/VBoxContainer"]
+offset_top = 336.0
+offset_right = 602.0
+offset_bottom = 360.0
+theme_override_constants/separation = 24
+theme_override_styles/separator = SubResource("StyleBoxEmpty_63lt1")
+
+[node name="Label3" type="Label" parent="MarginContainer/GridContainer/DetailsContainer/VBoxContainer"]
+offset_top = 372.0
+offset_right = 602.0
+offset_bottom = 423.0
+text = "Display name"
+vertical_alignment = 1
+
+[node name="DisplayNameField" type="LineEdit" parent="MarginContainer/GridContainer/DetailsContainer/VBoxContainer"]
+unique_name_in_owner = true
+offset_top = 435.0
+offset_right = 602.0
+offset_bottom = 522.0
+size_flags_horizontal = 3
+
+[node name="HSeparator3" type="HSeparator" parent="MarginContainer/GridContainer/DetailsContainer/VBoxContainer"]
+offset_top = 534.0
+offset_right = 602.0
+offset_bottom = 558.0
+theme_override_constants/separation = 24
+theme_override_styles/separator = SubResource("StyleBoxEmpty_63lt1")
+
+[node name="Label4" type="Label" parent="MarginContainer/GridContainer/DetailsContainer/VBoxContainer"]
+offset_top = 570.0
+offset_right = 602.0
+offset_bottom = 621.0
+text = "Mod folder"
+vertical_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/GridContainer/DetailsContainer/VBoxContainer"]
+offset_top = 633.0
+offset_right = 602.0
+offset_bottom = 720.0
+
+[node name="Label" type="Label" parent="MarginContainer/GridContainer/DetailsContainer/VBoxContainer/HBoxContainer"]
+modulate = Color(1, 1, 1, 0.490196)
+offset_top = 18.0
+offset_right = 81.0
+offset_bottom = 69.0
+text = "mods/"
+vertical_alignment = 1
+
+[node name="SaveLocationField" type="LineEdit" parent="MarginContainer/GridContainer/DetailsContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+offset_left = 93.0
+offset_right = 510.0
+offset_bottom = 87.0
+size_flags_horizontal = 3
+placeholder_text = "my_mod_name"
+
+[node name="SaveLocationButton" type="Button" parent="MarginContainer/GridContainer/DetailsContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(80, 80)
+offset_left = 522.0
+offset_right = 602.0
+offset_bottom = 87.0
+theme_type_variation = &"SubtleButton"
+icon = ExtResource("2_nrbvf")
+expand_icon = true
+
+[node name="HSeparator4" type="HSeparator" parent="MarginContainer/GridContainer/DetailsContainer/VBoxContainer"]
+offset_top = 732.0
+offset_right = 602.0
+offset_bottom = 756.0
+theme_override_constants/separation = 24
+theme_override_styles/separator = SubResource("StyleBoxEmpty_63lt1")
+
+[node name="Label5" type="Label" parent="MarginContainer/GridContainer/DetailsContainer/VBoxContainer"]
+offset_top = 768.0
+offset_right = 602.0
+offset_bottom = 819.0
+text = "Animals"
+
+[node name="GridContainer2" type="GridContainer" parent="MarginContainer/GridContainer/DetailsContainer/VBoxContainer"]
+offset_top = 831.0
+offset_right = 602.0
+offset_bottom = 882.0
+theme_override_constants/h_separation = 12
+theme_override_constants/v_separation = 12
+columns = 6
+
+[node name="DogCheckBox" type="Button" parent="MarginContainer/GridContainer/DetailsContainer/VBoxContainer/GridContainer2"]
+offset_top = 1.0
+offset_right = 48.0
+offset_bottom = 49.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_type_variation = &"CheckBoxButton"
+toggle_mode = true
+button_pressed = true
+script = ExtResource("2_ph0h2")
+
+[node name="DogLabel" type="Label" parent="MarginContainer/GridContainer/DetailsContainer/VBoxContainer/GridContainer2"]
+offset_left = 60.0
+offset_right = 193.0
+offset_bottom = 51.0
+size_flags_horizontal = 3
+text = "Dog"
+vertical_alignment = 1
+
+[node name="RabbitCheckBox" type="Button" parent="MarginContainer/GridContainer/DetailsContainer/VBoxContainer/GridContainer2"]
+offset_left = 205.0
+offset_top = 1.0
+offset_right = 253.0
+offset_bottom = 49.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_type_variation = &"CheckBoxButton"
+disabled = true
+toggle_mode = true
+script = ExtResource("2_ph0h2")
+
+[node name="RabbitLabel" type="Label" parent="MarginContainer/GridContainer/DetailsContainer/VBoxContainer/GridContainer2"]
+modulate = Color(1, 1, 1, 0.490196)
+offset_left = 265.0
+offset_right = 398.0
+offset_bottom = 51.0
+size_flags_horizontal = 3
+text = "???"
+vertical_alignment = 1
+
+[node name="ThirdAnimalCheckBox" type="Button" parent="MarginContainer/GridContainer/DetailsContainer/VBoxContainer/GridContainer2"]
+offset_left = 410.0
+offset_top = 1.0
+offset_right = 458.0
+offset_bottom = 49.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_type_variation = &"CheckBoxButton"
+disabled = true
+toggle_mode = true
+script = ExtResource("2_ph0h2")
+
+[node name="ThirdAnimalLabel" type="Label" parent="MarginContainer/GridContainer/DetailsContainer/VBoxContainer/GridContainer2"]
+modulate = Color(1, 1, 1, 0.490196)
+offset_left = 470.0
+offset_right = 602.0
+offset_bottom = 51.0
+size_flags_horizontal = 3
+text = "???"
+vertical_alignment = 1
+
+[node name="HSeparator5" type="HSeparator" parent="MarginContainer/GridContainer/DetailsContainer/VBoxContainer"]
+offset_top = 894.0
+offset_right = 602.0
+offset_bottom = 958.0
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="MarginContainer/GridContainer/DetailsContainer/VBoxContainer"]
+offset_top = 970.0
+offset_right = 602.0
+offset_bottom = 1057.0
+alignment = 2
+
+[node name="OpenButton" type="Button" parent="MarginContainer/GridContainer/DetailsContainer/VBoxContainer/HBoxContainer2"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(165, 0)
+offset_left = 185.0
+offset_right = 350.0
+offset_bottom = 87.0
+theme_type_variation = &"TagButton"
+text = "Open"
+icon = ExtResource("3_opjq0")
+expand_icon = true
+
+[node name="SaveButton" type="Button" parent="MarginContainer/GridContainer/DetailsContainer/VBoxContainer/HBoxContainer2"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(240, 0)
+offset_left = 362.0
+offset_right = 602.0
+offset_bottom = 87.0
+text = "Save"
+
+[node name="PetPreviewContainer" type="SubViewportContainer" parent="MarginContainer/GridContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(100, 100)
+offset_top = 1133.0
+offset_right = 732.0
+offset_bottom = 1233.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 2.0
+stretch = true
+
+[node name="PetPreview" parent="MarginContainer/GridContainer/PetPreviewContainer" instance=ExtResource("1_c6lp0")]
+size = Vector2i(732, 100)
+
+[node name="MaterialContainer" type="PanelContainer" parent="MarginContainer/GridContainer"]
+custom_minimum_size = Vector2(650, 0)
+offset_left = 41.0
+offset_top = 1237.0
+offset_right = 691.0
+offset_bottom = 2696.0
+size_flags_horizontal = 6
+size_flags_vertical = 6
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/GridContainer/MaterialContainer"]
+offset_left = 24.0
+offset_top = 36.0
+offset_right = 626.0
+offset_bottom = 1423.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 23
+
+[node name="AlbedoLabel" type="Label" parent="MarginContainer/GridContainer/MaterialContainer/VBoxContainer"]
+offset_right = 602.0
+offset_bottom = 69.0
+theme_type_variation = &"H3"
+text = "Albedo"
+vertical_alignment = 2
+
+[node name="AlbedoOptions" type="HBoxContainer" parent="MarginContainer/GridContainer/MaterialContainer/VBoxContainer"]
+offset_top = 92.0
+offset_right = 602.0
+offset_bottom = 212.0
+
+[node name="AlbedoColorButton" type="ColorPickerButton" parent="MarginContainer/GridContainer/MaterialContainer/VBoxContainer/AlbedoOptions"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(120, 100)
+offset_top = 10.0
+offset_right = 120.0
+offset_bottom = 110.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+icon = ExtResource("2_7mbcs")
+icon_alignment = 1
+expand_icon = true
+color = Color(1, 1, 1, 1)
+
+[node name="AlbedoTexturePreview" type="TextureRect" parent="MarginContainer/GridContainer/MaterialContainer/VBoxContainer/AlbedoOptions"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(120, 120)
+offset_left = 370.0
+offset_right = 490.0
+offset_bottom = 120.0
+size_flags_horizontal = 10
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="ClearAlbedoTextureButton" type="Button" parent="MarginContainer/GridContainer/MaterialContainer/VBoxContainer/AlbedoOptions/AlbedoTexturePreview"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(80, 80)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -36.0
+offset_top = -24.0
+offset_right = 36.0
+offset_bottom = 24.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+theme_type_variation = &"SubtleButton"
+icon = ExtResource("6_opa2e")
+expand_icon = true
+
+[node name="AlbedoTextureButton" type="Button" parent="MarginContainer/GridContainer/MaterialContainer/VBoxContainer/AlbedoOptions"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(100, 100)
+offset_left = 502.0
+offset_top = 10.0
+offset_right = 602.0
+offset_bottom = 110.0
+size_flags_vertical = 4
+theme_type_variation = &"CircleButton_PaddingSm"
+icon = ExtResource("2_uilxj")
+expand_icon = true
+
+[node name="HSeparator" type="HSeparator" parent="MarginContainer/GridContainer/MaterialContainer/VBoxContainer"]
+offset_top = 235.0
+offset_right = 602.0
+offset_bottom = 299.0
+
+[node name="NormalLabel" type="Label" parent="MarginContainer/GridContainer/MaterialContainer/VBoxContainer"]
+offset_top = 322.0
+offset_right = 602.0
+offset_bottom = 391.0
+theme_type_variation = &"H3"
+text = "Normal"
+vertical_alignment = 2
+
+[node name="NormalMapOptions" type="HBoxContainer" parent="MarginContainer/GridContainer/MaterialContainer/VBoxContainer"]
+offset_top = 414.0
+offset_right = 602.0
+offset_bottom = 534.0
+
+[node name="Label" type="Label" parent="MarginContainer/GridContainer/MaterialContainer/VBoxContainer/NormalMapOptions"]
+offset_top = 34.0
+offset_right = 162.0
+offset_bottom = 85.0
+text = "Normal map"
+
+[node name="NormalTexturePreview" type="TextureRect" parent="MarginContainer/GridContainer/MaterialContainer/VBoxContainer/NormalMapOptions"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(120, 120)
+offset_left = 370.0
+offset_right = 490.0
+offset_bottom = 120.0
+size_flags_horizontal = 10
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="ClearNormalTextureButton" type="Button" parent="MarginContainer/GridContainer/MaterialContainer/VBoxContainer/NormalMapOptions/NormalTexturePreview"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(80, 80)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -36.0
+offset_top = -24.0
+offset_right = 36.0
+offset_bottom = 24.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+theme_type_variation = &"SubtleButton"
+icon = ExtResource("6_opa2e")
+expand_icon = true
+
+[node name="NormalTextureButton" type="Button" parent="MarginContainer/GridContainer/MaterialContainer/VBoxContainer/NormalMapOptions"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(100, 100)
+offset_left = 502.0
+offset_top = 10.0
+offset_right = 602.0
+offset_bottom = 110.0
+size_flags_vertical = 4
+theme_type_variation = &"CircleButton_PaddingSm"
+icon = ExtResource("2_uilxj")
+expand_icon = true
+
+[node name="NormalMapOptions2" type="HBoxContainer" parent="MarginContainer/GridContainer/MaterialContainer/VBoxContainer"]
+offset_top = 557.0
+offset_right = 602.0
+offset_bottom = 677.0
+
+[node name="Label" type="Label" parent="MarginContainer/GridContainer/MaterialContainer/VBoxContainer/NormalMapOptions2"]
+offset_top = 34.0
+offset_right = 142.0
+offset_bottom = 85.0
+text = "Bump map"
+
+[node name="BumpTexturePreview" type="TextureRect" parent="MarginContainer/GridContainer/MaterialContainer/VBoxContainer/NormalMapOptions2"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(120, 120)
+offset_left = 370.0
+offset_right = 490.0
+offset_bottom = 120.0
+size_flags_horizontal = 10
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="ClearBumpTextureButton" type="Button" parent="MarginContainer/GridContainer/MaterialContainer/VBoxContainer/NormalMapOptions2/BumpTexturePreview"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(80, 80)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -36.0
+offset_top = -24.0
+offset_right = 36.0
+offset_bottom = 24.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+theme_type_variation = &"SubtleButton"
+icon = ExtResource("6_opa2e")
+expand_icon = true
+
+[node name="BumpTextureButton" type="Button" parent="MarginContainer/GridContainer/MaterialContainer/VBoxContainer/NormalMapOptions2"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(100, 100)
+offset_left = 502.0
+offset_top = 10.0
+offset_right = 602.0
+offset_bottom = 110.0
+size_flags_vertical = 4
+theme_type_variation = &"CircleButton_PaddingSm"
+icon = ExtResource("2_uilxj")
+expand_icon = true
+
+[node name="NormalMapOptions3" type="HBoxContainer" parent="MarginContainer/GridContainer/MaterialContainer/VBoxContainer"]
+offset_top = 700.0
+offset_right = 602.0
+offset_bottom = 751.0
+
+[node name="Label" type="Label" parent="MarginContainer/GridContainer/MaterialContainer/VBoxContainer/NormalMapOptions3"]
+offset_right = 290.0
+offset_bottom = 51.0
+size_flags_horizontal = 3
+text = "Scale"
+
+[node name="NormalScaleRange" type="Range" parent="MarginContainer/GridContainer/MaterialContainer/VBoxContainer/NormalMapOptions3"]
+_import_path = NodePath("")
+unique_name_in_owner = true
+process_mode = 0
+process_priority = 0
+editor_description = ""
+visible = true
+modulate = Color(1, 1, 1, 1)
+self_modulate = Color(1, 1, 1, 1)
+show_behind_parent = false
+top_level = false
+clip_children = 0
+light_mask = 1
+visibility_layer = 1
+z_index = 0
+z_as_relative = true
+y_sort_enabled = false
+texture_filter = 0
+texture_repeat = 0
+material = null
+use_parent_material = false
+clip_contents = false
+custom_minimum_size = Vector2(300, 50)
+layout_direction = 0
+layout_mode = 3
+anchors_preset = 0
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 302.0
+offset_top = 0.0
+offset_right = 602.0
+offset_bottom = 50.0
+grow_horizontal = 1
+grow_vertical = 1
+rotation = 0.0
+scale = Vector2(1, 1)
+pivot_offset = Vector2(0, 0)
+size_flags_horizontal = 1
+size_flags_vertical = 4
+size_flags_stretch_ratio = 1.0
+auto_translate = true
+localize_numeral_system = true
+tooltip_text = ""
+focus_neighbor_left = NodePath("")
+focus_neighbor_top = NodePath("")
+focus_neighbor_right = NodePath("")
+focus_neighbor_bottom = NodePath("")
+focus_next = NodePath("")
+focus_previous = NodePath("")
+focus_mode = 0
+mouse_filter = 0
+mouse_force_pass_scroll_events = true
+mouse_default_cursor_shape = 0
+theme = null
+theme_type_variation = &""
+min_value = 0.0
+max_value = 6.0
+step = 0.5
+page = 0.0
+value = 4.0
+exp_edit = false
+rounded = false
+allow_greater = false
+allow_lesser = false
+script = ExtResource("3_qec75")
+
+[node name="HSeparator2" type="HSeparator" parent="MarginContainer/GridContainer/MaterialContainer/VBoxContainer"]
+offset_top = 774.0
+offset_right = 602.0
+offset_bottom = 838.0
+
+[node name="LightingLabel" type="Label" parent="MarginContainer/GridContainer/MaterialContainer/VBoxContainer"]
+offset_top = 861.0
+offset_right = 602.0
+offset_bottom = 930.0
+theme_type_variation = &"H3"
+text = "Lighting"
+vertical_alignment = 2
+
+[node name="AOOptions" type="HBoxContainer" parent="MarginContainer/GridContainer/MaterialContainer/VBoxContainer"]
+offset_top = 953.0
+offset_right = 602.0
+offset_bottom = 1073.0
+
+[node name="Label" type="Label" parent="MarginContainer/GridContainer/MaterialContainer/VBoxContainer/AOOptions"]
+offset_right = 240.0
+offset_bottom = 51.0
+size_flags_vertical = 0
+text = "Ambient occlusion"
+vertical_alignment = 2
+
+[node name="AOTexturePreview" type="TextureRect" parent="MarginContainer/GridContainer/MaterialContainer/VBoxContainer/AOOptions"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(120, 120)
+offset_left = 370.0
+offset_right = 490.0
+offset_bottom = 120.0
+size_flags_horizontal = 10
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="ClearAOTextureButton" type="Button" parent="MarginContainer/GridContainer/MaterialContainer/VBoxContainer/AOOptions/AOTexturePreview"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(80, 80)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -36.0
+offset_top = -24.0
+offset_right = 36.0
+offset_bottom = 24.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+theme_type_variation = &"SubtleButton"
+icon = ExtResource("6_opa2e")
+expand_icon = true
+
+[node name="AOTextureButton" type="Button" parent="MarginContainer/GridContainer/MaterialContainer/VBoxContainer/AOOptions"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(100, 100)
+offset_left = 502.0
+offset_right = 602.0
+offset_bottom = 100.0
+size_flags_vertical = 0
+theme_type_variation = &"CircleButton_PaddingSm"
+icon = ExtResource("2_uilxj")
+expand_icon = true
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/GridContainer/MaterialContainer/VBoxContainer"]
+offset_top = 1096.0
+offset_right = 602.0
+offset_bottom = 1156.0
+
+[node name="Label" type="Label" parent="MarginContainer/GridContainer/MaterialContainer/VBoxContainer/HBoxContainer"]
+offset_top = 4.0
+offset_right = 490.0
+offset_bottom = 55.0
+size_flags_horizontal = 3
+text = "Use transparency"
+vertical_alignment = 1
+
+[node name="TransparencyToggle" type="Button" parent="MarginContainer/GridContainer/MaterialContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(100, 0)
+offset_left = 502.0
+offset_right = 602.0
+offset_bottom = 60.0
+theme_type_variation = &"ToggleSwitch"
+toggle_mode = true
+script = ExtResource("3_hspdp")
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="MarginContainer/GridContainer/MaterialContainer/VBoxContainer"]
+offset_top = 1179.0
+offset_right = 602.0
+offset_bottom = 1239.0
+
+[node name="Label" type="Label" parent="MarginContainer/GridContainer/MaterialContainer/VBoxContainer/HBoxContainer2"]
+offset_top = 4.0
+offset_right = 490.0
+offset_bottom = 55.0
+size_flags_horizontal = 3
+text = "Use diffused lighting"
+vertical_alignment = 1
+
+[node name="DiffusedLightingToggle" type="Button" parent="MarginContainer/GridContainer/MaterialContainer/VBoxContainer/HBoxContainer2"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(100, 0)
+offset_left = 502.0
+offset_right = 602.0
+offset_bottom = 60.0
+theme_type_variation = &"ToggleSwitch"
+toggle_mode = true
+script = ExtResource("3_hspdp")
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="MarginContainer/GridContainer/MaterialContainer/VBoxContainer"]
+offset_top = 1262.0
+offset_right = 602.0
+offset_bottom = 1313.0
+
+[node name="Label" type="Label" parent="MarginContainer/GridContainer/MaterialContainer/VBoxContainer/HBoxContainer3"]
+offset_right = 290.0
+offset_bottom = 51.0
+size_flags_horizontal = 3
+text = "Roughness"
+vertical_alignment = 1
+
+[node name="RoughnessRange" type="Range" parent="MarginContainer/GridContainer/MaterialContainer/VBoxContainer/HBoxContainer3"]
+_import_path = NodePath("")
+unique_name_in_owner = true
+process_mode = 0
+process_priority = 0
+editor_description = ""
+visible = true
+modulate = Color(1, 1, 1, 1)
+self_modulate = Color(1, 1, 1, 1)
+show_behind_parent = false
+top_level = false
+clip_children = 0
+light_mask = 1
+visibility_layer = 1
+z_index = 0
+z_as_relative = true
+y_sort_enabled = false
+texture_filter = 0
+texture_repeat = 0
+material = null
+use_parent_material = false
+clip_contents = false
+custom_minimum_size = Vector2(300, 50)
+layout_direction = 0
+layout_mode = 3
+anchors_preset = 0
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 302.0
+offset_top = 0.0
+offset_right = 602.0
+offset_bottom = 50.0
+grow_horizontal = 1
+grow_vertical = 1
+rotation = 0.0
+scale = Vector2(1, 1)
+pivot_offset = Vector2(0, 0)
+size_flags_horizontal = 1
+size_flags_vertical = 4
+size_flags_stretch_ratio = 1.0
+auto_translate = true
+localize_numeral_system = true
+tooltip_text = ""
+focus_neighbor_left = NodePath("")
+focus_neighbor_top = NodePath("")
+focus_neighbor_right = NodePath("")
+focus_neighbor_bottom = NodePath("")
+focus_next = NodePath("")
+focus_previous = NodePath("")
+focus_mode = 0
+mouse_filter = 0
+mouse_force_pass_scroll_events = true
+mouse_default_cursor_shape = 0
+theme = null
+theme_type_variation = &""
+min_value = 0.0
+max_value = 1.0
+step = 0.1
+page = 0.0
+value = 1.0
+exp_edit = false
+rounded = false
+allow_greater = false
+allow_lesser = false
+script = ExtResource("3_qec75")
+
+[node name="HBoxContainer4" type="HBoxContainer" parent="MarginContainer/GridContainer/MaterialContainer/VBoxContainer"]
+offset_top = 1336.0
+offset_right = 602.0
+offset_bottom = 1387.0
+
+[node name="Label" type="Label" parent="MarginContainer/GridContainer/MaterialContainer/VBoxContainer/HBoxContainer4"]
+offset_right = 290.0
+offset_bottom = 51.0
+size_flags_horizontal = 3
+text = "Metallic"
+vertical_alignment = 1
+
+[node name="MetallicRange" type="Range" parent="MarginContainer/GridContainer/MaterialContainer/VBoxContainer/HBoxContainer4"]
+_import_path = NodePath("")
+unique_name_in_owner = true
+process_mode = 0
+process_priority = 0
+editor_description = ""
+visible = true
+modulate = Color(1, 1, 1, 1)
+self_modulate = Color(1, 1, 1, 1)
+show_behind_parent = false
+top_level = false
+clip_children = 0
+light_mask = 1
+visibility_layer = 1
+z_index = 0
+z_as_relative = true
+y_sort_enabled = false
+texture_filter = 0
+texture_repeat = 0
+material = null
+use_parent_material = false
+clip_contents = false
+custom_minimum_size = Vector2(300, 50)
+layout_direction = 0
+layout_mode = 3
+anchors_preset = 0
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 302.0
+offset_top = 0.0
+offset_right = 602.0
+offset_bottom = 50.0
+grow_horizontal = 1
+grow_vertical = 1
+rotation = 0.0
+scale = Vector2(1, 1)
+pivot_offset = Vector2(0, 0)
+size_flags_horizontal = 1
+size_flags_vertical = 4
+size_flags_stretch_ratio = 1.0
+auto_translate = true
+localize_numeral_system = true
+tooltip_text = ""
+focus_neighbor_left = NodePath("")
+focus_neighbor_top = NodePath("")
+focus_neighbor_right = NodePath("")
+focus_neighbor_bottom = NodePath("")
+focus_next = NodePath("")
+focus_previous = NodePath("")
+focus_mode = 0
+mouse_filter = 0
+mouse_force_pass_scroll_events = true
+mouse_default_cursor_shape = 0
+theme = null
+theme_type_variation = &""
+min_value = 0.0
+max_value = 1.0
+step = 0.1
+page = 0.0
+value = 0.0
+exp_edit = false
+rounded = false
+allow_greater = false
+allow_lesser = false
+script = ExtResource("3_qec75")

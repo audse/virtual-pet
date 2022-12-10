@@ -1,0 +1,213 @@
+[gd_scene load_steps=4 format=3 uid="uid://1af4hqmj5og0"]
+
+[ext_resource type="Script" path="res://interface/components/modal/modal.gd" id="1_aj5lh"]
+[ext_resource type="Texture2D" uid="uid://bn61fbcpokvek" path="res://apps/painter/assets/icons/back.svg" id="2_c26ba"]
+
+[sub_resource type="GDScript" id="GDScript_7ku4q"]
+script/source = "extends Control
+
+@onready var controller := $ModalController as ModalController
+
+@onready var tab_bar := %TabBar as TabBar
+@onready var back_button := %BackButton as Button
+
+@onready var all_items_container := %AllItemsContainer as VFlowContainer
+
+var object_nodes: Dictionary = {}
+
+
+@onready var thumbnail_size: Vector2:
+	get: 
+		var current_size = all_items_container.get_parent_area_size() * 0.65
+		var base_size := Vector2(current_size.y, current_size.y)
+		match Settings.data.thumbnail_size:
+			5: return base_size
+			4, 3: return base_size / 2.0
+			1: return base_size / 4.0
+			0: return base_size / 5.0
+			_: return base_size / 3.0
+
+
+func _ready() -> void:	
+#	tab_bar.tab_changed.connect(
+#		func(_tab: int) -> void:
+#			pass
+#	)
+	
+	visible = true
+	
+	back_button.pressed.connect(close)
+	tab_bar.tab_button_pressed.emit(0)
+	
+	Inventory.data.object_removed.connect(
+		func(object: WorldObjectData) -> void:
+			if object.data_path in object_nodes:
+				var node = object_nodes[object.data_path]
+				if node: node.kill_all()
+				object_nodes.erase(object.data_path)
+	)
+
+
+func open() -> void:
+	# TODO hide/show building objects based on game mode
+	Inventory.data.objects.map(add_object)
+	tab_bar.tab_button_pressed.emit(0)
+	controller.open()
+
+
+func close() -> void:
+	Inventory.data.objects.map(destroy_object)
+	controller.close()
+
+
+func add_object(object: WorldObjectData) -> void:
+	if not object.data_path in object_nodes: object_nodes[object.data_path] = (
+		ItemThumbnail
+			.new(object.item_data, { 
+				min_size = thumbnail_size, 
+				show_price = false,
+				on_pressed = func() -> void: Inventory.data.remove_object(object)
+			})
+			.render(all_items_container)
+	)
+	else: object_nodes[object.data_path].render_all()
+
+
+func destroy_object(object: WorldObjectData) -> void:
+	if object.data_path in object_nodes: object_nodes[object.data_path].destroy()
+"
+
+[node name="InventoryMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = SubResource("GDScript_7ku4q")
+
+[node name="ModalController" type="Control" parent="." node_paths=PackedStringArray("target")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_aj5lh")
+target = NodePath("..")
+enter_from = 3
+exit_to = 3
+use_backdrop = false
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 0
+mouse_filter = 2
+
+[node name="MarginContainer2" type="MarginContainer" parent="VBoxContainer"]
+offset_right = 828.0
+offset_bottom = 148.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/MarginContainer2"]
+offset_left = 24.0
+offset_top = 24.0
+offset_right = 804.0
+offset_bottom = 124.0
+theme_override_constants/separation = 24
+
+[node name="BackButton" type="Button" parent="VBoxContainer/MarginContainer2/HBoxContainer"]
+unique_name_in_owner = true
+modulate = Color(0.894118, 0.894118, 0.905882, 1)
+custom_minimum_size = Vector2(100, 100)
+offset_right = 100.0
+offset_bottom = 100.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_type_variation = &"CircleButton"
+icon = ExtResource("2_c26ba")
+expand_icon = true
+
+[node name="TabBar" type="TabBar" parent="VBoxContainer/MarginContainer2/HBoxContainer"]
+unique_name_in_owner = true
+offset_left = 124.0
+offset_top = 6.0
+offset_right = 780.0
+offset_bottom = 93.0
+size_flags_horizontal = 3
+size_flags_vertical = 4
+scrolling_enabled = false
+scroll_to_selected = false
+tab_count = 1
+tab_0/title = "All"
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer"]
+offset_top = 160.0
+offset_right = 828.0
+offset_bottom = 666.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="Backdrop" type="MarginContainer" parent="VBoxContainer/MarginContainer"]
+offset_left = 24.0
+offset_top = 24.0
+offset_right = 804.0
+offset_bottom = 482.0
+theme_override_constants/margin_left = -24
+theme_override_constants/margin_top = -24
+theme_override_constants/margin_right = -24
+theme_override_constants/margin_bottom = -200
+
+[node name="ColorRect" type="ColorRect" parent="VBoxContainer/MarginContainer/Backdrop"]
+offset_left = -24.0
+offset_top = -24.0
+offset_right = 804.0
+offset_bottom = 658.0
+grow_horizontal = 2
+grow_vertical = 0
+color = Color(0.247059, 0.247059, 0.27451, 1)
+
+[node name="ExteriorContainer" type="ScrollContainer" parent="VBoxContainer/MarginContainer"]
+offset_left = 24.0
+offset_top = 24.0
+offset_right = 804.0
+offset_bottom = 482.0
+mouse_filter = 2
+vertical_scroll_mode = 0
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/MarginContainer/ExteriorContainer"]
+custom_minimum_size = Vector2(0, 450)
+offset_right = 780.0
+offset_bottom = 458.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 12
+
+[node name="AllItemsContainer" type="VFlowContainer" parent="VBoxContainer/MarginContainer/ExteriorContainer/MarginContainer"]
+unique_name_in_owner = true
+offset_left = 12.0
+offset_top = 12.0
+offset_right = 768.0
+offset_bottom = 446.0
+
+[node name="Button" type="Button" parent="VBoxContainer/MarginContainer/ExteriorContainer/MarginContainer/AllItemsContainer"]
+visible = false
+clip_children = 1
+custom_minimum_size = Vector2(100, 100)
+offset_right = 100.0
+offset_bottom = 100.0
+
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer/MarginContainer/ExteriorContainer/MarginContainer/AllItemsContainer/Button"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2

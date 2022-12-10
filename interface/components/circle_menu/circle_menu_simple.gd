@@ -131,7 +131,7 @@ func _on_open() -> void:
 		var duration := (
 			animation_duration if not Settings.data.limit_animations
 			else 0.0
-		)
+		) if not Engine.is_editor_hint() else animation_duration
 		var menu_tween := create_tween().set_parallel().set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 		menu_tween.tween_property(self, "_temp_background_radius", _background_radius, duration)
 		menu_tween.tween_property(self, "_temp_degree_range", degree_range, duration)
@@ -142,7 +142,7 @@ func _on_open() -> void:
 		var children := get_controlled_children()
 		for child in children:
 			var delay: float = (
-				clamp((len(children) - i) * 0.05, 0.0, 0.2) if not Settings.data.limit_animations
+				clamp((len(children) - i) * 0.05, 0.0, 0.2) if Engine.is_editor_hint() or not Settings.data.limit_animations
 				else 0.0
 			)
 			var tween := child.create_tween().set_parallel().set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
@@ -174,7 +174,7 @@ func _on_close() -> void:
 	_reset_opened()
 	if is_inside_tree():
 		var close_duration := (
-			(animation_duration * 0.85) if not Settings.data.limit_animations
+			(animation_duration * 0.85) if Engine.is_editor_hint() or not Settings.data.limit_animations
 			else 0.1
 		)
 		var menu_tween := create_tween().set_parallel().set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_IN)
@@ -190,7 +190,7 @@ func _on_close() -> void:
 		var children := get_controlled_children()
 		for child in children:			
 			var delay: float = (
-				clamp(i * 0.05, 0.0, 0.25) if not Settings.data.limit_animations
+				clamp(i * 0.05, 0.0, 0.25) if Engine.is_editor_hint() or not Settings.data.limit_animations
 				else 0.1
 			)
 			var tween := child.create_tween().set_parallel().set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_IN)

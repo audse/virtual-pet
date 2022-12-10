@@ -1,0 +1,100 @@
+[gd_scene load_steps=3 format=3 uid="uid://b5cr6ut2c532"]
+
+[ext_resource type="Script" path="res://apps/create_a_pet/interface/form_favorites.gd" id="1_804fy"]
+[ext_resource type="Texture2D" uid="uid://b2jk4ajjkgs5" path="res://static/icons/dice.svg" id="2_5b8xw"]
+
+[node name="FormFavorites" type="VBoxContainer"]
+offset_left = 24.0
+offset_top = 36.0
+offset_right = 804.0
+offset_bottom = 1756.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_804fy")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+offset_right = 780.0
+offset_bottom = 80.0
+
+[node name="Label" type="Label" parent="HBoxContainer"]
+offset_top = 5.0
+offset_right = 688.0
+offset_bottom = 74.0
+size_flags_horizontal = 3
+theme_type_variation = &"H3"
+text = "Favorites"
+vertical_alignment = 1
+
+[node name="RandomButton" type="Button" parent="HBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(80, 80)
+offset_left = 700.0
+offset_right = 780.0
+offset_bottom = 80.0
+theme_type_variation = &"SubtleButton"
+icon = ExtResource("2_5b8xw")
+expand_icon = true
+
+[node name="GridContainer" type="GridContainer" parent="."]
+offset_top = 92.0
+offset_right = 780.0
+offset_bottom = 341.0
+theme_override_constants/h_separation = 24
+theme_override_constants/v_separation = 48
+columns = 2
+
+[node name="FoodLabel" type="Label" parent="GridContainer"]
+offset_left = 3.0
+offset_right = 67.0
+offset_bottom = 51.0
+size_flags_horizontal = 4
+size_flags_vertical = 0
+text = "Food"
+vertical_alignment = 2
+
+[node name="FoodsContainer" type="HFlowContainer" parent="GridContainer"]
+unique_name_in_owner = true
+offset_left = 94.0
+offset_right = 780.0
+offset_bottom = 51.0
+size_flags_horizontal = 3
+theme_override_constants/h_separation = 12
+theme_override_constants/v_separation = 12
+
+[node name="ColorLabel" type="Label" parent="GridContainer"]
+offset_top = 99.0
+offset_right = 70.0
+offset_bottom = 150.0
+size_flags_horizontal = 4
+size_flags_vertical = 0
+text = "Color"
+vertical_alignment = 2
+
+[node name="ColorsContainer" type="HFlowContainer" parent="GridContainer"]
+unique_name_in_owner = true
+offset_left = 94.0
+offset_top = 99.0
+offset_right = 780.0
+offset_bottom = 150.0
+size_flags_horizontal = 3
+theme_override_constants/h_separation = 12
+theme_override_constants/v_separation = 12
+
+[node name="PlaceLabel" type="Label" parent="GridContainer"]
+offset_top = 198.0
+offset_right = 70.0
+offset_bottom = 249.0
+size_flags_horizontal = 4
+size_flags_vertical = 0
+text = "Place"
+vertical_alignment = 2
+
+[node name="PlacesContainer" type="HFlowContainer" parent="GridContainer"]
+unique_name_in_owner = true
+offset_left = 94.0
+offset_top = 198.0
+offset_right = 780.0
+offset_bottom = 249.0
+size_flags_horizontal = 3
+theme_override_constants/h_separation = 12
+theme_override_constants/v_separation = 12

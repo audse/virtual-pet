@@ -1,14 +1,14 @@
 extends Node
 
 signal category_added(BuyCategoryData)
-signal object_added(BuyableObjectData)
+signal object_added(BuyableItemData)
 
-signal object_bought(BuyableObjectData)
+signal object_bought(BuyableItemData)
 signal object_sold(WorldObjectData)
 
 
 var categories: Array[BuyCategoryData] = []
-var objects: Array[BuyableObjectData] = []
+var objects: Array[ItemData] = []
 
 
 func _ready() -> void:
@@ -16,9 +16,9 @@ func _ready() -> void:
 	Modules.accept_modules(self)
 
 
-func get_objects_in_category(category: BuyCategoryData) -> Array[BuyableObjectData]:
+func get_objects_in_category(category: BuyCategoryData) -> Array[BuyableItemData]:
 	return objects.filter(
-		func(object: BuyableObjectData) -> bool: return object.category_id == category.id
+		func(object: BuyableItemData) -> bool: return object.category_id == category.id
 	)
 
 
@@ -27,12 +27,12 @@ func add_category(category: BuyCategoryData) -> void:
 	category_added.emit(category)
 
 
-func add_object(object: BuyableObjectData) -> void:
+func add_object(object: ItemData) -> void:
 	objects.append(object)
 	object_added.emit(object)
 
 
-func buy_object(object: BuyableObjectData) -> void:
+func buy_object(object: BuyableItemData) -> void:
 	if Fate.data.fate >= object.price:
 		Fate.data.fate -= object.price
 		object_bought.emit(object)

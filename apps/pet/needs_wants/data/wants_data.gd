@@ -7,13 +7,19 @@ enum Want {
 	SLEEP_IN_FAVORITE_PLACE,
 	LOUNGE_IN_FAVORITE_PLACE,
 	EAT_IN_FAVORITE_PLACE,
-	PLAY_WITH_FRIEND,
 	LOUNGE_WITH_FRIEND,
 	GET_PATTED,
-	EAT_RARE_FOOD,
-	SLEEP_ON_EXPENSIVE_BED,
 	ROLL_AROUND_ON_GROUND,
 	EXPLORE,
+	
+	# [x] implemented
+	EAT_RARE_FOOD,
+	
+	# [-] implemented, but untested
+	PLAY_WITH_RARE_TOY,
+	LOUNGE_ON_RARE_BED,
+	SLEEP_ON_RARE_BED,
+	PLAY_WITH_FRIEND,
 }
 
 signal wants_changed(new_wants: Array[Want])
@@ -27,7 +33,7 @@ const hunger_wants: Array[Want] = [
 
 const sleepy_wants: Array[Want] = [
 	Want.SLEEP_IN_FAVORITE_PLACE,
-	Want.SLEEP_ON_EXPENSIVE_BED,
+	Want.SLEEP_ON_RARE_BED,
 ]
 
 const activity_wants: Array[Want] = [
@@ -35,12 +41,14 @@ const activity_wants: Array[Want] = [
 	Want.PLAY_WITH_FRIEND,
 	Want.GET_PATTED,
 	Want.EXPLORE,
+	Want.PLAY_WITH_RARE_TOY,
 ]
 
 const comfort_wants: Array[Want] = [
 	Want.LOUNGE_IN_FAVORITE_PLACE,
 	Want.GET_PATTED,
-	Want.SLEEP_ON_EXPENSIVE_BED,
+	Want.SLEEP_ON_RARE_BED,
+	Want.LOUNGE_ON_RARE_BED,
 	Want.LOUNGE_WITH_FRIEND,
 ]
 
@@ -86,8 +94,8 @@ func select_wants(pet_data: PetData) -> void:
 	emit_changed()
 
 
-func get_want_string(want: Want) -> String:
-	return (self.script.get_script_constant_map()["Want"] as Dictionary).find_key(want)
+static func get_want_name(want: Want) -> String:
+	return Want.find_key(want).replace("_", " ").to_lower()
 
 
 func add_wants(new_wants: Array) -> void:
@@ -96,5 +104,7 @@ func add_wants(new_wants: Array) -> void:
 
 
 func fulfill_want(want: Want) -> void:
+	print("Fulfilled want! ", WantsData.get_want_name(want))
 	if wants.has(want):
 		want_fulfilled.emit(want)
+		wants.erase(want)

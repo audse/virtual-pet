@@ -1,0 +1,15 @@
+{
+    "id": "little_pond",
+    "display_name": "Little Pond",
+    "mesh": "content_ponds/meshes/little_pond.res",
+    "world_layer": "foliage",
+    "price": 50,
+    "category_id": "pond",
+    "fulfills_needs": [
+        "hygiene"
+    ],
+    "dimensions": {
+        "width": 3,
+        "height": 3
+    }
+}

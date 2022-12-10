@@ -1,0 +1,18 @@
+{
+    "id": "knitted_round_bed",
+    "display_name": "Knitted Round Bed",
+    "mesh": "content_beds/meshes/knitted_round_bed.tres",
+    "world_layer": "floor_object",
+    "price": 250,
+    "category_id": "bed",
+    "flags": [
+        "ownable"
+    ],
+    "fulfills_needs": [
+        "sleepy"
+    ],
+    "dimensions": {
+        "width": 3,
+        "depth": 3
+    }
+}

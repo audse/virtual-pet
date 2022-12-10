@@ -1,0 +1,197 @@
+[gd_scene load_steps=10 format=3 uid="uid://b3huy3bcqpqeo"]
+
+[ext_resource type="Script" path="res://apps/mod/interface/mod_portal.gd" id="1_0o1ho"]
+[ext_resource type="PackedScene" uid="uid://bpes7jjsdturr" path="res://static/shaders/blurry_backdrop.tscn" id="1_ibbe1"]
+[ext_resource type="Texture2D" uid="uid://dlas7rl30n6x0" path="res://apps/painter/assets/icons/eyedropper.svg" id="2_yi885"]
+[ext_resource type="Texture2D" uid="uid://cudspscvutcxu" path="res://static/icons/paint_brush.svg" id="3_34inf"]
+[ext_resource type="Texture2D" uid="uid://bn61fbcpokvek" path="res://apps/painter/assets/icons/back.svg" id="3_txjao"]
+[ext_resource type="Texture2D" uid="uid://bgqmbqpl6rgk1" path="res://static/icons/wallpaper.svg" id="4_gdqx0"]
+[ext_resource type="Texture2D" uid="uid://c786o3d05v4t0" path="res://static/icons/interior.svg" id="5_bg1yo"]
+[ext_resource type="Texture2D" uid="uid://bfpo31vhsvp2d" path="res://static/icons/potion.svg" id="6_q5g20"]
+[ext_resource type="Texture2D" uid="uid://ceyt5m8kpfojt" path="res://static/icons/rocket.svg" id="7_prbrs"]
+
+[node name="ModPortal" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_0o1ho")
+
+[node name="Backdrop" parent="." instance=ExtResource("1_ibbe1")]
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/margin_top = 72
+
+[node name="BackButton" type="Button" parent="MarginContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(80, 80)
+offset_left = 24.0
+offset_top = 72.0
+offset_right = 104.0
+offset_bottom = 152.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+theme_type_variation = &"SubtleButton"
+icon = ExtResource("3_txjao")
+expand_icon = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+offset_left = 24.0
+offset_top = 72.0
+offset_right = 804.0
+offset_bottom = 1768.0
+mouse_filter = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(700, 0)
+offset_left = 40.0
+offset_top = 242.0
+offset_right = 740.0
+offset_bottom = 328.0
+size_flags_horizontal = 4
+theme_type_variation = &"H1"
+text = "  Mod portal"
+vertical_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="MarginContainer/VBoxContainer"]
+offset_top = 340.0
+offset_right = 780.0
+offset_bottom = 404.0
+
+[node name="DrawButton" type="Button" parent="MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(700, 0)
+offset_left = 40.0
+offset_top = 416.0
+offset_right = 740.0
+offset_bottom = 503.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_type_variation = &"SubtleButton"
+text = "Draw..."
+icon = ExtResource("3_34inf")
+alignment = 0
+icon_alignment = 2
+expand_icon = true
+
+[node name="HSeparator2" type="HSeparator" parent="MarginContainer/VBoxContainer"]
+offset_top = 515.0
+offset_right = 780.0
+offset_bottom = 579.0
+
+[node name="MakePetColorButton" type="Button" parent="MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(700, 0)
+offset_left = 40.0
+offset_top = 591.0
+offset_right = 740.0
+offset_bottom = 678.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_type_variation = &"SubtleButton"
+text = "Make pet color..."
+icon = ExtResource("2_yi885")
+alignment = 0
+icon_alignment = 2
+expand_icon = true
+
+[node name="HSeparator3" type="HSeparator" parent="MarginContainer/VBoxContainer"]
+offset_top = 690.0
+offset_right = 780.0
+offset_bottom = 754.0
+
+[node name="DesignButton" type="Button" parent="MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(700, 0)
+offset_left = 40.0
+offset_top = 766.0
+offset_right = 740.0
+offset_bottom = 853.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_type_variation = &"SubtleButton"
+disabled = true
+text = "Design..."
+icon = ExtResource("4_gdqx0")
+alignment = 0
+icon_alignment = 2
+expand_icon = true
+
+[node name="HSeparator4" type="HSeparator" parent="MarginContainer/VBoxContainer"]
+offset_top = 865.0
+offset_right = 780.0
+offset_bottom = 929.0
+
+[node name="CustomizeItemButton" type="Button" parent="MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(700, 0)
+offset_left = 40.0
+offset_top = 941.0
+offset_right = 740.0
+offset_bottom = 1028.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_type_variation = &"SubtleButton"
+disabled = true
+text = "Customize item..."
+icon = ExtResource("5_bg1yo")
+alignment = 0
+icon_alignment = 2
+expand_icon = true
+
+[node name="HSeparator5" type="HSeparator" parent="MarginContainer/VBoxContainer"]
+offset_top = 1040.0
+offset_right = 780.0
+offset_bottom = 1104.0
+
+[node name="MakeItemButton" type="Button" parent="MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(700, 0)
+offset_left = 40.0
+offset_top = 1116.0
+offset_right = 740.0
+offset_bottom = 1203.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_type_variation = &"SubtleButton"
+disabled = true
+text = "Make item..."
+icon = ExtResource("6_q5g20")
+alignment = 0
+icon_alignment = 2
+expand_icon = true
+
+[node name="HSeparator6" type="HSeparator" parent="MarginContainer/VBoxContainer"]
+offset_top = 1215.0
+offset_right = 780.0
+offset_bottom = 1279.0
+
+[node name="WriteGoalButton" type="Button" parent="MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(700, 0)
+offset_left = 40.0
+offset_top = 1291.0
+offset_right = 740.0
+offset_bottom = 1378.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_type_variation = &"SubtleButton"
+text = "Write goal..."
+icon = ExtResource("7_prbrs")
+alignment = 0
+icon_alignment = 2
+expand_icon = true
+
+[node name="HSeparator7" type="HSeparator" parent="MarginContainer/VBoxContainer"]
+offset_top = 1390.0
+offset_right = 780.0
+offset_bottom = 1454.0

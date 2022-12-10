@@ -72,9 +72,8 @@ static func merge(polygons: Array[PackedVector2Array]) -> PackedVector2Array:
 	for polygon in polygons:
 		merged = Geometry2D.merge_polygons(merged[0], Polygon.sort(polygon))
 
-	for polygon in merged.slice(1, len(merged)):
-		for point in polygon:
-			if not merged[0].has(point): merged[0].append(point)
+	for polygon in merged.slice(1, merged.size()):
+		for point in polygon: merged[0].append(point)
 
 	return Polygon.sort(merged[0])
 
@@ -186,3 +185,35 @@ static func closest_edge(polygon: PackedVector2Array, point: Vector2) -> Array[i
 
 static func snap_to_edge(e1: Vector2, e2: Vector2, point: Vector2) -> Vector2:
 	return e1.lerp(e2, clamp(point.distance_to(e1) / (e2 - e1).length(), 0.0, 1.0))
+
+
+static func new_circle(radius: float, num_points := 50, center := Vector2.ZERO) -> PackedVector2Array:
+	var angle := deg_to_rad(360) / num_points
+	var points := PackedVector2Array()
+	
+	var p := 0
+	while p < num_points:
+		var x = cos(angle * p) * radius
+		var y = sin(angle * p) * radius
+		points.append(center + Vector2(x, y))
+		p += 1
+	
+	return Polygon.sort(points)
+
+
+static func get_bounding_box(polygon: PackedVector2Array) -> Dictionary:
+	if polygon.size() == 0: return {}
+	var min_coord: Vector2 = Array(polygon).reduce(
+		func(a: Vector2, b: Vector2) -> Vector2: return Vector2(min(a.x, b.x), min(a.y, b.y)),
+		polygon[0]
+	)
+	var max_coord: Vector2 = Array(polygon).reduce(
+		func(a: Vector2, b: Vector2) -> Vector2: return Vector2(max(a.x, b.x), max(a.y, b.y)),
+		polygon[0]
+	)
+	return {
+		size = max_coord - min_coord,
+		position = min_coord,
+		end = max_coord,
+		center = min_coord + (max_coord - min_coord) / 2
+	}

@@ -1,0 +1,23 @@
+[gd_scene load_steps=4 format=3 uid="uid://bd5e2b1sk5afo"]
+
+[ext_resource type="PackedScene" uid="uid://b6dya0dbxdg1f" path="res://environment/scenes/environment.tscn" id="1_y8pju"]
+[ext_resource type="Script" path="res://interface/components/button_3d/button_3d.gd" id="2_yqqj2"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_crqiw"]
+size = Vector2(1, 1)
+orientation = 2
+
+[node name="Node3D" type="Node3D"]
+
+[node name="Environment" parent="." instance=ExtResource("1_y8pju")]
+
+[node name="Button3D" type="MeshInstance3D" parent="Environment"]
+mesh = SubResource("PlaneMesh_crqiw")
+script = ExtResource("2_yqqj2")
+text = "Hello world"
+size = Vector2(3, 1.5)
+
+[node name="Label3D" type="Label3D" parent="Environment"]
+visible = false
+no_depth_test = true
+text = "hello world"

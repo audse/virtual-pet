@@ -281,17 +281,17 @@ func parse_style_string(style_string: String) -> Dictionary:
 
 
 func set_bg_color(new_stylebox: StyleBoxFlat, color_string: String) -> StyleBoxFlat:
-	new_stylebox.bg_color = parse_color_string(color_string)
+	new_stylebox.bg_color = StyleBoxStyleSheet.parse_color_string(color_string)
 	return new_stylebox
 
 
 func set_border_color(new_stylebox: StyleBoxFlat, color_string: String) -> StyleBoxFlat:
-	new_stylebox.border_color = parse_color_string(color_string)
+	new_stylebox.border_color = StyleBoxStyleSheet.parse_color_string(color_string)
 	return new_stylebox
 
 
 func set_shadow_color(new_stylebox: StyleBoxFlat, color_string: String) -> StyleBoxFlat:
-	new_stylebox.shadow_color = parse_color_string(color_string)
+	new_stylebox.shadow_color = StyleBoxStyleSheet.parse_color_string(color_string)
 	return new_stylebox
 
 

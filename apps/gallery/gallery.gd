@@ -11,15 +11,13 @@ var num_canvases: int:
 	get: return %Viewports.get_child_count() - 1
 
 # for overwrite warning/saving with same name warning
-var current_canvases: Array[String] = []
+var current_canvases: Array[CanvasData] = []
 
 
 func _ready() -> void:
+	visible = true
 	load_gallery()
 	%PanelContainer.sort_children.connect(fit_panel)
-	
-	if get_tree().current_scene == self:
-		open()
 
 
 func _notification(what: int) -> void:
@@ -36,7 +34,6 @@ func fit_panel() -> void:
 	else:
 		%PanelContainer.size_flags_horizontal = SIZE_SHRINK_END
 		%PanelContainer.custom_minimum_size.x = max_width
-	%Blur.size.x = %PanelContainer.size.x
 
 
 func open() -> void:
@@ -56,18 +53,10 @@ func clear_gallery() -> void:
 
 
 func load_gallery() -> void:
-	current_canvases = []
 	clear_gallery()
-	
-	var finder := DirAccess.open("user://")
-	if not finder.dir_exists(GALLERY_PATH):
-		finder.make_dir(GALLERY_PATH)
-	
-	finder.open(GALLERY_PATH)
-	for canvas_path in finder.get_files():
-		if ".canvas" in canvas_path:
-			current_canvases.append(canvas_path)
-			load_canvas(canvas_path)
+	current_canvases = CanvasData.load_all_data()
+	for canvas in current_canvases:
+		create_canvas(canvas)
 
 
 func create_canvas_viewport() -> SubViewport:
@@ -106,30 +95,17 @@ func _on_canvas_pressed(canvas: SubViewport) -> void:
 	close()
 
 
-func load_canvas(path: String) -> int:	
-	var file := FileAccess.new()	
-
+func create_canvas(canvas: CanvasData) -> int:
 	var viewport := create_canvas_viewport()
-	
-	var err = file.open(GALLERY_PATH + "/" + path, FileAccess.READ)
-#	if not viewport: return err
-	
-	viewport.set_meta("path", path)
-	
-	while file.get_position() < file.get_length():
-		var pixel = file.get_var(true)
-		if pixel is Sprite2D:
-			viewport.add_child(pixel)
-	
-	create_canvas_texture(viewport, path)
-	
-	file.close()
+	viewport.set_meta("canvas_name", canvas.name)
+	canvas.render(viewport)
+	create_canvas_texture(viewport, canvas.name)
 	return OK
 
 
 func download_image(canvas: SubViewport, button: Button, success_button) -> void:
-	var path: String = canvas.get_meta("path").replace(".canvas", ".png")
-	canvas.get_texture().get_image().save_png(GALLERY_PATH + "/" + path)
+	var canvas_name: String = canvas.get_meta("canvas_name")
+	canvas.get_texture().get_image().save_png(CanvasData.GALLERY_PATH + "/" + canvas_name + ".png")
 	await Anim.pop_spin_exit(button)
 	await Anim.pop_spin_enter(success_button)
 	await get_tree().create_timer(2.0).timeout

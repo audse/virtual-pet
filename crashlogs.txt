@@ -1,3 +1,143 @@
+2022-11-29 12.15AM - Doing nothing, just watching dog AI go
+================================================================
+handle_crash: Program crashed with signal 11
+Engine version: Godot Engine v4.0.beta6.mono.official (7f8ecffa56834dce3ccbd736738b613d51133dea)
+Dumping the backtrace. Please include this when reporting the bug on: https://github.com/godotengine/godot/issues
+[1] sigsegv_handler(int, __siginfo*, void*)
+[2] 2   libsystem_platform.dylib            0x00000001a3f174a4 _sigtramp + 56
+[3] Object::can_translate_messages() const
+[4] _SoftBodyIntersectSegmentInfo::process_hit(unsigned int, void*)
+[5] _SoftBodyIntersectSegmentInfo::process_hit(unsigned int, void*)
+[6] RendererCompositorRD::_create_current()
+[7] 7   Godot                               0x0000000102e2ab80 Godot + 4025216
+[8] RendererCompositorRD::_create_current()
+[9] 9   dyld                                0x000000010920d08c start + 520
+-- END OF BACKTRACE --
+================================================================
+2022-11-28 11.36PM - Moving pond in buy mode (with no pet in scene)
+================================================================
+handle_crash: Program crashed with signal 11
+Engine version: Godot Engine v4.0.beta6.mono.official (7f8ecffa56834dce3ccbd736738b613d51133dea)
+Dumping the backtrace. Please include this when reporting the bug on: https://github.com/godotengine/godot/issues
+[1] sigsegv_handler(int, __siginfo*, void*)
+[2] 2   libsystem_platform.dylib            0x00000001a3f174a4 _sigtramp + 56
+[3] 3   IOGPU                               0x00000001beafb974 __IOGPUNotificationQueueSetDispatchQueue_block_invoke + 164
+[4] 4   libdispatch.dylib                   0x00000001a3d3c274 _dispatch_client_callout4 + 20
+[5] 5   libdispatch.dylib                   0x00000001a3d5853c _dispatch_mach_msg_invoke + 464
+[6] 6   libdispatch.dylib                   0x00000001a3d43784 _dispatch_lane_serial_drain + 376
+[7] 7   libdispatch.dylib                   0x00000001a3d5925c _dispatch_mach_invoke + 456
+[8] 8   libdispatch.dylib                   0x00000001a3d43784 _dispatch_lane_serial_drain + 376
+[9] 9   libdispatch.dylib                   0x00000001a3d44438 _dispatch_lane_invoke + 444
+[10] 10  libdispatch.dylib                   0x00000001a3d43784 _dispatch_lane_serial_drain + 376
+[11] 11  libdispatch.dylib                   0x00000001a3d44404 _dispatch_lane_invoke + 392
+[12] 12  libdispatch.dylib                   0x00000001a3d4ec98 _dispatch_workloop_worker_thread + 648
+[13] 13  libsystem_pthread.dylib             0x00000001a3efc360 _pthread_wqthread + 288
+[14] 14  libsystem_pthread.dylib             0x00000001a3efb080 start_wqthread + 8
+-- END OF BACKTRACE --
+================================================================
+2022-11-28 10.59PM - Trying to move `wavy_geometric_rug__grey` in buy mode
+================================================================
+handle_crash: Program crashed with signal 11
+Engine version: Godot Engine v4.0.beta6.mono.official (7f8ecffa56834dce3ccbd736738b613d51133dea)
+Dumping the backtrace. Please include this when reporting the bug on: https://github.com/godotengine/godot/issues
+[1] sigsegv_handler(int, __siginfo*, void*)
+[2] 2   libsystem_platform.dylib            0x00000001a3f174a4 _sigtramp + 56
+[3] PhysicalBone3D::get_bone_id() const
+[4] PhysicalBone3D::get_bone_id() const
+[5] PhysicalBone3D::get_bone_id() const
+[6] ScriptInstanceExtension::_add_property_with_state(void*, void*, void*)
+[7] ScriptInstanceExtension::_add_property_with_state(void*, void*, void*)
+[8] Node::is_inside_tree() const
+[9] RendererCompositorRD::_create_current()
+[10] 10  Godot                               0x0000000102d9eb80 Godot + 4025216
+[11] RendererCompositorRD::_create_current()
+[12] 12  dyld                                0x00000001091c108c start + 520
+-- END OF BACKTRACE --
+================================================================
+2022-11-28 10.10PM - Added `knitted_round_bed` to world
+================================================================
+handle_crash: Program crashed with signal 11
+Engine version: Godot Engine v4.0.beta6.mono.official (7f8ecffa56834dce3ccbd736738b613d51133dea)
+Dumping the backtrace. Please include this when reporting the bug on: https://github.com/godotengine/godot/issues
+[1] sigsegv_handler(int, __siginfo*, void*)
+[2] 2   libsystem_platform.dylib            0x00000001a3f174a4 _sigtramp + 56
+[3] Object::can_translate_messages() const
+[4] Object::can_translate_messages() const
+[5] _SoftBodyIntersectSegmentInfo::process_hit(unsigned int, void*)
+[6] SeparatorAxisTest<GodotCylinderShape3D, GodotConvexPolygonShape3D, true>::test_contact_points(Vector3 const&, int, Vector3 const&, int, void*)
+[7] PhysicsTestMotionParameters3D::set_recovery_as_collision_enabled(bool)
+[8] RendererSceneCull::Instance::dependency_deleted(RID const&, DependencyTracker*)
+[9] RendererSceneCull::Instance::dependency_deleted(RID const&, DependencyTracker*)
+[10] PhysicsTestMotionParameters3D::set_recovery_as_collision_enabled(bool)
+[11] MutexLock<MutexImpl<std::__1::mutex> >::~MutexLock()
+[12] MutexLock<MutexImpl<std::__1::mutex> >::~MutexLock()
+[13] 13  libsystem_pthread.dylib             0x00000001a3f0026c _pthread_start + 148
+[14] 14  libsystem_pthread.dylib             0x00000001a3efb08c thread_start + 8
+-- END OF BACKTRACE --
+================================================================
+2022-11-28 12.29AM - Messing arround with `PillRange`
+================================================================
+handle_crash: Program crashed with signal 11
+Engine version: Godot Engine v4.0.beta6.mono.official (7f8ecffa56834dce3ccbd736738b613d51133dea)
+Dumping the backtrace. Please include this when reporting the bug on: https://github.com/godotengine/godot/issues
+[1] sigsegv_handler(int, __siginfo*, void*)
+[2] 2   libsystem_platform.dylib            0x00000001a3f174a4 _sigtramp + 56
+[3] Object::can_translate_messages() const
+[4] Object::can_translate_messages() const
+[5] _SoftBodyIntersectSegmentInfo::process_hit(unsigned int, void*)
+[6] SeparatorAxisTest<GodotCylinderShape3D, GodotConvexPolygonShape3D, true>::test_contact_points(Vector3 const&, int, Vector3 const&, int, void*)
+[7] PhysicsTestMotionParameters3D::set_recovery_as_collision_enabled(bool)
+[8] RendererSceneCull::Instance::dependency_deleted(RID const&, DependencyTracker*)
+[9] RendererSceneCull::Instance::dependency_deleted(RID const&, DependencyTracker*)
+[10] PhysicsTestMotionParameters3D::set_recovery_as_collision_enabled(bool)
+[11] MutexLock<MutexImpl<std::__1::mutex> >::~MutexLock()
+[12] MutexLock<MutexImpl<std::__1::mutex> >::~MutexLock()
+[13] 13  libsystem_pthread.dylib             0x00000001a3f0026c _pthread_start + 148
+[14] 14  libsystem_pthread.dylib             0x00000001a3efb08c thread_start + 8
+-- END OF BACKTRACE --
+================================================================
+2022-11-27 9.26PM - Closed buy mode window, app was only open for 5 to 10 seconds, no frame rate drop
+================================================================
+handle_crash: Program crashed with signal 11
+Engine version: Godot Engine v4.0.beta6.mono.official (7f8ecffa56834dce3ccbd736738b613d51133dea)
+Dumping the backtrace. Please include this when reporting the bug on: https://github.com/godotengine/godot/issues
+[1] sigsegv_handler(int, __siginfo*, void*)
+[2] 2   libsystem_platform.dylib            0x00000001a3f174a4 _sigtramp + 56
+[3] 3   IOGPU                               0x00000001beafb974 __IOGPUNotificationQueueSetDispatchQueue_block_invoke + 164
+[4] 4   libdispatch.dylib                   0x00000001a3d3c274 _dispatch_client_callout4 + 20
+[5] 5   libdispatch.dylib                   0x00000001a3d5853c _dispatch_mach_msg_invoke + 464
+[6] 6   libdispatch.dylib                   0x00000001a3d43784 _dispatch_lane_serial_drain + 376
+[7] 7   libdispatch.dylib                   0x00000001a3d5925c _dispatch_mach_invoke + 456
+[8] 8   libdispatch.dylib                   0x00000001a3d43784 _dispatch_lane_serial_drain + 376
+[9] 9   libdispatch.dylib                   0x00000001a3d44438 _dispatch_lane_invoke + 444
+[10] 10  libdispatch.dylib                   0x00000001a3d43784 _dispatch_lane_serial_drain + 376
+[11] 11  libdispatch.dylib                   0x00000001a3d44404 _dispatch_lane_invoke + 392
+[12] 12  libdispatch.dylib                   0x00000001a3d4ec98 _dispatch_workloop_worker_thread + 648
+[13] 13  libsystem_pthread.dylib             0x00000001a3efc360 _pthread_wqthread + 288
+[14] 14  libsystem_pthread.dylib             0x00000001a3efb080 start_wqthread + 8
+-- END OF BACKTRACE --
+================================================================
+2022-11-25 9.54PM - Just finished changing exterior design and switched back to live mode.
+================================================================
+handle_crash: Program crashed with signal 11
+Engine version: Godot Engine v4.0.beta6.mono.official (7f8ecffa56834dce3ccbd736738b613d51133dea)
+Dumping the backtrace. Please include this when reporting the bug on: https://github.com/godotengine/godot/issues
+[1] sigsegv_handler(int, __siginfo*, void*)
+[2] 2   libsystem_platform.dylib            0x00000001a3f174a4 _sigtramp + 56
+[3] 3   IOGPU                               0x00000001beafb974 __IOGPUNotificationQueueSetDispatchQueue_block_invoke + 164
+[4] 4   libdispatch.dylib                   0x00000001a3d3c274 _dispatch_client_callout4 + 20
+[5] 5   libdispatch.dylib                   0x00000001a3d5853c _dispatch_mach_msg_invoke + 464
+[6] 6   libdispatch.dylib                   0x00000001a3d43784 _dispatch_lane_serial_drain + 376
+[7] 7   libdispatch.dylib                   0x00000001a3d5925c _dispatch_mach_invoke + 456
+[8] 8   libdispatch.dylib                   0x00000001a3d43784 _dispatch_lane_serial_drain + 376
+[9] 9   libdispatch.dylib                   0x00000001a3d44438 _dispatch_lane_invoke + 444
+[10] 10  libdispatch.dylib                   0x00000001a3d43784 _dispatch_lane_serial_drain + 376
+[11] 11  libdispatch.dylib                   0x00000001a3d44404 _dispatch_lane_invoke + 392
+[12] 12  libdispatch.dylib                   0x00000001a3d4ec98 _dispatch_workloop_worker_thread + 648
+[13] 13  libsystem_pthread.dylib             0x00000001a3efc360 _pthread_wqthread + 288
+[14] 14  libsystem_pthread.dylib             0x00000001a3efb080 start_wqthread + 8
+-- END OF BACKTRACE --
+================================================================
 ================================================================
 handle_crash: Program crashed with signal 11
 Engine version: Godot Engine v4.0.beta6.mono.official (7f8ecffa56834dce3ccbd736738b613d51133dea)

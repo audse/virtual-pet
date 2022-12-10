@@ -1,15 +1,15 @@
-[gd_scene load_steps=12 format=3 uid="uid://dj82sgm5f2jm6"]
+[gd_scene load_steps=12 format=3]
 
 [ext_resource type="Script" path="res://apps/normal_map_maker/normal_map_maker.gd" id="1_0pb7g"]
 [ext_resource type="Theme" uid="uid://wbvix152d8b5" path="res://apps/painter/assets/themes/draw_tools.tres" id="1_4jlm2"]
 [ext_resource type="Shader" path="res://apps/normal_map_maker/assets/shaders/height_map_to_normal_map.gdshader" id="3_kmcqq"]
 [ext_resource type="Texture2D" uid="uid://bq0fpkhfnr4a" path="res://temp/Exterior foundation 2.png" id="4_clusm"]
-[ext_resource type="Texture2D" uid="uid://cfd4gcr5qvsj7" path="res://static/icons/left_arrow.svg" id="4_td2cn"]
+[ext_resource type="Texture2D" uid="uid://cfd4gcr5qvsj7" path="res://static/icons/caret_left.svg" id="4_td2cn"]
 [ext_resource type="Texture2D" uid="uid://mexdj1uqwyjs" path="res://apps/gallery/assets/icons/gallery.svg" id="6_ibu1x"]
 [ext_resource type="Script" path="res://interface/components/pill_range.gd" id="7_6c60u"]
 [ext_resource type="Script" path="res://interface/components/checkbox_button.gd" id="7_dvyg1"]
 [ext_resource type="PackedScene" uid="uid://6ulp2gk1mb2g" path="res://apps/gallery/gallery.tscn" id="7_hb1b5"]
-[ext_resource type="PackedScene" path="res://apps/gallery/save_menu.tscn" id="7_hf0kx"]
+[ext_resource type="PackedScene" uid="uid://o021q7ln8kb6" path="res://apps/gallery/save_menu.tscn" id="7_hf0kx"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_gm46l"]
 shader = ExtResource("3_kmcqq")

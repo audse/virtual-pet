@@ -7,6 +7,13 @@ func _ready() -> void:
 		func (s: int): 
 			%CurrentShape.shape = s
 	)
+	
+	%RotateLeftButton.pressed.connect(_on_rotate_button_pressed.bind(-90))
+	%RotateRightButton.pressed.connect(_on_rotate_button_pressed.bind(-90))
+	
+	%IncreaseSizeButton.pressed.connect(_on_increase_size_button_pressed)
+	%DecreaseSizeButton.pressed.connect(_on_decrease_size_button_pressed)
+	
 	super._ready()
 
 

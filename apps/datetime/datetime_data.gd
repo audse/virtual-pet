@@ -1,23 +1,6 @@
 class_name DatetimeData
 extends Resource
 
-enum Day {
-	MON = 0,
-	TUE = 1,
-	WED = 2,
-	THU = 3,
-	FRI = 4,
-	SAT = 5,
-	SUN = 6
-}
-
-enum Season {
-	SPRING,
-	SUMMER,
-	FALL,
-	WINTER
-}
-
 # The amount of time (sec) that corresponds to `UNIT` in-game minutes
 const INTERVAL_TIME := 10.0
 const UNIT := 10
@@ -27,9 +10,9 @@ signal time_unpaused
 
 signal time_changed(value: int)
 signal hour_changed(value: int)
-signal day_changed(value: Day)
+signal day_changed(value: Dates.Day)
 signal week_changed(value: int)
-signal season_changed(value: Season)
+signal season_changed(value: Dates.Season)
 signal year_changed(value: int)
 
 var prev_pause_state: bool = false
@@ -41,13 +24,14 @@ var paused: bool = false:
 			if paused: time_paused.emit()
 			else: time_unpaused.emit()
 
-@export var day: Day = Day.MON:
+@export var day: Dates.Day = Dates.Day.MON:
 	set(value):
-		day = clamp(value, Day.MON, Day.SUN) as Day
+		day = clamp(value, Dates.Day.MON, Dates.Day.SUN) as Dates.Day
 		
 		# reset week after sunday
 		if value > 6:
-			day = Day.MON
+			day = Dates.Day.MON
+			week += 1
 		
 		day_changed.emit(day)
 
@@ -63,7 +47,7 @@ var paused: bool = false:
 		# reset day after 1440 minutes
 		if time > 1439:
 			time = 0
-			day = (day + 1) as Day
+			day = (day + 1) as Dates.Day
 		
 		time_changed.emit(time)
 
@@ -85,46 +69,25 @@ var paused: bool = false:
 		year = value
 		year_changed.emit(year)
 
-var day_name: String:
-	get: return {
-		Day.MON: "Monday",
-		Day.TUE: "Tuesday",
-		Day.WED: "Wednesday",
-		Day.THU: "Thursday",
-		Day.FRI: "Friday",
-		Day.SAT: "Saturday",
-		Day.SUN: "Sunday"
-	}[day]
-
-var day_name_short: String:
-	get: return {
-		Day.MON: "Mon",
-		Day.TUE: "Tue",
-		Day.WED: "Wed",
-		Day.THU: "Thu",
-		Day.FRI: "Fri",
-		Day.SAT: "Sat",
-		Day.SUN: "Sun"
-	}[day]
-
-
-var season: Season:
+var now: int:
 	get: return (
-		Season.WINTER if week > 12
-		else Season.FALL if week > 8
-		else Season.SUMMER if week > 4
-		else Season.SPRING
+		time
+		+ day * Dates.MINS_IN_DAY
+		+ week * Dates.MINS_IN_WEEK
+		+ year * Dates.MINS_IN_YEAR
 	)
 
+var day_name: String:
+	get: return Dates.get_day_name(day)
+
+var day_name_short: String:
+	get: return Dates.get_short_day_name(day)
+
+var season: int:
+	get: return Dates.get_season(week)
 
 var season_name: String:
-	get: return {
-		Season.WINTER: "Winter",
-		Season.FALL: "Fall",
-		Season.SUMMER: "Summer",
-		Season.SPRING: "Spring",
-	}[season]
-
+	get: return Dates.get_season_name(season)
 
 var display_time: String:
 	get:

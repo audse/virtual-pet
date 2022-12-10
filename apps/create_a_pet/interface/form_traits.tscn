@@ -1,0 +1,51 @@
+[gd_scene load_steps=3 format=3 uid="uid://cwympjetwsnql"]
+
+[ext_resource type="Script" path="res://apps/create_a_pet/interface/form_traits.gd" id="1_fyc02"]
+[ext_resource type="Texture2D" uid="uid://b2jk4ajjkgs5" path="res://static/icons/dice.svg" id="1_tpi46"]
+
+[node name="FormTraits" type="VBoxContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_fyc02")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+offset_right = 828.0
+offset_bottom = 80.0
+theme_override_constants/separation = 48
+
+[node name="Label" type="Label" parent="HBoxContainer"]
+offset_top = 5.0
+offset_right = 87.0
+offset_bottom = 74.0
+theme_type_variation = &"H3"
+text = "Traits"
+
+[node name="NumSelectedLabel" type="Label" parent="HBoxContainer"]
+unique_name_in_owner = true
+modulate = Color(1, 1, 1, 0.490196)
+offset_left = 135.0
+offset_top = 5.0
+offset_right = 700.0
+offset_bottom = 74.0
+size_flags_horizontal = 3
+theme_type_variation = &"H3"
+text = "0 / 3 selected"
+
+[node name="RandomTraitsButton" type="Button" parent="HBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(80, 80)
+offset_left = 748.0
+offset_right = 828.0
+offset_bottom = 80.0
+theme_type_variation = &"SubtleButton"
+icon = ExtResource("1_tpi46")
+expand_icon = true
+
+[node name="TraitsContainer" type="HFlowContainer" parent="."]
+unique_name_in_owner = true
+offset_top = 92.0
+offset_right = 828.0
+offset_bottom = 92.0

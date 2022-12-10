@@ -183,6 +183,14 @@ static func scale(a: Color, b: Color, inbetweens: int) -> Array[Color]:
 	colors.append(b)
 	return colors
 
+
+static func interpolate(colors: Array[Color], value: float) -> Color:
+	var step := 1.0 / float(colors.size() - 1)
+	var a: int = floori(value / step)
+	var b: int = ceili(value / step)
+	return ColorRef.lerp_rgba(colors[a], colors[b], value / step)
+
+
 ## Instance methods
 
 func done() -> Color:

@@ -14,5 +14,9 @@ func get_menu_from_context(context: Node) -> ActionMenu:
 
 func _on_ready(context: Node) -> void:
 	# only add item to menu if object does not have infinite uses
-	if context.object_data and context.object_data.buyable_object_data.total_uses != -1:
+	if (
+		context.object_data 
+		and context.object_data.use_data 
+		and context.object_data.item_data.total_uses != -1
+	):
 		super._on_ready(context)

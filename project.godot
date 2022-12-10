@@ -50,7 +50,7 @@ _global_script_classes=[{
 "path": "res://apps/mod/templates/add_buy_categories.gd"
 }, {
 "base": "Module",
-"class": &"AddBuyableObjectsModule",
+"class": &"AddBuyableItemsModule",
 "language": &"GDScript",
 "path": "res://apps/mod/templates/add_buyable_objects.gd"
 }, {
@@ -68,6 +68,11 @@ _global_script_classes=[{
 "class": &"AddDesignsModule",
 "language": &"GDScript",
 "path": "res://apps/mod/templates/add_designs.gd"
+}, {
+"base": "Module",
+"class": &"AddPetColorsModule",
+"language": &"GDScript",
+"path": "res://apps/mod/templates/add_pet_colors.gd"
 }, {
 "base": "Decorator",
 "class": &"AlwaysFail",
@@ -110,6 +115,11 @@ _global_script_classes=[{
 "path": "res://apps/behavior/tree.gd"
 }, {
 "base": "Object",
+"class": &"Benchmark",
+"language": &"GDScript",
+"path": "res://utils/benchmark.gd"
+}, {
+"base": "Object",
 "class": &"BitMask",
 "language": &"GDScript",
 "path": "res://apps/map/nodes/cell_map/bit_mask.gd"
@@ -134,10 +144,20 @@ _global_script_classes=[{
 "language": &"GDScript",
 "path": "res://apps/building/data/building_data.gd"
 }, {
+"base": "Resource",
+"class": &"BuildingItemData",
+"language": &"GDScript",
+"path": "res://apps/item/data/building_item_data.gd"
+}, {
 "base": "Node3D",
 "class": &"BuildingRenderer",
 "language": &"GDScript",
 "path": "res://apps/building/scenes/building_renderer.gd"
+}, {
+"base": "MeshInstance3D",
+"class": &"Button3D",
+"language": &"GDScript",
+"path": "res://interface/components/button_3d/button_3d.gd"
 }, {
 "base": "Resource",
 "class": &"BuyCategoryData",
@@ -149,20 +169,25 @@ _global_script_classes=[{
 "language": &"GDScript",
 "path": "res://apps/mod/parsers/buy_category_parser.gd"
 }, {
-"base": "SaveableResource",
-"class": &"BuyableObjectData",
+"base": "ItemData",
+"class": &"BuyableItemData",
 "language": &"GDScript",
-"path": "res://apps/buy/data/buyable_object_data.gd"
+"path": "res://apps/buy/data/buyable_item_data.gd"
 }, {
 "base": "Object",
-"class": &"BuyableObjectParser",
-"language": &"GDScript",
-"path": "res://apps/mod/parsers/buy_object_parser.gd"
-}, {
-"base": "Object",
-"class": &"BuyableObjectScript",
+"class": &"BuyableItemScript",
 "language": &"GDScript",
 "path": "res://apps/mod/scripts/buyable_object_script.gd"
+}, {
+"base": "Control",
+"class": &"Canvas",
+"language": &"GDScript",
+"path": "res://apps/painter/nodes/canvas.gd"
+}, {
+"base": "Resource",
+"class": &"CanvasData",
+"language": &"GDScript",
+"path": "res://apps/painter/data/canvas_data.gd"
 }, {
 "base": "Object",
 "class": &"Cell",
@@ -214,6 +239,11 @@ _global_script_classes=[{
 "language": &"GDScript",
 "path": "res://interface/components/circle_menu/circle_menu_simple.gd"
 }, {
+"base": "Button",
+"class": &"CollapseButton",
+"language": &"GDScript",
+"path": "res://interface/components/collapse_button/collapse_button.gd"
+}, {
 "base": "GoalData",
 "class": &"CollectGoalData",
 "language": &"GDScript",
@@ -258,6 +288,11 @@ _global_script_classes=[{
 "class": &"CustomSizeTexture2D",
 "language": &"GDScript",
 "path": "res://utils/sized_texture.gd"
+}, {
+"base": "Object",
+"class": &"Dates",
+"language": &"GDScript",
+"path": "res://utils/dates.gd"
 }, {
 "base": "Resource",
 "class": &"DatetimeData",
@@ -344,6 +379,11 @@ _global_script_classes=[{
 "language": &"GDScript",
 "path": "res://apps/goal/data/goal_data.gd"
 }, {
+"base": "Resource",
+"class": &"GoalTriggerData",
+"language": &"GDScript",
+"path": "res://apps/goal/data/trigger_data.gd"
+}, {
 "base": "ColorRect",
 "class": &"GradientNoiseRect",
 "language": &"GDScript",
@@ -364,10 +404,45 @@ _global_script_classes=[{
 "language": &"GDScript",
 "path": "res://apps/pet/behavior/ai/tasks/handle_need.gd"
 }, {
+"base": "SaveableResource",
+"class": &"InventoryData",
+"language": &"GDScript",
+"path": "res://apps/inventory/data/inventory_data.gd"
+}, {
 "base": "Marker3D",
 "class": &"IsoCamera",
 "language": &"GDScript",
 "path": "res://utils/nodes/iso_camera.gd"
+}, {
+"base": "SaveableResource",
+"class": &"ItemData",
+"language": &"GDScript",
+"path": "res://apps/item/data/item_data.gd"
+}, {
+"base": "Node3D",
+"class": &"ItemGrid",
+"language": &"GDScript",
+"path": "res://apps/item/interface/item_grid.gd"
+}, {
+"base": "Object",
+"class": &"ItemParser",
+"language": &"GDScript",
+"path": "res://apps/mod/parsers/item_parser.gd"
+}, {
+"base": "StaticBody3D",
+"class": &"ItemPreview",
+"language": &"GDScript",
+"path": "res://apps/item/interface/item_preview.gd"
+}, {
+"base": "Object",
+"class": &"ItemThumbnail",
+"language": &"GDScript",
+"path": "res://apps/item/interface/item_thumbnail.gd"
+}, {
+"base": "Resource",
+"class": &"ItemUseData",
+"language": &"GDScript",
+"path": "res://apps/item/data/item_use_data.gd"
 }, {
 "base": "RefCounted",
 "class": &"Iter",
@@ -378,6 +453,11 @@ _global_script_classes=[{
 "class": &"Leaf",
 "language": &"GDScript",
 "path": "res://apps/behavior/leaf.gd"
+}, {
+"base": "Button",
+"class": &"LibButton",
+"language": &"GDScript",
+"path": "res://interface/components/button/button.gd"
 }, {
 "base": "Node",
 "class": &"MapState",
@@ -435,7 +515,7 @@ _global_script_classes=[{
 "path": "res://utils/anim/node_anim.gd"
 }, {
 "base": "Resource",
-"class": &"OppportunityData",
+"class": &"OpportunityData",
 "language": &"GDScript",
 "path": "res://apps/world/data/opportunity_data.gd"
 }, {
@@ -469,6 +549,16 @@ _global_script_classes=[{
 "language": &"GDScript",
 "path": "res://apps/pet/scenes/actor.gd"
 }, {
+"base": "Resource",
+"class": &"PetColorData",
+"language": &"GDScript",
+"path": "res://apps/pet/animal/data/pet_color_data.gd"
+}, {
+"base": "Object",
+"class": &"PetColorParser",
+"language": &"GDScript",
+"path": "res://apps/mod/parsers/pet_color_parser.gd"
+}, {
 "base": "SaveableResource",
 "class": &"PetData",
 "language": &"GDScript",
@@ -478,6 +568,16 @@ _global_script_classes=[{
 "class": &"PetInterfaceData",
 "language": &"GDScript",
 "path": "res://apps/pet/interface/interface_data.gd"
+}, {
+"base": "Node3D",
+"class": &"PetRenderer",
+"language": &"GDScript",
+"path": "res://apps/pet/scenes/renderer.gd"
+}, {
+"base": "Resource",
+"class": &"PhysicalItemData",
+"language": &"GDScript",
+"path": "res://apps/item/data/physical_item_data.gd"
 }, {
 "base": "Range",
 "class": &"PillRange",
@@ -533,6 +633,11 @@ _global_script_classes=[{
 "class": &"QuickSpatialGrid",
 "language": &"GDScript",
 "path": "res://utils/nodes/quick_spatial_grid.gd"
+}, {
+"base": "SaveableResource",
+"class": &"RelationshipData",
+"language": &"GDScript",
+"path": "res://apps/pet/data/relationship_data.gd"
 }, {
 "base": "Decorator",
 "class": &"RepeatUntilFail",
@@ -654,6 +759,11 @@ _global_script_classes=[{
 "language": &"GDScript",
 "path": "res://apps/behavior/task.gd"
 }, {
+"base": "Resource",
+"class": &"TerrainData",
+"language": &"GDScript",
+"path": "res://apps/world/data/terrain_data.gd"
+}, {
 "base": "Object",
 "class": &"Themes",
 "language": &"GDScript",
@@ -773,10 +883,11 @@ _global_script_class_icons={
 "ActionMenu": "",
 "AddActionItemModule": "",
 "AddBuyCategoriesModule": "",
-"AddBuyableObjectsModule": "",
+"AddBuyableItemsModule": "",
 "AddCategoryFoodBowl": "",
 "AddDesignCategoriesModule": "",
 "AddDesignsModule": "",
+"AddPetColorsModule": "",
 "AlwaysFail": "res://apps/behavior/assets/always_fail.svg",
 "AlwaysSucceed": "res://apps/behavior/assets/always_succeed.svg",
 "Anim": "",
@@ -785,17 +896,21 @@ _global_script_class_icons={
 "AnimProperty": "",
 "AnimalData": "",
 "BehaviorTree": "res://apps/behavior/assets/behavior_tree.svg",
+"Benchmark": "",
 "BitMask": "",
 "Bits": "",
 "Bowl": "res://apps/cooking/mixing/nodes/bowl.svg",
 "BuildModeState": "",
 "BuildingData": "",
+"BuildingItemData": "",
 "BuildingRenderer": "",
+"Button3D": "",
 "BuyCategoryData": "",
 "BuyCategoryParser": "",
-"BuyableObjectData": "",
-"BuyableObjectParser": "",
-"BuyableObjectScript": "",
+"BuyableItemData": "",
+"BuyableItemScript": "",
+"Canvas": "",
+"CanvasData": "",
 "Cell": "",
 "CellMap": "res://apps/map/nodes/cell_map/cell_map_icon.svg",
 "Chance": "res://apps/behavior/assets/chance.svg",
@@ -806,6 +921,7 @@ _global_script_class_icons={
 "CircleContainer": "res://interface/components/circle_container/circle_container.svg",
 "CircleMenu": "",
 "CircleMenuSimple": "",
+"CollapseButton": "",
 "CollectGoalData": "",
 "ColorRef": "",
 "CommandData": "",
@@ -815,6 +931,7 @@ _global_script_class_icons={
 "ControlRef": "",
 "CuddleGoalData": "",
 "CustomSizeTexture2D": "",
+"Dates": "",
 "DatetimeData": "",
 "Decorator": "",
 "DesignCategoryData": "",
@@ -832,13 +949,22 @@ _global_script_class_icons={
 "FontStyleSheet": "",
 "GameModeState": "",
 "GoalData": "",
+"GoalTriggerData": "",
 "GradientNoiseRect": "res://utils/nodes/noise_rect.svg",
 "Guard": "",
 "GuideMap": "",
 "HandleNeedTask": "",
+"InventoryData": "",
 "IsoCamera": "",
+"ItemData": "",
+"ItemGrid": "",
+"ItemParser": "",
+"ItemPreview": "",
+"ItemThumbnail": "",
+"ItemUseData": "",
 "Iter": "",
 "Leaf": "",
+"LibButton": "",
 "MapState": "",
 "Math": "",
 "MeshDataToolPlus": "",
@@ -850,15 +976,19 @@ _global_script_class_icons={
 "NeedsData": "",
 "NeighborGroup": "",
 "NodeAnim": "",
-"OppportunityData": "",
+"OpportunityData": "",
 "PaintState": "",
 "PanelButton": "res://interface/components/panel_button/panel_button.svg",
 "PanelButtonGroup": "res://interface/components/panel_button/panel_button_group.svg",
 "PersonalityData": "",
 "Pet": "",
 "PetActor": "",
+"PetColorData": "",
+"PetColorParser": "",
 "PetData": "",
 "PetInterfaceData": "",
+"PetRenderer": "",
+"PhysicalItemData": "",
 "PillRange": "res://interface/components/pill_range.svg",
 "PlacementRect": "",
 "Polygon": "",
@@ -870,6 +1000,7 @@ _global_script_class_icons={
 "ProcMesh": "",
 "ProcMeshParams": "",
 "QuickSpatialGrid": "res://utils/nodes/quick_spatial_grid.svg",
+"RelationshipData": "",
 "RepeatUntilFail": "res://apps/behavior/assets/repeat_until_fail.svg",
 "RepeatUntilSucceed": "res://apps/behavior/assets/repeat_until_succeed.svg",
 "RewardData": "",
@@ -894,6 +1025,7 @@ _global_script_class_icons={
 "StyleSheetSetter": "res://utils/stylesheet/icons/wand-magic-sparkles-solid.svg",
 "StyleSheetUtils": "",
 "Task": "res://apps/behavior/assets/task.svg",
+"TerrainData": "",
 "Themes": "",
 "ThoughtBubble": "res://interface/components/thought_bubble/thought_bubble.svg",
 "TitleLabel": "res://interface/components/title_label/title_label.svg",
@@ -926,11 +1058,12 @@ config/features=PackedStringArray("4.0", "C#")
 
 [autoload]
 
+Debugger="*res://apps/debug/debugger.gd"
 Modules="*res://apps/mod/modules.gd"
+ResourceQueue="*res://utils/resource_queue.gd"
 Assets="*res://utils/assets.gd"
 States="*res://utils/states.gd"
 Auto="*res://utils/auto.gd"
-WorldData="*res://apps/world/data/world_data.gd"
 Game="*res://apps/game/game.gd"
 ModError="*res://apps/mod/error.gd"
 Fate="*res://apps/fate/fate.tscn"
@@ -938,6 +1071,9 @@ Settings="*res://apps/settings/settings.gd"
 Datetime="*res://apps/datetime/datetime.gd"
 BuyData="*res://apps/buy/data/buy_data.gd"
 BuildData="*res://apps/building/data/build_data.gd"
+Inventory="*res://apps/inventory/inventory.gd"
+WorldData="*res://apps/world/data/world_data.gd"
+PetManager="*res://apps/pet/pet_manager.gd"
 
 [debug]
 
@@ -954,6 +1090,7 @@ window/size/window_width_override=2880
 window/size/window_height_override=1620
 window/handheld/orientation=1
 window/vsync/vsync_mode=0
+window/subwindows/embed_subwindows=false
 window/stretch/mode="canvas_items"
 window/stretch/aspect="expand"
 
@@ -1014,6 +1151,11 @@ tap={
 "events": [Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"button_mask":0,"position":Vector2(0, 0),"global_position":Vector2(0, 0),"factor":1.0,"button_index":1,"pressed":false,"double_click":false,"script":null)
 ]
 }
+cheat_code={
+"deadzone": 0.5,
+"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"window_id":0,"alt_pressed":true,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":32,"unicode":0,"echo":false,"script":null)
+]
+}
 
 [input_devices]
 
@@ -1025,11 +1167,14 @@ pointing/emulate_touch_from_mouse=true
 
 [rendering]
 
+lights_and_shadows/directional_shadow/soft_shadow_filter_quality=1
+lights_and_shadows/positional_shadow/soft_shadow_filter_quality=1
+reflections/sky_reflections/roughness_layers=6
 global_illumination/gi/use_half_resolution=true
 camera/depth_of_field/depth_of_field_bokeh_shape=0
 environment/ssao/quality=1
-environment/ssil/quality=1
-scaling_3d/mode=1
+environment/ssil/quality=0
+environment/glow/upscale_mode=0
 global_illumination/sdfgi/frames_to_converge=1
 global_illumination/sdfgi/frames_to_update_lights=3
 anti_aliasing/quality/screen_space_aa=1

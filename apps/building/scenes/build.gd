@@ -17,9 +17,6 @@ var is_current: bool:
 
 
 func _ready() -> void:
-#	BuildData.confirm_build.connect(_on_built)
-#	BuildData.confirm_destroy.connect(_on_destroyed)
-	
 	BuildData.state.enter_state.connect(
 		func(state: BuildModeState.BuildState) -> void:
 			if is_current:
@@ -29,10 +26,6 @@ func _ready() -> void:
 					BuildModeState.BuildState.READY, BuildModeState.BuildState.EDIT:
 						_on_cancelled()
 	)
-	
-#	Settings.data.hide_roofs_changed.connect(
-#		func(hide_roofs: bool) -> void: roof_map.visible = not hide_roofs
-#	)
 	
 	Game.Mode.enter_state.connect(
 		func(_state) -> void: edit_button.visible = Game.Mode.is_build
@@ -89,14 +82,6 @@ func _on_start() -> void:
 		await get_tree().create_timer(0.1).timeout
 		editor.polygon = building_data.shape
 		enable()
-
-
-#func _on_built() -> void:
-#	if is_current: building_data.shape = editor.polygon
-#
-#
-#func _on_destroyed() -> void:
-#	pass
 
 
 func _on_object_added(object: WorldObjectData) -> void:

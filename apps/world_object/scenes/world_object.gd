@@ -23,6 +23,7 @@ var is_consumable: bool:
 func _ready() -> void:
 	if object_data: update_object_data(object_data)
 	action_menu.sell_pressed.connect(queue_free)
+	action_menu.put_in_inventory_pressed.connect(queue_free)
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -31,7 +32,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		and event is InputEventMouseButton 
 		and event.is_pressed()
 	): 
-		var event_position := Vector3Ref.project_position_to_floor_simple(camera, event.position)
+		var event_position := Vector3Ref.project_position_to_floor(camera, event.position)
 		if object_data.get_rect().has_point(Vector2(event_position.x, event_position.z)):
 			action_menu.open_at(viewport.get_mouse_position())
 			viewport.set_input_as_handled()
@@ -47,15 +48,13 @@ func update_object_data(object_data_value: WorldObjectData) -> void:
 		action_menu.object_data = object_data
 		
 		# render object scene
-		var nodes = object_data.buyable_object_data.render(self)
+		var nodes = object_data.item_data.physical_data.render(self)
 		mesh = nodes.mesh_instance
 		collision = nodes.collision_instance
 		
 		# unbind drag signals
 		for sig in [draggable.position_changed, draggable.rotation_changed]:
-			var connections := (sig as Signal).get_connections()
-			for connection in connections:
-				sig.disconnect(connection)
+			Utils.disconnect_all(sig)
 		
 		# rebind drag signals
 		draggable.position_changed.connect(_on_position_changed)
@@ -76,7 +75,7 @@ func snap_to_wall(target: Vector3, _current_pos: Vector3, building_data: Buildin
 		var p1 := building_data.shape[points[0]]
 		var p2 := building_data.shape[points[1]]
 		var snapped_target: Vector2 = Polygon.snap_to_edge(p1, p2, t)
-		var target_rotation := deg_to_rad(object_data.rotation + 90) - p1.angle_to_point(p2)
+		var target_rotation := deg_to_rad(object_data.rotation) - p1.angle_to_point(p2)
 		rotation.y = target_rotation
 		return Vector3(snapped_target.x, target.y, snapped_target.y)
 	return target
